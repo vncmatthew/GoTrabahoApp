@@ -22,9 +22,9 @@ interface BookingInterface {
     @POST("api/Booking")
     fun insertBooking(@Body request: Booking): Call<Booking>
 
-    @PUT("api/Booking/{bookingId")
+    @PUT("api/Booking/{bookingId}")
     fun updateBooking(@Path("bookingId") resourceId: String, @Body updatedResource: Booking): Call<Booking>
 
-    @DELETE("api/Booking/{bookingId")
+    @DELETE("api/Booking/{bookingId}")
     fun deleteBooking(@Path("bookingId") resourceId: String): Call<Booking>
 }
