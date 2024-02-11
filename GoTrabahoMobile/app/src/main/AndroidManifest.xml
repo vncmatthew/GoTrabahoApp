@@ -18,6 +18,9 @@
         android:theme="@style/Theme.GoTrabahoMobile"
         tools:targetApi="31">
         <activity
+            android:name=".FreelancerProofOfWorkActivity"
+            android:exported="false" />
+        <activity
             android:name=".FreelancerJobVerificationActivity"
             android:exported="false" />
         <activity
