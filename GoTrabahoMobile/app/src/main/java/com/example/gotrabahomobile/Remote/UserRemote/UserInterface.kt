@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile.Remote.UserRemote
 
 
+import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -23,11 +24,14 @@ interface UserInterface {
     fun getUserBookings(@Path("userId") userId: Int): Call<User>
     @POST("api/User")
     fun registerUser(@Body request: User): Call<User>
+    @POST("api/Login")
+    fun loginUser(@Body request: Login): Call<User>
 
     @PUT("api/User{userId}")
     fun updateUser(@Path("userId") resourceId: String, @Body updatedResource: User): Call<User>
 
     @DELETE("api/User/{userId}")
     fun deleteUser(@Path("userId") resourceId: String): Call<User>
+
 
 }
