@@ -37,7 +37,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imageViewLogoSignUp" />
 
         <EditText
-            android:id="@+id/editTextFreelancerFirstName"
+            android:id="@+id/editTextCustomerFirstName"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -50,7 +50,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewSignUp" />
 
         <EditText
-            android:id="@+id/editTextFreelancerLastName"
+            android:id="@+id/editTextCustomerLastName"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -60,10 +60,10 @@
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerFirstName" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerFirstName" />
 
         <EditText
-            android:id="@+id/editTextFreelancerBirthdate"
+            android:id="@+id/editTextCustomerBirthdate"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -74,10 +74,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerLastName" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerLastName" />
 
         <EditText
-            android:id="@+id/editTextFreelancerPhoneNumber"
+            android:id="@+id/editTextCustomerPhoneNumber"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -88,10 +88,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerBirthdate" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerBirthdate" />
 
         <EditText
-            android:id="@+id/editTextFreelancerEmailAddress"
+            android:id="@+id/editTextCustomerEmailAddress"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -102,10 +102,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerPhoneNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerPhoneNumber" />
 
         <EditText
-            android:id="@+id/editTextFreelancerPassword"
+            android:id="@+id/editTextCustomerPassword"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -116,10 +116,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerEmailAddress" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerEmailAddress" />
 
         <EditText
-            android:id="@+id/editTextFreelancerConfirmPassword"
+            android:id="@+id/editTextCustomerConfirmPassword"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -129,7 +129,7 @@
             android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerPassword" />
 
         <TextView
             android:id="@+id/textViewAddress"
@@ -142,10 +142,10 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerConfirmPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerConfirmPassword" />
 
         <EditText
-            android:id="@+id/editTextFreelancerAddress1"
+            android:id="@+id/editTextCustomerAddress1"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -158,7 +158,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
 
         <EditText
-            android:id="@+id/editTextFreelancerAddress2"
+            android:id="@+id/editTextCustomerAddress2"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -169,10 +169,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerAddress1" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerAddress1" />
 
         <EditText
-            android:id="@+id/editTextFreelancerBarangey"
+            android:id="@+id/editTextCustomerBarangey"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -183,10 +183,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerAddress2" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerAddress2" />
 
         <EditText
-            android:id="@+id/editTextFreelancerCity"
+            android:id="@+id/editTextCustomerCity"
             android:layout_width="312dp"
             android:layout_height="60dp"
             android:layout_marginTop="15dp"
@@ -196,17 +196,17 @@
             android:inputType="text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerBarangey" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerBarangey" />
 
         <CheckBox
-            android:id="@+id/checkBoxFreelancerTNC"
+            android:id="@+id/checkBoxCustomerTNC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="I agree with the Terms and Conditions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerCity" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerCity" />
 
         <Button
             android:id="@+id/buttonFreelancerContinue"
@@ -219,7 +219,7 @@
             app:cornerRadius="18dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/checkBoxFreelancerTNC" />
+            app:layout_constraintTop_toBottomOf="@+id/checkBoxCustomerTNC" />
 
         <TextView
             android:id="@+id/textViewCustomerSignUp"
