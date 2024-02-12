@@ -3,10 +3,17 @@ package com.example.gotrabahomobile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.SpannedString
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
@@ -24,10 +31,27 @@ class LoginActivity : AppCompatActivity() {
 
 
         val btn_login = findViewById<Button>(R.id.buttonLogin)
+        val txt_signup = findViewById<TextView>(R.id.textViewNoAccount)
 
+        val text = "Don't have an account? Sign Up"
+        val spanString = SpannableString(text)
+
+        val signupText = object: ClickableSpan() {
+            override fun onClick(widget: View) {
+                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+            }
+        }
+
+
+        spanString.setSpan(signupText,23,30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        txt_signup.text = spanString
+        txt_signup.movementMethod = LinkMovementMethod.getInstance()
         btn_login.setOnClickListener{loginUser()}
 
+
     }
+
 
     private fun loginUser() {
         val edit_Email = findViewById<EditText>(R.id.editTextLoginEmailAddress)
@@ -63,16 +87,17 @@ class LoginActivity : AppCompatActivity() {
                     val user = response.body()
                     if (user != null) {
                         val userID = user.userId
-/*                        val firstName = user.firstName
+                        val firstName = user.firstName
                         val lastName = user.lastName
-                        val fullName = "$firstName $lastName"*/
+                        val userType = user.userType
+                        val fullName = "$firstName $lastName"
                         if (userID != null) {
                             val intent = Intent(this@LoginActivity, StartupActivity::class.java)
-/*                            intent.putExtra("userID", userID)
+                            intent.putExtra("userID", userID)
                             intent.putExtra("fullName", fullName)
                             intent.putExtra("firstName", firstName)
-                            intent.putExtra("lastName", lastName)*/
-                            Log.d("NIGGER", "HELLO")
+                            intent.putExtra("lastName", lastName)
+                            intent.putExtra("userType", userType)
                             startActivity(intent)
                         } else {
                             Toast.makeText(
