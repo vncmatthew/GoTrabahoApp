@@ -3,7 +3,6 @@ package com.example.gotrabahomobile
 
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -20,7 +19,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 import java.io.IOException
-import java.math.BigDecimal
 
 class CustomerRegisterDetailsActivity : AppCompatActivity() {
 

@@ -222,7 +222,7 @@
             app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerCity" />
 
         <Button
-            android:id="@+id/buttonCustomerSignUp"
+            android:id="@+id/buttonFreelancerContinue1"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_marginTop="12dp"
@@ -242,7 +242,7 @@
             android:text="Looking for the Customer Sign Up page?"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonCustomerSignUp" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonFreelancerContinue1" />
 
         <TextView
             android:id="@+id/textViewSignIn"

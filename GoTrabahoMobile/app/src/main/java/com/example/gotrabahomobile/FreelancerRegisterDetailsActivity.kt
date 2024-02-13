@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
@@ -30,7 +31,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_register_details)
-
+        val btnCustomer = findViewById<Button>(R.id.buttonFreelancerContinue1)
         // put this in a different class
         val idType = findViewById<Spinner>(R.id.dropdownIDType)
 
@@ -50,8 +51,17 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 selectedItem = null
             }
+
         }
         //ends here
+
+        btnCustomer.setOnClickListener {
+            Log.d("RegisterActivity", "Before registerData")
+
+            Log.d("RegisterActivity", "After registerData")
+            insertCustomer()
+            Log.d("hello", insertCustomer().toString())
+        }
     }
 
     private fun insertCustomer(){
