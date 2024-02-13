@@ -59,11 +59,11 @@ data class User(
 
     @SerializedName("longitude")
     @Expose
-    var longitude: BigDecimal? = null,
+    var longitude: Double? = null,
 
     @SerializedName("latitude")
     @Expose
-    var latitude: BigDecimal? = null,
+    var latitude: Double? = null,
 
     @SerializedName("merit")
     @Expose
@@ -71,7 +71,7 @@ data class User(
 
     @SerializedName("status")
     @Expose
-    var status: Boolean = false,
+    var status: Boolean? = false,
 
     @SerializedName("fine")
     @Expose

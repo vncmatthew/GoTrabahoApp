@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.SpannedString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
@@ -99,27 +98,20 @@ class LoginActivity : AppCompatActivity() {
                             intent.putExtra("lastName", lastName)
                             intent.putExtra("userType", userType)
                             startActivity(intent)
-                        } else {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Connection Error",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                        }else {
+                            Toast.makeText(this@LoginActivity, "Connection Error", Toast.LENGTH_SHORT).show()
                         }
                     }
-                } else {
-                    Toast.makeText(this@LoginActivity, "Details are incorrect", Toast.LENGTH_SHORT)
-                        .show()
                 }
-
-
-            }
+                else {
+                    Toast.makeText(this@LoginActivity, "The email and/or password is incorrect", Toast.LENGTH_SHORT).show()
+                }
+        }
             override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.d ("MainActivity", "$t Registration failed: ")
+                Log.d ("MainActivity", "Registration failed: ")
             }
         })
     }
 }
-
 
 

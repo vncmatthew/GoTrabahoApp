@@ -15,7 +15,6 @@ object UserInstance {
     val retrofitBuilder = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create(gson))
         .baseUrl("http://10.0.2.2:5025/")
-        .client(OkHttpClient.Builder().followRedirects(true).build())
         .build()
         .create(UserInterface::class.java)
 

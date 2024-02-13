@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">GoTrabahoMobile</string>
+
+    <string-array name="idType">
+        <item>ID TYPE</item>
+        <item>Driver\'s License</item>
+        <item>SSS</item>
+        <item>Passport</item>
+        <item>National Id</item>
+    </string-array>
 </resources>
