@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Application"
+            android:text="Application Form"
             android:textColor="@color/gt_blue"
             android:textSize="24sp"
             android:textStyle="bold"
@@ -134,16 +134,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerPassword" />
 
-        <Spinner
-            android:id="@+id/dropdownIDType"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerConfirmPassword" />
-
         <TextView
             android:id="@+id/textViewAddress"
             android:layout_width="wrap_content"
@@ -155,7 +145,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dropdownIDType" />
+            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerConfirmPassword" />
 
         <EditText
             android:id="@+id/editTextFreelancerAddress1"
