@@ -26,32 +26,45 @@
         <activity
             android:name=".HomePageActivity"
             android:exported="false" />
-        <activity
-            android:name=".FreelancerProofOfWorkActivity"
-            android:exported="false" />
+
+
         <activity
             android:name=".FreelancerJobVerificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FreelancerIdentityVerificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FreelancerRegisterDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CustomerRegisterDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
+            android:exported="true" >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
 
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        </activity>
+        <activity
+            android:name=".FreelancerIdentityVerificationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FreelancerRegisterDetailsActivity"
+            android:exported="false"/>
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
+
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
+<!--        </activity>-->
+        <activity
+            android:name=".CustomerRegisterDetailsActivity"
+            android:exported="false"/>
+
+
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false">
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
+
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
         </activity>
         <activity
             android:name=".StartupActivity"
