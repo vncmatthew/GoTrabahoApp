@@ -5,14 +5,13 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
-import android.widget.Toolbar
 
-class HomePageActivity : AppCompatActivity() {
+class CustomerHomePageActivity : AppCompatActivity() {
 
     private lateinit var customerToolbar: androidx.appcompat.widget.Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_page)
+        setContentView(R.layout.activity_customer_home_page)
 
 
 
