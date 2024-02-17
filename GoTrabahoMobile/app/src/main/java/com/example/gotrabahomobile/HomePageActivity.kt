@@ -5,11 +5,16 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.Toast
+import android.widget.Toolbar
 
 class HomePageActivity : AppCompatActivity() {
+
+    private lateinit var customerToolbar: androidx.appcompat.widget.Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_page)
+
+
 
         val listView = findViewById<ListView>(R.id.listViewServices)
         val names = arrayOf("Plumbing", "Electrical", "Carpentry", "Refrigerator Repair", "Air Conditioner Repair")
