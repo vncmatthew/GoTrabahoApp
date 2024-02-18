@@ -2,6 +2,7 @@ package com.example.gotrabahomobile
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
@@ -29,12 +30,12 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
     private var currentLatitude: Double? = null
     private var currentLongitude: Double? = null
-    var selectedItem: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_register_details)
         val btnCustomer = findViewById<Button>(R.id.buttonFreelancerContinue1)
+<<<<<<< Updated upstream
         // put this in a different class
 //        val idType = findViewById<Spinner>(R.id.dropdownIDType)
 //
@@ -57,13 +58,14 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 //
 //        }
         //ends here
+=======
+>>>>>>> Stashed changes
 
         btnCustomer.setOnClickListener {
             Log.d("RegisterActivity", "Before registerData")
 
             Log.d("RegisterActivity", "After registerData")
             insertCustomer()
-            Log.d("hello", insertCustomer().toString())
         }
 
         setBirthdayEditText() //date format
@@ -177,22 +179,11 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         registerCustomer(userType, firstName, lastName,  email, password, contactNumber, birthdate, address1,
             address2, barangay, city, longitude, latitude)
 
-        /*        val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
-                intent.putExtra("firstName", firstName)
-                intent.putExtra("lastName", lastName)
-                intent.putExtra("birthdate", birthdate)
-                intent.putExtra("phoneNumber", contactNumber)
+                val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
+
                 intent.putExtra("email", email)
-                intent.putExtra("password", password)
-                intent.putExtra("userType", userType)
-                intent.putExtra("address1", address1)
-                intent.putExtra("address1", address2)
-                intent.putExtra("barangay", barangay)
-                intent.putExtra("city", city)
-                intent.putExtra("longitude", longitude)
-                intent.putExtra("latitude", latitude)
-                startActivity(intent)
-                return*/
+                return startActivity(intent)
+
 
 
     }

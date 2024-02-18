@@ -1,12 +1,14 @@
 package com.example.gotrabahomobile.Model
 
+import android.os.Parcelable
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.math.BigDecimal
 import java.time.LocalDate
+import kotlinx.parcelize.Parcelize
 
 
-
+@Parcelize
 data class User(
     @SerializedName("userId")
     @Expose
@@ -27,7 +29,7 @@ data class User(
 
     @SerializedName("email")
     @Expose
-    var email: String? = null,
+    var email: String,
 
     @SerializedName("password")
     @Expose
@@ -76,4 +78,4 @@ data class User(
     @SerializedName("fine")
     @Expose
     var fine: Int? =  null
-)
+): Parcelable

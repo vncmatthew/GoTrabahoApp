@@ -20,6 +20,10 @@ interface UserInterface {
     fun getUsers(): Call<List<User>>
     @GET("api/User/{userId}")
     fun getUserId(@Path("userId") userId: Int): Call<User>
+
+    @GET("api/User/GetEmail/{email}")
+    fun getEmail(@Path("email") email: String): Call<Int>
+
     @GET("api/User/bookings/{userId}")
     fun getUserBookings(@Path("userId") userId: Int): Call<User>
     @POST("api/User")
@@ -32,6 +36,7 @@ interface UserInterface {
 
     @DELETE("api/User/{userId}")
     fun deleteUser(@Path("userId") resourceId: String): Call<User>
+
 
 
 }
