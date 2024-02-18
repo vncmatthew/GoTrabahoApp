@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">GoTrabahoMobile</string>
 
+    <string name="login">Log In</string>
+    <string name="signup">Sign Up</string>
+    <string name="signupasa">Sign Up as a</string>
+    <string name="customer">Customer</string>
+    <string name="freelancer">Freelancer</string>
+
     <string-array name="idType">
         <item>ID TYPE</item>
         <item>Driver\'s License</item>
@@ -8,4 +14,57 @@
         <item>Passport</item>
         <item>National Id</item>
     </string-array>
+
+    <string name="application">Application Form</string>
+    <string name="activity">Activity</string>
+    <string name="services">Services</string>
+
+    <string name="identityverification">Identity Verification</string>
+    <string name="jobverification">Job Verification</string>
+    <string name="proofofwork">Proof of Work</string>
+
+    <string name="listview">List View</string>
+    <string name="mapview">Map View</string>
+
+
+
+<!--    freelancer details-->
+    <string name="freelancername"></string>
+    <string name="description"></string>
+    <string name="price"></string>
+    <string name="location"></string>
+    <string name="rating"></string>
+
+<!--    buttons text-->
+    <string name="setsched">Set Schedule</string>
+    <string name="nego">Negotiate</string>
+    <string name="identityver_details">Please upload a picture of an official photo ID (passport, driver's license, etc) showing your name and age to allow us to verify your identity. We need this to confirm your eligibility and to confirm that you have not worked for us in the past.</string>
+    <string name="uploadid">Upload ID</string>
+    <string name="serviceselection">Service Selection</string>
+
+    <string name="serviceselec_details">Please select the type of service you wish to provide</string>
+    <string name="proofofwork_details">Please upload a picture of previous work or experience related to the service you have selected. We need this to check your credibility and quality of work to ensure that quality service is provided.
+        \n \n (ex. Certificate of employment, previous works or projects)</string>
+    <string name="jobver_details">Please upload a picture or a file of your TESDA certificate that coincides with the service you selected. We need this to check your eligibility and ensure that quality service is provided.</string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+    <string name=""></string>
+
+
 </resources>
