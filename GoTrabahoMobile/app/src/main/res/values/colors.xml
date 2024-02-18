@@ -4,6 +4,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gt_blue">#40A0D6</color>
     <color name="gt_darkerblue">#0077B6</color>
+    <color name="blue2">#0F81C0</color>
+    <color name="lightblue">#54BFF8</color>
+    <color name="lighterblue">#AEECFF</color>
+    <color name="activetab_blue">#32CEFF</color>
     <color name="gt_green">#33C8A0</color>
     <color name="textbox_gray">#EFF0F6</color>
     <color name="text_gray">#6E7191</color>
