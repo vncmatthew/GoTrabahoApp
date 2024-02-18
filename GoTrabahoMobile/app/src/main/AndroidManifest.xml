@@ -6,71 +6,75 @@
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
-        android:usesCleartextTraffic="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GoTrabahoMobile"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".FreelancerDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FreelancerListMapViewActivity"
+            android:exported="false" />
         <activity
             android:name=".FreelancerListListViewActivity"
             android:exported="false" />
         <activity
             android:name=".CustomerHomePageActivity"
-            android:exported="false" >
-<!--        <intent-filter>-->
-<!--            <action android:name="android.intent.action.MAIN" />-->
+            android:exported="false">
 
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--        </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
-
         <activity
             android:name=".FreelancerJobVerificationActivity"
-            android:exported="false" >
-
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".FreelancerIdentityVerificationActivity"
             android:exported="false" />
         <activity
             android:name=".FreelancerRegisterDetailsActivity"
             android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".CustomerRegisterDetailsActivity"
-            android:exported="false"/>
-
-
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
             android:exported="false">
-<!--        <intent-filter>-->
-<!--            <action android:name="android.intent.action.MAIN" />-->
 
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--        </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".StartupActivity"
             android:exported="false" />
-
     </application>
 
 </manifest>

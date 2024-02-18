@@ -3,6 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gt_blue">#40A0D6</color>
+    <color name="gt_darkerblue">#0077B6</color>
     <color name="gt_green">#33C8A0</color>
     <color name="textbox_gray">#EFF0F6</color>
     <color name="text_gray">#6E7191</color>
