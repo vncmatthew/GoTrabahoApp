@@ -38,7 +38,7 @@
 <!--    buttons text-->
     <string name="setsched">Set Schedule</string>
     <string name="nego">Negotiate</string>
-    <string name="identityver_details">Please upload a picture of an official photo ID (passport, driver's license, etc) showing your name and age to allow us to verify your identity. We need this to confirm your eligibility and to confirm that you have not worked for us in the past.</string>
+    <string name="identityver_details">Please upload a picture of an official photo ID (passport, driver\'s license, etc) showing your name and age to allow us to verify your identity. We need this to confirm your eligibility and to confirm that you have not worked for us in the past.</string>
     <string name="uploadid">Upload ID</string>
     <string name="serviceselection">Service Selection</string>
 
@@ -46,25 +46,7 @@
     <string name="proofofwork_details">Please upload a picture of previous work or experience related to the service you have selected. We need this to check your credibility and quality of work to ensure that quality service is provided.
         \n \n (ex. Certificate of employment, previous works or projects)</string>
     <string name="jobver_details">Please upload a picture or a file of your TESDA certificate that coincides with the service you selected. We need this to check your eligibility and ensure that quality service is provided.</string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
-    <string name=""></string>
+
 
 
 </resources>
