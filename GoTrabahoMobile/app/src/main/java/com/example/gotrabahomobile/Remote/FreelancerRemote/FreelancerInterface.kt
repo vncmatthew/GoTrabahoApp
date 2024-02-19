@@ -4,12 +4,16 @@ import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.FreelancerTesdaCertificate
 import com.example.gotrabahomobile.Model.proofOfExperience
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.Multipart
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface FreelancerInterface {
@@ -40,8 +44,13 @@ interface FreelancerInterface {
     @GET("api/Freelancer/proof/{freelancerId}")
     fun getProofs(@Path("proofId") proofId: Int): Call<proofOfExperience>
 
+    @Multipart
     @POST("api/Freelancer/CreateFreelancer")
-    fun insertFreelancer(@Body request: Freelancer): Call<Freelancer>
+    fun createFreelancer(
+        @Part("userId") userId: Int,
+        @Part imageFile: MultipartBody.Part,
+        @Part("freelancerDTO") freelancerDTO: RequestBody
+    ): Call<Freelancer>
 
     @POST("api/Freelancer/CreateTesdaCertificate")
     fun insertCertificate(@Body request: FreelancerTesdaCertificate): Call<FreelancerTesdaCertificate>

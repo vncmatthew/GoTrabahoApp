@@ -35,28 +35,6 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_register_details)
         val btnCustomer = findViewById<Button>(R.id.buttonFreelancerContinue1)
-        // put this in a different class
-//        val idType = findViewById<Spinner>(R.id.dropdownIDType)
-//
-//        val adapter = ArrayAdapter.createFromResource(
-//            this,
-//            R.array.idType,
-//            android.R.layout.simple_spinner_dropdown_item
-//        )
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        idType.adapter = adapter
-//
-//        idType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//                selectedItem = parent?.getItemAtPosition(position).toString()
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {
-//                selectedItem = null
-//            }
-//
-//        }
-        //ends here
 
         btnCustomer.setOnClickListener {
             Log.d("RegisterActivity", "Before registerData")
@@ -225,8 +203,12 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                     val users = response.body()
                     if(users != null){
                         Toast.makeText(this@FreelancerRegisterDetailsActivity, "Register", Toast.LENGTH_SHORT).show()
+
+                        intent.putExtra("email", email)
+                        return startActivity(intent)
                     }else {
                         Toast.makeText(this@FreelancerRegisterDetailsActivity, "User ID is null", Toast.LENGTH_SHORT).show()
+
                     }
                 }
                 else {

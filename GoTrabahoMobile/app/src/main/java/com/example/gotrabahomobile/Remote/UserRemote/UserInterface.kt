@@ -22,6 +22,8 @@ interface UserInterface {
     fun getUserId(@Path("userId") userId: Int): Call<User>
     @GET("api/User/bookings/{userId}")
     fun getUserBookings(@Path("userId") userId: Int): Call<User>
+    @GET("api/User/GetEmail/{email}")
+    fun getEmail(@Path("email") email: String): Call<Int>
     @POST("api/User")
     fun registerUser(@Body request: User): Call<User>
     @POST("api/Login")

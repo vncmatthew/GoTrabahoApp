@@ -3,6 +3,7 @@ package com.example.gotrabahomobile
 
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
@@ -88,8 +89,8 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         registerCustomer(userType, firstName, lastName,  email, password, contactNumber, birthdate, address1,
             address2, barangay, city, longitude, latitude)
 
-/*        val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
-        intent.putExtra("firstName", firstName)
+
+/*        intent.putExtra("firstName", firstName)
         intent.putExtra("lastName", lastName)
         intent.putExtra("birthdate", birthdate)
         intent.putExtra("phoneNumber", contactNumber)
@@ -102,8 +103,11 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         intent.putExtra("city", city)
         intent.putExtra("longitude", longitude)
         intent.putExtra("latitude", latitude)
+
+*/
+        val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
         startActivity(intent)
-        return*/
+        return
 
 
     }
