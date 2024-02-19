@@ -6,15 +6,8 @@
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-<<<<<<< Updated upstream
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-=======
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
->>>>>>> Stashed changes
 
     <application
         android:allowBackup="true"
@@ -34,15 +27,7 @@
         </activity>
 
         <activity
-<<<<<<< Updated upstream
             android:name=".CustomerActivityPageActivity"
-=======
-            android:name=".FreelancerJobVerificationActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".FreelancerIdentityVerificationActivity"
->>>>>>> Stashed changes
             android:exported="true" >
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
@@ -51,7 +36,6 @@
         </intent-filter>
         </activity>
         <activity
-<<<<<<< Updated upstream
             android:name=".FreelancerDetailsActivity"
             android:exported="false" />
         <activity
@@ -78,8 +62,6 @@
             android:name=".FreelancerIdentityVerificationActivity"
             android:exported="false" />
         <activity
-=======
->>>>>>> Stashed changes
             android:name=".FreelancerRegisterDetailsActivity"
             android:exported="false">
 
@@ -93,7 +75,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false">
-<<<<<<< Updated upstream
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -101,13 +82,6 @@
 
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
-=======
-<!--        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>-->
->>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".StartupActivity"
