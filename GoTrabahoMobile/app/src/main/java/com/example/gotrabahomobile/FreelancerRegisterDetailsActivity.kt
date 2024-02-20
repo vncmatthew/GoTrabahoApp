@@ -2,6 +2,7 @@ package com.example.gotrabahomobile
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
@@ -29,7 +30,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
     private var currentLatitude: Double? = null
     private var currentLongitude: Double? = null
-    var selectedItem: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,17 +116,17 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     private fun insertCustomer(){
 
 
-        val firstNameText = findViewById<EditText>(R.id.editTextFreelancerFirstName)
-        val lastNameText = findViewById<EditText>(R.id.editTextFreelancerLastName)
-        val birthdateText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
-        val phoneNumberText = findViewById<EditText>(R.id.editTextFreelancerPhoneNumber)
-        val emailText = findViewById<EditText>(R.id.editTextFreelancerEmailAddress)
-        val passwordText = findViewById<EditText>(R.id.editTextFreelancerPassword)
-        val confirmPassText = findViewById<EditText>(R.id.editTextFreelancerConfirmPassword)
-        val address1Text = findViewById<EditText>(R.id.editTextFreelancerAddress1)
-        val address2Text = findViewById<EditText>(R.id.editTextFreelancerAddress2)
-        val barangayText = findViewById<EditText>(R.id.editTextFreelancerBarangey)
-        val cityText = findViewById<EditText>(R.id.editTextFreelancerCity)
+        val firstNameText = findViewById<EditText>(R.id.editTextCustomerFirstName)
+        val lastNameText = findViewById<EditText>(R.id.editTextCustomerLastName)
+        val birthdateText = findViewById<EditText>(R.id.editTextCustomerBirthdate)
+        val phoneNumberText = findViewById<EditText>(R.id.editTextCustomerPhoneNumber)
+        val emailText = findViewById<EditText>(R.id.editTextCustomerEmailAddress)
+        val passwordText = findViewById<EditText>(R.id.editTextCustomerPassword)
+        val confirmPassText = findViewById<EditText>(R.id.editTextCustomerConfirmPassword)
+        val address1Text = findViewById<EditText>(R.id.editTextCustomerAddress1)
+        val address2Text = findViewById<EditText>(R.id.editTextCustomerAddress2)
+        val barangayText = findViewById<EditText>(R.id.editTextCustomerBarangey)
+        val cityText = findViewById<EditText>(R.id.editTextCustomerCity)
         val userType = 2
 
 
@@ -155,8 +156,8 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         registerCustomer(userType, firstName, lastName,  email, password, contactNumber, birthdate, address1,
             address2, barangay, city, longitude, latitude)
 
-        /*        val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
-                intent.putExtra("firstName", firstName)
+
+        /*        intent.putExtra("firstName", firstName)
                 intent.putExtra("lastName", lastName)
                 intent.putExtra("birthdate", birthdate)
                 intent.putExtra("phoneNumber", contactNumber)
@@ -169,8 +170,11 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                 intent.putExtra("city", city)
                 intent.putExtra("longitude", longitude)
                 intent.putExtra("latitude", latitude)
-                startActivity(intent)
-                return*/
+
+        */
+        val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
+        startActivity(intent)
+        return
 
 
     }
@@ -203,12 +207,8 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                     val users = response.body()
                     if(users != null){
                         Toast.makeText(this@FreelancerRegisterDetailsActivity, "Register", Toast.LENGTH_SHORT).show()
-
-                        intent.putExtra("email", email)
-                        return startActivity(intent)
                     }else {
                         Toast.makeText(this@FreelancerRegisterDetailsActivity, "User ID is null", Toast.LENGTH_SHORT).show()
-
                     }
                 }
                 else {
@@ -224,6 +224,9 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             }
         })
     }
+
+
+
     fun getLatLongFromAddress(context: Context, address1: String, address2: String, barangay: String, city: String): Pair<Double, Double>? {
         val geocoder = Geocoder(context)
         val fullAddress = "$address1, $address2, $barangay, $city"
@@ -239,4 +242,5 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         }
         return null
     }
+
 }

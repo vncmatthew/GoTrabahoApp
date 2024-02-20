@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile.Remote.FreelancerRemote
 
+import com.example.gotrabahomobile.DTO.FreelancerDTO
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.FreelancerTesdaCertificate
@@ -15,6 +16,7 @@ import retrofit2.http.Body
 import retrofit2.http.Multipart
 import retrofit2.http.Part
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface FreelancerInterface {
     @GET("api/Freelancer")
@@ -45,12 +47,14 @@ interface FreelancerInterface {
     fun getProofs(@Path("proofId") proofId: Int): Call<proofOfExperience>
 
     @Multipart
-    @POST("api/Freelancer/CreateFreelancer")
-    fun createFreelancer(
-        @Part("userId") userId: Int,
-        @Part imageFile: MultipartBody.Part,
-        @Part("freelancerDTO") freelancerDTO: RequestBody
+    @POST("api/Freelancer/CreateFreelancerGovernment")
+    fun insertGovernment(
+        @Part imageFile: MultipartBody.Part
     ): Call<Freelancer>
+
+    @POST("api/Freelancer/CreateFreelancer")
+    fun insertFreelancer(@Body request: Freelancer): Call<Freelancer>
+
 
     @POST("api/Freelancer/CreateTesdaCertificate")
     fun insertCertificate(@Body request: FreelancerTesdaCertificate): Call<FreelancerTesdaCertificate>
