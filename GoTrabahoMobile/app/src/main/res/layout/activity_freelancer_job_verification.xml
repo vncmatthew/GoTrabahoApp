@@ -95,26 +95,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewJobVerification" />
 
-    <Button
-        android:id="@+id/buttonUploadCertificate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/gt_blue"
-        android:text="Upload Certificate"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewUploadText" />
+        <Button
+            android:id="@+id/buttonUploadCertificate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/gt_blue"
+            android:text="Upload Certificate"
+            app:cornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCertificate" />
 
         <Button
-            android:id="@+id/buttonApplicationPage2Continue"
+            android:id="@+id/buttonApplicationPageSignUp"
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
             android:backgroundTint="@color/gt_green"
-            android:text="Continue"
+            android:text="Sign Up"
             android:textSize="17sp"
             app:cornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -151,14 +151,34 @@
             android:id="@+id/buttonUploadProofOfWork"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="@color/gt_blue"
+            android:layout_marginTop="20dp"
 
+            android:backgroundTint="@color/gt_blue"
             android:text="Upload Proof of Work"
             app:cornerRadius="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewUploadProofOfWorkDesc" />
+            app:layout_constraintTop_toBottomOf="@+id/imageViewProofOfWork" />
+
+        <ImageView
+            android:id="@+id/imageViewCertificate"
+            android:layout_width="143dp"
+            android:layout_height="121dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUploadText"
+            app:srcCompat="@drawable/image_upload" />
+
+        <ImageView
+            android:id="@+id/imageViewProofOfWork"
+            android:layout_width="143dp"
+            android:layout_height="121dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUploadProofOfWorkDesc"
+            app:srcCompat="@drawable/image_upload" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
