@@ -1,8 +1,6 @@
 package com.example.gotrabahomobile
 
 import android.Manifest
-import android.app.Activity
-import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.CursorLoader
 import android.content.Intent
@@ -11,7 +9,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
@@ -23,16 +20,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.gotrabahomobile.DTO.FreelancerDTO
 import com.example.gotrabahomobile.Model.Freelancer
-import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
-import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,7 +51,7 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
             openImagePicker()
         }
         val idType = findViewById<Spinner>(R.id.dropdownIDType)
-        val buttonUpload = findViewById<Button>(R.id.buttonApplicationPage2Continue)
+        val buttonUpload = findViewById<Button>(R.id.buttonApplicationPageSignUp)
         val adapter = ArrayAdapter.createFromResource(
             this,
             R.array.idType,

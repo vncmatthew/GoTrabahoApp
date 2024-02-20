@@ -69,17 +69,17 @@
         android:id="@+id/government_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/gt_blue"
         android:text="Upload ID"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dropdownIDType" />
+        app:layout_constraintTop_toBottomOf="@+id/imageViewGovernment" />
 
     <Button
-        android:id="@+id/buttonApplicationPage2Continue"
+        android:id="@+id/buttonApplicationPageSignUp"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginTop="210dp"
@@ -98,7 +98,7 @@
         android:id="@+id/imageViewGovernment"
         android:layout_width="143dp"
         android:layout_height="121dp"
-        app:layout_constraintBottom_toTopOf="@+id/government_button"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dropdownIDType"
