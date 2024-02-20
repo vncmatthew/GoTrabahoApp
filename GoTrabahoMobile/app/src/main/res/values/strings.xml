@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">GoTrabahoMobile</string>
 
     <string name="login">Log In</string>
@@ -47,6 +47,8 @@
     <string name="jobver_details">Please upload a picture or a file of your TESDA certificate that coincides with the service you selected. We need this to check your eligibility and ensure that quality service is provided.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="application_confirmation" tools:ignore="ExtraTranslation">Your application is currently being reviewed. Please wait while we confirm you application.</string>
 
 
 </resources>
