@@ -59,9 +59,19 @@ interface FreelancerInterface {
     @POST("api/Freelancer/CreateTesdaCertificate")
     fun insertCertificate(@Body request: FreelancerTesdaCertificate): Call<FreelancerTesdaCertificate>
 
+    @Multipart
+    @POST("api/Freelancer/CreateFreelancerCertificate")
+    fun insertCertificateImage(
+        @Part imageFile: MultipartBody.Part
+    ): Call<FreelancerTesdaCertificate>
     @POST("api/Freelancer/CreateProof")
     fun insertProof(@Body request: proofOfExperience): Call<proofOfExperience>
 
+    @Multipart
+    @POST("api/Freelancer/CreateFreelancerProof")
+    fun insertProofImage(
+        @Part imageFile: MultipartBody.Part
+    ): Call<proofOfExperience>
     @PUT("api/Freelancer/{freelancerId}")
     fun updateFreelancer(@Path("freelancerId") resourceId: String, @Body updatedResource: Freelancer): Call<Freelancer>
     @PUT("api/Freelancer/{proofId")
