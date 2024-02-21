@@ -15,6 +15,15 @@
         <item>National Id</item>
     </string-array>
 
+    <string-array name="serviceTypes">
+        <item>Service Type</item>
+        <item>Plumbing</item>
+        <item>Electrical</item>
+        <item>Refrigerator Repair</item>
+        <item>Air Conditioner Repair</item>
+        <item>Carpentry</item>
+    </string-array>
+
     <string name="application">Application Form</string>
     <string name="activity">Activity</string>
     <string name="services">Services</string>

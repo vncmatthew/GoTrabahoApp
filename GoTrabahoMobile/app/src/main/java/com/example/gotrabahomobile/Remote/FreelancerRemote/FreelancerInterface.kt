@@ -12,6 +12,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Multipart
 import retrofit2.http.Part
@@ -24,6 +25,9 @@ interface FreelancerInterface {
 
     @GET("api/Freelancer/GetCertificates")
     fun getCertificates(): Call<List<FreelancerTesdaCertificate>>
+
+    @GET("api/Freelancer/FreelancerId/{userId}")
+    fun getFreelancerId(@Path("userId") userId: Int?): Call<Int>
 
     @GET("api/Freelancer/GetProofs")
     fun getProofs(): Call<List<proofOfExperience>>
@@ -56,7 +60,7 @@ interface FreelancerInterface {
     fun insertFreelancer(@Body request: Freelancer): Call<Freelancer>
 
 
-    @POST("api/Freelancer/CreateTesdaCertificate")
+    @POST("api/Freelancer/CreateCertificate")
     fun insertCertificate(@Body request: FreelancerTesdaCertificate): Call<FreelancerTesdaCertificate>
 
     @Multipart
