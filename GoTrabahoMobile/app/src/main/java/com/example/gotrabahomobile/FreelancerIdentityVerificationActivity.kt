@@ -111,15 +111,6 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
     companion object {
         const val REQUEST_CODE_IMAGE = 101
     }
-    /*    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
-                val imageView = findViewById<ImageView>(R.id.imageViewGovernment)
-                val selectedImageUri: Uri? = data.data
-                Log.d("FUCK", "Where $selectedImageUri")
-                loadImage(imageView, selectedImageUri)
-            }
-        }   */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
