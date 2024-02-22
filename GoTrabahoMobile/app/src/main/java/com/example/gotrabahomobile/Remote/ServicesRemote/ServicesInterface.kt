@@ -1,6 +1,8 @@
 package com.example.gotrabahomobile.Remote.ServicesRemote
 
+import com.example.gotrabahomobile.DTO.ServiceTypeListDTO
 import com.example.gotrabahomobile.Model.Services
+import com.example.gotrabahomobile.Wrapper.ServiceTypeList
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -31,6 +33,9 @@ interface ServicesInterface {
 
     @DELETE("api/Services/freelancer/{serviceId}")
     fun deleteService(@Path("serviceId") resourceId: String): Call<Services>
+
+    @GET("api/Services/List/{serviceTypeName}")
+    fun getServicesType(@Path("serviceTypeName") serviceTypeName: String?): Call<List<Services>>
 
 
 }

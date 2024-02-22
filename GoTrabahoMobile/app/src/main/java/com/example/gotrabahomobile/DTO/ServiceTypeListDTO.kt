@@ -1,17 +1,11 @@
-package com.example.gotrabahomobile.Model
+package com.example.gotrabahomobile.DTO
 
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
-
-@Parcelize
-data class Services(
+data class ServiceTypeListDTO(
     var serviceId: Int? = null,
     var freelancerId: Int? = null,
     var name: String? = null,
-    var description: String? = null,
     var priceEstimate: Double? = null,
     var serviceTypeName: String? = null,
-    var status: Boolean? = null,
     var location: String? = null,
     var rating: Float? = null
-): Parcelable
+)

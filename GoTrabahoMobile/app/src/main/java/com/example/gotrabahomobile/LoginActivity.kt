@@ -91,7 +91,7 @@ class LoginActivity : AppCompatActivity() {
                         val userType = user.userType
                         val fullName = "$firstName $lastName"
                         if (userID != null) {
-                            val intent = Intent(this@LoginActivity, StartupActivity::class.java)
+                            val intent = Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
                             intent.putExtra("userID", userID)
                             intent.putExtra("fullName", fullName)
                             intent.putExtra("firstName", firstName)

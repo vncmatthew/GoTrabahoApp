@@ -50,23 +50,20 @@
             android:exported="false" />
         <activity
             android:name=".CustomerHomePageActivity"
-            android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            android:exported="true">
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
             android:name=".FreelancerJobVerificationActivity"
             android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt; -->
-            <!-- </intent-filter> -->
+<!--
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+             <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;
+             </intent-filter>-->
         </activity>
         <activity
             android:name=".FreelancerIdentityVerificationActivity"
@@ -89,12 +86,12 @@
         </activity>
         <activity
             android:name=".CustomerRegisterDetailsActivity"
-            android:exported="true">
-            <intent-filter>
+            android:exported="false">
+<!--            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".RegisterActivity"
