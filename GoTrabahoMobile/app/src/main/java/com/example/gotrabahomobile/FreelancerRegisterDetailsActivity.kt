@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
@@ -40,6 +41,10 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_register_details)
 
+        //terms and conditions
+        val txt_termsandconditions = findViewById<TextView>(R.id.textViewNoAccount)
+
+        //birthdate
         val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
         birthdateEditText.inputType = InputType.TYPE_NULL
 
