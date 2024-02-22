@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/freelancer_nav_graph"
+    app:startDestination="@id/bookingsFragment">
+
+    <fragment
+        android:id="@+id/bookingsFragment"
+        android:name="com.example.gotrabahomobile.BookingsFragment"
+        android:label="fragment_bookings"
+        tools:layout="@layout/fragment_bookings" />
+    <fragment
+        android:id="@+id/freelancerAccountFragment"
+        android:name="com.example.gotrabahomobile.FreelancerAccountFragment"
+        android:label="fragment_freelancer_account"
+        tools:layout="@layout/fragment_freelancer_account" />
+    <fragment
+        android:id="@+id/freelancerMessagesFragment"
+        android:name="com.example.gotrabahomobile.FreelancerMessagesFragment"
+        android:label="fragment_freelancer_messages"
+        tools:layout="@layout/fragment_freelancer_messages" />
+
+</navigation>
