@@ -78,7 +78,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
 
 
     /*private fun requestPermissionsIfNecessary(String[] permissions) {
-        val permissionsToRequest = ArrayList<String>();
+            val permissionsToRequest = ArrayList<String>();
         permissions.forEach { permission ->
         if (ContextCompat.checkSelfPermission(this, permission)
                 != PackageManager.PERMISSION_GRANTED) {

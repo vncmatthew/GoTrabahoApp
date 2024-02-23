@@ -4,6 +4,8 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gt_blue">#40A0D6</color>
     <color name="gt_darkerblue">#0077B6</color>
+    <color name="gt_red_cancel">#FF6F6F</color>
+
     <color name="blue2">#0F81C0</color>
     <color name="lightblue">#54BFF8</color>
     <color name="lighterblue">#AEECFF</color>
