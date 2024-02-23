@@ -14,8 +14,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
+import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -91,13 +93,48 @@ class LoginActivity : AppCompatActivity() {
                         val userType = user.userType
                         val fullName = "$firstName $lastName"
                         if (userID != null) {
-                            val intent = Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
-                            intent.putExtra("userID", userID)
-                            intent.putExtra("fullName", fullName)
-                            intent.putExtra("firstName", firstName)
-                            intent.putExtra("lastName", lastName)
-                            intent.putExtra("userType", userType)
-                            startActivity(intent)
+                            if(user.userType == 1) {
+                                val intent =
+                                    Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
+                                intent.putExtra("userID", userID)
+                                intent.putExtra("fullName", fullName)
+                                intent.putExtra("firstName", firstName)
+                                intent.putExtra("lastName", lastName)
+                                intent.putExtra("userType", userType)
+                                startActivity(intent)
+                            }
+                            else if(user.userType == 2) {
+
+                                    val call = FreelancerInstance.retrofitBuilder
+                                    call.getFreelancerId(userID).enqueue(object: Callback<Freelancer>{
+                                        override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
+
+                                            if(response.isSuccessful){
+                                                val freelancerId = response.body()
+                                                var bro = freelancerId?.verificationStatus
+                                                if(bro == true){
+                                                    val intent =
+                                                        Intent(this@LoginActivity, FreelancerBookingsPageActivity::class.java)
+                                                    intent.putExtra("userID", userID)
+                                                    intent.putExtra("fullName", fullName)
+                                                    intent.putExtra("firstName", firstName)
+                                                    intent.putExtra("lastName", lastName)
+                                                    intent.putExtra("userType", userType)
+                                                    startActivity(intent)
+                                                }
+                                                else{
+                                                    val intent =
+                                                        Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)
+                                                    startActivity(intent)
+                                                }
+                                            }
+                                        }
+
+                                        override fun onFailure(call: Call<Freelancer>, t: Throwable) {
+                                            TODO("Not yet implemented")
+                                        }
+                                    })
+                            }
                         }else {
                             Toast.makeText(this@LoginActivity, "Connection Error", Toast.LENGTH_SHORT).show()
                         }
@@ -112,6 +149,9 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+
+
+
 }
 
 

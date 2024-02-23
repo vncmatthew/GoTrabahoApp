@@ -22,6 +22,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.FreelancerTesdaCertificate
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.proofOfExperience
@@ -166,8 +167,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
     }
 
     private fun getEmail() {
-        //val email = intent.getStringExtra("email")
-        val email = "hello@gmail.com"
+        val email = intent.getStringExtra("email")
         val userCall = UserInstance.retrofitBuilder
 
         if (email != null) {
@@ -176,14 +176,16 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     if (response.isSuccessful) {
 
-                        val userId = response.body()?.toInt()
+                        val userId = response.body()
                         val service = FreelancerInstance.retrofitBuilder
-                        service.getFreelancerId(userId).enqueue(object : Callback<Int> {
+                        service.getFreelancerId(userId).enqueue(object : Callback<Freelancer> {
                             @RequiresApi(Build.VERSION_CODES.O)
-                            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                            override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
                                 if (response.isSuccessful) {
 
-                                    val freelancerId = response.body()
+                                    val data = response.body()
+                                    val freelancerId = data?.freelancerId
+
                                     Log.d("Freelancer", "$freelancerId}")
                                     if(freelancerId != null){
                                         val service = FreelancerInstance.retrofitBuilder
@@ -250,6 +252,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                                             })
                                         Log.d("Resort", "$userId")
                                         val intent = Intent(this@FreelancerJobVerificationActivity, ApplicationConfirmationActivity::class.java)
+                                        intent.putExtra("email", email)
                                         intent.putExtra("userId", userId)
                                         startActivity(intent)
                                         return
@@ -263,7 +266,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                                 }
                             }
 
-                            override fun onFailure(call: Call<Int>, t: Throwable) {
+                            override fun onFailure(call: Call<Freelancer>, t: Throwable) {
                                 Log.d ("Freelancer Identity Verification", "Failed to Retrieve UserId: ")
                             }
                         })

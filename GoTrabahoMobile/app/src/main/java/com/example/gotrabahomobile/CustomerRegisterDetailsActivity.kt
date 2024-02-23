@@ -122,22 +122,8 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         registerCustomer(userType, firstName, lastName,  email, password, contactNumber, birthdate, address1,
             address2, barangay, city, longitude, latitude)
 
-
-/*        intent.putExtra("firstName", firstName)
-        intent.putExtra("lastName", lastName)
-        intent.putExtra("birthdate", birthdate)
-        intent.putExtra("phoneNumber", contactNumber)
         intent.putExtra("email", email)
-        intent.putExtra("password", password)
-        intent.putExtra("userType", userType)
-        intent.putExtra("address1", address1)
-        intent.putExtra("address1", address2)
-        intent.putExtra("barangay", barangay)
-        intent.putExtra("city", city)
-        intent.putExtra("longitude", longitude)
-        intent.putExtra("latitude", latitude)
 
-*/
         val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
         startActivity(intent)
         return

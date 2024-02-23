@@ -16,7 +16,7 @@
         android:paddingBottom="8dp">
 
         <TextView
-            android:id="@+id/tvNameR"
+            android:id="@+id/tvCustomerName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Name"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvRatingR"
+            android:id="@+id/tvDateCustomer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -34,10 +34,10 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNameR" />
+            app:layout_constraintTop_toBottomOf="@+id/tvCustomerName" />
 
         <TextView
-            android:id="@+id/tvLocationR"
+            android:id="@+id/tvServiceCustomer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -45,31 +45,43 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvRatingR" />
+            app:layout_constraintTop_toBottomOf="@+id/tvDateCustomer" />
 
         <TextView
-            android:id="@+id/tvPriceR"
+            android:id="@+id/tvSetPriceCustomer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Price Estimate"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/btnChooseService"
+            app:layout_constraintBottom_toTopOf="@+id/btnChat"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLocationR" />
+            app:layout_constraintTop_toBottomOf="@+id/tvServiceCustomer"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/btnChooseService"
-            android:layout_width="150dp"
+            android:id="@+id/btnChat"
+            android:layout_width="100dp"
             android:layout_height="40dp"
             android:layout_marginBottom="8dp"
-            android:text="Choose Service"
+            android:text="Chat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.428"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.505"
+            app:layout_constraintStart_toEndOf="@+id/btnPayServiceFee" />
 
+        <Button
+            android:id="@+id/btnPayServiceFee"
+            android:layout_width="190dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="8dp"
+            android:text="Pay Service Fee"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSetPriceCustomer"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

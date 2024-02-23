@@ -103,5 +103,9 @@
         vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
     </string>
 
+    <string name="status_pending">Pending</string>
+    <string name="status_ongoing">Ongoing</string>
+    <string name="status_completed">Completed</string>
+
 
 </resources>

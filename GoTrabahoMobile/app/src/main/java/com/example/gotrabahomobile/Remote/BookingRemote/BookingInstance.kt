@@ -11,7 +11,7 @@ object BookingInstance {
 
     val retrofitBuilder = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create(gson))
-        .baseUrl("http://10.0.2.2:5179/")
+        .baseUrl("http://10.0.2.2:5025/")
         .build()
         .create(BookingInterface::class.java)
 }

@@ -26,7 +26,13 @@
             android:exported="false" />
         <activity
             android:name=".FreelancerBookingsPageActivity"
-            android:exported="false"></activity>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".CustomerActivityPageActivity"
             android:exported="false">
@@ -50,17 +56,16 @@
             android:exported="false" />
         <activity
             android:name=".CustomerHomePageActivity"
-            android:exported="true">
-             <intent-filter>
+            android:exported="false">
+<!--             <intent-filter>
              <action android:name="android.intent.action.MAIN" />
              <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+             </intent-filter>-->
         </activity>
         <activity
             android:name=".FreelancerJobVerificationActivity"
             android:exported="false">
-<!--
-             <intent-filter>
+<!--             <intent-filter>
              <action android:name="android.intent.action.MAIN" />
              <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;
              </intent-filter>-->
@@ -99,13 +104,10 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false">
-
-            <!--
-                 <intent-filter>
+<!--                 <intent-filter>
              <action android:name="android.intent.action.MAIN" />
              <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-            -->
+             </intent-filter>-->
         </activity>
         <activity
             android:name=".StartupActivity"

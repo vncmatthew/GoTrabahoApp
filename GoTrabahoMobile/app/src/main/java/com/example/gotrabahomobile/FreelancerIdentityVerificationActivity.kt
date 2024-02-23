@@ -124,8 +124,8 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
         }
     }
     private fun getEmail() {
-        //val email = intent.getStringExtra("email")
-          val email = "hello@gmail.com"
+        val email = intent.getStringExtra("email")
+
         val service = UserInstance.retrofitBuilder
 
         if (email != null) {

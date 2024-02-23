@@ -27,7 +27,7 @@ interface FreelancerInterface {
     fun getCertificates(): Call<List<FreelancerTesdaCertificate>>
 
     @GET("api/Freelancer/FreelancerId/{userId}")
-    fun getFreelancerId(@Path("userId") userId: Int?): Call<Int>
+    fun getFreelancerId(@Path("userId") userId: Int?): Call<Freelancer>
 
     @GET("api/Freelancer/GetProofs")
     fun getProofs(): Call<List<proofOfExperience>>

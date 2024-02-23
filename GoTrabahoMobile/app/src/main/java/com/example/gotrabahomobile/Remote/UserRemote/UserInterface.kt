@@ -19,7 +19,7 @@ interface UserInterface {
     @GET("api/User")
     fun getUsers(): Call<List<User>>
     @GET("api/User/{userId}")
-    fun getUserId(@Path("userId") userId: Int): Call<User>
+    fun getUser(@Path("userId") userId: Int): Call<User>
     @GET("api/User/bookings/{userId}")
     fun getUserBookings(@Path("userId") userId: Int): Call<User>
     @GET("api/User/GetEmail/{email}")

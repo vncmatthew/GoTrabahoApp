@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.FreelancerDetailsActivity
 import com.example.gotrabahomobile.LoginActivity
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.R
@@ -40,7 +41,7 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
             tvPriceR.text = "Price Estimate: ${currentItem.priceEstimate}"
         }
         holder.binding.btnChooseService.setOnClickListener{
-            val intent = Intent(context, LoginActivity::class.java)
+            val intent = Intent(context, FreelancerDetailsActivity::class.java)
             intent.putExtra("serviceId", currentItem.serviceId)
             context.startActivity(intent)
         }
