@@ -1,13 +1,30 @@
 package com.example.gotrabahomobile
 
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.views.MapView
+import androidx.core.content.ContextCompat
+import com.example.gotrabahomobile.DTO.FreelancerLocations
+
+import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.osmdroid.config.Configuration.*
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.ItemizedIconOverlay
+import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
+import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.OverlayItem
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.HttpException
+import retrofit2.Response
 
 
 class FreelancerListMapViewActivity : AppCompatActivity() {
@@ -33,13 +50,19 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         //inflate and create the map
         setContentView(R.layout.activity_freelancer_list_map_view)
 
+
         map = findViewById<MapView>(R.id.mapview)
         map.setTileSource(TileSourceFactory.MAPNIK)
 
         val mapController = map.controller
-        mapController.setZoom(9.5)
-        val startPoint = GeoPoint(14.6091, 121.0223);
+        mapController.setZoom(20.20)
+        val longitude = intent.getDoubleExtra("longitude", 0.0)
+        val latitude = intent.getDoubleExtra("latitude", 0.0)
+        val startPoint = GeoPoint(latitude, longitude);
         mapController.setCenter(startPoint);
+        addFreelancerPins()
+        //addMarker()
+
     }
 
     override fun onResume() {
@@ -75,6 +98,76 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                 REQUEST_PERMISSIONS_REQUEST_CODE)
         }
     }
+
+    private fun addFreelancerPins() {
+        val call = ServicesInstance.retrofitBuilder.getServiceLocations()
+        call.enqueue(object : Callback<List<FreelancerLocations>> {
+            override fun onResponse(
+                call: Call<List<FreelancerLocations>>,
+                response: Response<List<FreelancerLocations>>
+            ) {
+                if (response.isSuccessful) {
+                    response.body()?.let { freelancerLocations ->
+                        for (freelancer in freelancerLocations) {
+                            Log.i("Check", "onResponse: ${freelancer.latitude}")
+                            Log.i("Check", "onLong: ${freelancer.longitude}")
+                            val geoPoint = freelancer.latitude?.let { freelancer.longitude?.let { it1 ->
+                                GeoPoint(it,
+                                    it1
+                                )
+                            } }
+
+                            // Create a marker for each freelancer location
+                            val marker = Marker(map)
+                            marker.position = geoPoint
+                            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                            marker.setTitle(freelancer.Name)
+                            marker.setSnippet(freelancer.Description)
+                            marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.marker_icon))
+
+                            // Add the marker to the map
+                            map.overlays.add(marker)
+                        }
+                        map.invalidate() // Refresh the map to show the new markers
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<FreelancerLocations>>, t: Throwable) {
+                // Handle failure
+                Toast.makeText(this@FreelancerListMapViewActivity, "Failed to load locations", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
+  /*  private fun addMarker(){
+
+        val service = ServicesInstance.retrofitBuilder
+
+        service.getServiceLocations().enqueue(object : Callback<List<FreelancerLocations>>{
+            override fun onResponse(
+                call: Call<List<FreelancerLocations>>,
+                response: Response<List<FreelancerLocations>>
+            ) {
+                if(response.isSuccessful){
+                    response.body().let{
+                        if (it != null) {
+                            for(freelancer in it){
+                                Log.i("Check", "onResponse: ${freelancer.latitude}")
+                                Log.i("Check", "onResponse: ${freelancer.longitude}")
+                            }
+                        }
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<FreelancerLocations>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }*/
 
 
     /*private fun requestPermissionsIfNecessary(String[] permissions) {

@@ -1,8 +1,8 @@
 package com.example.gotrabahomobile.Remote.ServicesRemote
 
-import com.example.gotrabahomobile.DTO.ServiceTypeListDTO
+import com.example.gotrabahomobile.DTO.FreelancerLocations
+
 import com.example.gotrabahomobile.Model.Services
-import com.example.gotrabahomobile.Wrapper.ServiceTypeList
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -18,6 +18,9 @@ interface ServicesInterface {
 
     @GET("api/Services/{serviceId}/rating")
     fun getServiceRating(@Path("serviceId") serviceId: Int): Call<Services>
+
+    @GET("api/Services/GetLocations")
+    fun getServiceLocations(): Call<List<FreelancerLocations>>
 
     @GET("api/Services/{serviceId}")
     fun getService(@Path("serviceId") serviceId: Int): Call<Services>

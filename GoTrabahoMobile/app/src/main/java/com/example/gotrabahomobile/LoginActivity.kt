@@ -91,15 +91,19 @@ class LoginActivity : AppCompatActivity() {
                         val firstName = user.firstName
                         val lastName = user.lastName
                         val userType = user.userType
+                        val longitude = user.longitude
+                        val latitude = user.latitude
                         val fullName = "$firstName $lastName"
                         if (userID != null) {
                             if(user.userType == 1) {
                                 val intent =
-                                    Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
+                                    Intent(this@LoginActivity, FreelancerListMapViewActivity::class.java)
                                 intent.putExtra("userID", userID)
                                 intent.putExtra("fullName", fullName)
                                 intent.putExtra("firstName", firstName)
                                 intent.putExtra("lastName", lastName)
+                                intent.putExtra("longitude", longitude)
+                                intent.putExtra("latitude", latitude)
                                 intent.putExtra("userType", userType)
                                 startActivity(intent)
                             }
