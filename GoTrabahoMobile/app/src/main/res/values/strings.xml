@@ -50,6 +50,10 @@
     <string name="serviceselection">Service Selection</string>
     <string name="setSched">Set Schedule</string>
     <string name="negotiate">Negotiate</string>
+    <string name="rewards">Rewards</string>
+    <string name="paymentOptions">Payment Options</string>
+    <string name="logout">Log Out</string>
+
 
     <string name="serviceselec_details">Please select the type of service you wish to provide</string>
     <string name="proofofwork_details">Please upload a picture of previous work or experience related to the service you have selected. We need this to check your credibility and quality of work to ensure that quality service is provided.
@@ -107,7 +111,7 @@
     <string name="status_ongoing">Ongoing</string>
     <string name="status_completed">Completed</string>
 
-
+    <string name="customerName">Peter Griffin</string>
 
 
 </resources>
