@@ -14,10 +14,10 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="120dp"
+            android:layout_width="160dp"
             android:layout_height="30dp"
             android:id="@+id/customerName"
-            android:text="@string/rewards"
+            android:text="@string/paymentOptions"
             android:textSize="20sp"
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
@@ -28,7 +28,7 @@
             android:layout_height="30dp"
             android:src="@drawable/rightarrow_icon"
             android:layout_marginTop="30dp"
-            android:layout_marginStart="200dp"
+            android:layout_marginStart="160dp"
             android:layout_toEndOf="@+id/customerName" />
 
     </RelativeLayout>
