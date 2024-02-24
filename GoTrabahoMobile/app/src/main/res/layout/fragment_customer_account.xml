@@ -1,20 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".CustomerAccountFragment">
 
-   <include
-       android:id="@+id/include"
-       layout="@layout/customer_toolbar" />
+   <!--   <ListView-->
+<!--       android:layout_width="match_parent"-->
+<!--       android:layout_height="match_parent"-->
+<!--       android:id="@+id/listviewCustomerAccount"-->
+<!--       android:scrollbars="vertical"-->
+<!--       tools:listitem="@layout/list_item_customer_profile">-->
+
+
+<!--   </ListView>-->
 
    <include
-       android:id="@+id/customerProfile"
+       android:id="@+id/include"
+       layout="@layout/toolbar_no_notificationicon"
+       tools:layout_editor_absoluteX="0dp"
+       tools:layout_editor_absoluteY="0dp" />
+
+   <include
+       android:id="@+id/profile"
        layout="@layout/list_item_customer_profile"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:layout_toEndOf="@+id/include" />
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/include" />
 
-</FrameLayout>
+   <include
+       android:id="@+id/cardRewards"
+       layout="@layout/list_item_rewards"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="2dp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/profile" />
+
+   <include
+       android:id="@+id/cardPaymentOptions"
+       layout="@layout/list_item_payment_options"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="2dp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/cardRewards" />
+
+   <include
+       android:id="@+id/cardLogout"
+       layout="@layout/list_item_logout"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="2dp"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/cardPaymentOptions" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
