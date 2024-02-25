@@ -1,22 +1,31 @@
 package com.example.gotrabahomobile
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
@@ -41,8 +50,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_register_details)
 
-        //terms and conditions
-        val txt_termsandconditions = findViewById<TextView>(R.id.textViewNoAccount)
+
 
         //birthdate
         val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
@@ -51,6 +59,26 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         birthdateEditText.setOnClickListener {
             showDatePickerDialog(birthdateEditText)
         }
+
+        val checkBox = findViewById<CheckBox>(R.id.checkBoxFreelancerTNC)
+        val spannableString = SpannableString("I agree to the Terms and Conditions and Data Privacy")
+
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Show the dialog when the text is clicked
+                showDialog()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE
+                ds.isUnderlineText = true
+            }
+        }
+
+        spannableString.setSpan(clickableSpan,  16,  50, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        checkBox.text = spannableString
+        checkBox.movementMethod = LinkMovementMethod.getInstance() // Enable clickable text
 
         val btnCustomer = findViewById<Button>(R.id.buttonFreelancerContinue1)
 
@@ -63,6 +91,22 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         }
 
         //setBirthdayEditText() //date format
+    }
+
+    private fun showDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.terms_and_conditions_dialog, null)
+
+        val closeButton = dialogView.findViewById<ImageButton>(R.id.close_button)
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        closeButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 
     private fun showDatePickerDialog(birthdateEditText: EditText) {
