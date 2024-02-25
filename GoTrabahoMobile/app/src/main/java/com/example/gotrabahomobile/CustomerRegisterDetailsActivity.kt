@@ -1,17 +1,27 @@
 package com.example.gotrabahomobile
 
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.text.InputType
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
+import android.view.View
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gotrabahomobile.Model.User
@@ -44,6 +54,26 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             showDatePickerDialog(birthdateEditText)
         }
 
+        val checkBox = findViewById<CheckBox>(R.id.checkBoxCustomerTNC)
+        val spannableString = SpannableString("I agree to the Terms and Conditions and Data Privacy")
+
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Show the dialog when the text is clicked
+                showDialog()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE // Set the text color
+                ds.isUnderlineText = true // Set the text to be underlined
+            }
+        }
+
+        spannableString.setSpan(clickableSpan,  16,  50, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        checkBox.text = spannableString
+        checkBox.movementMethod = LinkMovementMethod.getInstance() // Enable clickable text
+
         val btnCustomer = findViewById<Button>(R.id.buttonCustomerSignUp)
 
         btnCustomer.setOnClickListener {
@@ -56,6 +86,22 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun showDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.terms_and_conditions_dialog, null)
+
+        val closeButton = dialogView.findViewById<ImageButton>(R.id.close_button)
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        closeButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 
     private fun showDatePickerDialog(birthdateEditText: EditText) {
