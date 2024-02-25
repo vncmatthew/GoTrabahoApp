@@ -54,6 +54,7 @@
     <string name="paymentOptions">Payment Options</string>
     <string name="logout">Log Out</string>
     <string name="confirm">Confirm</string>
+    <string name="proceed">Proceed</string>
 
 
     <string name="serviceselec_details">Please select the type of service you wish to provide</string>
@@ -71,6 +72,13 @@
 
     <string name="setPrice">Set Price</string>
     <string name="setPriceDesc">Make sure that the set price is agreed by both parties.</string>
+    <string name="setASched">Set A Schedule</string>
+    <string name="setDate">Set Date</string>
+    <string name="setASchedDesc">Set a schedule for the service based on the dates the freelancer is available</string>
+    <string name="Resched">Reschedule Service</string>
+    <string name="ReschedDesc">Set a new date to reschedule the service</string>
+    <string name="cancelService">Cancel Service?</string>
+    <string name="cancelServiceDesc">Note: Cancellation of a booked service 2 days before the scheduled date will charge you with a cancellation fee.</string>
 
     //payment booking summary
 

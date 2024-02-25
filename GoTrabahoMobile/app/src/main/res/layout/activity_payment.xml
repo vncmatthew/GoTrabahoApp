@@ -102,12 +102,29 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewBookingSummarySetPrice" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageViewMayaLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="24dp"
-        tools:layout_editor_absoluteY="411dp"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:layout_marginTop="18dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChoosePaymentOption"
+        tools:srcCompat="@drawable/logo_maya" />
+
+    <Button
+        android:id="@+id/buttonCancelServiceProceed"
+        android:layout_width="288dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="120dp"
+        android:backgroundTint="@color/gt_green2"
+        android:text="@string/confirm"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewMayaLogo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
