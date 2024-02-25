@@ -59,8 +59,6 @@
     <string name="proofofwork_details">Please upload a picture of previous work or experience related to the service you have selected. We need this to check your credibility and quality of work to ensure that quality service is provided.
         \n \n (ex. Certificate of employment, previous works or projects)</string>
     <string name="jobver_details">Please upload a picture or a file of your TESDA certificate that coincides with the service you selected. We need this to check your eligibility and ensure that quality service is provided.</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="application_confirmation" tools:ignore="ExtraTranslation">Your application is currently being reviewed. Please wait while we confirm you application.</string>
     <string name="title_activity_freelancer_main">FreelancerMainActivity</string>
@@ -70,42 +68,120 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
-    <string name="lorem_ipsum">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
-        volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
-        dui nec risus. Maecenas non sodales nisi, vel dictum dolor. Class aptent taciti sociosqu ad
-        litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse blandit eleifend
-        diam, vel rutrum tellus vulputate quis. Aliquam eget libero aliquet, imperdiet nisl a,
-        ornare ex. Sed rhoncus est ut libero porta lobortis. Fusce in dictum tellus.\n\n
-        Suspendisse interdum ornare ante. Aliquam nec cursus lorem. Morbi id magna felis. Vivamus
-        egestas, est a condimentum egestas, turpis nisl iaculis ipsum, in dictum tellus dolor sed
-        neque. Morbi tellus erat, dapibus ut sem a, iaculis tincidunt dui. Interdum et malesuada
-        fames ac ante ipsum primis in faucibus. Curabitur et eros porttitor, ultricies urna vitae,
-        molestie nibh. Phasellus at commodo eros, non aliquet metus. Sed maximus nisl nec dolor
-        bibendum, vel congue leo egestas.\n\n
-        Sed interdum tortor nibh, in sagittis risus mollis quis. Curabitur mi odio, condimentum sit
-        amet auctor at, mollis non turpis. Nullam pretium libero vestibulum, finibus orci vel,
-        molestie quam. Fusce blandit tincidunt nulla, quis sollicitudin libero facilisis et. Integer
-        interdum nunc ligula, et fermentum metus hendrerit id. Vestibulum lectus felis, dictum at
-        lacinia sit amet, tristique id quam. Cras eu consequat dui. Suspendisse sodales nunc ligula,
-        in lobortis sem porta sed. Integer id ultrices magna, in luctus elit. Sed a pellentesque
-        est.\n\n
-        Aenean nunc velit, lacinia sed dolor sed, ultrices viverra nulla. Etiam a venenatis nibh.
-        Morbi laoreet, tortor sed facilisis varius, nibh orci rhoncus nulla, id elementum leo dui
-        non lorem. Nam mollis ipsum quis auctor varius. Quisque elementum eu libero sed commodo. In
-        eros nisl, imperdiet vel imperdiet et, scelerisque a mauris. Pellentesque varius ex nunc,
-        quis imperdiet eros placerat ac. Duis finibus orci et est auctor tincidunt. Sed non viverra
-        ipsum. Nunc quis augue egestas, cursus lorem at, molestie sem. Morbi a consectetur ipsum, a
-        placerat diam. Etiam vulputate dignissim convallis. Integer faucibus mauris sit amet finibus
-        convallis.\n\n
-        Phasellus in aliquet mi. Pellentesque habitant morbi tristique senectus et netus et
-        malesuada fames ac turpis egestas. In volutpat arcu ut felis sagittis, in finibus massa
-        gravida. Pellentesque id tellus orci. Integer dictum, lorem sed efficitur ullamcorper,
-        libero justo consectetur ipsum, in mollis nisl ex sed nisl. Donec maximus ullamcorper
-        sodales. Praesent bibendum rhoncus tellus nec feugiat. In a ornare nulla. Donec rhoncus
-        libero vel nunc consequat, quis tincidunt nisl eleifend. Cras bibendum enim a justo luctus
-        vestibulum. Fusce dictum libero quis erat maximus, vitae volutpat diam dignissim.
+
+    <string name="hello_blank_fragment">aaa</string>
+    //terms and conditions
+    <string name="terms_and_conditions" formatted="false">
+        GoTrabaho Terms and Conditions \n \n
+        I. Introduction
+        \n \n Welcome to GoTrabaho! By using our application and/or using the services that are provided, you acknowledge that you have read, understood, and agree to be bound by our Terms and Conditions. If you are not in agreement with all of these Terms and Conditions, you are prohibited from using this application, and you may discontinue use immediately. GoTrabaho recommends that you save or print a copy of these Terms and Conditions for future reference.
+        \n \n
+
+        II.  User Agreement
+        \n \n 2.1 By using the GoTrabaho Application, you agree to the following terms and conditions:
+        \n \u25CF You are at least 18  years of age
+        \n \u25CF You have provided accurate and truthful information when registering for the application
+        \n \u25CF You will not use the application for illegal or harmful purposes
+        \n \u25CF You will not violate the intellectual property rights of others
+        \n \u25CF You agree to the terms of GoTrabaho’s privacy policy and data security practices
+        \n \u25CF You agree to be bound by the decisions of GoTrabaho’s dispute resolution process
+        \n \n 2.2 GoTrabaho may change the terms and conditions of this agreement at any time. You will be notified of any changes to the terms and conditions by email or through the application. By continuing to use the GoTrabaho application after any changes to the terms and conditions, you agree to be bound by the new terms and conditions.
+        \n \n
+
+        III. Contract Display and Acceptance
+        \n \n 3.1 Overview of Contracting Process: Both parties (freelancer and client) will agree upon the same price that they negotiated through the messaging application and will follow the agreed schedule booked by the client.
+
+        \n \n 3.2 Contract Display: The project details (name of freelancer, type of work, location, contact number, and date) and payment fee will be shown before the contract is accepted by both parties through a prompt, and the contract will also be shown in the Ongoing Booking.
+
+        \n \n 3.3 Acceptance of Contracts: The acceptance of the contract will be valid after the confirmation of the price negotiated by the freelancer and client through a prompt in the messages.
+
+        \n \n 3.4 Modification and Cancellation of Contracts: The cancellation of the contract will be only valid before 2 days of the date agreed by both parties. Modifications in the contract such as payment, type of work, date, and contact number are not allowed after the booking is confirmed.
+        \n \n
+
+        IV. Client-Freelancer Match
+        \n \n 4.1 Matchmaking Algorithms: The freelancer will be shown based on the location of the user and the type of service that the user chose (ex. Plumbing, Electrical, Carpentry, and Refrigerator Repair).
+
+        \n \n4.2 Profile Creation: Both freelancer and client will be sharing their personal details (full name, location, contact number, and email address). For the freelancer, they have to upload their government ID, Tesda Certificate, and Proof of Work based on their chosen service.
+
+        \n \n 4.3 Proposal Submission: The type of project will be discussed in the messaging system which will affect the negotiated price.
+
+        \n \n 4.4 Client Selection and Awarding of Projects: The Freelancers will be selected through either a list or map view and it also depends on the type of service the client chose.
+        \n \n
+
+        V. Service Timeline Confirmation
+        \n \n 5.1 Freelancers are required to accept service requests from customers as long as the customers have set it at the time of the freelancer’s availability that the freelancers have set themselves.
+
+        \n \n 5.2 The confirmation of service based on the agreed-upon date and time of the freelancer and client is an integral part of the service agreement between the client and the freelancer. It shows the details of the agreed-upon timeline for when the service will be done as specified in the service details.
+        \n \n
+
+        VI. Service Agreement Visibility
+        \n \n 6.1 The users and the freelancer can access and view the services they agreed on. In their respective accounts on the application.
+        \n \n
+
+        VII. Progress and Communication Tracking
+        \n \n 7.1 We (GoTrabaho), have the right to track the progress of services done within our application. This is to know the information of services being done to be used for data for further improvements within the application’s system or the application itself. Communication is also tracked to ensure that no unjust actions or actions that do not abide by our terms and conditions are being conducted. Progress and communication information tracked will not be disclosed to the public and will only be accessible to GoTrabaho and any parties we deem necessary.
+        \n \n
+
+        VIII. Payment and Fees
+        \n \n 8.1 Payment Methods: The accepted payment method of both client and freelancer will be Paymaya.
+
+        \n \n 8.2 Fee Structure: The breakdown of the fee structure of the client will be the following: service payment and 15% commission payment for the company.
+
+        \n \n 8.3 Disbursement and Withdrawal: After the service has been completed, the client will pay the freelancer via Paymaya.
+
+        \n \n 8.4 Taxation and Reporting: Information about tax responsibilities and reporting requirements for users.
+        \n \n
+
+        IX. Intellectual Property
+        \n \n 9.1 GoTrabaho respects the intellectual property rights of others. All intellectual property created by users on the GoTrabaho platform belongs to the user who created it. Users are prohibited from copying, distributing, or modifying the intellectual property of others without permission. GoTrabaho may remove any content that infringes on the intellectual property rights of others.
+
+        \n \n 9.2 If you believe that your intellectual property rights have been infringed on by a user of the GoTrabaho platform, you may contact GoTrabaho and provide the following information: Your name, Email Address, and Contact Information. The Intellectual property that you believe has been infringed on.The specific content that you believe infringes on your intellectual property rights.Evidence that you own the intellectual property rights that have been infringed on. GoTrabaho will investigate the claim and take appropriate action, such as removing the infringing content or disabling the user\'s account.
+        \n \n
+
+        X. Data Privacy and Security
+        \n \n 10.1 Data Privacy
+
+        \n \n 10.1.1 GoTrabaho ensures the responsibility to protect the privacy and confidentiality of all data, information, and records entrusted to it by our users (Freelancers and Clients).
+
+        \n \n 10.1.2 GoTrabaho shall comply with data protection laws and regulations including but not limited to the Data Privacy Act of 2012 and all other applicable laws and regulations regarding data protection.
+
+        \n \n 10.2 Data Collection and Use
+
+        \n \n 10.2.1 GoTrabaho, may collect and use personal data and other information when users register to ensure that services are conducted with the utmost care and quality.
+
+        \n \n 10.2.2 GoTrabaho shall not use or disclose user’s personal data for any purpose other than through the services offered within the application as well as for tracking performance and data of the services within the application.
+
+        \n \n 10.2.3 GoTrabaho may collaborate with third-party service providers to assist with services within the application, provided that they adhere to the same data privacy and security standards that GoTrabaho adheres to as stated in this Agreement.
+
+        \n \n 10.3 Data Security
+
+        \n \n 10.3.1 GoTrabaho shall ensure the implementation and maintenance of necessary technical and organizational measures to protect user’s data against unauthorized access, disclosure, alteration, and destruction.
+        \n \n
+
+        XI. Termination and Closure
+        \n \n 11.1 GoTrabaho may terminate your account if you violate any of the terms of this agreement. GoTrabaho may also terminate your account if you are inactive for a period of time, the information will still be secured and will be archived.
+
+        \n \n 11.2 We (GoTrabaho) have the right to terminate clients\' and freelancers\' accounts if we deem the opposite party liable for breaking our terms and conditions. We also have the right to terminate ongoing services if we deem the said services to violate our terms and conditions.
+        \n \n
+
+        XII. Dispute Resolution
+        \n \n 12.1 GoTrabaho strives to resolve disputes between users amicably. If a dispute arises between users, they are encouraged to try to resolve it directly. If they are unable to resolve the dispute, they may submit it to GoTrabaho for mediation. GoTrabaho will mediate the dispute in good faith and attempt to reach a mutually agreeable outcome. If the mediation is unsuccessful, the parties may agree to arbitration or take legal action.
+        \n \n
+
+        XIII. Miscellaneous
+        \n \n 13.1 Governing Law: The client and freelancer should follow the House  Bill 6718 Freelancer Workers Protection Act. It aims to protect the freelancers as it grants them labor rights and improves their welfare as it gives them night differential and hazard pay for freelance workers.
+        \n \n 13.2 Severability: If the freelancer cannot give the work that is demanded by the user then the contract is voided and shall receive a penalty for false information.
+        \n \n 13.3 Entire Agreement: The client and freelancer should abide by the terms agreed throughout the duration of the contract.
+        \n \n 13.4 Amendments to Terms and Conditions: Freelancers and Users can freely message each other as long as they can modify the terms agreed 2 days before the service.
+        \n \n 13.5 Contact Information: Users and Freelancers can report after the work has been accomplished in the booking summarization prompt where the Users can rate the freelancers.
+        \n \n 13.6 Breaking of Property: If the freelancer breaks a property of a client the organization is not held responsible but will deliver penalties towards the freelancer and will have 15% insurance with a Php 3,500 max.
+        \n \n
+
+        XIV. Acceptance of Terms
+        \n \n 14.1 GoTrabaho Terms and Conditions (these "Terms" or these “Terms and Conditions”) contained in this Agreement shall govern your use of this application and all its content (collectively referred to herein as this “Application”). These Terms outline the rules and regulations guiding the use of GoTrabaho Located at Google Play. All (Services\Information\Documents) or all other entities (collectively referred to as content) that appear on the GoTrabaho shall be administered subject to these Terms and Conditions. These Terms and Conditions apply in full force and effect to your use of this Application, and the use of this Application constitutes an express agreement with all the terms and conditions contained herein in full. Do not continue to use this application if you have any objection to any of the Terms and Conditions stated on this page.
     </string>
+
+
 
     <string name="status_pending">Pending</string>
     <string name="status_ongoing">Ongoing</string>
