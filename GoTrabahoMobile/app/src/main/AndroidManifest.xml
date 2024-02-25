@@ -22,24 +22,30 @@
         android:theme="@style/Theme.GoTrabahoMobile"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".RewardsActivity"
+            android:exported="false" />
         <activity
             android:name=".CustomerMainActivity"
-            android:exported="false" >
-<!--        <intent-filter>-->
-<!--            <action android:name="android.intent.action.MAIN" />-->
+            android:exported="true">
 
-<!--            <category android:name="android.intent.category.LAUNCHER" />-->
-<!--        </intent-filter>-->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
             android:name=".CustomerEditProfileActivity"
-            android:exported="false" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:exported="false">
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity
             android:name=".CustomerProfilePageActivity"
@@ -75,13 +81,11 @@
             android:exported="false" />
         <activity
             android:name=".FreelancerListMapViewActivity"
-            android:exported="false"/>
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
+            android:exported="false" /> <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <activity
             android:name=".FreelancerListListViewActivity"
             android:exported="false" />
@@ -119,23 +123,23 @@
         </activity>
         <activity
             android:name=".FreelancerRegisterDetailsActivity"
-            android:exported="true">
+            android:exported="false">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".CustomerRegisterDetailsActivity"
             android:exported="false">
 
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
-<!--                <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
         <activity

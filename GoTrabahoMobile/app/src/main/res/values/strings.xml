@@ -53,6 +53,7 @@
     <string name="rewards">Rewards</string>
     <string name="paymentOptions">Payment Options</string>
     <string name="logout">Log Out</string>
+    <string name="confirm">Confirm</string>
 
 
     <string name="serviceselec_details">Please select the type of service you wish to provide</string>
@@ -67,6 +68,27 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+
+    <string name="setPrice">Set Price</string>
+    <string name="setPriceDesc">Make sure that the set price is agreed by both parties.</string>
+
+    //payment booking summary
+
+    <string name="payment">Payment</string>
+
+    <string name="bookingSummary">Booking Summary</string>
+
+    <string name="freelancerName">Freelancer: </string>
+
+    <string name="bookingSummaryService">Service: </string>
+
+    <string name="bookingSummaryDate">Date: </string>
+
+    <string name="bookingSummaryTime">Time: </string>
+
+    <string name="bookingSummarySetPrice">Set Price: </string>
+
+    <string name="choosePaymentOption">Choose a Payment Option</string>
 
 
     <string name="hello_blank_fragment">aaa</string>
@@ -180,7 +202,6 @@
         XIV. Acceptance of Terms
         \n \n 14.1 GoTrabaho Terms and Conditions (these "Terms" or these “Terms and Conditions”) contained in this Agreement shall govern your use of this application and all its content (collectively referred to herein as this “Application”). These Terms outline the rules and regulations guiding the use of GoTrabaho Located at Google Play. All (Services\Information\Documents) or all other entities (collectively referred to as content) that appear on the GoTrabaho shall be administered subject to these Terms and Conditions. These Terms and Conditions apply in full force and effect to your use of this Application, and the use of this Application constitutes an express agreement with all the terms and conditions contained herein in full. Do not continue to use this application if you have any objection to any of the Terms and Conditions stated on this page.
     </string>
-
 
 
     <string name="status_pending">Pending</string>
