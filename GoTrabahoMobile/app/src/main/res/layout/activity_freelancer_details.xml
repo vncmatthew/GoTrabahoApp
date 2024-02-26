@@ -55,7 +55,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
     <TextView
-        android:id="@+id/textViewDescription"
+        android:id="@+id/textViewDescriptionTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -66,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewFreelancerName" />
 
     <TextView
-        android:id="@+id/textViewPrice"
+        android:id="@+id/textViewPriceDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -74,10 +74,10 @@
         android:text="@string/price"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescriptionTitle" />
 
     <TextView
-        android:id="@+id/textViewLocation"
+        android:id="@+id/textViewLocationDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -85,10 +85,10 @@
         android:text="@string/location"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPriceDescription" />
 
     <TextView
-        android:id="@+id/textViewRating"
+        android:id="@+id/textViewRatingDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -96,7 +96,7 @@
         android:text="@string/rating"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocationDescription" />
 
     <Button
         android:id="@+id/buttonSetSchedule"
@@ -108,7 +108,7 @@
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingDescription" />
 
     <Button
         android:id="@+id/buttonNegotiate"
@@ -121,6 +121,50 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonSetSchedule" />
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="35dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewDescriptionTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFreelancerName" />
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewPriceDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
+
+    <TextView
+        android:id="@+id/textViewLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewLocationDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPrice" />
+
+    <TextView
+        android:id="@+id/textViewRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="9dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewRatingDescription"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
