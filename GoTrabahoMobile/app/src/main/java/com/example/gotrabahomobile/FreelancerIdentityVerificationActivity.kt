@@ -125,7 +125,6 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
     }
     private fun getEmail() {
         val email = intent.getStringExtra("email")
-
         val service = UserInstance.retrofitBuilder
 
         if (email != null) {
@@ -157,7 +156,7 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
                             val verificationStatus = false
                             val totalIncome = 0
 
-                            registerFreelancer(13, idType, governmentId, verificationStatus, totalIncome)
+                            registerFreelancer(userId, idType, governmentId, verificationStatus, totalIncome)
                             Log.d("TEST", "${call.toString()}")
                             service.insertGovernment(imagePart)
                             .enqueue(object : Callback<Freelancer> {
@@ -187,6 +186,7 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
 
                         val intent = Intent(this@FreelancerIdentityVerificationActivity, FreelancerJobVerificationActivity::class.java)
                         intent.putExtra("userId", userId)
+                        intent.putExtra("email", email)
                         startActivity(intent)
                         return
                     } else {

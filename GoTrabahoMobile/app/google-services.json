@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1016906740562",
+    "firebase_url": "https://gotrabahochat-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "gotrabahochat",
+    "storage_bucket": "gotrabahochat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016906740562:android:4228f67d9b5f311031008b",
+        "android_client_info": {
+          "package_name": "com.gotabaho.chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7Fd1JjqWP3svSdu6hJas6Hq8h96YrqLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -64,5 +64,14 @@ dependencies {
 
     implementation ("org.osmdroid:osmdroid-android:6.1.18")
 
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
+    implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
+    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
+
 
 }

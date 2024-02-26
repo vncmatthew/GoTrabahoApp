@@ -168,6 +168,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
 
     private fun getEmail() {
         val email = intent.getStringExtra("email")
+
         val userCall = UserInstance.retrofitBuilder
 
         if (email != null) {

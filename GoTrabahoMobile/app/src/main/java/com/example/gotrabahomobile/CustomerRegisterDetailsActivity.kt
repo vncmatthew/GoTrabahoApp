@@ -170,7 +170,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
         intent.putExtra("email", email)
 
-        val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
+        val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
         startActivity(intent)
         return
 

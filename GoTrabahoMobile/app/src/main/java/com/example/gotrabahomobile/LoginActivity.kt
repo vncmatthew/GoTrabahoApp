@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
                         if (userID != null) {
                             if(user.userType == 1) {
                                 val intent =
-                                    Intent(this@LoginActivity, FreelancerListMapViewActivity::class.java)
+                                    Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
                                 intent.putExtra("userID", userID)
                                 intent.putExtra("fullName", fullName)
                                 intent.putExtra("firstName", firstName)

@@ -43,6 +43,12 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
         holder.binding.btnChooseService.setOnClickListener{
             val intent = Intent(context, FreelancerDetailsActivity::class.java)
             intent.putExtra("serviceId", currentItem.serviceId)
+            intent.putExtra("name", currentItem.name)
+            intent.putExtra("rating", currentItem.rating)
+            intent.putExtra("location", currentItem.location)
+            intent.putExtra("price", currentItem.priceEstimate)
+            intent.putExtra("description", currentItem.description)
+
             context.startActivity(intent)
         }
     }

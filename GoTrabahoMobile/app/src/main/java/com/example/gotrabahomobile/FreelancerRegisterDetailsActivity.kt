@@ -53,12 +53,12 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
 
         //birthdate
-        val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
+/*        val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
         birthdateEditText.inputType = InputType.TYPE_NULL
 
         birthdateEditText.setOnClickListener {
             showDatePickerDialog(birthdateEditText)
-        }
+        }*/
 
         val checkBox = findViewById<CheckBox>(R.id.checkBoxFreelancerTNC)
         val spannableString = SpannableString("I agree to the Terms and Conditions and Data Privacy")
@@ -80,9 +80,9 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         checkBox.text = spannableString
         checkBox.movementMethod = LinkMovementMethod.getInstance() // Enable clickable text
 
-        val btnCustomer = findViewById<Button>(R.id.buttonFreelancerContinue1)
+        val btnContinue = findViewById<Button>(R.id.buttonFreelancerContinue1)
 
-        btnCustomer.setOnClickListener {
+        btnContinue.setOnClickListener {
             Log.d("RegisterActivity", "Before registerData")
 
             Log.d("RegisterActivity", "After registerData")
@@ -109,7 +109,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-    private fun showDatePickerDialog(birthdateEditText: EditText) {
+/*    private fun showDatePickerDialog(birthdateEditText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -128,7 +128,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             day
         )
         datePickerDialog.show()
-    }
+    }*/
 
 
     //date format
@@ -199,17 +199,17 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     private fun insertCustomer(){
 
 
-        val firstNameText = findViewById<EditText>(R.id.editTextCustomerFirstName)
-        val lastNameText = findViewById<EditText>(R.id.editTextCustomerLastName)
-        val birthdateText = findViewById<EditText>(R.id.editTextCustomerBirthdate)
-        val phoneNumberText = findViewById<EditText>(R.id.editTextCustomerPhoneNumber)
-        val emailText = findViewById<EditText>(R.id.editTextCustomerEmailAddress)
-        val passwordText = findViewById<EditText>(R.id.editTextCustomerPassword)
-        val confirmPassText = findViewById<EditText>(R.id.editTextCustomerConfirmPassword)
-        val address1Text = findViewById<EditText>(R.id.editTextCustomerAddress1)
-        val address2Text = findViewById<EditText>(R.id.editTextCustomerAddress2)
-        val barangayText = findViewById<EditText>(R.id.editTextCustomerBarangey)
-        val cityText = findViewById<EditText>(R.id.editTextCustomerCity)
+        val firstNameText = findViewById<EditText>(R.id.editTextFreelancerFirstName)
+        val lastNameText = findViewById<EditText>(R.id.editTextFreelancerLastName)
+        val birthdateText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
+        val phoneNumberText = findViewById<EditText>(R.id.editTextFreelancerPhoneNumber)
+        val emailText = findViewById<EditText>(R.id.editTextFreelancerEmailAddress)
+        val passwordText = findViewById<EditText>(R.id.editTextFreelancerPassword)
+        val confirmPassText = findViewById<EditText>(R.id.editTextFreelancerConfirmPassword)
+        val address1Text = findViewById<EditText>(R.id.editTextFreelancerAddress1)
+        val address2Text = findViewById<EditText>(R.id.editTextFreelancerAddress2)
+        val barangayText = findViewById<EditText>(R.id.editTextFreelancerBarangey)
+        val cityText = findViewById<EditText>(R.id.editTextFreelancerCity)
         val userType = 2
 
 
@@ -240,22 +240,9 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             address2, barangay, city, longitude, latitude)
 
 
-        /*        intent.putExtra("firstName", firstName)
-                intent.putExtra("lastName", lastName)
-                intent.putExtra("birthdate", birthdate)
-                intent.putExtra("phoneNumber", contactNumber)
-                intent.putExtra("email", email)
-                intent.putExtra("password", password)
-                intent.putExtra("userType", userType)
-                intent.putExtra("address1", address1)
-                intent.putExtra("address1", address2)
-                intent.putExtra("barangay", barangay)
-                intent.putExtra("city", city)
-                intent.putExtra("longitude", longitude)
-                intent.putExtra("latitude", latitude)
 
-        */
-        val intent = Intent(this, CustomerRegisterDetailsActivity::class.java)
+        val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
+        intent.putExtra("email", email)
         startActivity(intent)
         return
 
@@ -325,5 +312,4 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         }
         return null
     }
-
 }
