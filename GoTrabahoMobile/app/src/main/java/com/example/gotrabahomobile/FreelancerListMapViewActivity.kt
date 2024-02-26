@@ -123,7 +123,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                             marker.setTitle(freelancer.Name)
                             marker.setSnippet(freelancer.Description)
-                            marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.marker_icon))
+                            marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.map_arrow))
 
                             // Add the marker to the map
                             map.overlays.add(marker)
