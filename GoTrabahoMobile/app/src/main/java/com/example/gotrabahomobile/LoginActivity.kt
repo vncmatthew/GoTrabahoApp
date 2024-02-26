@@ -19,18 +19,25 @@ import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.HashMap
 
 class LoginActivity : AppCompatActivity() {
 
-
+    private lateinit var auth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
-
+        FirebaseApp.initializeApp(this@LoginActivity)
+        auth = FirebaseAuth.getInstance()
         val btn_login = findViewById<Button>(R.id.buttonLogin)
         val txt_signup = findViewById<TextView>(R.id.textViewNoAccount)
 
@@ -95,22 +102,71 @@ class LoginActivity : AppCompatActivity() {
                         val latitude = user.latitude
                         val fullName = "$firstName $lastName"
                         if (userID != null) {
-                            if(user.userType == 1) {
-                                val intent =
-                                    Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
-                                intent.putExtra("userID", userID)
-                                intent.putExtra("fullName", fullName)
-                                intent.putExtra("firstName", firstName)
-                                intent.putExtra("lastName", lastName)
-                                intent.putExtra("longitude", longitude)
-                                intent.putExtra("latitude", latitude)
-                                intent.putExtra("userType", userType)
-                                startActivity(intent)
-                            }
-                            else if(user.userType == 2) {
+                        registerUser(email, pass ,firstName,lastName, userID.toString(), userType, longitude, latitude)
+                        }else {
+                            Toast.makeText(this@LoginActivity, "Connection Error", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+                else {
+                    Toast.makeText(this@LoginActivity, "The email and/or password is incorrect", Toast.LENGTH_SHORT).show()
+                }
+        }
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.d ("MainActivity", "Registration failed: ")
+            }
+        })
+    }
+
+    private fun registerUser(email:String,password:String,firstName:String?, lastName:String?, sqlId: String?, userType: Int?,
+                             longitude: Double?, latitude: Double?){
+        auth.createUserWithEmailAndPassword(email,password)
+            .addOnCompleteListener(this){
+                if (it.isSuccessful){
+                    val user: FirebaseUser? = auth.currentUser
+                    val userId:String = user!!.uid
+
+                    databaseReference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId)
+
+                    val hashMap: HashMap<String, String> = HashMap()
+                    hashMap.put("userId",userId)
+                    if (firstName != null) {
+                        hashMap.put("firstname", firstName)
+                    }
+                    if (lastName != null) {
+                        hashMap.put("lastName",lastName)
+                    }
+                    if (sqlId != null) {
+                        hashMap.put("sqlId",sqlId)
+                    }
+
+                    databaseReference.setValue(hashMap).addOnCompleteListener(this){
+                        if (it.isSuccessful){
+                            //open home activity
+                            Log.d("CHECK", "Successfully Registered")
+                        }
+                    }
+                }
+
+                else{
+                    auth!!.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this) {
+                            if (it.isSuccessful) {
+
+                                if(userType == 1) {
+                                    val intent =
+                                        Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
+                                    intent.putExtra("userID", sqlId)
+                                    intent.putExtra("firstName", firstName)
+                                    intent.putExtra("lastName", lastName)
+                                    intent.putExtra("longitude", longitude)
+                                    intent.putExtra("latitude", latitude)
+                                    startActivity(intent)
+                                }
+                                else if(userType == 2) {
 
                                     val call = FreelancerInstance.retrofitBuilder
-                                    call.getFreelancerId(userID).enqueue(object: Callback<Freelancer>{
+                                    call.getFreelancerId(sqlId!!.toInt()).enqueue(object: Callback<Freelancer>{
                                         override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
 
                                             if(response.isSuccessful){
@@ -119,8 +175,7 @@ class LoginActivity : AppCompatActivity() {
                                                 if(bro == true){
                                                     val intent =
                                                         Intent(this@LoginActivity, FreelancerBookingsPageActivity::class.java)
-                                                    intent.putExtra("userID", userID)
-                                                    intent.putExtra("fullName", fullName)
+                                                    intent.putExtra("userID", sqlId)
                                                     intent.putExtra("firstName", firstName)
                                                     intent.putExtra("lastName", lastName)
                                                     intent.putExtra("userType", userType)
@@ -138,20 +193,19 @@ class LoginActivity : AppCompatActivity() {
                                             TODO("Not yet implemented")
                                         }
                                     })
+                                }
+                                startActivity(intent)
+                                finish()
+                            } else {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "email or password invalid",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
-                        }else {
-                            Toast.makeText(this@LoginActivity, "Connection Error", Toast.LENGTH_SHORT).show()
                         }
-                    }
                 }
-                else {
-                    Toast.makeText(this@LoginActivity, "The email and/or password is incorrect", Toast.LENGTH_SHORT).show()
-                }
-        }
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.d ("MainActivity", "Registration failed: ")
             }
-        })
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile.Model
 
 data class Chat(
-    var chatId: Int? = null,
-    var bookingId: Int? = null
+    var senderId:String = "",
+    var receiverId:String = "",
+    var message:String = ""
 )

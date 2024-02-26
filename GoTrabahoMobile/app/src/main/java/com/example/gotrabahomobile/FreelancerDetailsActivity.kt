@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -33,11 +34,25 @@ class FreelancerDetailsActivity : AppCompatActivity() {
         val price = intent.getDoubleExtra("price", 0.0)
         val description = intent.getStringExtra("description")
 
+        val userId = intent.getStringExtra("userId")
+        val firstName = intent.getStringExtra("firstName")
+        val lastName = intent.getStringExtra("lastName")
+        val sqlId = intent.getStringExtra("sqlid")
         serviceName.text = name
         serviceRating.text = rating.toString()
         serviceDescription.text = description
         serviceLocation.text = location
         servicePrice.text = price.toString()
+
+        btnNegotiate.setOnClickListener{
+            val intent = Intent(this, ChatActivity::class.java)
+            intent.putExtra("userId",userId)
+            intent.putExtra("firstName",firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("sqlId",sqlId)
+            this.startActivity(intent)
+
+        }
 
 
 

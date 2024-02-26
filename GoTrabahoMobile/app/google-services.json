@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1016906740562:android:4228f67d9b5f311031008b",
+        "mobilesdk_app_id": "1:1016906740562:android:00b5d9e4d9b24f8031008b",
         "android_client_info": {
-          "package_name": "com.gotabaho.chat"
+          "package_name": "com.example.gotrabahomobile"
         }
       },
       "oauth_client": [],
