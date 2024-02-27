@@ -34,8 +34,10 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
     }
 
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
+        if (serviceList.isNotEmpty()) {
         val currentItem = serviceList[position]
         val user = userList[position]
+
         holder.binding.apply{
             tvNameR.text = "Service Name: ${currentItem.name}"
             tvLocationR.text = "Location Name: ${currentItem.location}"
@@ -56,6 +58,10 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
             intent.putExtra("description", currentItem.description)
 
             context.startActivity(intent)
+        }
+
+        } else {
+
         }
     }
 }

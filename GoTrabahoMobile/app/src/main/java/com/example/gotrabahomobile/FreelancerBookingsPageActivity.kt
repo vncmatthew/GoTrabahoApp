@@ -1,8 +1,10 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gotrabahomobile.Helper.BookingFreelancerAdapter
 import com.example.gotrabahomobile.Helper.ServiceAdapter
@@ -22,6 +24,7 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
     private lateinit var rvAdapter: BookingFreelancerAdapter
     private lateinit var bookingList: List<Booking>
     private lateinit var binding: ActivityFreelancerBookingsPageBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFreelancerBookingsPageBinding.inflate(layoutInflater)
@@ -33,7 +36,10 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.status_pending))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.status_ongoing))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.status_completed))
-
+        binding.btnFreelancerMessage.setOnClickListener{
+            val intent = Intent(this@FreelancerBookingsPageActivity, FreelancerMessagesActivity::class.java)
+            startActivity(intent)
+        }
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 // Handle tab selection
