@@ -28,7 +28,7 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var etMessage: EditText
     private lateinit var btnSendMessage: ImageButton
-    private lateinit var imgBack: ImageView
+//    private lateinit var imgBack: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var chatRecyclerView: RecyclerView
     private var userData: UserFirebase? = null
@@ -46,7 +46,7 @@ class ChatActivity : AppCompatActivity() {
 
         etMessage = findViewById(R.id.etMessage)
         btnSendMessage = findViewById(R.id.btnSendMessage)
-        imgBack = findViewById(R.id.imgBack)
+//        imgBack = findViewById(R.id.imgBack)
         tvUserName = findViewById(R.id.tvUserName)
 
         //get UserModel
@@ -57,7 +57,7 @@ class ChatActivity : AppCompatActivity() {
             var lastName = intent.getStringExtra("lastName")
 
             tvUserName.setText(firstName + " " + lastName)
-        imgBack.setOnClickListener { v: View? -> onBackPressed() }
+//        imgBack.setOnClickListener { v: View? -> onBackPressed() }
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId!!)
 
