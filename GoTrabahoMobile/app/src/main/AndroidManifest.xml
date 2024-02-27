@@ -25,12 +25,12 @@
         tools:targetApi="31">
         <activity
             android:name=".FreelancerMessagesActivity"
-            android:exported="true" >
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:exported="false" >
+<!--        <intent-filter>-->
+<!--            <action android:name="android.intent.action.MAIN" />-->
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+<!--            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--        </intent-filter>-->
         </activity>
         <activity
             android:name=".ReportProblemActivity"
@@ -66,7 +66,14 @@
             android:exported="false" />
         <activity
             android:name=".ChatActivity"
-            android:exported="false" />
+            android:exported="true" >
+         <intent-filter>
+         <action android:name="android.intent.action.MAIN" />
+
+
+         <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+        </activity>
         <activity
             android:name=".ApplicationConfirmationActivity"
             android:exported="false" />
