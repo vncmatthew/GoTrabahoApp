@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,41 @@ class CustomerAccountFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_customer_account, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Find your custom CardView by its ID
+        val customCardViewProfile = view.findViewById<androidx.cardview.widget.CardView>(R.id.profile)
+        val customCardViewRewards = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardRewards)
+        val customCardViewPaymentOptions = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardPaymentOptions)
+        val customCardViewLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardLogout)
+
+        // Set a click listener for the CardView
+        customCardViewProfile.setOnClickListener {
+            // Navigate to the target Activity
+            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
+            startActivity(intent)
+        }
+
+        customCardViewRewards.setOnClickListener {
+            // Navigate to the target Activity
+            val intent = Intent(requireActivity(), RewardsActivity::class.java)
+            startActivity(intent)
+        }
+
+//        customCardViewProfile.setOnClickListener {
+//            // Navigate to the target Activity
+//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        customCardViewProfile.setOnClickListener {
+//            // Navigate to the target Activity
+//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 
     companion object {
