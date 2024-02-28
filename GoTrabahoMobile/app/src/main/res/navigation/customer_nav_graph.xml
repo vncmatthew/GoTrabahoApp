@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_customer_home" />
     <fragment
         android:id="@+id/activityFragment"
-        android:name="com.example.gotrabahomobile.ActivityFragment"
+        android:name="com.example.gotrabahomobile.fragments.CustomerActivityFragment"
         android:label="fragment_activity"
         tools:layout="@layout/fragment_activity" />
     <fragment
