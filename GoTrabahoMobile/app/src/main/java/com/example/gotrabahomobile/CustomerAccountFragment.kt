@@ -49,25 +49,23 @@ class CustomerAccountFragment : Fragment() {
 
         // Set a click listener for the CardView
         customCardViewProfile.setOnClickListener {
-            // Navigate to the target Activity
+
             val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
             startActivity(intent)
         }
 
         customCardViewRewards.setOnClickListener {
-            // Navigate to the target Activity
+
             val intent = Intent(requireActivity(), RewardsActivity::class.java)
             startActivity(intent)
         }
 
-//        customCardViewProfile.setOnClickListener {
-//            // Navigate to the target Activity
+//        customCardViewPaymentOptions.setOnClickListener {
 //            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
 //            startActivity(intent)
 //        }
 //
-//        customCardViewProfile.setOnClickListener {
-//            // Navigate to the target Activity
+//        customCardViewLogout.setOnClickListener {
 //            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
 //            startActivity(intent)
 //        }

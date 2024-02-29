@@ -10,16 +10,27 @@
         android:id="@+id/include"
         layout="@layout/customer_toolbar" />
 
+    <Spinner
+        android:id="@+id/spinnerBookingsServiceName"
+        android:layout_width="184dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/include"></com.google.android.material.tabs.TabLayout>
+        app:layout_constraintTop_toBottomOf="@+id/spinnerBookingsServiceName"></com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFreeelancerHome"
         android:layout_width="409dp"
         android:layout_height="617dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +39,14 @@
 
     <Button
         android:id="@+id/btnFreelancerMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="71dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:text="Messages"
         app:layout_constraintBottom_toBottomOf="@+id/tabLayout"
         app:layout_constraintStart_toStartOf="@+id/include"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.524" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
