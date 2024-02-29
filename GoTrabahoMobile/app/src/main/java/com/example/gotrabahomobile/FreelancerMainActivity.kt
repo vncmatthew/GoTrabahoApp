@@ -16,9 +16,9 @@ class FreelancerMainActivity : AppCompatActivity() {
 
 
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.freelancerMainContainer) as NavHostFragment
         navController = navHostFragment.navController
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.freelancerBottomNavigationView)
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }
