@@ -28,7 +28,7 @@
                 android:layout_width="120dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="16dp"
-
+                android:layout_marginStart="18dp"
                 android:text="@string/customerName"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -40,8 +40,8 @@
                 android:id="@+id/serviceActivity"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
-
-                android:text="Sample Message"
+                android:layout_marginStart="18dp"
+                android:text="Plumbing"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,12 +51,14 @@
                 android:id="@+id/dateActivity"
                 android:layout_width="210dp"
                 android:layout_height="wrap_content"
-
+                android:layout_marginStart="18dp"
+                android:layout_marginBottom="16dp"
                 android:text="March 12, 2024"
                 android:textColor="@color/text_gray3"
                 android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/serviceActivity"/>
+                app:layout_constraintTop_toBottomOf="@+id/serviceActivity" />
 
             <TextView
                 android:id="@+id/priceActivity"
@@ -69,6 +71,7 @@
 
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.871"
                 app:layout_constraintStart_toEndOf="@+id/customerNameActivity"
                 app:layout_constraintTop_toTopOf="parent" />
 
