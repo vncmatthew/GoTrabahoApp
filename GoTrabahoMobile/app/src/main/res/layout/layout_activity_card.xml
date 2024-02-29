@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:id="@+id/layoutFreelancerMessage"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/customerProfile">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/customerNameActivity"
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+
+                android:text="@string/customerName"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/serviceActivity"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+
+                android:text="Sample Message"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/customerNameActivity" />
+
+            <TextView
+                android:id="@+id/dateActivity"
+                android:layout_width="210dp"
+                android:layout_height="wrap_content"
+
+                android:text="March 12, 2024"
+                android:textColor="@color/text_gray3"
+                android:textSize="15sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/serviceActivity"/>
+
+            <TextView
+                android:id="@+id/priceActivity"
+                android:layout_width="57dp"
+                android:layout_height="28dp"
+                android:layout_marginTop="16dp"
+                android:text="₱432"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/customerNameActivity"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
