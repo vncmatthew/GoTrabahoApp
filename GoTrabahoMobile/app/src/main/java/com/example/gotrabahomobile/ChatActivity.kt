@@ -1,8 +1,10 @@
 package com.example.gotrabahomobile
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -13,7 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.ChatAdapter
 import com.example.gotrabahomobile.Model.Chat
+import com.example.gotrabahomobile.Model.Negotiation
 import com.example.gotrabahomobile.Model.UserFirebase
+import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
+import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -21,6 +26,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
 
 @Suppress("DEPRECATION")
@@ -28,8 +36,10 @@ class ChatActivity : AppCompatActivity() {
 
     private lateinit var etMessage: EditText
     private lateinit var btnSendMessage: ImageButton
+    private lateinit var btnSetPrice: Button
 //    private lateinit var imgBack: ImageView
     private lateinit var tvUserName: TextView
+    private lateinit var tvSetPrice:TextView
     private lateinit var chatRecyclerView: RecyclerView
     private var userData: UserFirebase? = null
 
@@ -46,18 +56,18 @@ class ChatActivity : AppCompatActivity() {
 
         etMessage = findViewById(R.id.etMessage)
         btnSendMessage = findViewById(R.id.btnSendMessage)
-//        imgBack = findViewById(R.id.imgBack)
         tvUserName = findViewById(R.id.tvUserName)
+        btnSetPrice = findViewById(R.id.buttonChatSetPrice)
 
         //get UserModel
 
             var intent = getIntent()
+            var Id = intent.getIntExtra("serviceId", 0)
             var userId = intent.getStringExtra("userId")
             var firstName = intent.getStringExtra("firstName")
             var lastName = intent.getStringExtra("lastName")
 
             tvUserName.setText(firstName + " " + lastName)
-//        imgBack.setOnClickListener { v: View? -> onBackPressed() }
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId!!)
 
@@ -90,6 +100,12 @@ class ChatActivity : AppCompatActivity() {
 
             }
         readMessage(firebaseUser!!.uid, userId)
+
+        btnSetPrice.setOnClickListener{
+            showDialog()
+
+        }
+
         }
 
 
@@ -136,6 +152,70 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
+    private fun showDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.set_price_dialog, null)
+
+        // Find the close button from the dialogView
+        val closeButton = dialogView.findViewById<ImageButton>(R.id.close_button)
+
+        // Find the tvSetPrice from the dialogView
+        val tvSetPrice = dialogView.findViewById<EditText>(R.id.editTextSetPrice)
+
+        val alertDialog = AlertDialog.Builder(this@ChatActivity)
+            .setView(dialogView)
+            .create()
+
+
+
+        val updateButton = dialogView.findViewById<Button>(R.id.buttonSetPriceConfirm)
+        updateButton.setOnClickListener {
+            val serviceId = intent.getStringExtra("serviceId")?.toIntOrNull()
+            val negotiationId = intent.getStringExtra("negotiationId")?.toIntOrNull()
+            val freelancerPrice = tvSetPrice.text.toString().toDoubleOrNull()
+
+            var negotiation: Negotiation? = null
+
+            if (serviceId != null) {
+                negotiation = Negotiation(
+                    serviceId = serviceId,
+                    freelancerPrice = freelancerPrice,
+                    // Set other fields as necessary
+                )
+            } else {
+                negotiation = Negotiation(
+                    customerPrice = freelancerPrice,
+                    // Set other fields as necessary
+                )
+            }
+
+
+                val call = NegotiationInstance.retrofitBuilder
+                call.updateNegotiation(negotiationId.toString(), negotiation).enqueue(object:
+                    Callback<Negotiation> {
+                    override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
+                        if (response.isSuccessful) {
+                            // Handle successful update
+                            Toast.makeText(this@ChatActivity, "Update successful", Toast.LENGTH_SHORT).show()
+                        } else {
+                            // Handle error response
+                            Toast.makeText(this@ChatActivity, "Update failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Negotiation>, t: Throwable) {
+                        // Handle failure
+                        Toast.makeText(this@ChatActivity, "Update failed: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+
+        // Set the onClickListener for the close button
+        closeButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
+    }
+    }
 
 
 }

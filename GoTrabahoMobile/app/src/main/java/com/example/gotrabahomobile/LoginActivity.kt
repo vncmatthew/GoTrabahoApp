@@ -102,7 +102,7 @@ class LoginActivity : AppCompatActivity() {
                         val latitude = user.latitude
                         val fullName = "$firstName $lastName"
                         if (userID != null) {
-                        registerUser(email, pass ,firstName,lastName, userID.toString(), userType, longitude, latitude)
+                        registerUser(email, pass ,firstName,lastName, userID.toString(), userType, longitude, latitude, userID)
                         }else {
                             Toast.makeText(this@LoginActivity, "Connection Error", Toast.LENGTH_SHORT).show()
                         }
@@ -119,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun registerUser(email:String,password:String,firstName:String?, lastName:String?, sqlId: String?, userType: Int?,
-                             longitude: Double?, latitude: Double?){
+                             longitude: Double?, latitude: Double?, identification: Int?){
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener(this){
                 if (it.isSuccessful){
@@ -156,7 +156,9 @@ class LoginActivity : AppCompatActivity() {
                                 if(userType == 1) {
                                     val intent =
                                         Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
-                                    intent.putExtra("userID", sqlId)
+                                    intent.putExtra("sqlId", sqlId)
+                                    intent.putExtra("userId", identification)
+                                    intent.putExtra("email", email)
                                     intent.putExtra("firstName", firstName)
                                     intent.putExtra("lastName", lastName)
                                     intent.putExtra("longitude", longitude)
@@ -176,6 +178,7 @@ class LoginActivity : AppCompatActivity() {
                                                     val intent =
                                                         Intent(this@LoginActivity, FreelancerBookingsPageActivity::class.java)
                                                     intent.putExtra("userID", sqlId)
+                                                    intent.putExtra("freelancerId", freelancerId?.freelancerId)
                                                     intent.putExtra("firstName", firstName)
                                                     intent.putExtra("lastName", lastName)
                                                     intent.putExtra("userType", userType)

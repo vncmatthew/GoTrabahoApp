@@ -15,7 +15,7 @@ import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.databinding.ItemLayoutBinding
 
 
-class ServiceAdapter(private val serviceList: List<Services>, private val context: Context, private val userList: ArrayList<UserFirebase>): RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder>() {
+class ServiceAdapter(private val serviceList: List<Services>, private val context: Context, private val userList: ArrayList<UserFirebase>, private val identification: Int): RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder>() {
 
 
     inner class ServiceViewHolder(val binding: ItemLayoutBinding) :
@@ -49,7 +49,7 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
             intent.putExtra("userId",user.userId)
             intent.putExtra("firstName",user.firstName)
             intent.putExtra("lastName", user.lastName)
-            intent.putExtra("sqlId",user.sqlId)
+            intent.putExtra("sqlId", identification)
             intent.putExtra("serviceId", currentItem.serviceId)
             intent.putExtra("name", currentItem.name)
             intent.putExtra("rating", currentItem.rating)

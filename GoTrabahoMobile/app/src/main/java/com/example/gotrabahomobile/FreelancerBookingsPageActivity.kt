@@ -29,6 +29,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -63,7 +66,11 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 // Store the selected item in the variable
                 selectedService = parent.getItemAtPosition(position) as? String
+<<<<<<< Updated upstream
 //                getBookingList(selectedService)
+=======
+                //getBookingList(selectedService,)
+>>>>>>> Stashed changes
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -77,21 +84,23 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
         tabLayout.addTab(tabLayout.newTab().setText(R.string.status_ongoing))
         tabLayout.addTab(tabLayout.newTab().setText(R.string.status_completed))
         binding.btnFreelancerMessage.setOnClickListener{
-            val intent = Intent(this@FreelancerBookingsPageActivity, FreelancerMessagesActivity::class.java)
-            startActivity(intent)
+/*            val intent = Intent(this@FreelancerBookingsPageActivity, FreelancerMessagesActivity::class.java)
+            startActivity(intent)*/
+        getServiceId()
+
         }
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 // Handle tab selection
                 when (tab.position) {
                     0 -> {
-                       getBookingList(1)
+                        selectedService?.let { getBookingList(1, it) }
                     }
                     1 -> {
-                        getBookingList(2)
+                        selectedService?.let { getBookingList(2, it) }
                     }
                     2 -> {
-                        getBookingList(3)
+                        selectedService?.let { getBookingList(3, it) }
                     }
                 }
             }
@@ -106,36 +115,69 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
         })
 
 
+
+
     }
 
 
 
-    private fun getBookingList(status: Int){
+    private fun getBookingList(status: Int, selectedService: String){
         //val userId = intent.getIntExtra("userID", 0)
         //val freelancerId = intent.getIntExtra("freelancerId", 0)
         val service = BookingInstance.retrofitBuilder
-
-        service.getBookingStatus(50,status).enqueue(object : Callback<List<Booking>> {
-            override fun onResponse(
-                call: Call<List<Booking>>,
-                response: Response<List<Booking>>
-            ) {
-                if (response.isSuccessful && response.body() != null){
-                    bookingList = response.body()!!
-                    binding.rvFreeelancerHome.apply {
-                        rvAdapter = BookingFreelancerAdapter(bookingList, this@FreelancerBookingsPageActivity)
-                        adapter = rvAdapter
-                        layoutManager = LinearLayoutManager(this@FreelancerBookingsPageActivity)
+        var intent = getIntent()
+        val freelancerId = intent.getIntExtra("freelancerId", 0)
+            service.getBookingStatus(freelancerId,status, selectedService).enqueue(object : Callback<List<Booking>> {
+                override fun onResponse(
+                    call: Call<List<Booking>>,
+                    response: Response<List<Booking>>
+                ) {
+                    if (response.isSuccessful && response.body() != null){
+                        bookingList = response.body()!!
+                        binding.rvFreeelancerHome.apply {
+                            rvAdapter = BookingFreelancerAdapter(bookingList, this@FreelancerBookingsPageActivity)
+                            adapter = rvAdapter
+                            layoutManager = LinearLayoutManager(this@FreelancerBookingsPageActivity)
+                        }
+                    } else{
+                        Log.d("TestActivity", "Error: ${response.code()}")
                     }
                 }
-                else{
-                    Log.d("TestActivity", "Error: ${response.code()}")
-                }
-            }
-            override fun onFailure(call: Call<List<Booking>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
 
-        })
+                override fun onFailure(call: Call<List<Booking>>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
     }
+    private fun getServiceId() {
+            val call = ServicesInstance.retrofitBuilder
+            val freelancerId = intent.getIntExtra("freelancerId", 0)
+        selectedService?.let {
+            call.getServiceIdByFreelancer(freelancerId, it).enqueue(object: Callback<List<Services>> {
+                override fun onResponse(call: Call<List<Services>>, response: Response<List<Services>>) {
+                    if (response.isSuccessful) {
+                        val services = response.body()
+                        // Assuming you want the first service ID from the list
+                        val serviceId = services?.firstOrNull()?.serviceId
+                        if (serviceId != null) {
+                            val intent = Intent(this@FreelancerBookingsPageActivity, FreelancerMessagesActivity::class.java)
+                            intent.putExtra("serviceId", serviceId)
+                            startActivity(intent)
+                        } else {
+                            Toast.makeText(this@FreelancerBookingsPageActivity, "No Service Id", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this@FreelancerBookingsPageActivity, "No Service Id", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Services>>, t: Throwable) {
+                    Log.d("Check", "{$t}")
+                }
+            })
+        }
+        }
+
 }

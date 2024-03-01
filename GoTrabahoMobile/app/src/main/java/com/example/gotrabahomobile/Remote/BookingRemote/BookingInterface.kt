@@ -16,10 +16,11 @@ interface BookingInterface {
     @GET("api/Booking/{bookingId}")
     fun getBooking(@Path("bookingId") bookingId: Int): Call<Booking>
 
-    @GET("api/Booking/freelancer/{freelancerId}/{bookingstatus}")
+    @GET("api/Booking/freelancer/{freelancerId}/{bookingStatus}/{serviceTypeName}")
     fun getBookingStatus(
         @Path("freelancerId") freelancerId: Int,
-        @Path("bookingstatus") bookingStatus: Int
+        @Path("bookingStatus") bookingStatus: Int,
+        @Path("serviceTypeName") serviceTypeName: String
     ): Call<List<Booking>>
 
     @POST("api/Booking")

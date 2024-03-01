@@ -68,8 +68,8 @@ class CustomerHomePageActivity : AppCompatActivity() {
     }
 
     private fun getServiceList(select: String?){
-        val userId = intent.getIntExtra("userID", 0)
         val service = ServicesInstance.retrofitBuilder
+        val identification = intent.getIntExtra("userId", 0)
 
         service.getServicesType(select).enqueue(object : Callback<List<Services>> {
             override fun onResponse(
@@ -115,9 +115,10 @@ class CustomerHomePageActivity : AppCompatActivity() {
                                 }
                             }
                         serviceList = response.body()!!
+
                         binding.rvMain.apply {
                             rvAdapter =
-                                ServiceAdapter(serviceList, this@CustomerHomePageActivity, userList)
+                                ServiceAdapter(serviceList, this@CustomerHomePageActivity, userList, identification)
                             adapter = rvAdapter
                             layoutManager = LinearLayoutManager(this@CustomerHomePageActivity)
                         }

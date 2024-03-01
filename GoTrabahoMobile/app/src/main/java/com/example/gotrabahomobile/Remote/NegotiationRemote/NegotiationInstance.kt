@@ -1,10 +1,10 @@
-package com.example.gotrabahomobile.Remote.FreelancerRemote
+package com.example.gotrabahomobile.Remote.NegotiationRemote
 
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object FreelancerInstance {
+object NegotiationInstance {
     val gson = GsonBuilder()
         .setLenient()
         .create()
@@ -13,5 +13,5 @@ object FreelancerInstance {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .baseUrl("http://10.0.2.2:5025/")
         .build()
-        .create(FreelancerInterface::class.java)
+        .create(NegotiationInterface::class.java)
 }
