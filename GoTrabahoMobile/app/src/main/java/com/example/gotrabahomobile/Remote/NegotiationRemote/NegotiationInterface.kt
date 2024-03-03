@@ -22,7 +22,7 @@ interface NegotiationInterface {
     fun getNegotiationStatus(@Path("negotiationId") negotiationId: Int?): Call<Negotiation>
 
     @POST("api/Negotiation")
-    fun insertNegotiation(@Body request: Negotiation): Call<NegotiationResponse>
+    fun insertNegotiation(@Body request: Negotiation): Call<Negotiation>
 
     @DELETE("api/Negotiation/{negotiationId}")
     fun deleteNegotiation(@Path("negotiationId") resourceId: String): Call<Negotiation>

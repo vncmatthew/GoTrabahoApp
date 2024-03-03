@@ -42,11 +42,12 @@ class FreelancerDetailsActivity : AppCompatActivity() {
         val location = intent.getStringExtra("location")
         val price = intent.getDoubleExtra("price", 0.0)
         val description = intent.getStringExtra("description")
+        val negotiation = intent.getIntExtra("negotiationId", 0)
 
         val userId = intent.getStringExtra("userId")
         val firstName = intent.getStringExtra("firstName")
         val lastName = intent.getStringExtra("lastName")
-        val sqlId = intent.getIntArrayExtra("sqlId")
+
         serviceName.text = name
         serviceRating.text = rating.toString()
         serviceDescription.text = description
@@ -55,14 +56,6 @@ class FreelancerDetailsActivity : AppCompatActivity() {
 
         btnNegotiate.setOnClickListener{
             setNegotiation()
-
-            val intent = Intent(this@FreelancerDetailsActivity, ChatActivity::class.java)
-            intent.putExtra("userId", userId)
-            intent.putExtra("firstName", firstName)
-            intent.putExtra("lastName", lastName)
-            intent.putExtra("serviceId", Id)
-            intent.putExtra("sqlId", sqlId)
-            startActivity(intent)
         }
 
     }
@@ -82,25 +75,25 @@ class FreelancerDetailsActivity : AppCompatActivity() {
             negotiationStatus = true)
 
         val call = NegotiationInstance.retrofitBuilder
-        call.insertNegotiation(negotiationInput).enqueue(object: Callback <NegotiationResponse>{
-            override fun onResponse(call: Call<NegotiationResponse>, response: Response<NegotiationResponse>) {
+        call.insertNegotiation(negotiationInput).enqueue(object: Callback <Negotiation>{
+            override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
 
                 if (response.isSuccessful) {
-                    val responseString = response.body()?.response
-                    if (responseString == "success") {
-                        // Proceed to ChatActivity
-
-                    } else {
-                        // Handle other responses
-                        Log.d("MainActivity", "Negotiation response: $responseString")
-                    }
+                    val negotiation = response.body()
+                    val intent = Intent(this@FreelancerDetailsActivity, ChatActivity::class.java)
+                    intent.putExtra("negotiationId", negotiation?.negotiationId )
+                    intent.putExtra("userId", negotiation?.customerId)
+                    intent.putExtra("lastName", lastName)
+                    intent.putExtra("serviceId", negotiation?.serviceId)
+                    startActivity(intent)
                 } else {
                     // Handle the error response
                     Log.d("MainActivity", "Response code: ${response.message()}")
+
                 }
             }
 
-            override fun onFailure(call: Call<NegotiationResponse>, t: Throwable) {
+            override fun onFailure(call: Call<Negotiation>, t: Throwable) {
                 Log.d("MainActivity", "Response code: ${t}")
             }
 

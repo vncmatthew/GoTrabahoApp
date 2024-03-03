@@ -66,11 +66,11 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 // Store the selected item in the variable
                 selectedService = parent.getItemAtPosition(position) as? String
-<<<<<<< Updated upstream
+
 //                getBookingList(selectedService)
-=======
+
                 //getBookingList(selectedService,)
->>>>>>> Stashed changes
+
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
