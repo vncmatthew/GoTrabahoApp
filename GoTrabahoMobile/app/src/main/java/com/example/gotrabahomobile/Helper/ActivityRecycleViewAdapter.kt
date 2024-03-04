@@ -30,6 +30,4 @@ import com.example.gotrabahomobile.databinding.ItemLayoutBinding
 //        return serviceList.size
 //    }
 
-
-
 //}
