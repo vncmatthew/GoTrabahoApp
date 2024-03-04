@@ -2,6 +2,7 @@ package com.example.gotrabahomobile
 
 import android.app.AlertDialog
 import android.media.Image
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +11,16 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
+import com.example.gotrabahomobile.Model.Rating
+import com.example.gotrabahomobile.Remote.RatingRemote.RatingInstance
+import retrofit2.Call
+import retrofit2.Response
+import java.sql.Date
+import java.text.DateFormat
+import java.time.LocalDate
+import javax.security.auth.callback.Callback
+
 
 class BookingDetailsActivity : AppCompatActivity() {
     private var ratingNumber = 0
@@ -27,6 +38,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showRatingDialog() {
         val ratingView = LayoutInflater.from(this).inflate(R.layout.dialog_rating, null)
 
@@ -117,7 +129,25 @@ class BookingDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun submitRatingToDatabase(rating: Int) {
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun submitRatingToDatabase(ratingNumber: Int) {
+        val newRating = Rating(
+            star = ratingNumber.toBigDecimal(),
+            dateRecorded = LocalDate.now()
+            //customerId =
 
+        )
+        val call = RatingInstance.retrofitBuilder
+
+        call.insertRating(newRating).enqueue(object: retrofit2.Callback<Rating>{
+            override fun onResponse(call: Call<Rating>, response: Response<Rating>) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onFailure(call: Call<Rating>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }
