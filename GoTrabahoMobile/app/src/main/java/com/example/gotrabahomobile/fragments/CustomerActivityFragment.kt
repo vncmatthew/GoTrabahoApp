@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,6 +38,15 @@ class CustomerActivityFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_customer_activity, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Initialize RecyclerView
+        val recyclerView = view.findViewById<RecyclerView>(R.id.activityRecycleView)
+        recyclerView.layoutManager = LinearLayoutManager(context)
+//        recyclerView.adapter = MyAdapter()
     }
 
     companion object {

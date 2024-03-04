@@ -55,6 +55,7 @@
     <string name="logout">Log Out</string>
     <string name="confirm">Confirm</string>
     <string name="proceed">Proceed</string>
+    <string name="submit">Submit</string>
 
 
     <string name="serviceselec_details">Please select the type of service you wish to provide</string>
@@ -70,6 +71,7 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="rateService">Rate the Service</string>
     <string name="setPrice">Set Price</string>
     <string name="setPriceDesc">Make sure that the set price is agreed by both parties.</string>
     <string name="setASched">Set A Schedule</string>
