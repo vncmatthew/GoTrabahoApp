@@ -7,7 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.Helper.ActivityRecycleViewAdapter
+import com.example.gotrabahomobile.Model.Booking
+import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.R
+import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +27,7 @@ class CustomerActivityFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,11 +47,12 @@ class CustomerActivityFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bookingList = ArrayList<Booking>()
 
         // Initialize RecyclerView
         val recyclerView = view.findViewById<RecyclerView>(R.id.activityRecycleView)
         recyclerView.layoutManager = LinearLayoutManager(context)
-//        recyclerView.adapter = MyAdapter()
+        recyclerView.adapter = context?.let { ActivityRecycleViewAdapter(bookingList, it) }
     }
 
     companion object {
