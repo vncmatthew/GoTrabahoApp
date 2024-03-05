@@ -68,9 +68,8 @@ class PaymentActivity : AppCompatActivity() {
         val call = UserInstance.retrofitBuilder
 
         call.getUser(userId).enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) {
-                val data = response.body()
-                    if (response.isSuccessful) {
+            override fun onResponse(call: Call<User>, response: Response<User>) { val data = response.body()
+                if (response.isSuccessful) {
                         email = data?.email.toString()
                     }
             }
