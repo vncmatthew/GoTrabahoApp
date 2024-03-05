@@ -2,15 +2,14 @@ package com.example.gotrabahomobile.Helper
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
-import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.ItemLayoutBinding
+import java.util.ArrayList
 
-class ActivityRecycleViewAdapter(private val bookingList: List<Booking>, private val context: Context) : RecyclerView.Adapter<ActivityRecycleViewAdapter.ActivityViewHolder>() {
+class ActivityRecycleViewAdapter(private val bookingList: ArrayList<Booking>, private val context: Context) : RecyclerView.Adapter<ActivityRecycleViewAdapter.ActivityViewHolder>() {
 
 
     inner class ActivityViewHolder(val binding: ItemLayoutBinding) :

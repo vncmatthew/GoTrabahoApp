@@ -89,42 +89,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBookingSummaryTime" />
 
-    <TextView
-        android:id="@+id/textViewChoosePaymentOption"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/choosePaymentOption"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewBookingSummarySetPrice" />
-
-    <ImageView
-        android:id="@+id/imageViewMayaLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="18dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewChoosePaymentOption"
-        tools:srcCompat="@drawable/logo_maya" />
-
     <Button
-        android:id="@+id/buttonCancelServiceProceed"
+        android:id="@+id/buttonPayWithMaya"
         android:layout_width="288dp"
         android:layout_height="50dp"
+        android:layout_marginTop="150dp"
         android:layout_marginBottom="120dp"
         android:backgroundTint="@color/gt_green2"
-        android:text="@string/confirm"
+        android:text="Pay With Maya"
         android:textColor="@color/white"
         android:textSize="14dp"
         app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewMayaLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewBookingSummarySetPrice" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

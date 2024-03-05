@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.ActivityRecycleViewAdapter
 import com.example.gotrabahomobile.Model.Booking
-import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.R
 import java.util.ArrayList
 

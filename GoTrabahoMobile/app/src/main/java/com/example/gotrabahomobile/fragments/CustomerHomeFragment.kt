@@ -1,11 +1,36 @@
 package com.example.gotrabahomobile.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.Helper.CustomerHomeServicesAdapter
+import com.example.gotrabahomobile.Helper.ServiceAdapter
+import com.example.gotrabahomobile.Model.Services
+import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.R
+import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
+import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,9 +46,17 @@ class CustomerHomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var selectedService: String? = null
+    var userList = ArrayList<UserFirebase>()
+    private lateinit var rvAdapter: ServiceAdapter
+    private lateinit var serviceList: List<Services>
+    private lateinit var binding: FragmentCustomerHomeBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = FragmentCustomerHomeBinding.inflate(layoutInflater)
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -35,7 +68,104 @@ class CustomerHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_customer_home, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val serviceList = ArrayList<Services>()
+
+        val serviceTypeName = view.findViewById<Spinner>(R.id.spinnerServiceName)
+        val serviceTypesArray = resources.getStringArray(R.array.serviceTypes)
+        val serviceTypesList = serviceTypesArray.toMutableList()
+
+        val adapter = ArrayAdapter(requireContext(),
+            android.R.layout.simple_spinner_item, serviceTypesList)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+        serviceTypeName.adapter = adapter
+        serviceTypeName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                // Store the selected item in the variable
+                selectedService = parent.getItemAtPosition(position) as? String
+                getServiceList(selectedService)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Toast.makeText(requireContext(), "Please Select a Service", Toast.LENGTH_SHORT).show()
+            }
+        }
+        // Initialize RecyclerView
+//        val recyclerView = view.findViewById<RecyclerView>(R.id.rvMain)
+//        recyclerView.layoutManager = LinearLayoutManager(context)
+//        recyclerView.adapter = context?.let { CustomerHomeServicesAdapter(serviceList) }
+    }
+
+    private fun getServiceList(select: String?){
+        val service = ServicesInstance.retrofitBuilder
+        val identification = arguments?.getInt("userId", 0) ?: 0
+
+        service.getServicesType(select).enqueue(object : Callback<List<Services>> {
+            override fun onResponse(
+                call: Call<List<Services>>,
+                response: Response<List<Services>>
+            ) {
+                if (response.isSuccessful && response.body() != null){
+                    val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+
+                    var userid = firebase.uid
+                    FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
+
+
+                    val databaseReference: DatabaseReference =
+                        FirebaseDatabase.getInstance().getReference("UserFirebase")
+                    databaseReference.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            Log.d("DEBUG", "Path: ${dataSnapshot.ref.path}")
+                            Log.d("DEBUG", "Data: ${dataSnapshot.value}")
+                            val user = dataSnapshot.getValue(UserFirebase::class.java)
+                            Log.d("DEBUG", "User: $user")
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            Log.w("DEBUG", "Failed to read value.", databaseError.toException())
+                        }
+                    })
+
+                    databaseReference.addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            userList.clear()
+
+                            for (dataSnapShot: DataSnapshot in snapshot.children) {
+                                val user = dataSnapShot.getValue(UserFirebase::class.java)
+                                Log.d("TAG", "Value is: $user")
+                                if (!user!!.userId.equals(firebase.uid)) {
+
+                                    userList.add(user)
+                                }
+                            }
+                            serviceList = response.body()!!
+
+                            binding.rvMain.apply {
+                                rvAdapter =
+                                    ServiceAdapter(serviceList, requireContext(), userList, identification)
+                                adapter = rvAdapter
+                                layoutManager = LinearLayoutManager(requireContext())
+                            }
+                        }
+                    })
+                }
+            }
+            override fun onFailure(call: Call<List<Services>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     companion object {
