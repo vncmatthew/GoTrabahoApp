@@ -5,27 +5,31 @@ import com.google.gson.annotations.SerializedName
 
 data class Negotiation(
 
-    @SerializedName("userId")
+    @SerializedName("negotiationId")
     @Expose
-    var negotiationId: Int? = null,
+    val negotiationId: Int? = null,
 
-    @SerializedName("freelancerId")
+    @SerializedName("freelancerPrice")
     @Expose
-    var freelancerPrice: Double? = null,
+    val freelancerPrice: Double? = null,
 
     @SerializedName("customerPrice")
     @Expose
-    var customerPrice: Double? = null,
+    val customerPrice: Double? = null,
 
     @SerializedName("customerId")
     @Expose
-    var customerId: Int? = null,
+    val customerId: Int? = null,
 
     @SerializedName("serviceId")
     @Expose
-    var serviceId: Int? = null,
+    val serviceId: Int? = null,
 
     @SerializedName("negotiationStatus")
     @Expose
-    var negotiationStatus: Boolean? = null,
+    val negotiationStatus: Boolean? = true,
+
+    @SerializedName("tracker")
+    @Expose
+    val tracker: String? = null
 )

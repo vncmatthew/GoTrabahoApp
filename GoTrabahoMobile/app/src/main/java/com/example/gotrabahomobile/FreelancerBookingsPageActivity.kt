@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -86,6 +87,9 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
         binding.btnFreelancerMessage.setOnClickListener{
 /*            val intent = Intent(this@FreelancerBookingsPageActivity, FreelancerMessagesActivity::class.java)
             startActivity(intent)*/
+
+
+
         getServiceId()
 
         }
@@ -127,7 +131,7 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
         val service = BookingInstance.retrofitBuilder
         var intent = getIntent()
         val freelancerId = intent.getIntExtra("freelancerId", 0)
-            service.getBookingStatus(freelancerId,status, selectedService).enqueue(object : Callback<List<Booking>> {
+        service.getBookingStatus(freelancerId,status, selectedService).enqueue(object : Callback<List<Booking>> {
                 override fun onResponse(
                     call: Call<List<Booking>>,
                     response: Response<List<Booking>>
@@ -159,11 +163,12 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<List<Services>>, response: Response<List<Services>>) {
                     if (response.isSuccessful) {
                         val services = response.body()
-                        // Assuming you want the first service ID from the list
+
                         val serviceId = services?.firstOrNull()?.serviceId
                         if (serviceId != null) {
                             val intent = Intent(this@FreelancerBookingsPageActivity, FreelancerMessagesActivity::class.java)
                             intent.putExtra("serviceId", serviceId)
+                            intent.putExtra("serviceName", services?.firstOrNull()?.name)
                             startActivity(intent)
                         } else {
                             Toast.makeText(this@FreelancerBookingsPageActivity, "No Service Id", Toast.LENGTH_SHORT).show()

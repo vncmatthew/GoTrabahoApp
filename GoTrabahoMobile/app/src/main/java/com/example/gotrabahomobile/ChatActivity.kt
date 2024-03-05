@@ -1,24 +1,25 @@
 package com.example.gotrabahomobile
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.ChatAdapter
+import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.Model.Negotiation
 import com.example.gotrabahomobile.Model.UserFirebase
+import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
-import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInterface
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
 import java.util.ArrayList
 
 @Suppress("DEPRECATION")
@@ -37,12 +39,12 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var etMessage: EditText
     private lateinit var btnSendMessage: ImageButton
     private lateinit var btnSetPrice: Button
+    private var finalPrice: Double? = null
 //    private lateinit var imgBack: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvSetPrice:TextView
     private lateinit var chatRecyclerView: RecyclerView
     private var userData: UserFirebase? = null
-
     var topic = ""
     var chatList = ArrayList<Chat>()
 
@@ -105,11 +107,7 @@ class ChatActivity : AppCompatActivity() {
             showDialog()
 
         }
-
-        }
-
-
-
+    }
 
     private fun sendMessage(senderId: String, receiverId: String, message: String) {
         var reference: DatabaseReference? = FirebaseDatabase.getInstance().getReference()
@@ -165,56 +163,133 @@ class ChatActivity : AppCompatActivity() {
             .setView(dialogView)
             .create()
 
-
-
         val updateButton = dialogView.findViewById<Button>(R.id.buttonSetPriceConfirm)
         updateButton.setOnClickListener {
-            val serviceId = intent.getStringExtra("serviceId")?.toIntOrNull()
-            val negotiationId = intent.getStringExtra("negotiationId")?.toIntOrNull()
+            val sqlId = intent.getStringExtra("sqlId")
+            val serviceId: Int? = intent.getIntExtra("serviceId", 0)
+            val name = intent.getStringExtra("serviceName")
+            val negotiationId = intent.getIntExtra("negotiationId", 0)
             val freelancerPrice = tvSetPrice.text.toString().toDoubleOrNull()
 
-            var negotiation: Negotiation? = null
-
-            if (serviceId != null) {
-                negotiation = Negotiation(
-                    serviceId = serviceId,
-                    freelancerPrice = freelancerPrice,
-                    // Set other fields as necessary
-                )
+            if (serviceId != 0) {
+                val track = NegotiationInstance.retrofitBuilder
+                track.getNegotiationTracker("$sqlId$serviceId$name").enqueue(object : Callback<Negotiation> {
+                    override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
+                        if (response.isSuccessful) {
+                            val service = response.body()?.negotiationId
+                            service?.let {
+                                val negotiation = Negotiation(
+                                    negotiationId = service,
+                                    freelancerPrice = freelancerPrice
+                                )
+                                patchNegotiation(service!!, negotiation)
+                            }
+                        }
+                    }
+                    override fun onFailure(call: Call<Negotiation>, t: Throwable) {
+                        Log.e("Checkit", "Failed to get negotiation tracker", t)
+                        Toast.makeText(this@ChatActivity, "Failed to get negotiation tracker", Toast.LENGTH_SHORT).show()
+                    }
+                })
             } else {
-                negotiation = Negotiation(
-                    customerPrice = freelancerPrice,
-                    // Set other fields as necessary
+                val negotiation = Negotiation(
+                    negotiationId = negotiationId,
+                    customerPrice = freelancerPrice
                 )
+                patchNegotiation(negotiationId, negotiation)
+                Log.d("Inside", "YUes")
             }
 
 
-                val call = NegotiationInstance.retrofitBuilder
-                call.updateNegotiation(negotiationId.toString(), negotiation).enqueue(object:
-                    Callback<Negotiation> {
-                    override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
-                        if (response.isSuccessful) {
-                            // Handle successful update
-                            Toast.makeText(this@ChatActivity, "Update successful", Toast.LENGTH_SHORT).show()
-                        } else {
-                            // Handle error response
-                            Toast.makeText(this@ChatActivity, "Update failed: ${response.message()}", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+        }
 
-                    override fun onFailure(call: Call<Negotiation>, t: Throwable) {
-                        // Handle failure
-                        Toast.makeText(this@ChatActivity, "Update failed: ${t.message}", Toast.LENGTH_SHORT).show()
-                    }
-                })
-
-        // Set the onClickListener for the close button
         closeButton.setOnClickListener {
             alertDialog.dismiss()
         }
 
+
+
         alertDialog.show()
     }
+
+    private fun patchNegotiation(negotiationId: Int, negotiation: Negotiation) {
+        val call = NegotiationInstance.retrofitBuilder
+        call.patchNegotiation(negotiationId, negotiation).enqueue(object : Callback<Negotiation> {
+            override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
+                if (response.isSuccessful) {
+                    Log.d("Warframe", "${response.body()}")
+                    Toast.makeText(this@ChatActivity, "Update successful", Toast.LENGTH_SHORT).show()
+                } else {
+                    Log.d("Checkit", "${response.body()}")
+                    Toast.makeText(this@ChatActivity, "Update failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Negotiation>, t: Throwable) {
+                Log.e("Checkit", "Update failed", t)
+                Toast.makeText(this@ChatActivity, "Update failed: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun checker(negotiationId: Int, serviceId: Int, userId: Int){
+
+        var newBooking = Booking(
+            customerId = userId,
+            bookingDatetime = LocalDate.now().toString(),
+            amount = finalPrice,
+            serviceFee = finalPrice!! * 0.15,
+            bookingStatus = 1,
+            serviceId = serviceId,
+            ratingId = null
+
+        )
+
+        val call = NegotiationInstance.retrofitBuilder
+
+        call.getNegotiationPrice(negotiationId).enqueue(object: Callback<Double>{
+            override fun onResponse(call: Call<Double>, response: Response<Double>) {
+                if (response.isSuccessful) {
+                     finalPrice = response.body()
+
+                }
+            }
+
+            override fun onFailure(call: Call<Double>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        call.getPriceChecker(negotiationId).enqueue(object: Callback<Boolean>{
+            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                var check = response.body()
+                if (response.isSuccessful){
+                    if(check == true){
+                        val book = BookingInstance.retrofitBuilder
+                        book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
+                            override fun onResponse(
+                                call: Call<Booking>,
+                                response: Response<Booking>
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
 

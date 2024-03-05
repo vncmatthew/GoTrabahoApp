@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,9 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
-import com.example.gotrabahomobile.DTO.NegotiationResponse
 import com.example.gotrabahomobile.Model.Negotiation
-import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,7 +36,7 @@ class FreelancerDetailsActivity : AppCompatActivity() {
         serviceRating = findViewById(R.id.textViewRating)
 
         val Id = intent.getIntExtra("serviceId", 0)
-        val name = intent.getStringExtra("name")
+        val name = intent.getStringExtra("serviceName")
         val rating = intent.getFloatExtra("rating", 0.0f)
         val location = intent.getStringExtra("location")
         val price = intent.getDoubleExtra("price", 0.0)
@@ -64,29 +63,41 @@ class FreelancerDetailsActivity : AppCompatActivity() {
 
         val sqlId = intent.getIntExtra("sqlId", 0)
         val Id = intent.getIntExtra("serviceId", 0)
-        val userId = intent.getStringExtra("userId")
-        val firstName = intent.getStringExtra("firstName")
-        val lastName = intent.getStringExtra("lastName")
+        val name = intent.getStringExtra("serviceName")
         val negotiationInput = Negotiation(
-            customerId = sqlId?.toInt(),
-            serviceId = Id.toInt(),
-            customerPrice = 0.0,
             freelancerPrice = 1.0,
-            negotiationStatus = true)
+            customerPrice = 22.0,
+            customerId = sqlId,
+            serviceId = Id,
+            tracker = sqlId.toString() + Id.toString() + name)
 
-        val call = NegotiationInstance.retrofitBuilder
-        call.insertNegotiation(negotiationInput).enqueue(object: Callback <Negotiation>{
+        val userService = NegotiationInstance.retrofitBuilder
+        userService.insertNegotiation(negotiationInput).enqueue(object : Callback<Negotiation> {
             override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
-
+                Log.i(ContentValues.TAG, "The response is " + response.message());
+                Log.i(ContentValues.TAG, "The response is " + response.body());
+                val userId = intent.getStringExtra("userId")
                 if (response.isSuccessful) {
                     val negotiation = response.body()
-                    val intent = Intent(this@FreelancerDetailsActivity, ChatActivity::class.java)
-                    intent.putExtra("negotiationId", negotiation?.negotiationId )
-                    intent.putExtra("userId", negotiation?.customerId)
-                    intent.putExtra("lastName", lastName)
-                    intent.putExtra("serviceId", negotiation?.serviceId)
-                    startActivity(intent)
-                } else {
+                    if (negotiation != null) {
+
+                                val lastName = intent.getStringExtra("lastName")
+                                val name = intent.getStringExtra("serviceName")
+                                val intent =
+                                    Intent(this@FreelancerDetailsActivity, ChatActivity::class.java)
+                                intent.putExtra("negotiationId", negotiation?.negotiationId)
+                                intent.putExtra("serviceName", name)
+                                intent.putExtra("userId", userId)
+                                intent.putExtra("lastName", lastName)
+                                //intent.putExtra("serviceId", negotiation?.serviceId)
+                                startActivity(intent)
+
+                        } else {
+                        // Handle the case where the negotiation object is null
+                        Log.e(ContentValues.TAG, "Negotiation object is null")
+                    }
+                }
+                else {
                     // Handle the error response
                     Log.d("MainActivity", "Response code: ${response.message()}")
 
@@ -94,9 +105,9 @@ class FreelancerDetailsActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<Negotiation>, t: Throwable) {
-                Log.d("MainActivity", "Response code: ${t}")
+                // Handle network or other exceptions
+                Log.d("MainActivity", "Exception: ", t)
             }
-
         })
     }
 }

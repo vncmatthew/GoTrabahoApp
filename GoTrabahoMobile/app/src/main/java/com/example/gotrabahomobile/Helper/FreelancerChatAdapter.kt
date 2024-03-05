@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 
-class FreelancerChatAdapter(private val context: Context, private val userList: ArrayList<UserFirebase>) :
+class FreelancerChatAdapter(private val context: Context, private val userList: ArrayList<UserFirebase>, private val serviceId: Int, private val serviceName: String?) :
     RecyclerView.Adapter<FreelancerChatAdapter.ViewHolder>() {
 
 
@@ -37,6 +37,8 @@ class FreelancerChatAdapter(private val context: Context, private val userList: 
 
         holder.layoutUser.setOnClickListener {
             val intent = Intent(context, ChatActivity::class.java)
+            intent.putExtra("serviceId", serviceId)
+            intent.putExtra("serviceName", serviceName)
             intent.putExtra("userId",user.userId)
             intent.putExtra("firstName",user.firstName)
             intent.putExtra("lastName", user.lastName)

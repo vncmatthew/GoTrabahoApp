@@ -82,8 +82,9 @@ class FreelancerMessagesActivity : AppCompatActivity() {
 
                     }
                 }
-
-                val userAdapter = FreelancerChatAdapter(this@FreelancerMessagesActivity, userList)
+                val serviceId = intent.getIntExtra("serviceId",0)
+                val serviceName = intent.getStringExtra("serviceName")
+                val userAdapter = FreelancerChatAdapter(this@FreelancerMessagesActivity, userList, serviceId, serviceName)
                 userRecyclerView = findViewById(R.id.rvFreelancerMessageList)
                 userRecyclerView.adapter = userAdapter
             }

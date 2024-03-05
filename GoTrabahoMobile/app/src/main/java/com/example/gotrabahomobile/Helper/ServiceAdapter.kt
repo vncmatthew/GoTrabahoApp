@@ -51,7 +51,7 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
             intent.putExtra("lastName", user.lastName)
             intent.putExtra("sqlId", identification)
             intent.putExtra("serviceId", currentItem.serviceId)
-            intent.putExtra("name", currentItem.name)
+            intent.putExtra("serviceName", currentItem.name)
             intent.putExtra("rating", currentItem.rating)
             intent.putExtra("location", currentItem.location)
             intent.putExtra("price", currentItem.priceEstimate)
