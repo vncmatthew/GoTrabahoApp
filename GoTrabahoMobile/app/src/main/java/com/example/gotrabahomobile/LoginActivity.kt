@@ -155,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
 
                                 if(userType == 1) {
                                     val intent =
-                                        Intent(this@LoginActivity, CustomerHomePageActivity::class.java)
+                                        Intent(this@LoginActivity, CustomerMainActivity::class.java)
                                     intent.putExtra("sqlId", sqlId)
                                     intent.putExtra("userId", identification)
                                     intent.putExtra("email", email)
