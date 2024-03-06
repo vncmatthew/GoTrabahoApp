@@ -1,10 +1,12 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.DTO.PaymentDTO
 import com.example.gotrabahomobile.Model.User
@@ -30,7 +32,6 @@ class PaymentActivity : AppCompatActivity() {
         btn_pay = findViewById(R.id.buttonPayWithMaya)
         btn_pay.setOnClickListener {
             paymentBooking()
-
         }
     }
 
@@ -41,16 +42,24 @@ class PaymentActivity : AppCompatActivity() {
         val customerName = intent.getStringExtra("customerName")
 
         val Paymentservice = PaymentInstance.retrofitBuilder
-        val emailBook = email ?: ""
+        val emailBook = findViewById<EditText>(R.id.editTextEmailForInvoice)
+        val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
 
-        val paymentInfo = PaymentDTO(email = emailBook)
+        val paymentInfo = PaymentDTO(email = emailBook.toString())
 
-        Paymentservice.paymentBook(emailBook).enqueue(object : Callback<ResponseBody> {
+        Paymentservice.paymentBook(paymentInfo.toString()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val invoiceResponse = response.body()
+//                    val intent = Intent(this@PaymentActivity, ConfirmActivity::class.java)
+//                    intent.putExtra("BUTTON_STATE","payment_success")
+//                    intent.putExtra("userID", userID)
+//                    intent.putExtra("customerID", customerID)
+//                    intent.putExtra("customerName", customerName)
+//                    intent.putExtra("selectedDateTime", selectedDateTime)
+//                    startActivity(intent)
+                    val invoiceLink = response.body()?.toString()
 //                    // Display the invoice link to the user
-//                    invoiceLinkTextView.text = invoiceResponse?.invoiceLink
+                    invoiceLinkText.text = invoiceLink
                 } else {
                     // Handle error
                     Toast.makeText(this@PaymentActivity, "Failed to generate invoice.", Toast.LENGTH_SHORT).show()

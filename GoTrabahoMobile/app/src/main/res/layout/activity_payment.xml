@@ -93,7 +93,7 @@
         android:id="@+id/buttonPayWithMaya"
         android:layout_width="288dp"
         android:layout_height="50dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="69dp"
         android:layout_marginBottom="120dp"
         android:backgroundTint="@color/gt_green2"
         android:text="Pay With Maya"
@@ -103,7 +103,29 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailForInvoice" />
+
+    <EditText
+        android:id="@+id/editTextEmailForInvoice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="108dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        android:hint="Email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewBookingSummarySetPrice" />
+
+    <TextView
+        android:id="@+id/textViewInvoiceLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPayWithMaya" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
