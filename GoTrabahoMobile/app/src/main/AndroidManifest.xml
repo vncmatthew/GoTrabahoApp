@@ -24,16 +24,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".PaymentActivity"
-            android:exported="false" >
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-        </activity>
-
-        <activity
             android:name=".BookingDetailsActivity"
             android:exported="false" >
 <!--        <intent-filter>-->
@@ -74,16 +64,6 @@
             android:name=".CustomerMainActivity"
             android:exported="false">
 
-
-
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
-
 <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -91,7 +71,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
-
         </activity>
         <activity
             android:name=".CustomerEditProfileActivity"

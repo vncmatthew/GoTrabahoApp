@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.Model.Negotiation
@@ -56,11 +55,6 @@ class FreelancerDetailsActivity : AppCompatActivity() {
 
         btnNegotiate.setOnClickListener{
             setNegotiation()
-        }
-
-        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
-        backButton.setOnClickListener{
-            finish()
         }
 
     }

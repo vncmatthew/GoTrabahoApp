@@ -11,7 +11,7 @@
         layout="@layout/toolbar_no_notificationicon" />
 
     <TextView
-        android:id="@+id/textViewAppReview"
+        android:id="@+id/textView12"
         android:layout_width="284dp"
         android:layout_height="118dp"
         android:text="@string/application_confirmation"
