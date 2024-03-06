@@ -61,11 +61,6 @@ class ChatActivity : AppCompatActivity() {
         tvUserName = findViewById(R.id.tvUserName)
         btnSetPrice = findViewById(R.id.buttonChatSetPrice)
 
-        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
-        backButton.setOnClickListener{
-            finish()
-        }
-
         //get UserModel
 
             var intent = getIntent()
