@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.FreelancerDetailsActivity
-import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.ItemLayoutBinding
+import com.example.gotrabahomobile.fragments.CustomerHomeFragment
 import java.util.ArrayList
 
 class CustomerHomeServicesAdapter(private val serviceList: ArrayList<Services>, private val context: Context, private val userList: ArrayList<UserFirebase>, private val identification: Int) : RecyclerView.Adapter<CustomerHomeServicesAdapter.ServiceViewHolder>() {

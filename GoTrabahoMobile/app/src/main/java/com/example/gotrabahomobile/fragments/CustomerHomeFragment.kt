@@ -50,7 +50,8 @@ class CustomerHomeFragment : Fragment() {
     var userList = ArrayList<UserFirebase>()
     private lateinit var rvAdapter: ServiceAdapter
     private lateinit var serviceList: List<Services>
-    private lateinit var binding: FragmentCustomerHomeBinding
+    private var _binding: FragmentCustomerHomeBinding? = null
+    private val binding get() = _binding!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,54 +68,40 @@ class CustomerHomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_customer_home, container, false)
+        _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
 
-        val spinner: Spinner = view.findViewById(R.id.spinnerServiceNameHome)
+
+        val spinner: Spinner = _binding!!.spinnerServiceNameHome
         Log.d("CustomerHomeFragment", "Spinner found: $spinner")
-
-
 
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
             R.array.serviceTypes,
             android.R.layout.simple_spinner_item
         )
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinner.adapter = adapter
-            Log.d("CustomerHomeFragment", "Adapter set: ${spinner.adapter}")
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        Log.d("CustomerHomeFragment", "Adapter set: ${spinner.adapter}")
 
-        return view
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedService = parent.getItemAtPosition(position) as? String
+                getServiceList(selectedService)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Toast.makeText(requireContext(), "Please Select a Service", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        return _binding!!.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val serviceList = ArrayList<Services>()
-
-//        val serviceTypeName = view.findViewById<Spinner>(R.id.spinnerServiceName)
-//        val serviceTypesArray = resources.getStringArray(R.array.serviceTypes)
-//        val serviceTypesList = serviceTypesArray.toMutableList()
-//
-//        val adapter = ArrayAdapter(requireContext(),
-//            android.R.layout.simple_spinner_item, serviceTypesList)
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//
-//        serviceTypeName.adapter = adapter
-//        serviceTypeName.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-//                // Store the selected item in the variable
-//                selectedService = parent.getItemAtPosition(position) as? String
-//                getServiceList(selectedService)
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>) {
-//                Toast.makeText(requireContext(), "Please Select a Service", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-        // Initialize RecyclerView
-//        val recyclerView = view.findViewById<RecyclerView>(R.id.rvMain)
-//        recyclerView.layoutManager = LinearLayoutManager(context)
-//        recyclerView.adapter = context?.let { CustomerHomeServicesAdapter(serviceList) }
     }
 
     private fun getServiceList(select: String?){

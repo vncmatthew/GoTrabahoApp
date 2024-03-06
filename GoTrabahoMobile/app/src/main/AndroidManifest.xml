@@ -62,15 +62,15 @@
         </activity>
         <activity
             android:name=".CustomerMainActivity"
-            android:exported="true">
+            android:exported="false">
 
-
+<!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity
             android:name=".CustomerEditProfileActivity"
@@ -199,12 +199,12 @@
         <activity
             android:name=".LoginActivity"
 
-            android:exported="false">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".StartupActivity"
