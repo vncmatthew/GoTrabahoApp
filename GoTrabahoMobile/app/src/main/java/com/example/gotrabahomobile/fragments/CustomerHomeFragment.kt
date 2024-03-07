@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +18,7 @@ import com.example.gotrabahomobile.Helper.CustomerHomeServicesAdapter
 import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.UserFirebase
+import com.example.gotrabahomobile.PaymentActivity
 import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
@@ -70,6 +73,11 @@ class CustomerHomeFragment : Fragment() {
     ): View? {
         _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
 
+        val buttonPay: Button = _binding!!.buttonPayment
+        buttonPay.setOnClickListener{
+            val intent = Intent(requireContext(), PaymentActivity::class.java)
+            startActivity(intent)
+        }
 
         val spinner: Spinner = _binding!!.spinnerServiceNameHome
         Log.d("CustomerHomeFragment", "Spinner found: $spinner")

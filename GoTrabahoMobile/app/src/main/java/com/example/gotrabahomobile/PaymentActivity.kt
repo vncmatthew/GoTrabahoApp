@@ -29,9 +29,10 @@ class PaymentActivity : AppCompatActivity() {
         getEmail(userID)
 
         btn_pay = findViewById(R.id.buttonPayWithMaya)
+        val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
+//        invoiceLinkText.text = email
         btn_pay.setOnClickListener {
             paymentBooking()
-
         }
     }
 
@@ -43,15 +44,17 @@ class PaymentActivity : AppCompatActivity() {
         val emailBook = findViewById<EditText>(R.id.editTextEmailForInvoice)
         val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
 
+//        val emailBook = email ?: ""
         val Paymentservice = PaymentInstance.retrofitBuilder
 
 
         val paymentInfo = PaymentDTO(email = emailBook.toString())
 
-        Paymentservice.paymentBook(paymentInfo.toString()).enqueue(object : Callback<ResponseBody> {
+        Paymentservice.paymentBook(emailBook.toString()).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val invoiceResponse = response.body()
+                    Toast.makeText(this@PaymentActivity, "THIS SHIT WORKS", Toast.LENGTH_SHORT).show()
                     //                    val intent = Intent(this@PaymentActivity, ConfirmActivity::class.java)
 //                    intent.putExtra("BUTTON_STATE","payment_success")
 //                    intent.putExtra("userID", userID)
@@ -59,9 +62,10 @@ class PaymentActivity : AppCompatActivity() {
 //                    intent.putExtra("customerName", customerName)
 //                    intent.putExtra("selectedDateTime", selectedDateTime)
 //                    startActivity(intent)
-                    val invoiceLink = response.body()?.toString()
+//                    val invoiceLink = response.body()?.toString()
+                    invoiceLinkText.text = invoiceResponse?.string()
 //                    // Display the invoice link to the user
-                    invoiceLinkText.text = invoiceLink
+//                    invoiceLinkText.text = invoiceLink
                 } else {
                     // Handle error
                     Toast.makeText(this@PaymentActivity, "Failed to generate invoice.", Toast.LENGTH_SHORT).show()
