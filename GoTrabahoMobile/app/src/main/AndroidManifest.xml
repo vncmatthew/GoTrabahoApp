@@ -44,6 +44,9 @@
             <!-- </intent-filter> -->
         </activity>
         <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+        <activity
             android:name=".ReportProblemActivity"
             android:exported="false" />
         <activity
