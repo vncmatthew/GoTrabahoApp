@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="409dp"
+    android:layout_height="729dp"
+    tools:context=".FreelancerIdentityVerificationActivity"
+    android:fillViewport="true"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/logo_blue_noname" />
+
+        <TextView
+            android:id="@+id/textViewApplication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="New Service Application"
+            android:textColor="@color/gt_blue"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <TextView
+            android:id="@+id/textViewServiceSelection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:text="@string/serviceselection"
+            android:textColor="@color/gt_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewApplication" />
+
+        <TextView
+            android:id="@+id/textViewServiceSelectionDesc"
+            android:layout_width="198dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/serviceselec_details"
+            android:textAlignment="viewStart"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewServiceSelection" />
+
+        <Spinner
+            android:id="@+id/dropdownNewServiceIDType"
+            android:layout_width="312dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewServiceSelectionDesc" />
+
+        <TextView
+            android:id="@+id/textViewJobVerification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/jobverification"
+            android:textColor="@color/gt_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dropdownNewServiceIDType" />
+
+        <TextView
+            android:id="@+id/textViewUploadText"
+            android:layout_width="219dp"
+            android:layout_height="81dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/jobver_details"
+            android:textAlignment="viewStart"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewJobVerification" />
+
+        <Button
+            android:id="@+id/buttonNewServiceUploadCertificate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/gt_blue"
+            android:text="Upload Certificate"
+            app:cornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCertificate" />
+
+        <Button
+            android:id="@+id/buttonApplicationPageSignUp"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/gt_green"
+            android:text="Sign Up"
+            android:textSize="17sp"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonNewServiceUploadProofOfWork" />
+
+        <TextView
+            android:id="@+id/textViewProofOfWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/proofofwork"
+            android:textColor="@color/gt_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonNewServiceUploadCertificate" />
+
+        <TextView
+            android:id="@+id/textViewUploadProofOfWorkDesc"
+            android:layout_width="221dp"
+            android:layout_height="117dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/proofofwork_details"
+            android:textAlignment="viewStart"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewProofOfWork" />
+
+        <Button
+            android:id="@+id/buttonNewServiceUploadProofOfWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+
+            android:backgroundTint="@color/gt_blue"
+            android:text="Upload Proof of Work"
+            app:cornerRadius="12dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewProofOfWork" />
+
+        <ImageView
+            android:id="@+id/imageViewCertificate"
+            android:layout_width="143dp"
+            android:layout_height="121dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUploadText"
+            app:srcCompat="@drawable/image_upload" />
+
+        <ImageView
+            android:id="@+id/imageViewProofOfWork"
+            android:layout_width="143dp"
+            android:layout_height="121dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewUploadProofOfWorkDesc"
+            app:srcCompat="@drawable/image_upload" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

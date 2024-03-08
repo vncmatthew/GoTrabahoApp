@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CustomerProfilePageActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/customer_toolbar_withbackbutton" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Profile"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/icon_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/editTextProfileFreelancerFirstName"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_white"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/avatar" />
+
+    <EditText
+        android:id="@+id/editTextProfileFreelancerLastName"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/edit_text_background_white"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerFirstName" />
+
+    <EditText
+        android:id="@+id/editTextProfileFreelancerPhone"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/edit_text_background_white"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerLastName" />
+
+    <EditText
+        android:id="@+id/editTextProfileFreelancerEmailAddress"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/edit_text_background_white"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerPhone" />
+
+    <Button
+        android:id="@+id/buttonVerifyEmail"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/gt_blue"
+        android:text="Verify Email"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:cornerRadius="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerEmailAddress" />
+
+    <Button
+        android:id="@+id/buttonEditProfile"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/gt_blue"
+        android:text="Edit Profile"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:cornerRadius="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonVerifyEmail" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

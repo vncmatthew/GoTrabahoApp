@@ -11,14 +11,15 @@
         android:label="fragment_bookings"
         tools:layout="@layout/fragment_bookings" />
     <fragment
-        android:id="@+id/freelancerAccountFragment"
-        android:name="com.example.gotrabahomobile.FreelancerAccountFragment"
-        android:label="fragment_freelancer_account"
-        tools:layout="@layout/fragment_freelancer_account" />
-    <fragment
         android:id="@+id/freelancerMessagesFragment"
         android:name="com.example.gotrabahomobile.FreelancerMessagesFragment"
         android:label="fragment_freelancer_messages"
         tools:layout="@layout/fragment_freelancer_messages" />
+    <fragment
+        android:id="@+id/freelancerAccountFragment"
+        android:name="com.example.gotrabahomobile.FreelancerAccountFragment"
+        android:label="fragment_freelancer_account"
+        tools:layout="@layout/fragment_freelancer_account" />
+
 
 </navigation>

@@ -81,6 +81,7 @@
     <string name="ReschedDesc">Set a new date to reschedule the service</string>
     <string name="cancelService">Cancel Service?</string>
     <string name="cancelServiceDesc">Note: Cancellation of a booked service 2 days before the scheduled date will charge you with a cancellation fee.</string>
+    <string name="noteAddservice">Note: Adding a new service will require you to submit a new TESDA Certificate that will align with that service.</string>
 
     //payment booking summary
 

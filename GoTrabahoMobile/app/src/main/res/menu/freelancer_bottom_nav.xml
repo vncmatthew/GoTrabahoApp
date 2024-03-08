@@ -7,12 +7,12 @@
         android:icon="@drawable/bookings_icon" />
 
     <item
-        android:id="@+id/messagesFragment"
+        android:id="@+id/freelancerMessagesFragment"
         android:title="Messages"
         android:icon="@drawable/message_icon_notext" />
 
     <item
-        android:id="@+id/accountFragment"
+        android:id="@+id/freelancerAccountFragment"
         android:title="Account"
         android:icon="@drawable/account_icon_notext" />
 </menu>

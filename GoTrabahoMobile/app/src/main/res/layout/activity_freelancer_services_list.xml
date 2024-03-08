@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FreelancerServicesListActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/customer_toolbar_withbackbutton" />
+
+    <include
+        android:id="@+id/list_item_edit_del"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/list_item_services_list_edit_delete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
