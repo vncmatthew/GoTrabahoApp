@@ -41,31 +41,22 @@ class PaymentActivity : AppCompatActivity() {
         val userID = intent.getIntExtra("userID", 0)
         val customerID = intent.getIntExtra("customerID", 0)
         val customerName = intent.getStringExtra("customerName")
-        val emailBook = findViewById<EditText>(R.id.editTextEmailForInvoice)
         val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
 
-//        val emailBook = email ?: ""
+        val emailBook = email ?: ""
         val Paymentservice = PaymentInstance.retrofitBuilder
 
 
-        val paymentInfo = PaymentDTO(email = emailBook.toString())
+        val paymentInfo = PaymentDTO(email = emailBook)
 
-        Paymentservice.paymentBook(emailBook.toString()).enqueue(object : Callback<ResponseBody> {
+        Paymentservice.paymentBook(paymentInfo).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val invoiceResponse = response.body()
                     Toast.makeText(this@PaymentActivity, "THIS SHIT WORKS", Toast.LENGTH_SHORT).show()
-                    //                    val intent = Intent(this@PaymentActivity, ConfirmActivity::class.java)
-//                    intent.putExtra("BUTTON_STATE","payment_success")
-//                    intent.putExtra("userID", userID)
-//                    intent.putExtra("customerID", customerID)
-//                    intent.putExtra("customerName", customerName)
-//                    intent.putExtra("selectedDateTime", selectedDateTime)
-//                    startActivity(intent)
-//                    val invoiceLink = response.body()?.toString()
+
                     invoiceLinkText.text = invoiceResponse?.string()
-//                    // Display the invoice link to the user
-//                    invoiceLinkText.text = invoiceLink
+
                 } else {
                     // Handle error
                     Toast.makeText(this@PaymentActivity, "Failed to generate invoice.", Toast.LENGTH_SHORT).show()
