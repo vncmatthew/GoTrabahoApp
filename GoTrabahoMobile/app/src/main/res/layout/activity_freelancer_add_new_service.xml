@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".FreelancerAddNewServiceActivity">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_no_notificationicon" />
+
+    <TextView
+        android:id="@+id/textViewAddNewServiceLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Add a New Service Listing"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/textView10"-->
+<!--        android:layout_width="334dp"-->
+<!--        android:layout_height="31dp"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:text="@string/noteAddservice"-->
+<!--        android:textSize="11sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textViewAddNewServiceLabel" />-->
+
+    <EditText
+        android:id="@+id/editTextAddNewServiceDescription"
+        android:layout_width="312dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:background="@drawable/edit_text_background_white"
+        android:inputType="textMultiLine"
+        android:hint="Description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAddNewServiceLabel" />
+
+    <EditText
+        android:id="@+id/editTextAddNewServiceSetPrice"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background_white"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Set a Price (₱)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAddNewServiceDescription" />
+
+    <EditText
+        android:id="@+id/editTextAddNewServiceLocation"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_background_white"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Your Location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAddNewServiceSetPrice" />
+
+    <Button
+        android:id="@+id/buttonFreelancerEditServiceCancel"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginLeft="48dp"
+        android:backgroundTint="@color/gt_red_cancel"
+        android:text="Cancel"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:cornerRadius="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAddNewServiceLocation" />
+
+    <Button
+        android:id="@+id/buttonFreelancerEditServiceSave"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="34dp"
+        android:layout_marginRight="48dp"
+        android:backgroundTint="@color/gt_green"
+        android:text="Save"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextAddNewServiceLocation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,13 +41,13 @@ class CustomerAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Find your custom CardView by its ID
+
         val customCardViewProfile = view.findViewById<androidx.cardview.widget.CardView>(R.id.profile)
         val customCardViewRewards = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardRewards)
         val customCardViewPaymentOptions = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardPaymentOptions)
         val customCardViewLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardLogout)
 
-        // Set a click listener for the CardView
+
         customCardViewProfile.setOnClickListener {
 
             val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)

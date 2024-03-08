@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,43 @@ class FreelancerAccountFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_freelancer_account, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val freelancerCardProfile = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerProfile)
+        val freelancerCardAddNewService = view.findViewById<androidx.cardview.widget.CardView>(R.id.addNewService)
+        val freelancerCardEditServices = view.findViewById<androidx.cardview.widget.CardView>(R.id.editServices)
+        val freelancerCardPaymentOptions = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerPaymentOptions)
+        val freelancerCardLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerLogout)
+
+        freelancerCardProfile.setOnClickListener{
+            val intent = Intent(requireActivity(), FreelancerProfilePageActivity::class.java)
+            startActivity(intent)
+        }
+
+        freelancerCardAddNewService.setOnClickListener{
+            val intent = Intent(requireActivity(), FreelancerAddNewServiceActivity::class.java)
+            startActivity(intent)
+        }
+
+        freelancerCardEditServices.setOnClickListener{
+            val intent = Intent(requireActivity(), FreelancerServicesListActivity::class.java)
+            startActivity(intent)
+        }
+
+        freelancerCardPaymentOptions.setOnClickListener{
+            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
+            startActivity(intent)
+        }
+
+//        freelancerCardLogout.setOnClickListener{
+//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
+//            startActivity(intent)
+//        }
+
+
     }
 
     companion object {
