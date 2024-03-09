@@ -23,6 +23,7 @@ class CustomerMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_customer_main)
 
         val email = intent.getStringExtra("email")
+        val firstName = intent
 
         val textView: TextView = findViewById(R.id.textViewSample)
 
@@ -37,14 +38,18 @@ class CustomerMainActivity : AppCompatActivity() {
         // Create a Bundle and put the data into it
         val bundle = Bundle()
         bundle.putInt("userId", userId as Int)
+        bundle.putString("email", email as String)
+        bundle.putString("firstName", firstName as String)
+        bundle.putString("lastName", lastName as String)
+        bundle.putString("fullName", fullName as String)
         // Add other data similarly
 
         // Set the Bundle as the arguments for the Fragment
         customerHomeFragment.arguments = bundle
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.mainContainer, customerHomeFragment)
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .replace(R.id.mainContainer, customerHomeFragment)
+//            .commit()
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment
         navController = navHostFragment.navController
@@ -55,11 +60,11 @@ class CustomerMainActivity : AppCompatActivity() {
 //
 //        textView.text = aBundle.toString()
 
-        val aBundle = Bundle()
-        aBundle.putString("email", email)
 
-        navController.navigate(R.id.homeFragment, aBundle)
-        Log.d("CustomerMainActivity", "Bundle: $aBundle")
+
+
+        navController.navigate(R.id.homeFragment, bundle)
+        Log.d("CustomerMainActivity", "Bundle: $bundle")
 
 
     }

@@ -25,7 +25,8 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
-        email = email ?: ""
+        email = intent.getStringExtra("email").toString()
+//        email = email ?: ""
         Log.d("PaymentActivity", "Bundle: $email")
 
         val userID = intent.getIntExtra("userID", 0)
