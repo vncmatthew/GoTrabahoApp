@@ -25,8 +25,12 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
+        email = email ?: ""
+        Log.d("PaymentActivity", "Bundle: $email")
+
         val userID = intent.getIntExtra("userID", 0)
         getEmail(userID)
+
 
         btn_pay = findViewById(R.id.buttonPayWithMaya)
         val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
@@ -34,6 +38,7 @@ class PaymentActivity : AppCompatActivity() {
         btn_pay.setOnClickListener {
             paymentBooking()
         }
+
     }
 
     private fun paymentBooking() {
@@ -41,15 +46,19 @@ class PaymentActivity : AppCompatActivity() {
         val userID = intent.getIntExtra("userID", 0)
         val customerID = intent.getIntExtra("customerID", 0)
         val customerName = intent.getStringExtra("customerName")
+        val userEmail = "testing072301@gmail.com"
         val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
 
-        val emailBook = email ?: ""
+
+
+//        val emailBook = email ?: ""
         val Paymentservice = PaymentInstance.retrofitBuilder
 
 
-        val paymentInfo = PaymentDTO(email = emailBook)
 
-        Paymentservice.paymentBook(paymentInfo).enqueue(object : Callback<ResponseBody> {
+        val paymentInfo = PaymentDTO(email = userEmail)
+
+        Paymentservice.paymentBook(userEmail).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val invoiceResponse = response.body()
@@ -77,6 +86,9 @@ class PaymentActivity : AppCompatActivity() {
             override fun onResponse(call: Call<User>, response: Response<User>) { val data = response.body()
                 if (response.isSuccessful) {
                         email = data?.email.toString()
+
+                    val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
+                    invoiceLinkText.text = email
                     }
             }
 

@@ -56,6 +56,8 @@ class CustomerHomeFragment : Fragment() {
     private var _binding: FragmentCustomerHomeBinding? = null
     private val binding get() = _binding!!
 
+    private var email: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +67,9 @@ class CustomerHomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+        email = arguments?.getString("email")
+        Log.d("YourFragment", "Arguments: $arguments")
     }
 
     override fun onCreateView(
@@ -76,6 +81,7 @@ class CustomerHomeFragment : Fragment() {
         val buttonPay: Button = _binding!!.buttonPayment
         buttonPay.setOnClickListener{
             val intent = Intent(requireContext(), PaymentActivity::class.java)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
 

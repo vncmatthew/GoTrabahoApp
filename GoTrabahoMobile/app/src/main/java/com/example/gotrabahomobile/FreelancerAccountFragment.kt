@@ -53,7 +53,7 @@ class FreelancerAccountFragment : Fragment() {
         }
 
         freelancerCardAddNewService.setOnClickListener{
-            val intent = Intent(requireActivity(), FreelancerAddNewServiceActivity::class.java)
+            val intent = Intent(requireActivity(), FreelancerNewServiceJobVerificationActivity::class.java)
             startActivity(intent)
         }
 
