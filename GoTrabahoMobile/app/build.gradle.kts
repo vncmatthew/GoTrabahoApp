@@ -3,7 +3,11 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs")
+
 }
+
+
 
 android {
     namespace = "com.example.gotrabahomobile"
@@ -59,9 +63,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
 
-
     implementation ("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
+
 
     implementation ("org.osmdroid:osmdroid-android:6.1.18")
 

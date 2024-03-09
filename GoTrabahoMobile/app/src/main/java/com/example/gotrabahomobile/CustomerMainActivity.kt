@@ -2,9 +2,13 @@ package com.example.gotrabahomobile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.TextView
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.example.gotrabahomobile.fragments.CustomerHomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -17,6 +21,12 @@ class CustomerMainActivity : AppCompatActivity() {
 
 
         setContentView(R.layout.activity_customer_main)
+
+        val email = intent.getStringExtra("email")
+
+        val textView: TextView = findViewById(R.id.textViewSample)
+
+
 
         val userId = intent.getIntExtra("userId", 0) ?: ""
         // Retrieve other data similarly
@@ -38,10 +48,18 @@ class CustomerMainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.mainContainer) as NavHostFragment
         navController = navHostFragment.navController
+
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView.setupWithNavController(navController)
 
-        setupWithNavController(bottomNavigationView, navController)
+//
+//        textView.text = aBundle.toString()
 
+        val aBundle = Bundle()
+        aBundle.putString("email", email)
+
+        navController.navigate(R.id.homeFragment, aBundle)
+        Log.d("CustomerMainActivity", "Bundle: $aBundle")
 
 
     }

@@ -24,7 +24,9 @@
         android:id="@+id/accountFragment"
         android:name="com.example.gotrabahomobile.CustomerAccountFragment"
         android:label="fragment_account"
-        tools:layout="@layout/fragment_customer_account" />
+        tools:layout="@layout/fragment_customer_account" >
+
+    </fragment>
 
 
 

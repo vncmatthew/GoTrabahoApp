@@ -12,8 +12,8 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_profile_page)
 
-        val cancelButton: Button = findViewById(R.id.buttonFreelancerEditServiceCancel)
-        cancelButton.setOnClickListener{
+        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
+        backButton.setOnClickListener{
             finish()
         }
 
