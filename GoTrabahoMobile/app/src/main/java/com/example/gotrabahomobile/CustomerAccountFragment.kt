@@ -58,11 +58,11 @@ class CustomerAccountFragment : Fragment() {
 
         val name = customCardViewProfile.findViewById<TextView>(R.id.customerName)
         val identification = arguments?.getInt("userId", 0) ?: 0
-        val firstName = arguments?.getString("firstName" )
+        val firstName = arguments?.getString("firstName")
         val lastName = arguments?.getString("lastName")
         val fullName = arguments?.getString("fullName")
-        name.text = firstName
-
+        name.text = fullName
+        Log.d("CheckMe", "${fullName}")
 
 
         customCardViewProfile.setOnClickListener {
