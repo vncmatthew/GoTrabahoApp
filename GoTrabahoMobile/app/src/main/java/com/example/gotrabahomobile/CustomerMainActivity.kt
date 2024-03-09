@@ -23,7 +23,9 @@ class CustomerMainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_customer_main)
 
         val email = intent.getStringExtra("email")
-        val firstName = intent
+        val firstName = intent.getStringExtra("firstName")
+        val lastName = intent.getStringExtra("lastName")
+        val fullName = intent.getStringExtra("fullName")
 
         val textView: TextView = findViewById(R.id.textViewSample)
 

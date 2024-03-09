@@ -97,12 +97,13 @@ class LoginActivity : AppCompatActivity() {
                         val userID = user.userId
                         val firstName = user.firstName
                         val lastName = user.lastName
+                        Log.d("Nigger", "${user.lastName}")
                         val userType = user.userType
                         val longitude = user.longitude
                         val latitude = user.latitude
                         val fullName = "$firstName $lastName"
                         if (userID != null) {
-                        registerUser(email, pass ,firstName,lastName, userID.toString(), userType, longitude, latitude, userID)
+                        registerUser(email, pass ,firstName,lastName, fullName, userID.toString(), userType, longitude, latitude, userID)
                         }else {
                             Toast.makeText(this@LoginActivity, "Connection Error", Toast.LENGTH_SHORT).show()
                         }
@@ -118,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerUser(email:String,password:String,firstName:String?, lastName:String?, sqlId: String?, userType: Int?,
+    private fun registerUser(email:String,password:String,firstName:String?, lastName:String?, fullName:String?, sqlId: String?, userType: Int?,
                              longitude: Double?, latitude: Double?, identification: Int?){
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener(this){
@@ -161,6 +162,7 @@ class LoginActivity : AppCompatActivity() {
                                     intent.putExtra("email", email)
                                     intent.putExtra("firstName", firstName)
                                     intent.putExtra("lastName", lastName)
+                                    intent.putExtra("fullName", fullName)
                                     intent.putExtra("longitude", longitude)
                                     intent.putExtra("latitude", latitude)
                                     startActivity(intent)
