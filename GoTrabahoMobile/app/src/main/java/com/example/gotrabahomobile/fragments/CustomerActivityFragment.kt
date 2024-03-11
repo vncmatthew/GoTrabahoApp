@@ -7,9 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.DTO.BookingUserDTO
 import com.example.gotrabahomobile.Helper.ActivityRecycleViewAdapter
+import com.example.gotrabahomobile.Helper.BookingUserAdapter
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.R
+import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
+import com.example.gotrabahomobile.databinding.FragmentCustomerActivityBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +33,10 @@ class CustomerActivityFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var _binding: FragmentCustomerActivityBinding? = null
+    private lateinit var bookingList: List<BookingUserDTO>
+    private lateinit var rvAdapter: BookingUserAdapter
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +50,11 @@ class CustomerActivityFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        _binding = FragmentCustomerActivityBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer_activity, container, false)
+        getServiceList()
+        return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,6 +65,36 @@ class CustomerActivityFragment : Fragment() {
         val recyclerView = view.findViewById<RecyclerView>(R.id.activityRecycleView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = context?.let { ActivityRecycleViewAdapter(bookingList, it) }
+    }
+
+
+
+    private fun getServiceList(){
+        val booking = BookingInstance.retrofitBuilder
+        val userId = arguments?.getInt("userId", 0) ?: 0
+
+        booking.getUserBookings(userId).enqueue(object : Callback<List<BookingUserDTO>> {
+            override fun onResponse(
+                call: Call<List<BookingUserDTO>>,
+                response: Response<List<BookingUserDTO>>
+            ) {
+                if (response.isSuccessful && response.body() != null) {
+
+                    bookingList = response.body()!!
+
+                    binding.activityRecycleView.apply {
+                        rvAdapter =
+                            BookingUserAdapter(requireContext(), bookingList)
+                        adapter = rvAdapter
+                        layoutManager = LinearLayoutManager(requireContext())
+                    }
+                }
+            }
+            override fun onFailure(call: Call<List<BookingUserDTO>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     companion object {

@@ -16,12 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CustomerProfilePageActivity : AppCompatActivity() {
-/*
-    private lateinit var tvFirstName : EditText
-    private lateinit var tvLastName : EditText
-    private lateinit var tvPhoneNumber: EditText
-    private lateinit var tvEmail: EditText*/
-    private lateinit var btnEditProfile: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

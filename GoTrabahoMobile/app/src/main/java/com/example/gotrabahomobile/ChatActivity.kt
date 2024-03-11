@@ -202,7 +202,6 @@ class ChatActivity : AppCompatActivity() {
                     customerPrice = freelancerPrice
                 )
                 patchNegotiation(negotiationId, negotiation)
-                Log.d("Inside", "YUes")
             }
 
 

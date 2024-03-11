@@ -160,7 +160,6 @@ class LoginActivity : AppCompatActivity() {
                                     intent.putExtra("sqlId", sqlId)
                                     intent.putExtra("userId", identification)
                                     intent.putExtra("email", email)
-                                    intent.putExtra("password", password)
                                     intent.putExtra("firstName", firstName)
                                     intent.putExtra("lastName", lastName)
                                     intent.putExtra("fullName", fullName)
@@ -171,7 +170,7 @@ class LoginActivity : AppCompatActivity() {
                                 else if(userType == 2) {
 
                                     val call = FreelancerInstance.retrofitBuilder
-                                    call.getFreelancerId(sqlId!!.toInt()).enqueue(object: Callback<Freelancer>{
+                                    call.getFreelancerId(identification!!.toInt()).enqueue(object: Callback<Freelancer>{
                                         override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
 
                                             if(response.isSuccessful){

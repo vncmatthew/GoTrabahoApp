@@ -14,7 +14,7 @@
         android:id="@+id/activityFragment"
         android:name="com.example.gotrabahomobile.fragments.CustomerActivityFragment"
         android:label="fragment_activity"
-        tools:layout="@layout/fragment_activity" />
+        tools:layout="@layout/fragment_customer_activity" />
     <fragment
         android:id="@+id/customerMessagesFragment"
         android:name="com.example.gotrabahomobile.CustomerMessagesFragment"

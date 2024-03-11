@@ -24,6 +24,7 @@ import javax.security.auth.callback.Callback
 
 class BookingDetailsActivity : AppCompatActivity() {
     private var ratingNumber = 0
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking_details)

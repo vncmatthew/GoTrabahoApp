@@ -30,7 +30,6 @@ class CustomerMainActivity : AppCompatActivity() {
         val firstName = intent.getStringExtra("firstName")
         val lastName = intent.getStringExtra("lastName")
         val fullName = intent.getStringExtra("fullName")
-        val password = intent.getStringExtra("password")
         val userId = intent.getIntExtra("userId", 0)
 
         // Create a Bundle and put the data into it
@@ -40,7 +39,6 @@ class CustomerMainActivity : AppCompatActivity() {
             putString("firstName", firstName)
             putString("lastName", lastName)
             putString("fullName", fullName)
-            putString("password", password)
         }
 
         // Instantiate fragments with the bundle
