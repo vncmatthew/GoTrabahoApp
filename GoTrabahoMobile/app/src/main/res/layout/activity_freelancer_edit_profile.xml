@@ -73,29 +73,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerLastName" />
 
-    <EditText
-        android:id="@+id/editTextProfileFreelancerEmailAddress"
-        android:layout_width="312dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/edit_text_background_white"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerPhone" />
-
     <TextView
         android:id="@+id/textViewChangePassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="15dp"
         android:text="Change Password"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerEmailAddress" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerPhone" />
 
     <EditText
         android:id="@+id/editTextNewPassword"
