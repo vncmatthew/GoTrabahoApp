@@ -42,16 +42,6 @@
         app:layout_constraintTop_toBottomOf="@+id/addNewService" />
 
     <include
-        android:id="@+id/freelancerPaymentOptions"
-        layout="@layout/list_item_payment_options"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editServices" />
-
-    <include
         android:id="@+id/freelancerLogout"
         layout="@layout/list_item_logout"
         android:layout_width="match_parent"
@@ -59,7 +49,7 @@
         android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/freelancerPaymentOptions" />
+        app:layout_constraintTop_toBottomOf="@+id/editServices" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

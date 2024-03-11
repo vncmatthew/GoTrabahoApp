@@ -2,6 +2,7 @@ package com.example.gotrabahomobile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,28 +45,56 @@ class FreelancerAccountFragment : Fragment() {
         val freelancerCardProfile = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerProfile)
         val freelancerCardAddNewService = view.findViewById<androidx.cardview.widget.CardView>(R.id.addNewService)
         val freelancerCardEditServices = view.findViewById<androidx.cardview.widget.CardView>(R.id.editServices)
-        val freelancerCardPaymentOptions = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerPaymentOptions)
+
         val freelancerCardLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerLogout)
+
+        val userId = arguments?.getInt("userId", 0) ?: 0
+        val freelancerId = arguments?.getInt("userId", 0) ?: 0
+        val firstName = arguments?.getString("firstName")
+        val lastName = arguments?.getString("lastName")
+        val email = arguments?.getString("email")
+        val fullName = arguments?.getString("fullName")
+
+        Log.d("FreelancerAccountFragment", freelancerId.toString())
+        Log.d("FreelancerAccountFragment", "${email}")
 
         freelancerCardProfile.setOnClickListener{
             val intent = Intent(requireActivity(), FreelancerProfilePageActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("freelancerId", freelancerId)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
 
         freelancerCardAddNewService.setOnClickListener{
             val intent = Intent(requireActivity(), FreelancerNewServiceJobVerificationActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("freelancerId", freelancerId)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
 
         freelancerCardEditServices.setOnClickListener{
             val intent = Intent(requireActivity(), FreelancerServicesListActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("freelancerId", freelancerId)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
 
-        freelancerCardPaymentOptions.setOnClickListener{
-            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
-            startActivity(intent)
-        }
+//        freelancerCardPaymentOptions.setOnClickListener{
+//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
+//            startActivity(intent)
+//        }
 
 //        freelancerCardLogout.setOnClickListener{
 //            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)

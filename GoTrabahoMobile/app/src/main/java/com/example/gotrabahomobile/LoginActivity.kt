@@ -177,6 +177,7 @@ class LoginActivity : AppCompatActivity() {
                                             if(response.isSuccessful){
                                                 val freelancerId = response.body()
                                                 var bro = freelancerId?.verificationStatus
+
                                                 if(bro == true){
                                                     val intent =
                                                         Intent(this@LoginActivity, FreelancerBookingsPageActivity::class.java)
@@ -184,12 +185,22 @@ class LoginActivity : AppCompatActivity() {
                                                     intent.putExtra("freelancerId", freelancerId?.freelancerId)
                                                     intent.putExtra("firstName", firstName)
                                                     intent.putExtra("lastName", lastName)
+                                                    intent.putExtra("fullName", fullName)
+                                                    intent.putExtra("email", email)
                                                     intent.putExtra("userType", userType)
                                                     startActivity(intent)
                                                 }
                                                 else{
                                                     val intent =
                                                         Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)
+                                                        intent.putExtra("userID", sqlId)
+                                                        intent.putExtra("freelancerId", freelancerId?.freelancerId)
+
+                                                        intent.putExtra("firstName", firstName)
+                                                        intent.putExtra("lastName", lastName)
+                                                        intent.putExtra("fullName", fullName)
+                                                        intent.putExtra("email", email)
+                                                        intent.putExtra("userType", userType)
                                                     startActivity(intent)
                                                 }
                                             }

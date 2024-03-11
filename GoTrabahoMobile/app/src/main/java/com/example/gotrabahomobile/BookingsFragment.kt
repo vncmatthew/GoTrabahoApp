@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,20 @@ class BookingsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_bookings, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val userId = arguments?.getInt("userId", 0) ?: 0
+        val freelancerId = arguments?.getInt("userId", 0) ?: 0
+        val firstName = arguments?.getString("firstName")
+        val lastName = arguments?.getString("lastName")
+        val email = arguments?.getString("email")
+        val fullName = arguments?.getString("fullName")
+
+        Log.d("BookingsFragment", freelancerId.toString())
+        Log.d("BookingsFragment", "${email}")
     }
 
     companion object {
