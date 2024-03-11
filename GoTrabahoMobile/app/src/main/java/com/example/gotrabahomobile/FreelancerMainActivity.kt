@@ -5,12 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import com.example.gotrabahomobile.databinding.ActivityCustomerMainBinding
 import com.example.gotrabahomobile.databinding.ActivityFreelancerMainBinding
-import com.example.gotrabahomobile.fragments.CustomerHomeFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class FreelancerMainActivity : AppCompatActivity() {
 

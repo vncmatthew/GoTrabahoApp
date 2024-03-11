@@ -97,7 +97,7 @@ class LoginActivity : AppCompatActivity() {
                         val userID = user.userId
                         val firstName = user.firstName
                         val lastName = user.lastName
-                        Log.d("Nigger", "${user.lastName}")
+
                         val userType = user.userType
                         val longitude = user.longitude
                         val latitude = user.latitude

@@ -2,18 +2,10 @@ package com.example.gotrabahomobile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.gotrabahomobile.databinding.ActivityCustomerMainBinding
-import com.example.gotrabahomobile.fragments.CustomerActivityFragment
 import com.example.gotrabahomobile.fragments.CustomerHomeFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CustomerMainActivity : AppCompatActivity() {
 

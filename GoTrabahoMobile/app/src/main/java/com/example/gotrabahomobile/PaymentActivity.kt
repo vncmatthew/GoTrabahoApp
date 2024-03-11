@@ -1,8 +1,20 @@
 package com.example.gotrabahomobile
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -17,56 +29,41 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class PaymentActivity : AppCompatActivity() {
-    private lateinit var input_email:EditText
     private lateinit var btn_pay: Button
-    private lateinit var email: String
-    var customerEmail: String? = null
+    private lateinit var userEmail: String
+    private lateinit var textInvoiceLink: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
-        email = intent.getStringExtra("email").toString()
-//        email = email ?: ""
-        Log.d("PaymentActivity", "Bundle: $email")
-
-        val userID = intent.getIntExtra("userID", 0)
-        getEmail(userID)
-
-
+        textInvoiceLink = findViewById(R.id.textViewInvoiceLink)
         btn_pay = findViewById(R.id.buttonPayWithMaya)
-        val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
-//        invoiceLinkText.text = email
+        userEmail = intent.getStringExtra("email").toString()
+        //display user email
+        Log.d("PaymentActivity", "Bundle: $userEmail")
+
+
         btn_pay.setOnClickListener {
             paymentBooking()
         }
 
     }
 
+
+
     private fun paymentBooking() {
-        val selectedDateTime = intent.getStringExtra("selectedDateTime")
-        val userID = intent.getIntExtra("userID", 0)
-        val customerID = intent.getIntExtra("customerID", 0)
-        val customerName = intent.getStringExtra("customerName")
-        val userEmail = "testing072301@gmail.com"
-        val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
 
-
-
-//        val emailBook = email ?: ""
         val Paymentservice = PaymentInstance.retrofitBuilder
-
-
-
         val paymentInfo = PaymentDTO(email = userEmail)
 
-        Paymentservice.paymentBook(userEmail).enqueue(object : Callback<ResponseBody> {
+        Paymentservice.paymentBook(paymentInfo).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val invoiceResponse = response.body()
-                    Toast.makeText(this@PaymentActivity, "THIS SHIT WORKS", Toast.LENGTH_SHORT).show()
-
-                    invoiceLinkText.text = invoiceResponse?.string()
-
+//                    textInvoiceLink.text = invoiceResponse?.string()
+                    setupInvoiceLink(textInvoiceLink, invoiceResponse?.string())
+                    Toast.makeText(this@PaymentActivity, "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard", Toast.LENGTH_LONG).show()
+                    Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
                 } else {
                     // Handle error
                     Toast.makeText(this@PaymentActivity, "Failed to generate invoice.", Toast.LENGTH_SHORT).show()
@@ -80,24 +77,29 @@ class PaymentActivity : AppCompatActivity() {
         })
     }
 
-    private fun getEmail(userId: Int) {
-        val call = UserInstance.retrofitBuilder
+    private fun setupInvoiceLink(textView: TextView, url: String?) {
+        val spannableString = SpannableString("Invoice Link")
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
 
-        call.getUser(userId).enqueue(object: Callback<User> {
-            override fun onResponse(call: Call<User>, response: Response<User>) { val data = response.body()
-                if (response.isSuccessful) {
-                        email = data?.email.toString()
-
-                    val invoiceLinkText = findViewById<TextView>(R.id.textViewInvoiceLink)
-                    invoiceLinkText.text = email
-                    }
+                val clipboard =
+                    widget.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                val clip = ClipData.newPlainText("Invoice Link", url)
+                clipboard.setPrimaryClip(clip)
+                Log.d("Invoice URL", "Invoice URL has been copied to clipboard")
+                Toast.makeText(this@PaymentActivity, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onFailure(call: Call<User>, t: Throwable) {
-                Log.d("Failed to get email", "${t}" )
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE // Set the text color
+                ds.isUnderlineText = true
+
             }
+        }
 
-        })
-
+        spannableString.setSpan(clickableSpan, 16, spannableString.length - 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        textInvoiceLink.text = spannableString
+        textInvoiceLink.movementMethod = LinkMovementMethod.getInstance()
     }
 }
