@@ -12,6 +12,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -38,6 +39,9 @@ interface UserInterface {
 
     @DELETE("api/User/{userId}")
     fun deleteUser(@Path("userId") resourceId: String): Call<User>
+
+    @PATCH("api/User/Patch/{userId}")
+    fun patchUser(@Path("userId") resourceId: Int, @Body updatedResource: User): Call<User>
 
 
 }

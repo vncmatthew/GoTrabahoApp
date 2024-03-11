@@ -160,6 +160,7 @@ class LoginActivity : AppCompatActivity() {
                                     intent.putExtra("sqlId", sqlId)
                                     intent.putExtra("userId", identification)
                                     intent.putExtra("email", email)
+                                    intent.putExtra("password", password)
                                     intent.putExtra("firstName", firstName)
                                     intent.putExtra("lastName", lastName)
                                     intent.putExtra("fullName", fullName)

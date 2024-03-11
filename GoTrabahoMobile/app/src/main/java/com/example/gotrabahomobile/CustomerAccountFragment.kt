@@ -57,9 +57,10 @@ class CustomerAccountFragment : Fragment() {
         val customCardViewLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardLogout)
 
         val name = customCardViewProfile.findViewById<TextView>(R.id.customerName)
-        val identification = arguments?.getInt("userId", 0) ?: 0
+        val userId = arguments?.getInt("userId", 0) ?: 0
         val firstName = arguments?.getString("firstName")
         val lastName = arguments?.getString("lastName")
+        val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
         name.text = fullName
         Log.d("CheckMe", "${fullName}")
@@ -69,6 +70,8 @@ class CustomerAccountFragment : Fragment() {
 
             val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
 
+            intent.putExtra("userId", userId)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
 
