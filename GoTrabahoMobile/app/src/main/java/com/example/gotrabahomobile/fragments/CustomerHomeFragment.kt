@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -77,6 +78,13 @@ class CustomerHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
+
+        val notifButton: ImageButton = _binding!!.include.notifNavbar
+
+        notifButton.setOnClickListener {
+            val intent = Intent(requireContext(), PaymentActivity::class.java)
+            startActivity(intent)
+        }
 
         val buttonPay: Button = _binding!!.buttonPayment
         buttonPay.setOnClickListener{

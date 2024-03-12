@@ -179,7 +179,7 @@ class LoginActivity : AppCompatActivity() {
 
                                                 if(bro == true){
                                                     val intent =
-                                                        Intent(this@LoginActivity, FreelancerBookingsPageActivity::class.java)
+                                                        Intent(this@LoginActivity, FreelancerMainActivity::class.java)
                                                     intent.putExtra("userID", sqlId)
                                                     intent.putExtra("freelancerId", freelancerId?.freelancerId)
                                                     intent.putExtra("firstName", firstName)

@@ -63,7 +63,7 @@ class PaymentActivity : AppCompatActivity() {
         val Paymentservice = PaymentInstance.retrofitBuilder
         val paymentInfo = PaymentDTO(email = userEmail)
 
-        Paymentservice.paymentBook(paymentInfo).enqueue(object : Callback<ResponseBody> {
+        Paymentservice.paymentBook(paymentInfo, 2).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val invoiceResponse = response.body()
@@ -71,6 +71,7 @@ class PaymentActivity : AppCompatActivity() {
                     setupInvoiceLink(textInvoiceLink, invoiceResponse?.string())
                     Toast.makeText(this@PaymentActivity, "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard", Toast.LENGTH_LONG).show()
                     Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
+                    Log.d("Invoice URL", invoiceResponse?.toString() ?: "Example invoice link")
                 } else {
                     // Handle error
                     Toast.makeText(this@PaymentActivity, "Failed to generate invoice.", Toast.LENGTH_SHORT).show()
