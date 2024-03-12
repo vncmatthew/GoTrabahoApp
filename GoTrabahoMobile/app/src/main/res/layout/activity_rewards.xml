@@ -14,12 +14,48 @@
         android:id="@+id/textViewRewards"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         android:text="Rewards"
-        android:textSize="20sp"
+        android:textSize="26sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
+
+    <include
+        android:id="@+id/rewardCard"
+        layout="@layout/layout_rewardcard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRewards" />
+
+    <TextView
+        android:id="@+id/textViewRewardInfo"
+        android:layout_width="285dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="18dp"
+        android:text="@string/rewardInfo"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rewardCard" />
+
+    <Button
+        android:id="@+id/buttonAvail"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="48dp"
+        android:backgroundTint="@color/gt_blue"
+        android:text="Avail Now!"
+        android:textColor="@color/white"
+        app:cornerRadius="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRewardInfo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

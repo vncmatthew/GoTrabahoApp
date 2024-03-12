@@ -57,7 +57,7 @@
     <string name="proceed">Proceed</string>
     <string name="submit">Submit</string>
 
-
+    <string name="rewardInfo">Availing eight (8) services will reward you with ₱100 off on your next avail!</string>
     <string name="serviceselec_details">Please select the type of service you wish to provide</string>
     <string name="proofofwork_details">Please upload a picture of previous work or experience related to the service you have selected. We need this to check your credibility and quality of work to ensure that quality service is provided.
         \n \n (ex. Certificate of employment, previous works or projects)</string>
