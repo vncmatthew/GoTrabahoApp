@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FreelancerMessagesFragment">
+    tools:context=".FreelancerMessagesFragment"
+    android:background="@color/white">
 
 
 
