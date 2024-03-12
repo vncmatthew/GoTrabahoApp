@@ -10,6 +10,12 @@
         android:id="@+id/include"
         layout="@layout/customer_toolbar_withbackbutton" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">\
+
+    </androidx.recyclerview.widget.RecyclerView>
+
     <include
         android:id="@+id/list_item_edit_del"
         android:layout_width="match_parent"

@@ -20,6 +20,8 @@ class RewardsActivity : AppCompatActivity() {
         availButton.setOnClickListener {
             counter++
             updateRewardCircles()
+
+
         }
 
         backButton.setOnClickListener{
