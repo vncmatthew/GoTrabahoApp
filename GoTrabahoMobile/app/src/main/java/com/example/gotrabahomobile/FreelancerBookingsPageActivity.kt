@@ -87,9 +87,6 @@ class FreelancerBookingsPageActivity : AppCompatActivity() {
         binding.btnFreelancerMessage.setOnClickListener{
 /*            val intent = Intent(this@FreelancerBookingsPageActivity, FreelancerMessagesActivity::class.java)
             startActivity(intent)*/
-
-
-
         getServiceId()
 
         }
