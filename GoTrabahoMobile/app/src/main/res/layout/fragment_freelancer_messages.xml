@@ -6,6 +6,8 @@
     tools:context=".FreelancerMessagesFragment"
     android:background="@color/white">
 
-
+    <include
+        android:id="@+id/include"
+        layout="@layout/customer_toolbar" />
 
 </FrameLayout>
