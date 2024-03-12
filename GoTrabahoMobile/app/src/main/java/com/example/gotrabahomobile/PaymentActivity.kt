@@ -17,6 +17,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.DTO.PaymentDTO
@@ -32,6 +33,7 @@ class PaymentActivity : AppCompatActivity() {
     private lateinit var btn_pay: Button
     private lateinit var userEmail: String
     private lateinit var textInvoiceLink: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
@@ -41,6 +43,11 @@ class PaymentActivity : AppCompatActivity() {
         userEmail = intent.getStringExtra("email").toString()
         //display user email
         Log.d("PaymentActivity", "Bundle: $userEmail")
+
+        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
+        backButton.setOnClickListener{
+            finish()
+        }
 
 
         btn_pay.setOnClickListener {
@@ -60,7 +67,7 @@ class PaymentActivity : AppCompatActivity() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val invoiceResponse = response.body()
-//                    textInvoiceLink.text = invoiceResponse?.string()
+
                     setupInvoiceLink(textInvoiceLink, invoiceResponse?.string())
                     Toast.makeText(this@PaymentActivity, "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard", Toast.LENGTH_LONG).show()
                     Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
@@ -84,7 +91,9 @@ class PaymentActivity : AppCompatActivity() {
 
                 val clipboard =
                     widget.context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+
                 val clip = ClipData.newPlainText("Invoice Link", url)
+
                 clipboard.setPrimaryClip(clip)
                 Log.d("Invoice URL", "Invoice URL has been copied to clipboard")
                 Toast.makeText(this@PaymentActivity, "Text copied to clipboard", Toast.LENGTH_SHORT).show()
@@ -98,7 +107,7 @@ class PaymentActivity : AppCompatActivity() {
             }
         }
 
-        spannableString.setSpan(clickableSpan, 16, spannableString.length - 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(clickableSpan, 0, spannableString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         textInvoiceLink.text = spannableString
         textInvoiceLink.movementMethod = LinkMovementMethod.getInstance()
     }
