@@ -8,14 +8,14 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/customer_toolbar_withbackbutton" />
+        layout="@layout/toolbar_no_notificationicon" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Profile"
+        android:text="Edit Profile"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -73,46 +73,72 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerLastName" />
 
+    <TextView
+        android:id="@+id/textViewChangePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Change Password"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerPhone" />
+
     <EditText
-        android:id="@+id/editTextProfileCustomerEmailAddress"
+        android:id="@+id/editTextNewPassword"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_background_white"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="New Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewChangePassword" />
+
+    <EditText
+        android:id="@+id/editTextConfirmNewPassword"
         android:layout_width="312dp"
         android:layout_height="60dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/edit_text_background_white"
         android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
+        android:inputType="textPassword"
+        android:hint="Confirm New Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerPhone" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextNewPassword" />
 
     <Button
-        android:id="@+id/buttonVerifyEmail"
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="@color/gt_blue"
-        android:text="Verify Email"
-        android:textColor="@color/white"
-        android:textSize="14dp"
-        app:cornerRadius="14dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerEmailAddress" />
-
-    <Button
-        android:id="@+id/buttonEditProfile"
+        android:id="@+id/buttonEditCustomerProfileCancel"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="@color/gt_blue"
-        android:text="Edit Profile"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="150dp"
+        android:backgroundTint="@color/gt_red_cancel"
+        android:text="Cancel"
+        android:textColor="@color/white"
+        android:textSize="14dp"
+        app:cornerRadius="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextNewPassword"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmNewPassword" />
+
+    <Button
+        android:id="@+id/buttonEditCustomerProfileSave"
+        android:layout_width="120dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/gt_green"
+        android:text="Save"
         android:textColor="@color/white"
         android:textSize="14dp"
         app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonVerifyEmail" />
+        app:layout_constraintStart_toStartOf="@+id/editTextNewPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmNewPassword" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

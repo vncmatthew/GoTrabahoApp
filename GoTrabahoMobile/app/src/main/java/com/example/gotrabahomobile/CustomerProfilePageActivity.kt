@@ -22,21 +22,19 @@ class CustomerProfilePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_profile_page)
 
-        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
-        backButton.setOnClickListener{
+        val cancelButton: Button = findViewById(R.id.buttonEditCustomerProfileCancel)
+        cancelButton.setOnClickListener{
             finish()
         }
-        val btnEditProfile = findViewById<Button>(R.id.buttonEditProfile)
+        val btnSaveProfile = findViewById<Button>(R.id.buttonEditCustomerProfileSave)
         val tvFirstName = findViewById<EditText>(R.id.editTextProfileCustomerFirstName)
         val tvLastName = findViewById<EditText>(R.id.editTextProfileCustomerLastName)
-        val tvEmail = findViewById<EditText>(R.id.editTextProfileCustomerEmailAddress)
         val tvPhone = findViewById<EditText>(R.id.editTextProfileCustomerPhone)
 
 
-        btnEditProfile.setOnClickListener {
+        btnSaveProfile.setOnClickListener {
             val firstName = tvFirstName.text?.toString()
             val lastName = tvLastName.text?.toString()
-            val email = tvEmail.text?.toString()
             val phone = tvPhone.text?.toString()
             val userId = intent.getIntExtra("userId",0)
             val updateUser = User(
