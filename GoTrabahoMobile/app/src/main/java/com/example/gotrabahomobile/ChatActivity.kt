@@ -74,7 +74,6 @@ class ChatActivity : AppCompatActivity() {
 
         //get UserModel
 
-            var intent = getIntent()
             var Id = intent.getIntExtra("serviceId", 0)
             var userId = intent.getStringExtra("userId")
             var firstName = intent.getStringExtra("firstName")
@@ -85,12 +84,7 @@ class ChatActivity : AppCompatActivity() {
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId!!)
 
-        btnConfirmSetPrice = findViewById(R.id.buttonSetPriceConfirm)
-        btnConfirmSetPrice.setOnClickListener {
-            val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
-            intent.putExtra("email", email)
-            startActivity(intent)
-        }
+
 
 
         reference!!.addValueEventListener(object : ValueEventListener {
@@ -179,6 +173,13 @@ class ChatActivity : AppCompatActivity() {
             .setView(dialogView)
             .create()
 
+        btnConfirmSetPrice = dialogView.findViewById(R.id.buttonSetPriceConfirm)
+        btnConfirmSetPrice.setOnClickListener {
+            val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
+            intent.putExtra("email", email)
+            startActivity(intent)
+        }
+
         val updateButton = dialogView.findViewById<Button>(R.id.buttonSetPriceConfirm)
         updateButton.setOnClickListener {
             val sqlId = intent.getStringExtra("sqlId")
@@ -207,6 +208,7 @@ class ChatActivity : AppCompatActivity() {
                                 )
                                 patchNegotiation(service!!, negotiation)
                             }
+
                         }
                     }
                     override fun onFailure(call: Call<Negotiation>, t: Throwable) {
@@ -228,7 +230,6 @@ class ChatActivity : AppCompatActivity() {
         closeButton.setOnClickListener {
             alertDialog.dismiss()
         }
-
 
 
         alertDialog.show()

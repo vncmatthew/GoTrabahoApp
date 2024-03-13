@@ -15,7 +15,9 @@ class FreelancerNewServiceJobVerificationActivity : AppCompatActivity() {
         val back: ImageView = findViewById(R.id.imageViewBackButton)
 
         nextButton.setOnClickListener{
+            val freelancerId = intent.getIntExtra("freelancerId", 0)
             val intent = Intent(this, FreelancerAddNewServiceActivity::class.java)
+            intent.putExtra("freelancerId", freelancerId)
             startActivity(intent)
         }
 

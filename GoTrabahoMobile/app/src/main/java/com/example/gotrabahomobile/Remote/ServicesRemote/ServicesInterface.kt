@@ -25,6 +25,9 @@ interface ServicesInterface {
     @GET("api/Services/GetLocations")
     fun getServiceLocations(): Call<List<FreelancerLocations>>
 
+    @GET("api/Services/ServiceList/{freelancerId}")
+    fun getFreelancerServices(@Path("freelancerId") freelancerId: Int): Call<List<Services>>
+
     @GET("api/Services/{serviceId}")
     fun getService(@Path("serviceId") serviceId: Int): Call<Services>
 

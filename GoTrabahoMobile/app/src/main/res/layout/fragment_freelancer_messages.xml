@@ -11,14 +11,6 @@
         android:id="@+id/include"
         layout="@layout/customer_toolbar" />
 
-    <Button
-        android:id="@+id/buttonTestFree"
-        android:layout_width="84dp"
-        android:layout_height="52dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFreelancerMessageList"
         android:layout_width="match_parent"

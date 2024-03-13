@@ -96,7 +96,7 @@
         android:layout_marginTop="34dp"
         android:layout_marginRight="48dp"
         android:backgroundTint="@color/gt_green"
-        android:text="Save"
+        android:text="@string/save"
         android:textColor="@color/white"
         android:textSize="16dp"
         app:cornerRadius="10dp"

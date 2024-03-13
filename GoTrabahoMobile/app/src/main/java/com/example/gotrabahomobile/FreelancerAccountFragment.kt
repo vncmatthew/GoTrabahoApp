@@ -49,7 +49,7 @@ class FreelancerAccountFragment : Fragment() {
         val freelancerCardLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerLogout)
 
         val userId = arguments?.getInt("userId", 0) ?: 0
-        val freelancerId = arguments?.getInt("userId", 0) ?: 0
+        val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
         val firstName = arguments?.getString("firstName")
         val lastName = arguments?.getString("lastName")
         val email = arguments?.getString("email")

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.FreelancerChatAdapter
 import com.example.gotrabahomobile.Model.Chat
@@ -87,25 +88,32 @@ class FreelancerMessagesFragment : Fragment() {
             Log.d("FreelancerMessagesFrag", Id.toString())
             Log.d("FreelancerMessagesFrag", userId.toString())
         }
+
         return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val chatButton: Button = view.findViewById(R.id.buttonTestFree)
+        //val chatButton: Button = view.findViewById(R.id.buttonTestFree)
 
-        userRecyclerView = view.findViewById(R.id.rvFreelancerMessageList)
 
-        chatButton.setOnClickListener {
+
+/*        chatButton.setOnClickListener {
 
 //            val intent = Intent(requireContext(), ChatActivity::class.java)
 //            startActivity(intent)
-        }
+        }*/
+
+        userRecyclerView = _binding!!.rvFreelancerMessageList
+
+        userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         getUsersList()
+
     }
 
     fun getUsersList() {
+        Log.d("Tag", "Check")
         val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         var userid = firebase.uid
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
