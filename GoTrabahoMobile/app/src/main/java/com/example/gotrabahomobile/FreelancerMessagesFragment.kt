@@ -1,11 +1,13 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,6 +43,10 @@ class FreelancerMessagesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val chatButton: Button = view.findViewById(R.id.buttonTestFree)
+
+
+
         val userId = arguments?.getInt("userId", 0) ?: 0
         val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
         val firstName = arguments?.getString("firstName")
@@ -48,8 +54,22 @@ class FreelancerMessagesFragment : Fragment() {
         val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
 
-        Log.d("FreelancerMessagesFrag", freelancerId.toString())
         Log.d("FreelancerMessagesFrag", "${email}")
+        Log.d("FreelancerMessagesFrag", "${fullName}")
+        Log.d("FreelancerMessagesFrag", freelancerId.toString())
+        Log.d("FreelancerMessagesFrag", userId.toString())
+
+        chatButton.setOnClickListener {
+            Log.d("FreelancerMessagesFrag", "Button Clicked")
+            val intent = Intent(requireContext(), ASampleChatActivity::class.java)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("freelancerId", freelancerId)
+//            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+
+//        Log.d("FreelancerMessagesFrag", freelancerId.toString())
+//        Log.d("FreelancerMessagesFrag", "${email}")
     }
 
     companion object {

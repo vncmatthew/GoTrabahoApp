@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -39,6 +40,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var etMessage: EditText
     private lateinit var btnSendMessage: ImageButton
     private lateinit var btnSetPrice: Button
+    private lateinit var btnConfirmSetPrice: Button
     private var finalPrice: Double? = null
 //    private lateinit var imgBack: ImageView
     private lateinit var tvUserName: TextView
@@ -61,6 +63,9 @@ class ChatActivity : AppCompatActivity() {
         tvUserName = findViewById(R.id.tvUserName)
         btnSetPrice = findViewById(R.id.buttonChatSetPrice)
 
+
+
+        //back button
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{
             finish()
@@ -73,12 +78,18 @@ class ChatActivity : AppCompatActivity() {
             var userId = intent.getStringExtra("userId")
             var firstName = intent.getStringExtra("firstName")
             var lastName = intent.getStringExtra("lastName")
+            var email = intent.getStringExtra("email")
 
             tvUserName.setText(firstName + " " + lastName)
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId!!)
 
-
+        btnConfirmSetPrice = findViewById(R.id.buttonSetPriceConfirm)
+        btnConfirmSetPrice.setOnClickListener {
+            val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
+            intent.putExtra("email", email)
+            startActivity(intent)
+        }
 
 
         reference!!.addValueEventListener(object : ValueEventListener {

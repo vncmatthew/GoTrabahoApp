@@ -79,6 +79,7 @@ class CustomerHomeFragment : Fragment() {
     ): View? {
         _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
 
+        //notif
         val notifButton: ImageButton = _binding!!.include.notifNavbar
 
         notifButton.setOnClickListener {
@@ -93,6 +94,7 @@ class CustomerHomeFragment : Fragment() {
             startActivity(intent)
         }
 
+        //select service spinner
         val spinner: Spinner = _binding!!.spinnerServiceNameHome
         Log.d("CustomerHomeFragment", "Spinner found: $spinner")
 
