@@ -2,6 +2,7 @@ package com.example.gotrabahomobile
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.gotrabahomobile.databinding.ActivityCustomerMainBinding
@@ -23,6 +24,8 @@ class CustomerMainActivity : AppCompatActivity() {
         val lastName = intent.getStringExtra("lastName")
         val fullName = intent.getStringExtra("fullName")
         val userId = intent.getIntExtra("userId", 0)
+
+        Log.d("CustomerMain", userId.toString())
 
         // Create a Bundle and put the data into it
         val bundle = Bundle().apply {

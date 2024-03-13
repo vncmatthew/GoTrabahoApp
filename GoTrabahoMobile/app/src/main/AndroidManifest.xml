@@ -45,9 +45,6 @@
             android:name=".FreelancerServicesListActivity"
             android:exported="false" />
         <activity
-            android:name=".FreelancerEditProfileActivity"
-            android:exported="false" />
-        <activity
             android:name=".FreelancerProfilePageActivity"
             android:exported="false" />
         <activity
@@ -121,13 +118,10 @@
         <activity
             android:name=".ChatActivity"
             android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+<!--             <intent-filter>-->
+<!--                 <action android:name="android.intent.action.MAIN" />-->
+<!--                 <category android:name="android.intent.category.LAUNCHER" />-->
+<!--             </intent-filter>-->
         </activity>
         <activity
             android:name=".ApplicationConfirmationActivity"
@@ -143,18 +137,7 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity
-            android:name=".CustomerActivityPageActivity"
-            android:exported="false">
 
-            <!--
-            <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-            -->
-        </activity>
         <activity
             android:name=".FreelancerDetailsActivity"
             android:exported="false" />
@@ -168,17 +151,7 @@
         <activity
             android:name=".FreelancerListListViewActivity"
             android:exported="false" />
-        <activity
-            android:name=".CustomerHomePageActivity"
-            android:exported="false">
 
-            <!--
-                 <intent-filter>
-             <action android:name="android.intent.action.MAIN" />
-             <category android:name="android.intent.category.LAUNCHER" />
-             </intent-filter>
-            -->
-        </activity>
         <activity
             android:name=".FreelancerJobVerificationActivity"
             android:exported="false">
@@ -239,7 +212,13 @@
         </activity>
         <activity
             android:name=".StartupActivity"
-            android:exported="false" />
+            android:exported="false" >
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
     </application>
 
 </manifest>

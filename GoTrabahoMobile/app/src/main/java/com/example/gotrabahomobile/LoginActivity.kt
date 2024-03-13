@@ -194,7 +194,6 @@ class LoginActivity : AppCompatActivity() {
                                                         Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)
                                                         intent.putExtra("userID", sqlId)
                                                         intent.putExtra("freelancerId", freelancerId?.freelancerId)
-
                                                         intent.putExtra("firstName", firstName)
                                                         intent.putExtra("lastName", lastName)
                                                         intent.putExtra("fullName", fullName)

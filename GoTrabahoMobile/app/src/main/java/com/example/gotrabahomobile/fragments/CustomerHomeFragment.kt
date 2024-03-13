@@ -15,6 +15,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.FreelancerListMapViewActivity
 import com.example.gotrabahomobile.Helper.CustomerHomeServicesAdapter
 import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Services
@@ -84,13 +85,23 @@ class CustomerHomeFragment : Fragment() {
 
         notifButton.setOnClickListener {
             val intent = Intent(requireContext(), PaymentActivity::class.java)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
 
-        val buttonPay: Button = _binding!!.buttonPayment
-        buttonPay.setOnClickListener{
-            val intent = Intent(requireContext(), PaymentActivity::class.java)
-            intent.putExtra("email", email)
+        //old payment button (dont delete yet)
+//        val buttonPay: Button = _binding!!.buttonMapView
+//        buttonPay.setOnClickListener{
+//            val intent = Intent(requireContext(), PaymentActivity::class.java)
+//            intent.putExtra("email", email)
+//            startActivity(intent)
+//        }
+
+
+        //map view button
+        val buttonMapView: Button = _binding!!.buttonMapView
+        buttonMapView.setOnClickListener{
+            val intent = Intent(requireContext(), FreelancerListMapViewActivity::class.java)
             startActivity(intent)
         }
 
