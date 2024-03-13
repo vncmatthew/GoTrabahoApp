@@ -46,6 +46,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var tvUserName: TextView
     private lateinit var tvSetPrice:TextView
     private lateinit var chatRecyclerView: RecyclerView
+    private val email: String? = null
     private var userData: UserFirebase? = null
     var topic = ""
     var chatList = ArrayList<Chat>()
@@ -121,7 +122,6 @@ class ChatActivity : AppCompatActivity() {
 
         btnSetPrice.setOnClickListener{
             showDialog()
-
         }
     }
 
@@ -187,11 +187,18 @@ class ChatActivity : AppCompatActivity() {
             val negotiationId = intent.getIntExtra("negotiationId", 0)
             val freelancerPrice = tvSetPrice.text.toString().toDoubleOrNull()
 
+            Log.d("ChatActivity", email.toString())
+
             if (serviceId != 0) {
                 val track = NegotiationInstance.retrofitBuilder
                 track.getNegotiationTracker("$sqlId$serviceId$name").enqueue(object : Callback<Negotiation> {
                     override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
                         if (response.isSuccessful) {
+                            Log.d("ChatActivity", email.toString())
+//                            val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
+//                            intent.putExtra("email", email)
+//                            startActivity(intent)
+
                             val service = response.body()?.negotiationId
                             service?.let {
                                 val negotiation = Negotiation(

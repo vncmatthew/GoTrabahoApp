@@ -16,14 +16,14 @@ class FreelancerMainActivity : AppCompatActivity() {
         binding = ActivityFreelancerMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val userId = intent.getIntExtra("userId", 0) ?: ""
+        val userId = intent.getIntExtra("sqlId", 0) ?: ""
         val freelancerId = intent.getIntExtra("freelancerId", 0) ?: ""
         val firstName = intent.getStringExtra("firstName")
         val lastName = intent.getStringExtra("lastName")
         val fullName = intent.getStringExtra("fullName")
         val email = intent.getStringExtra("email")
 
-        Log.d("FreelancerMainActivity", freelancerId.toString())
+        Log.d("FreelancerMainActivity", "${userId}")
         Log.d("FreelancerMainActivity", "${email}")
 
         val bundle = Bundle().apply {

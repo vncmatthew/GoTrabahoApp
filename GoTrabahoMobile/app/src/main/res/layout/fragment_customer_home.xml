@@ -10,24 +10,26 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <include
-        android:id="@+id/include"
-        layout="@layout/customer_toolbar" />
+
+        <include
+            android:id="@+id/include"
+            layout="@layout/customer_toolbar" />
 
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Services"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerServiceNameHome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include" />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Services"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/spinnerServiceNameHome"
+            app:layout_constraintHorizontal_bias="0.946"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <Spinner
+        <Spinner
         android:id="@+id/spinnerServiceNameHome"
         android:layout_width="184dp"
         android:layout_height="31dp"
@@ -49,15 +51,16 @@
         app:layout_constraintVertical_bias="0.675"
         tools:listitem="@layout/item_layout" />
 
-    <Button
-        android:id="@+id/buttonPayment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="7dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        <Button
+            android:id="@+id/buttonMapView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/gt_blue"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="12dp"
+            android:text="Map View"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/include" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

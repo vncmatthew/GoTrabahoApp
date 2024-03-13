@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -49,6 +50,11 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
 
         //inflate and create the map
         setContentView(R.layout.activity_freelancer_list_map_view)
+
+        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
+        backButton.setOnClickListener{
+            finish()
+        }
 
 
         map = findViewById<MapView>(R.id.mapview)
