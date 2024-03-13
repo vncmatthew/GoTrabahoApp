@@ -19,19 +19,18 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_profile_page)
 
-        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
-        backButton.setOnClickListener{
-            finish()
-        }
-
-        val btnEditProfile = findViewById<Button>(R.id.buttonEditProfile)
         val tvFirstName = findViewById<EditText>(R.id.editTextProfileFreelancerFirstName)
         val tvLastName = findViewById<EditText>(R.id.editTextProfileFreelancerLastName)
         val tvPhone = findViewById<EditText>(R.id.editTextProfileFreelancerPhone)
 
+        val cancelButton: Button = findViewById(R.id.buttonFreelancerEditProfileCancel)
+        cancelButton.setOnClickListener {
+            finish()
+        }
 
-        val editProfileButton: Button = findViewById(R.id.buttonEditProfile)
-        editProfileButton.setOnClickListener{
+
+        val saveProfileButton: Button = findViewById(R.id.buttonFreelancerEditProfileSave)
+        saveProfileButton.setOnClickListener{
 
             val firstName = tvFirstName.text?.toString()
             val lastName = tvLastName.text?.toString()
