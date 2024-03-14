@@ -13,5 +13,7 @@ class CustomerNotificationActivity : AppCompatActivity() {
         backButton.setOnClickListener{
             finish()
         }
+
+
     }
 }
