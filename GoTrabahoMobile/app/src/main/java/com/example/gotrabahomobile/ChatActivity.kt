@@ -219,9 +219,7 @@ class ChatActivity : AppCompatActivity() {
                                     intent.putExtra("negotiationId", service.negotiationId)
                                     startActivity(intent)
                                 }
-
                             }
-
                         }
                     }
                     override fun onFailure(call: Call<Negotiation>, t: Throwable) {

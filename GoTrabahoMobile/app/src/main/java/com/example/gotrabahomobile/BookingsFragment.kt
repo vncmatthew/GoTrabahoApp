@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -75,6 +76,7 @@ class BookingsFragment : Fragment() {
         Log.d("BookingsFragment", "Adapter set: ${spinner.adapter}")
 
 
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
@@ -100,7 +102,15 @@ class BookingsFragment : Fragment() {
         val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
 
+        val payServiceFeeButton = requireView().findViewById<Button>(R.id.btnPayServiceFee)
 
+        payServiceFeeButton.setOnClickListener {
+            val intent = Intent(requireContext(), PaymentActivity::class.java)
+            intent.putExtra("email", email)
+            startActivity(intent)
+        }
+
+        Log.d("BookingsFragment", email.toString())
 
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
         val recyclerView = view.findViewById<RecyclerView>(R.id.rvFreelancerHome)
