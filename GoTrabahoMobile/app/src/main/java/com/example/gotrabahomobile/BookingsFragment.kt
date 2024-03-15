@@ -102,13 +102,7 @@ class BookingsFragment : Fragment() {
         val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
 
-        val payServiceFeeButton = requireView().findViewById<Button>(R.id.btnPayServiceFee)
 
-        payServiceFeeButton.setOnClickListener {
-            val intent = Intent(requireContext(), PaymentActivity::class.java)
-            intent.putExtra("email", email)
-            startActivity(intent)
-        }
 
         Log.d("BookingsFragment", email.toString())
 

@@ -64,12 +64,10 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                     tvSetPriceCustomer.text = "Amount: ${currentItem.amount}"
                                 }
                                 holder.binding.btnPayServiceFee.setOnClickListener() {
-
                                     val intent = Intent(context, PaymentActivity::class.java)
                                     intent.putExtra("negotiationId", currentItem.negotiationId)
                                     intent.putExtra("email", email)
                                     context.startActivity(intent)
-
                                 }
 
                             }
