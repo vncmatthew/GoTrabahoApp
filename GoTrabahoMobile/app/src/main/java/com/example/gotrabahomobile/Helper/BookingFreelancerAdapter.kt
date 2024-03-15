@@ -2,17 +2,20 @@ package com.example.gotrabahomobile.Helper
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.BookingsFragment
 import com.example.gotrabahomobile.FreelancerDetailsActivity
 import com.example.gotrabahomobile.FreelancerEditServiceActivity
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.PaymentActivity
+import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 
@@ -67,8 +70,27 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                 holder.binding.btnPayServiceFee.setOnClickListener() {
                                     val intent = Intent(context, PaymentActivity::class.java)
                                     intent.putExtra("negotiationId", currentItem.negotiationId)
+                                    intent.putExtra("bookingId", currentItem.bookingId)
                                     intent.putExtra("email", email)
                                     context.startActivity(intent)
+                                }
+
+                                holder.binding.btnSetToCompleted.setOnClickListener{
+
+                                    val booking = BookingInstance.retrofitBuilder
+                                    booking.updateBookingStatus(currentItem.bookingId!!, 3).enqueue(object: Callback<Void>{
+                                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                            val check = response.body()
+                                            if(response.isSuccessful){
+
+                                            }
+                                        }
+
+                                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                                            TODO("Not yet implemented")
+                                        }
+
+                                    })
                                 }
 
                                 if (status == 1){

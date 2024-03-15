@@ -64,6 +64,7 @@ class PaymentActivity : AppCompatActivity() {
         val Paymentservice = PaymentInstance.retrofitBuilder
         val paymentInfo = PaymentDTO(email = userEmail)
         val negotiationId = intent.getIntExtra("negotiationId", 0)
+        val bookingId = intent.getIntExtra("bookingId", 0)
 
         Paymentservice.paymentBook(paymentInfo, negotiationId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -76,6 +77,19 @@ class PaymentActivity : AppCompatActivity() {
                     Log.d("Invoice URL", invoiceResponse?.toString() ?: "Example invoice link")
 
                     val booking = BookingInstance.retrofitBuilder
+                    booking.updateBookingStatus(bookingId, 2).enqueue(object: Callback<Void>{
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            val check = response.body()
+                            if(response.isSuccessful){
+                                Log.d("SuccessPay", "Shce")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
 
                 } else {
                     // Handle error

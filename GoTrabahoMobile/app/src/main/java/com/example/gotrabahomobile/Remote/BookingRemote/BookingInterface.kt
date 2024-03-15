@@ -7,6 +7,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -30,6 +31,10 @@ interface BookingInterface {
 
     @POST("api/Booking")
     fun insertBooking(@Body request: Booking): Call<ResponseBody>
+
+
+    @PATCH("api/Booking/{id}/status/{status}")
+    fun updateBookingStatus(@Path("id") bookingId: Int, @Path("status") newStatus: Int): Call<Void>
 
     @PUT("api/Booking/{bookingId}")
     fun updateBooking(@Path("bookingId") resourceId: String, @Body updatedResource: Booking): Call<Booking>
