@@ -14,14 +14,11 @@ import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.CustomerNotificationActivity
 import com.example.gotrabahomobile.FreelancerListMapViewActivity
-import com.example.gotrabahomobile.Helper.CustomerHomeServicesAdapter
 import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.UserFirebase
-import com.example.gotrabahomobile.PaymentActivity
 import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
