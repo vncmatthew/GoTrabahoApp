@@ -71,8 +71,17 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                     context.startActivity(intent)
                                 }
 
-                                if(status == 2 || status == 3){
+                                if (status == 1){
+                                    holder.binding.btnSetToCompleted.visibility = View.GONE
+                                }
+                                if (status == 2){
                                     holder.binding.btnPayServiceFee.visibility = View.GONE
+                                    holder.binding.btnSetToOngoing.visibility = View.GONE
+                                }
+                                if (status == 3){
+                                    holder.binding.btnPayServiceFee.visibility = View.GONE
+                                    holder.binding.btnSetToOngoing.visibility = View.GONE
+                                    holder.binding.btnSetToCompleted.visibility = View.GONE
                                 }
 
 
