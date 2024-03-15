@@ -113,7 +113,6 @@ class BookingsFragment : Fragment() {
         Log.d("BookingsFragment", email.toString())
 
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
-        val recyclerView = view.findViewById<RecyclerView>(R.id.rvFreelancerHome)
 
         tabLayout.addTab(tabLayout.newTab().setText("Pending"))
         tabLayout.addTab(tabLayout.newTab().setText("Ongoing"))
@@ -164,7 +163,8 @@ class BookingsFragment : Fragment() {
                 if (response.isSuccessful && response.body() != null){
                     bookingList = response.body()!!
                     _binding!!.rvFreelancerHome.apply {
-                        rvAdapter = BookingFreelancerAdapter(bookingList, requireContext())
+                        val email = arguments?.getString("email")
+                        rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email)
                         adapter = rvAdapter
                         layoutManager = LinearLayoutManager(requireContext())
                     }

@@ -24,6 +24,8 @@ class CustomerMainActivity : AppCompatActivity() {
         val firstName = intent.getStringExtra("firstName")
         val lastName = intent.getStringExtra("lastName")
         val fullName = intent.getStringExtra("fullName")
+        val longitude = intent.getDoubleExtra("longitude", 0.0)
+        val latitude = intent.getDoubleExtra("latitude", 0.0)
         val userId = intent.getIntExtra("userId", 0)
 
         Log.d("CustomerMain", userId.toString())
@@ -34,6 +36,8 @@ class CustomerMainActivity : AppCompatActivity() {
             putString("email", email)
             putString("firstName", firstName)
             putString("lastName", lastName)
+            putDouble("longitude", longitude)
+            putDouble("latitude", latitude)
             putString("fullName", fullName)
         }
 

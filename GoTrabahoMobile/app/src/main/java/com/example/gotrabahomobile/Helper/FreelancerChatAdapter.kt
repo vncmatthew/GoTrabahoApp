@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.ChatActivity
+import com.example.gotrabahomobile.ConfirmedChatActivity
 import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.R
@@ -36,7 +37,7 @@ class FreelancerChatAdapter(private val context: Context, private val userList: 
         holder.txtUserName.text = user.firstName + " " + user.lastName
 
         holder.layoutUser.setOnClickListener {
-            val intent = Intent(context, ChatActivity::class.java)
+            val intent = Intent(context, ConfirmedChatActivity::class.java)
             intent.putExtra("serviceId", serviceId)
             intent.putExtra("serviceName", serviceName)
             intent.putExtra("userId",user.userId)

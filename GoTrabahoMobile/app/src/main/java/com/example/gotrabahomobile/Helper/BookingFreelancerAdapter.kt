@@ -4,11 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.FreelancerDetailsActivity
+import com.example.gotrabahomobile.FreelancerEditServiceActivity
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.User
+import com.example.gotrabahomobile.PaymentActivity
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 
@@ -18,7 +21,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.format.DateTimeFormatter
 
-class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
+class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context, private val email: String?): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
 
 
     inner class BookingViewHolder(val binding: BookingLayoutBinding) :
@@ -60,11 +63,15 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                     }
                                     tvSetPriceCustomer.text = "Amount: ${currentItem.amount}"
                                 }
-                                /*        holder.binding.btnChooseService.setOnClickListener{
-                                            val intent = Intent(context, FreelancerDetailsActivity::class.java)
-                                            intent.putExtra("serviceId", currentItem.)
-                                            context.startActivity(intent)
-                                        }*/
+                                holder.binding.btnPayServiceFee.setOnClickListener() {
+
+                                    val intent = Intent(context, PaymentActivity::class.java)
+                                    intent.putExtra("negotiationId", currentItem.negotiationId)
+                                    intent.putExtra("email", email)
+                                    context.startActivity(intent)
+
+                                }
+
                             }
                         }
 

@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 data class FreelancerLocations(
     var longitude: Double?,
     var latitude: Double?,
-    var Name: String?,
-    var Description: String?
+    var name: String?,
+    var description: String?
 )

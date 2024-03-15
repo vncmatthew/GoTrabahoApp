@@ -1,6 +1,6 @@
 package com.example.gotrabahomobile
 
-import android.graphics.drawable.Drawable
+
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -12,19 +12,13 @@ import androidx.core.content.ContextCompat
 import com.example.gotrabahomobile.DTO.FreelancerLocations
 
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import org.osmdroid.config.Configuration.*
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.ItemizedIconOverlay
-import org.osmdroid.views.overlay.ItemizedOverlayWithFocus
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.OverlayItem
 import retrofit2.Call
 import retrofit2.Callback
-import retrofit2.HttpException
 import retrofit2.Response
 
 
@@ -127,8 +121,10 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                             val marker = Marker(map)
                             marker.position = geoPoint
                             marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                            marker.setTitle(freelancer.Name)
-                            marker.setSnippet(freelancer.Description)
+                            marker.setTitle("Service Name: " + freelancer.name)
+                            Log.d("Freelancer", "${freelancer.name}")
+                            Log.d("Freelancer", "${freelancer.description}")
+                            marker.setSnippet("Service Description: " + freelancer.description)
                             marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.map_arrow))
 
                             // Add the marker to the map
