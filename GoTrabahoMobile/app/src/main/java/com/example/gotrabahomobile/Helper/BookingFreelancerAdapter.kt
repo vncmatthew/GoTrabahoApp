@@ -3,6 +3,7 @@ package com.example.gotrabahomobile.Helper
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +22,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.time.format.DateTimeFormatter
 
-class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context, private val email: String?): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
+class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context, private val email: String?, private val status: Int): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
 
 
     inner class BookingViewHolder(val binding: BookingLayoutBinding) :
@@ -69,6 +70,11 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                     intent.putExtra("email", email)
                                     context.startActivity(intent)
                                 }
+
+                                if(status == 2 || status == 3){
+                                    holder.binding.btnPayServiceFee.visibility = View.GONE
+                                }
+
 
                             }
                         }

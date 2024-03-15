@@ -158,7 +158,7 @@ class BookingsFragment : Fragment() {
                     bookingList = response.body()!!
                     _binding!!.rvFreelancerHome.apply {
                         val email = arguments?.getString("email")
-                        rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email)
+                        rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, status)
                         adapter = rvAdapter
                         layoutManager = LinearLayoutManager(requireContext())
                     }
