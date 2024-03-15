@@ -83,18 +83,8 @@ class CustomerHomeFragment : Fragment() {
 
         notifButton.setOnClickListener {
             val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
-            intent.putExtra("email", email)
             startActivity(intent)
         }
-
-        //old payment button (dont delete yet)
-//        val buttonPay: Button = _binding!!.buttonMapView
-//        buttonPay.setOnClickListener{
-//            val intent = Intent(requireContext(), PaymentActivity::class.java)
-//            intent.putExtra("email", email)
-//            startActivity(intent)
-//        }
-
 
         //map view button
 

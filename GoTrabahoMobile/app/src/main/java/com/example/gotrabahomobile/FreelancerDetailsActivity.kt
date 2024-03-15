@@ -17,7 +17,6 @@ import retrofit2.Response
 
 class FreelancerDetailsActivity : AppCompatActivity() {
 
-    private lateinit var btnSetSchedule: Button
     private lateinit var btnNegotiate: Button
     private lateinit var serviceName: TextView
     private lateinit var serviceDescription: TextView
@@ -28,7 +27,6 @@ class FreelancerDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_details)
 
-        btnSetSchedule = findViewById(R.id.buttonSetSchedule)
         btnNegotiate = findViewById(R.id.buttonNegotiate)
         serviceName = findViewById(R.id.textViewFreelancerName)
         serviceDescription = findViewById(R.id.textViewDescription)

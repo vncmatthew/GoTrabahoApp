@@ -27,7 +27,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="fitXY"
-            android:src="@drawable/logo_blue_noname" />
+            android:src="@drawable/icon_profile" />
 
     </androidx.cardview.widget.CardView>
 
@@ -99,28 +99,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewLocationDescription" />
 
     <Button
-        android:id="@+id/buttonSetSchedule"
-        android:layout_width="288dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/blue2"
-        android:text="@string/setSched"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRatingDescription" />
-
-    <Button
         android:id="@+id/buttonNegotiate"
         android:layout_width="288dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="44dp"
         android:backgroundTint="@color/lightblue"
         android:text="@string/negotiate"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSetSchedule" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewRating" />
 
     <TextView
         android:id="@+id/textViewDescription"

@@ -1,11 +1,13 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -79,6 +81,13 @@ class CustomerMessagesFragment : Fragment() {
             Log.d("FreelancerMessagesFrag", "${fullName}")
             Log.d("FreelancerMessagesFrag", Id.toString())
             Log.d("FreelancerMessagesFrag", userId.toString())
+        }
+
+        val notifButton: ImageButton = _binding!!.include.notifNavbar
+
+        notifButton.setOnClickListener {
+            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
+            startActivity(intent)
         }
 
         return _binding!!.root
