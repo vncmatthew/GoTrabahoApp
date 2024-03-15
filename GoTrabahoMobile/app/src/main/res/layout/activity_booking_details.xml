@@ -31,17 +31,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!--    <ImageView-->
-    <!--        android:background="@drawable/circle_border"-->
-    <!--        android:id="@+id/imageView2"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginTop="14dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/include"-->
-    <!--        tools:srcCompat="@tools:sample/avatars" />-->
-
     <TextView
         android:id="@+id/textViewBookingDetailsFreelancerName"
         android:layout_width="wrap_content"
@@ -99,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewService" />
 
     <TextView
-        android:id="@+id/textViewPriceDescription"
+        android:id="@+id/textViewPriceTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -110,7 +99,19 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
 
     <TextView
-        android:id="@+id/textViewLocationDescription"
+        android:id="@+id/textViewPriceDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewPriceTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
+
+
+    <TextView
+        android:id="@+id/textViewLocationTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -118,10 +119,21 @@
         android:text="@string/location"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPriceDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewPriceTitle" />
 
     <TextView
-        android:id="@+id/textViewRatingDescription"
+        android:id="@+id/textViewLocationDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewLocationTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPriceDesc" />
+
+    <TextView
+        android:id="@+id/textViewRatingTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -129,59 +141,137 @@
         android:text="@string/rating"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLocationDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocationTitle" />
+
+    <TextView
+        android:id="@+id/textViewRatingDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewRatingTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLocationDesc" />
+
+    <TextView
+        android:id="@+id/textViewDateBookedTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Date Booked: "
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingTitle" />
+
+    <TextView
+        android:id="@+id/textViewDateBookedDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewDateBookedTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRatingDesc" />
+
+    <TextView
+        android:id="@+id/textViewStatusTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Status: "
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateBookedTitle" />
+
+    <TextView
+        android:id="@+id/textViewStatusDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:text="TextView"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@+id/textViewStatusTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDateBookedDesc" />
 
     <Button
-        android:id="@+id/buttonSetSchedule"
+        android:id="@+id/buttonMessage"
         android:layout_width="288dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/blue2"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/lightblue"
         android:text="Message"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewRatingDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewStatusDesc" />
+
+    <Button
+        android:id="@+id/buttonCancelBooking"
+        android:layout_width="288dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/gt_red_cancel2"
+        android:text="Cancel"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonMessage" />
 
     <Button
         android:id="@+id/buttonRate"
         android:layout_width="288dp"
         android:layout_height="50dp"
-        android:layout_marginTop="10dp"
-        android:backgroundTint="@color/lightblue"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/gt_yellow"
         android:text="Rate"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonSetSchedule" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewStatusDesc" />
 
 
 
-
-
-    <TextView
-        android:id="@+id/textViewLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+    <Button
+        android:id="@+id/buttonPayment"
+        android:layout_width="288dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10dp"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewLocationDescription"
-        app:layout_constraintTop_toBottomOf="@+id/textViewDescription" />
+        android:backgroundTint="@color/gt_green"
+        android:text="Payment"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonMessage" />
 
-    <TextView
-        android:id="@+id/textViewRating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="9dp"
-        android:text="TextView"
-        android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@+id/textViewRatingDescription"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLocation" />
+    <Button
+        android:id="@+id/buttonReport"
+        android:layout_width="288dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/gt_red_cancel"
+        android:text="Report"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRate" />
 
-<!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+
+
+
+
+
+
+
+
+
+
+
+    <!--    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->
 <!--        android:orientation="vertical">-->

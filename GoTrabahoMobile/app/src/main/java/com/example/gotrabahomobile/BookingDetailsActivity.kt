@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.media.Image
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -24,19 +25,137 @@ import javax.security.auth.callback.Callback
 
 class BookingDetailsActivity : AppCompatActivity() {
     private var ratingNumber = 0
+    private var status = 3
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_booking_details)
 
+        //buttons 1
         val rateButton = findViewById<Button>(R.id.buttonRate)
+        val messageButton = findViewById<Button>(R.id.buttonMessage)
+        //buttons 2
+        val cancelBookingButton = findViewById<Button>(R.id.buttonCancelBooking)
+        val paymentButton = findViewById<Button>(R.id.buttonPayment)
+        val reportBookingButton = findViewById<Button>(R.id.buttonReport)
 
-
-
+        bookingStatus()
 
         rateButton.setOnClickListener {
             showRatingDialog()
         }
+
+        messageButton.setOnClickListener {
+
+        }
+
+        cancelBookingButton.setOnClickListener {
+            showCancelServiceDialog()
+        }
+
+        paymentButton.setOnClickListener {
+            val intent = Intent(this, PaymentActivity::class.java)
+            startActivity(intent)
+        }
+
+        reportBookingButton.setOnClickListener {
+            val intent = Intent(this, ReportProblemActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun bookingStatus() {
+        //bookingStatus 0 - Pending, 1 - Ongoing, 2 - Service Done awaiting payment, 3 - Payment Done
+
+        //buttons 1
+        val rateButton = findViewById<Button>(R.id.buttonRate)
+        val messageButton = findViewById<Button>(R.id.buttonMessage)
+        //buttons 2
+        val cancelBookingButton = findViewById<Button>(R.id.buttonCancelBooking)
+        val paymentButton = findViewById<Button>(R.id.buttonPayment)
+        val reportBookingButton = findViewById<Button>(R.id.buttonReport)
+
+
+        when (status) {
+            0 -> { //Pending
+                rateButton.visibility = View.GONE
+                messageButton.visibility = View.VISIBLE
+                cancelBookingButton.visibility = View.VISIBLE
+                paymentButton.visibility = View.GONE
+                reportBookingButton.visibility = View.GONE
+            }
+            1 -> { //Ongoing
+                rateButton.visibility = View.GONE
+                messageButton.visibility = View.GONE
+                cancelBookingButton.visibility = View.GONE
+                paymentButton.visibility = View.GONE
+                reportBookingButton.visibility = View.GONE
+            }
+            2 -> { //Service Done awaiting payment
+                rateButton.visibility = View.GONE
+                messageButton.visibility = View.GONE
+                cancelBookingButton.visibility = View.GONE
+                paymentButton.visibility = View.VISIBLE
+                reportBookingButton.visibility = View.GONE
+            }
+            3 -> { //Payment Done
+                rateButton.visibility = View.VISIBLE
+                messageButton.visibility = View.GONE
+                cancelBookingButton.visibility = View.GONE
+                paymentButton.visibility = View.GONE
+                reportBookingButton.visibility = View.VISIBLE
+            }
+            else -> {
+                rateButton.visibility = View.GONE
+                messageButton.visibility = View.GONE
+                cancelBookingButton.visibility = View.GONE
+                paymentButton.visibility = View.GONE
+                reportBookingButton.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun showCancelServiceDialog() {
+        val cancelServiceView = LayoutInflater.from(this).inflate(R.layout.dialog_cancel_service, null)
+
+        val closeButton = cancelServiceView.findViewById<ImageView>(R.id.close_button)
+        val proceedButton = cancelServiceView.findViewById<Button>(R.id.buttonCancelServiceProceed)
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(cancelServiceView)
+            .create()
+
+        closeButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        proceedButton.setOnClickListener {
+            alertDialog.dismiss()
+            showConfirmCancelDialog()
+        }
+
+        alertDialog.show()
+    }
+
+    private fun showConfirmCancelDialog() {
+        val confirmCancelServiceView = LayoutInflater.from(this).inflate(R.layout.dialog_confirm_cancelservice, null)
+
+        val noButton = confirmCancelServiceView.findViewById<Button>(R.id.buttonNoCancelBooking)
+        val yesButton = confirmCancelServiceView.findViewById<Button>(R.id.buttonYesCancelBooking)
+
+        val alertDialog = AlertDialog.Builder(this)
+            .setView(confirmCancelServiceView)
+            .create()
+
+        noButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        yesButton.setOnClickListener {
+            alertDialog.dismiss()
+        }
+
+        alertDialog.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

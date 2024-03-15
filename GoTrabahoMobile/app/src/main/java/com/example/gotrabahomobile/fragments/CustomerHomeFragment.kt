@@ -15,6 +15,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.CustomerNotificationActivity
 import com.example.gotrabahomobile.FreelancerListMapViewActivity
 import com.example.gotrabahomobile.Helper.CustomerHomeServicesAdapter
 import com.example.gotrabahomobile.Helper.ServiceAdapter
@@ -84,7 +85,7 @@ class CustomerHomeFragment : Fragment() {
         val notifButton: ImageButton = _binding!!.include.notifNavbar
 
         notifButton.setOnClickListener {
-            val intent = Intent(requireContext(), PaymentActivity::class.java)
+            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
             intent.putExtra("email", email)
             startActivity(intent)
         }
