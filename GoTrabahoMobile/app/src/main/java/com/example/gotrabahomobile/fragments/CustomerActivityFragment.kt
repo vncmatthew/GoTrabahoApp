@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.DTO.BookingUserDTO
 import com.example.gotrabahomobile.Helper.ActivityRecycleViewAdapter
 import com.example.gotrabahomobile.Helper.BookingUserAdapter
-import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.databinding.FragmentCustomerActivityBinding
@@ -59,7 +58,7 @@ class CustomerActivityFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val bookingList = ArrayList<Booking>()
+        val bookingList = ArrayList<BookingUserDTO>()
 
         // Initialize RecyclerView
         val recyclerView = view.findViewById<RecyclerView>(R.id.activityRecycleView)

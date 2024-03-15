@@ -88,14 +88,17 @@ class FreelancerDetailsActivity : AppCompatActivity() {
                     if (negotiation != null) {
 
                                 val lastName = intent.getStringExtra("lastName")
+                                val firstName = intent.getStringExtra("firstName")
                                 val name = intent.getStringExtra("serviceName")
                                 val intent =
                                     Intent(this@FreelancerDetailsActivity, ChatActivity::class.java)
                                 intent.putExtra("negotiationId", negotiation?.negotiationId)
                                 intent.putExtra("serviceName", name)
                                 intent.putExtra("userId", userId)
+                                intent.putExtra("sqlId", sqlId)
                                 intent.putExtra("lastName", lastName)
-                                //intent.putExtra("serviceId", negotiation?.serviceId)
+                                intent.putExtra("firstName", firstName)
+                                intent.putExtra("serviceIdcustomer", negotiation?.serviceId)
                                 startActivity(intent)
 
                         } else {

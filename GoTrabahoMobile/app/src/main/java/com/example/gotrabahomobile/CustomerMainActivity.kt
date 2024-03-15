@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import com.example.gotrabahomobile.databinding.ActivityCustomerMainBinding
+import com.example.gotrabahomobile.fragments.CustomerActivityFragment
 import com.example.gotrabahomobile.fragments.CustomerHomeFragment
 
 class CustomerMainActivity : AppCompatActivity() {

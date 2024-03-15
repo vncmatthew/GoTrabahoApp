@@ -22,6 +22,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.DTO.PaymentDTO
 import com.example.gotrabahomobile.Model.User
+import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.PaymentRemote.PaymentInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import okhttp3.ResponseBody
@@ -62,8 +63,9 @@ class PaymentActivity : AppCompatActivity() {
 
         val Paymentservice = PaymentInstance.retrofitBuilder
         val paymentInfo = PaymentDTO(email = userEmail)
+        val negotiationId = intent.getIntExtra("negotiationId", 0)
 
-        Paymentservice.paymentBook(paymentInfo, 2).enqueue(object : Callback<ResponseBody> {
+        Paymentservice.paymentBook(paymentInfo, negotiationId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
                     val invoiceResponse = response.body()
@@ -72,6 +74,9 @@ class PaymentActivity : AppCompatActivity() {
                     Toast.makeText(this@PaymentActivity, "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard", Toast.LENGTH_LONG).show()
                     Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
                     Log.d("Invoice URL", invoiceResponse?.toString() ?: "Example invoice link")
+
+                    val booking = BookingInstance.retrofitBuilder
+
                 } else {
                     // Handle error
                     Toast.makeText(this@PaymentActivity, "Failed to generate invoice.", Toast.LENGTH_SHORT).show()

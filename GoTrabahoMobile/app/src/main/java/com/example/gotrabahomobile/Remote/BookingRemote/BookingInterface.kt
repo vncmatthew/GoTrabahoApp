@@ -2,6 +2,7 @@ package com.example.gotrabahomobile.Remote.BookingRemote
 
 import com.example.gotrabahomobile.DTO.BookingUserDTO
 import com.example.gotrabahomobile.Model.Booking
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -28,7 +29,7 @@ interface BookingInterface {
     ): Call<List<Booking>>
 
     @POST("api/Booking")
-    fun insertBooking(@Body request: Booking): Call<Booking>
+    fun insertBooking(@Body request: Booking): Call<ResponseBody>
 
     @PUT("api/Booking/{bookingId}")
     fun updateBooking(@Path("bookingId") resourceId: String, @Body updatedResource: Booking): Call<Booking>

@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,7 +42,6 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var btnSendMessage: ImageButton
     private lateinit var btnSetPrice: Button
     private lateinit var btnConfirmSetPrice: Button
-    private var finalPrice: Double? = null
 //    private lateinit var imgBack: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvSetPrice:TextView
@@ -53,6 +53,7 @@ class ChatActivity : AppCompatActivity() {
 
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
@@ -160,6 +161,7 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showDialog() {
         val dialogView = layoutInflater.inflate(R.layout.set_price_dialog, null)
 
@@ -172,13 +174,6 @@ class ChatActivity : AppCompatActivity() {
         val alertDialog = AlertDialog.Builder(this@ChatActivity)
             .setView(dialogView)
             .create()
-
-        btnConfirmSetPrice = dialogView.findViewById(R.id.buttonSetPriceConfirm)
-        btnConfirmSetPrice.setOnClickListener {
-            val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
-            intent.putExtra("email", email)
-            startActivity(intent)
-        }
 
         val updateButton = dialogView.findViewById<Button>(R.id.buttonSetPriceConfirm)
         updateButton.setOnClickListener {
@@ -193,20 +188,28 @@ class ChatActivity : AppCompatActivity() {
             if (serviceId != 0) {
                 val track = NegotiationInstance.retrofitBuilder
                 track.getNegotiationTracker("$sqlId$serviceId$name").enqueue(object : Callback<Negotiation> {
+                    @RequiresApi(Build.VERSION_CODES.O)
                     override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
                         if (response.isSuccessful) {
                             Log.d("ChatActivity", email.toString())
-//                            val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
-//                            intent.putExtra("email", email)
-//                            startActivity(intent)
 
-                            val service = response.body()?.negotiationId
+
+                            val service = response.body()
                             service?.let {
                                 val negotiation = Negotiation(
-                                    negotiationId = service,
+                                    negotiationId = service.negotiationId,
                                     freelancerPrice = freelancerPrice
                                 )
-                                patchNegotiation(service!!, negotiation)
+                                patchNegotiation(service.negotiationId!!, negotiation)
+                                checker(service.negotiationId, service.serviceId!!, service.customerId!! )
+                                btnConfirmSetPrice = dialogView.findViewById(R.id.buttonSetPriceConfirm)
+                                btnConfirmSetPrice.setOnClickListener {
+                                    val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
+                                    intent.putExtra("email", email)
+                                    intent.putExtra("negotiationId", service.negotiationId)
+                                    startActivity(intent)
+                                }
+
                             }
 
                         }
@@ -217,11 +220,14 @@ class ChatActivity : AppCompatActivity() {
                     }
                 })
             } else {
+
                 val negotiation = Negotiation(
                     negotiationId = negotiationId,
                     customerPrice = freelancerPrice
                 )
                 patchNegotiation(negotiationId, negotiation)
+
+
             }
 
 
@@ -235,13 +241,19 @@ class ChatActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+
     private fun patchNegotiation(negotiationId: Int, negotiation: Negotiation) {
         val call = NegotiationInstance.retrofitBuilder
         call.patchNegotiation(negotiationId, negotiation).enqueue(object : Callback<Negotiation> {
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
                 if (response.isSuccessful) {
                     Log.d("Warframe", "${response.body()}")
+                    val serviceIdcustomer: Int? = intent.getIntExtra("serviceIdcustomer", 0)
+                    val sqlId: Int? = intent.getIntExtra("sqlId",0)
                     Toast.makeText(this@ChatActivity, "Update successful", Toast.LENGTH_SHORT).show()
+                    checker(negotiationId, serviceIdcustomer!!, sqlId!! )
+
                 } else {
                     Log.d("Checkit", "${response.body()}")
                     Toast.makeText(this@ChatActivity, "Update failed: ${response.message()}", Toast.LENGTH_SHORT).show()
@@ -259,24 +271,70 @@ class ChatActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checker(negotiationId: Int, serviceId: Int, userId: Int){
 
-        var newBooking = Booking(
-            customerId = userId,
-            bookingDatetime = LocalDate.now().toString(),
-            amount = finalPrice,
-            serviceFee = finalPrice!! * 0.15,
-            bookingStatus = 1,
-            serviceId = serviceId,
-            ratingId = null
-
-        )
 
         val call = NegotiationInstance.retrofitBuilder
 
         call.getNegotiationPrice(negotiationId).enqueue(object: Callback<Double>{
             override fun onResponse(call: Call<Double>, response: Response<Double>) {
                 if (response.isSuccessful) {
-                     finalPrice = response.body()
+                    val finalPrice = response.body()
 
+
+
+                    val call = NegotiationInstance.retrofitBuilder
+                    call.getPriceChecker(negotiationId).enqueue(object: Callback<Boolean>{
+                        override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                            var check = response.body()
+                            if (response.isSuccessful){
+                                if(check == true){
+
+                                    var newBooking = Booking(
+                                        customerId = userId,
+                                        bookingDatetime = LocalDate.now().toString(),
+                                        amount = finalPrice,
+                                        serviceFee = finalPrice!! * 0.15,
+                                        bookingStatus = 1,
+                                        serviceId = serviceId,
+                                        negotiationId = negotiationId )
+
+                                    val book = BookingInstance.retrofitBuilder
+                                    book.insertBooking(newBooking).enqueue(object: Callback<ResponseBody>{
+                                        override fun onResponse(
+                                            call: Call<ResponseBody>,
+                                            response: Response<ResponseBody>
+                                        ) {
+                                            val booking = response.body()
+                                            if(response.isSuccessful){
+                                                Toast.makeText(applicationContext, "Successfully Booked", Toast.LENGTH_SHORT).show()
+                                                Log.d("Check", "${booking}")
+                                                val serviceId: Int? = intent.getIntExtra("serviceId", 0)
+
+                                                if (serviceId != 0){
+                                                Intent(this@ChatActivity, FreelancerMainActivity::class.java)
+                                                startActivity(intent)
+                                                }else {
+                                                    Intent(this@ChatActivity, CustomerMainActivity::class.java)
+                                                    startActivity(intent)
+                                                }
+
+                                            }
+                                            Log.d("Check", "${booking}")
+                                        }
+
+                                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                            Log.d("Check", "${t}")
+                                        }
+
+                                    })
+                                }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
                 }
             }
 
@@ -285,34 +343,11 @@ class ChatActivity : AppCompatActivity() {
             }
 
         })
-        call.getPriceChecker(negotiationId).enqueue(object: Callback<Boolean>{
-            override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                var check = response.body()
-                if (response.isSuccessful){
-                    if(check == true){
-                        val book = BookingInstance.retrofitBuilder
-                        book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
-                            override fun onResponse(
-                                call: Call<Booking>,
-                                response: Response<Booking>
-                            ) {
-                                TODO("Not yet implemented")
-                            }
 
-                            override fun onFailure(call: Call<Booking>, t: Throwable) {
-                                TODO("Not yet implemented")
-                            }
 
-                        })
-                    }
-                }
-            }
 
-            override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
 
-        })
+
     }
 
 

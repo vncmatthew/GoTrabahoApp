@@ -190,8 +190,7 @@ class LoginActivity : AppCompatActivity() {
                                                     startActivity(intent)
                                                 }
                                                 else{
-                                                    val intent =
-                                                        Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)
+                                                     Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)
                                                         intent.putExtra("userID", sqlId)
                                                         intent.putExtra("freelancerId", freelancerId?.freelancerId)
                                                         intent.putExtra("firstName", firstName)
