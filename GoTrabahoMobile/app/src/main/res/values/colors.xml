@@ -5,6 +5,7 @@
     <color name="gt_blue">#40A0D6</color>
     <color name="gt_darkerblue">#0077B6</color>
     <color name="gt_red_cancel">#FF6F6F</color>
+    <color name="gt_red_cancel2">#B43D3D</color>
     <color name="text_gray3">#656565</color>
 
     <color name="blue2">#0F81C0</color>
@@ -13,6 +14,7 @@
     <color name="activetab_blue">#32CEFF</color>
     <color name="gt_green">#33C8A0</color>
     <color name="gt_green2">#4ECB71</color>
+    <color name="gt_yellow">#FFD233</color>
     <color name="textbox_gray">#EFF0F6</color>
     <color name="text_gray">#6E7191</color>
     <color name="text_gray2">#B8B8B8</color>

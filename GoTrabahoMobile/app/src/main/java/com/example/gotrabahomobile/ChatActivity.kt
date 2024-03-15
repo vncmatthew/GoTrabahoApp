@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -50,6 +51,7 @@ class ChatActivity : AppCompatActivity() {
     private var userData: UserFirebase? = null
     var topic = ""
     var chatList = ArrayList<Chat>()
+    var setPriceClicked = false
 
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
@@ -117,7 +119,10 @@ class ChatActivity : AppCompatActivity() {
 
         btnSetPrice.setOnClickListener{
             showDialog()
+
         }
+
+
     }
 
     private fun sendMessage(senderId: String, receiverId: String, message: String) {
@@ -177,6 +182,11 @@ class ChatActivity : AppCompatActivity() {
 
         val updateButton = dialogView.findViewById<Button>(R.id.buttonSetPriceConfirm)
         updateButton.setOnClickListener {
+            //
+            setPriceClicked = true
+
+            setPriceVisibility()
+            //
             val sqlId = intent.getStringExtra("sqlId")
             val serviceId: Int? = intent.getIntExtra("serviceId", 0)
             val name = intent.getStringExtra("serviceName")
@@ -239,6 +249,16 @@ class ChatActivity : AppCompatActivity() {
 
 
         alertDialog.show()
+    }
+
+    private fun setPriceVisibility() {
+        val setPriceButton: Button = findViewById(R.id.buttonChatSetPrice)
+
+        if (!setPriceClicked) {
+            setPriceButton.visibility = View.VISIBLE
+        } else {
+            setPriceButton.visibility = View.GONE
+        }
     }
 
 

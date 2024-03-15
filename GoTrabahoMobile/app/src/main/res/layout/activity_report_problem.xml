@@ -15,64 +15,76 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="35dp"
-        android:text="TextView"
+        android:text="@string/reportProblem"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="273dp"
+        android:layout_height="56dp"
         android:layout_marginTop="25dp"
-        android:text="TextView"
+        android:text="@string/reportProblemDesc"
+        android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/editTextReportProblemTitle"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
         android:layout_marginTop="39dp"
+        android:background="@drawable/edit_text_background_white"
         android:ems="10"
         android:inputType="text"
-        android:text="Name"
+        android:hint="Title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="51dp"
+        android:id="@+id/editTextReportProblemDesc"
+        android:layout_width="312dp"
+        android:layout_height="178dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/edit_text_background_white"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="Write something..."
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextReportProblemTitle" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:text="Button"
+        android:id="@+id/buttonReportProblemSubmit"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:backgroundTint="@color/gt_blue"
+        android:text="@string/submit"
+        android:textSize="16dp"
+        app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextMultiLine" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextReportProblemDesc" />
 
     <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="43dp"
-        android:text="Button"
+        android:id="@+id/buttonReportProblemCancel"
+        android:layout_width="312dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="@color/gt_red_cancel"
+        android:text="Cancel"
+        android:textSize="16dp"
+        app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonReportProblemSubmit" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

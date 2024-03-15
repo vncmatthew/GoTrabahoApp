@@ -71,6 +71,9 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="reportProblem">Report a Problem</string>
+    <string name="reportProblemDesc">If you had a problem with the service provided by the freelancer, please write down the details below.</string>
+
     <string name="rateService">Rate the Service</string>
     <string name="setPrice">Set Price</string>
     <string name="setPriceDesc">Make sure that the set price is agreed by both parties.</string>
@@ -82,6 +85,7 @@
     <string name="cancelService">Cancel Service?</string>
     <string name="cancelServiceDesc">Note: Cancellation of a booked service 2 days before the scheduled date will charge you with a cancellation fee.</string>
     <string name="noteAddservice">Note: Adding a new service will require you to submit a new TESDA Certificate that will align with that service.</string>
+    <string name="confirmCancelService">Are you sure you want to cancel the booking?</string>
 
     //payment booking summary
 

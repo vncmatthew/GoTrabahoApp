@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -20,7 +21,8 @@ class RewardsActivity : AppCompatActivity() {
         availButton.setOnClickListener {
             counter++
             updateRewardCircles()
-
+            val intent = Intent(this, CustomerMainActivity::class.java)
+            startActivity(intent)
 
         }
 
