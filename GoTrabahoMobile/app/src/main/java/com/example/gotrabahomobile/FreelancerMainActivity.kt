@@ -42,14 +42,6 @@ class FreelancerMainActivity : AppCompatActivity() {
 
         replaceFragment(bookingsFragment)
 
-        // Add other data similarly
-
-//        bookingsFragment.arguments = bundle
-
-//        supportFragmentManager.beginTransaction()
-//            .replace(R.id.freelancerMainContainer, bookingsFragment)
-//            .commit()
-
         binding.freelancerBottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.bookingsFragment -> replaceFragment(bookingsFragment)
@@ -59,12 +51,6 @@ class FreelancerMainActivity : AppCompatActivity() {
             }
             true
         }
-
-//        val navHostFragment = supportFragmentManager.findFragmentById(R.id.freelancerMainContainer) as NavHostFragment
-//        navController = navHostFragment.navController
-//        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.freelancerBottomNavigationView)
-//
-//        NavigationUI.setupWithNavController(bottomNavigationView, navController)
     }
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

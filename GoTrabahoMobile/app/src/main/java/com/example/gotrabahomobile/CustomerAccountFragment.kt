@@ -53,6 +53,7 @@ class CustomerAccountFragment : Fragment() {
         val customCardViewLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardLogout)
 
         val name = customCardViewProfile.findViewById<TextView>(R.id.customerName)
+        val counter = arguments?.getInt("counter", 0) ?: 0
         val userId = arguments?.getInt("userId", 0) ?: 0
         val firstName = arguments?.getString("firstName")
         val lastName = arguments?.getString("lastName")
@@ -65,15 +66,14 @@ class CustomerAccountFragment : Fragment() {
         customCardViewProfile.setOnClickListener {
 
             val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
-
             intent.putExtra("userId", userId)
             intent.putExtra("email", email)
             startActivity(intent)
         }
 
         customCardViewRewards.setOnClickListener {
-
             val intent = Intent(requireActivity(), RewardsActivity::class.java)
+            intent.putExtra("counter", counter)
             startActivity(intent)
         }
 
