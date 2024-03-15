@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/customer_toolbar_withbackbutton" />
+
+    <TextView
+        android:id="@+id/tvUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/include"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="206dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="21dp"
+        android:text=" "
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <include
+        android:id="@+id/negotiationInfo"
+        layout="@layout/layout_chat_negotiation_info"
+        android:layout_below="@+id/tvUserName"
+        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="5dp"/>
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/l1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:gravity="center_vertical"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:layout_below="@+id/include">-->
+
+
+
+    <!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:id="@+id/tvUserName"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_below="@+id/include"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_alignParentStart="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_centerHorizontal="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginStart="152dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginTop="10dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginEnd="21dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_toStartOf="@+id/buttonChatSetPrice"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:text=" "&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:textAlignment="center"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:textColor="@color/black"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:textSize="20sp" />&ndash;&gt;-->
+    <!--&lt;!&ndash;        &ndash;&gt;-->
+    <!--&lt;!&ndash;        <TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:id="@+id/tvUserName"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_width="0dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:layout_weight="2"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:fontFamily="sans-serif-thin"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:text="aaa"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:textAlignment="center"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:textSize="20sp"&ndash;&gt;-->
+    <!--&lt;!&ndash;            android:textStyle="bold" />&ndash;&gt;-->
+
+    <!--        <Button-->
+    <!--            android:id="@+id/buttonChatSetPrice"-->
+    <!--            android:layout_width="120dp"-->
+    <!--            android:layout_height="40dp"-->
+    <!--            android:layout_marginTop="10dp"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_marginEnd="12dp"-->
+    <!--            android:backgroundTint="@color/gt_green2"-->
+    <!--            android:textColor="@color/white"-->
+    <!--            android:textSize="16sp"-->
+    <!--            app:cornerRadius="10dp"-->
+    <!--            android:text="Set Price" />-->
+
+    <!--    </LinearLayout>-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/negotiationInfo"
+        android:layout_above="@id/r1"
+        android:layout_marginTop="10dp"/>
+
+    <RelativeLayout
+        android:id="@+id/r1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/etMessage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="#D6D2D2"
+                android:fontFamily="sans-serif-light"
+                android:hint="Type Message"
+                android:inputType="text"
+                android:padding="12dp"
+                android:textColor="#000000" />
+
+            <ImageButton
+                android:id="@+id/btnSendMessage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="#F4F6F6"
+                android:src="@drawable/send"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
