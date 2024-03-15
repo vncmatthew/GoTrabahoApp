@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -87,6 +88,14 @@ class FreelancerMessagesFragment : Fragment() {
             Log.d("FreelancerMessagesFrag", "${fullName}")
             Log.d("FreelancerMessagesFrag", Id.toString())
             Log.d("FreelancerMessagesFrag", userId.toString())
+        }
+
+
+        val notifButton: ImageButton = _binding!!.include.notifNavbar
+
+        notifButton.setOnClickListener {
+            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
+            startActivity(intent)
         }
 
         return _binding!!.root

@@ -51,48 +51,52 @@ class RewardsActivity : AppCompatActivity() {
         Log.d("RewardsAct", "counter = $counter")
         val rewardGrid: GridLayout = findViewById(R.id.rewardGrid)
 
-        val circle1 = findViewById<ImageView>(R.id.circle1)
-        val circle2 = findViewById<ImageView>(R.id.circle2)
-        val circle3 = findViewById<ImageView>(R.id.circle3)
-        val circle4 = findViewById<ImageView>(R.id.circle4)
-        val circle5 = findViewById<ImageView>(R.id.circle5)
-        val circle6 = findViewById<ImageView>(R.id.circle6)
-        val circle7 = findViewById<ImageView>(R.id.circle7)
-        val circle8 = findViewById<ImageView>(R.id.circle8)
 
 
-        if (counter >= 1) {
-            circle1.setImageResource(R.drawable.reward_checked)
-        }
-        if (counter >= 2) {
-            circle1.setImageResource(R.drawable.reward_checked)
-            circle2.setImageResource(R.drawable.reward_checked)
-        }
-        if (counter >= 3) {
-            circle1.setImageResource(R.drawable.reward_checked)
-        }
-        if (counter >= 4) {
-            circle1.setImageResource(R.drawable.reward_checked)
-        }
-        if (counter >= 5) {
-            circle1.setImageResource(R.drawable.reward_checked)
-        }
-        if (counter >= 6) {
-            circle1.setImageResource(R.drawable.reward_checked)
-        }
-        if (counter >= 7) {
-            circle1.setImageResource(R.drawable.reward_checked)
-        }
-        if (counter >= 8) {
-            circle1.setImageResource(R.drawable.reward_checked)
-        }
+        val circles = arrayOf(
+            findViewById<ImageView>(R.id.circle1),
+            findViewById<ImageView>(R.id.circle2),
+            findViewById<ImageView>(R.id.circle3),
+            findViewById<ImageView>(R.id.circle4),
+            findViewById<ImageView>(R.id.circle5),
+            findViewById<ImageView>(R.id.circle6),
+            findViewById<ImageView>(R.id.circle7),
+            findViewById<ImageView>(R.id.circle8)
+        )
 
-//        for (i in circles.indices) {
-//            if (i < counter) {
-//                circles[i].setImageResource(R.drawable.reward_checked)
-//            } else {
-//                circles[i].setImageResource(R.drawable.reward_notchecked)
-//            }
+//
+//        if (counter >= 1) {
+//            circle1.setImageResource(R.drawable.reward_checked)
 //        }
+//        if (counter >= 2) {
+//            circle1.setImageResource(R.drawable.reward_checked)
+//            circle2.setImageResource(R.drawable.reward_checked)
+//        }
+//        if (counter >= 3) {
+//            circle1.setImageResource(R.drawable.reward_checked)
+//        }
+//        if (counter >= 4) {
+//            circle1.setImageResource(R.drawable.reward_checked)
+//        }
+//        if (counter >= 5) {
+//            circle1.setImageResource(R.drawable.reward_checked)
+//        }
+//        if (counter >= 6) {
+//            circle1.setImageResource(R.drawable.reward_checked)
+//        }
+//        if (counter >= 7) {
+//            circle1.setImageResource(R.drawable.reward_checked)
+//        }
+//        if (counter >= 8) {
+//            circle1.setImageResource(R.drawable.reward_checked)
+//        }
+
+        for (i in circles.indices) {
+            if (i < counter) {
+                circles[i].setImageResource(R.drawable.reward_checked)
+            } else {
+                circles[i].setImageResource(R.drawable.reward_notchecked)
+            }
+        }
     }
 }

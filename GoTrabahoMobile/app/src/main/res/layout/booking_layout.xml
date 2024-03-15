@@ -72,20 +72,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/btnSetToOngoing"
-            android:layout_width="130dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="-220dp"
-            android:backgroundTint="@color/gt_green"
-            android:text="Start Service"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvSetPriceCustomer"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
             android:id="@+id/btnSetToCompleted"
             android:layout_width="120dp"
             android:layout_height="40dp"

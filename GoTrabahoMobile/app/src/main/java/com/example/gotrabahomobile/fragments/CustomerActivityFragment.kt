@@ -1,12 +1,15 @@
 package com.example.gotrabahomobile.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.CustomerNotificationActivity
 import com.example.gotrabahomobile.DTO.BookingUserDTO
 import com.example.gotrabahomobile.Helper.ActivityRecycleViewAdapter
 import com.example.gotrabahomobile.Helper.BookingUserAdapter
@@ -53,6 +56,14 @@ class CustomerActivityFragment : Fragment() {
         _binding = FragmentCustomerActivityBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
         getServiceList()
+
+        val notifButton: ImageButton = _binding!!.include.notifNavbar
+
+        notifButton.setOnClickListener {
+            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
+            startActivity(intent)
+        }
+
         return _binding!!.root
     }
 

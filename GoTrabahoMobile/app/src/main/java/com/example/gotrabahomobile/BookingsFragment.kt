@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -87,6 +88,13 @@ class BookingsFragment : Fragment() {
             override fun onNothingSelected(parent: AdapterView<*>) {
                 Toast.makeText(requireContext(), "Please Select a Service", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        val notifButton: ImageButton = _binding!!.include.notifNavbar
+
+        notifButton.setOnClickListener {
+            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
+            startActivity(intent)
         }
 
         return _binding!!.root
