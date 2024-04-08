@@ -21,10 +21,12 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.DTO.PaymentDTO
+import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.PaymentRemote.PaymentInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
+import com.google.gson.JsonParser
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,7 +60,23 @@ class PaymentActivity : AppCompatActivity() {
     }
 
 
+    private fun getBookingSummary(){
 
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        val call = BookingInstance.retrofitBuilder
+        call.getBooking(bookingId).enqueue(object: Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                if(response.isSuccessful){
+
+                }
+            }
+
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
     private fun paymentBooking() {
 
         val Paymentservice = PaymentInstance.retrofitBuilder
@@ -69,13 +87,15 @@ class PaymentActivity : AppCompatActivity() {
         Paymentservice.paymentBook(paymentInfo, negotiationId).enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 if (response.isSuccessful) {
-                    val invoiceResponse = response.body()
 
-                    setupInvoiceLink(textInvoiceLink, invoiceResponse?.string())
+                    val jsonObject = response.body()
+                    val invoiceResponse = jsonObject?.let { JsonParser.parseString(it.string()).asJsonObject }
+
+                    setupInvoiceLink(textInvoiceLink, invoiceResponse?.get("invoiceUrl")?.asString)
                     Toast.makeText(this@PaymentActivity, "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard", Toast.LENGTH_LONG).show()
-                    Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
+                   // Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
                     Log.d("Invoice URL", invoiceResponse?.toString() ?: "Example invoice link")
-
+                    Log.d("Invoice URL", invoiceResponse?.get("invoiceUrl")?.asString?: "Example invoice link")
                     val booking = BookingInstance.retrofitBuilder
                     booking.updateBookingStatus(bookingId, 2).enqueue(object: Callback<Void>{
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {

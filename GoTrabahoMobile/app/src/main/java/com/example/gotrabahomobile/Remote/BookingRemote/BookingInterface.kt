@@ -29,6 +29,12 @@ interface BookingInterface {
         @Path("serviceTypeName") serviceTypeName: String
     ): Call<List<Booking>>
 
+    @GET("api/Booking/BookingUser/{userId}/{bookingStatus}")
+    fun getCompletedBooking(
+        @Path("userId") userId: Int,
+        @Path("bookingStatus") bookingStatus: Int,
+    ): Call<Int>
+
     @POST("api/Booking")
     fun insertBooking(@Body request: Booking): Call<ResponseBody>
 

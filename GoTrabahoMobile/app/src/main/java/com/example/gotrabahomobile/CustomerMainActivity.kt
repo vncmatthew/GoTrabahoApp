@@ -1,13 +1,20 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
+import com.example.gotrabahomobile.Remote.RatingRemote.RatingInstance
 import com.example.gotrabahomobile.databinding.ActivityCustomerMainBinding
 import com.example.gotrabahomobile.fragments.CustomerActivityFragment
 import com.example.gotrabahomobile.fragments.CustomerHomeFragment
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CustomerMainActivity : AppCompatActivity() {
 
@@ -39,6 +46,7 @@ class CustomerMainActivity : AppCompatActivity() {
             putDouble("longitude", longitude)
             putDouble("latitude", latitude)
             putString("fullName", fullName)
+            AddRating()
         }
 
         // Instantiate fragments with the bundle
@@ -62,6 +70,33 @@ class CustomerMainActivity : AppCompatActivity() {
         }
     }
 
+    private fun AddRating(){
+        val userId = intent.getIntExtra("userId", 0)
+        val call = BookingInstance.retrofitBuilder
+        call.getCompletedBooking(userId,3).enqueue(object: Callback<Int>{
+            override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                if (response.isSuccessful) {
+                    // Safely attempt to convert the ResponseBody to a string
+                    val bookingId = response.body()
+
+                    Log.d("Booking", "${bookingId}")
+                    if(bookingId != 0) {
+                        val intent =
+                            Intent(this@CustomerMainActivity, BookingDetailsActivity::class.java)
+                        intent.putExtra("bookingId", bookingId)
+                        startActivity(intent)
+                    }
+
+
+                }
+                }
+
+            override fun onFailure(call: Call<Int>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
     private fun replaceFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.mainContainer, fragment)

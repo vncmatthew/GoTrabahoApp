@@ -6,6 +6,7 @@ import android.media.Image
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,11 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.annotation.RequiresApi
+import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Rating
+import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.RatingRemote.RatingInstance
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
 import java.sql.Date
@@ -251,23 +255,44 @@ class BookingDetailsActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun submitRatingToDatabase(ratingNumber: Int) {
-        val newRating = Rating(
-            star = ratingNumber.toBigDecimal(),
-            dateRecorded = LocalDate.now()
-            //customerId =
 
-        )
-        val call = RatingInstance.retrofitBuilder
+        val call = BookingInstance.retrofitBuilder
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        call.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                if(response.isSuccessful){
+                    Log.d("Success ID","${response.body()?.bookingId?.toInt()}")
+                    val newRating = Rating(
+                        star = ratingNumber.toBigDecimal(),
+                        bookingId = response.body()?.bookingId?.toInt(),
 
-        call.insertRating(newRating).enqueue(object: retrofit2.Callback<Rating>{
-            override fun onResponse(call: Call<Rating>, response: Response<Rating>) {
-                TODO("Not yet implemented")
+                        dateRecorded = LocalDate.now().toString(),
+                        customerId = response.body()?.customerId
+                    )
+                    val call = RatingInstance.retrofitBuilder
+                    call.insertRating(newRating).enqueue(object: retrofit2.Callback<ResponseBody>{
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            if(response.isSuccessful){
+                                Log.d("Success", "${response.body()}")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                }
             }
 
-            override fun onFailure(call: Call<Rating>, t: Throwable) {
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
         })
+
     }
 }

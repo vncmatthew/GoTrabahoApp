@@ -36,6 +36,7 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
 
         binding.buttonFreelancerEditServiceCancel.setOnClickListener {
             finish()
+            Toast.makeText(this, "Cancel button clicked", Toast.LENGTH_SHORT).show()
         }
 
         binding.buttonFreelancerEditServiceSave.setOnClickListener{
