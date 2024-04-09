@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
@@ -18,35 +19,38 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFreelancerEditServiceBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_freelancer_edit_service)
+
         binding = ActivityFreelancerEditServiceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+//        var name: EditText = findViewById(R.id.editTextEditServiceName)
+//        var nameString = name.toString()
 
         var name = binding.editTextEditServiceName.text.toString()
         var description = binding.editTextEditDescription.text.toString()
-        var price: Double
-        try {
-            price = binding.editTextEditPrice.text.toString().toDouble()
-        } catch (e: NumberFormatException) {
-            Toast.makeText(this, "Please enter a valid price", Toast.LENGTH_SHORT).show()
-            return
-        }
+        var priceEditText = binding.editTextEditPrice.text.toString()
         var location = binding.editTextEditLocation.text.toString()
+        var price: Double? = null
 
-        binding.buttonFreelancerEditServiceCancel.setOnClickListener {
+        price = priceEditText.trim().toDoubleOrNull()
+
+
+        binding.buttonEditServiceCancel.setOnClickListener {
+            Log.d("ButtonClick", "Cancel button clicked")
             finish()
-            Toast.makeText(this, "Cancel button clicked", Toast.LENGTH_SHORT).show()
         }
 
-        binding.buttonFreelancerEditServiceSave.setOnClickListener{
-            editService(name, description, price,location)
-            Log.d("Test", "CheckUpButtonClicked")
-            val intent = Intent(this@FreelancerEditServiceActivity, FreelancerServicesListActivity::class.java)
-            startActivity(intent)
+        binding.buttonEditServiceSave.setOnClickListener{
+            if (price != null) {
+                editService(name, description, price.toDouble(), location)
+                Log.d("SaveButton", price.toString())
+                val intent = Intent(this@FreelancerEditServiceActivity, FreelancerServicesListActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Please enter a valid price", Toast.LENGTH_SHORT).show()
+            }
         }
-
-
     }
 
 
