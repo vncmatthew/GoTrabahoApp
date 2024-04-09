@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile.Remote.ReportBookingRemote
 
 import com.example.gotrabahomobile.Model.ReportBooking
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -18,7 +19,7 @@ interface ReportBookingInterface {
     fun getReportBooking(@Path("reportId") reportId: Int): Call<ReportBooking>
 
     @POST("api/ReportBooking")
-    fun insertReportBooking(@Body request: ReportBooking): Call<ReportBooking>
+    fun insertReportBooking(@Body request: ReportBooking): Call<ResponseBody>
 
     @PUT("api/ReportBooking/{reportId}")
     fun updateReportBooking(@Path("reportId") resourceId: String, @Body updatedResource: ReportBooking): Call<ReportBooking>

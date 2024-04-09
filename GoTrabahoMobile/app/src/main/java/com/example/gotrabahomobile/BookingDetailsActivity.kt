@@ -63,7 +63,9 @@ class BookingDetailsActivity : AppCompatActivity() {
         }
 
         reportBookingButton.setOnClickListener {
+            val bookingId = intent.getIntExtra("bookingId", 0)
             val intent = Intent(this, ReportProblemActivity::class.java)
+            intent.putExtra("bookingId", bookingId)
             startActivity(intent)
         }
     }
@@ -261,7 +263,6 @@ class BookingDetailsActivity : AppCompatActivity() {
         call.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
             override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
                 if(response.isSuccessful){
-                    Log.d("Success ID","${response.body()?.bookingId?.toInt()}")
                     val newRating = Rating(
                         star = ratingNumber.toBigDecimal(),
                         bookingId = response.body()?.bookingId?.toInt(),
@@ -275,8 +276,33 @@ class BookingDetailsActivity : AppCompatActivity() {
                             call: Call<ResponseBody>,
                             response: Response<ResponseBody>
                         ) {
-                            if(response.isSuccessful){
+                             if(response.isSuccessful){
                                 Log.d("Success", "${response.body()}")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+
+
+                    val book = BookingInstance.retrofitBuilder
+                    val updatedBook = Booking(
+                        bookingId = response.body()?.bookingId,
+                        customerId = response.body()?.customerId,
+                        bookingDatetime = response.body()?.bookingDatetime,
+                        amount = response.body()?.amount,
+                        bookingStatus = 4,
+                        serviceId = response.body()?.serviceId,
+                        serviceFee = response.body()?.serviceFee,
+                        negotiationId = response.body()?.negotiationId
+                    )
+                    book.updateBooking(response.body()?.bookingId.toString(), updatedBook).enqueue(object: retrofit2.Callback<ResponseBody>{
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            if(response.isSuccessful){
+                                Log.d("Check", "SuccessBook")
                             }
                         }
 
@@ -295,4 +321,5 @@ class BookingDetailsActivity : AppCompatActivity() {
         })
 
     }
+
 }

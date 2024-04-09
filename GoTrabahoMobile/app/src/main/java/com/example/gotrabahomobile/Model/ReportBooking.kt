@@ -6,7 +6,8 @@ data class ReportBooking(
     var reportId: Int? = null,
     var userId: Int? = null,
     var title: String? = null,
-    var timeStamp: LocalDateTime? = null,
+    var description: String? = null,
+    var timeStamp: String? = null,
     var status: Boolean? = null,
     var bookingId: Int? = null
 )

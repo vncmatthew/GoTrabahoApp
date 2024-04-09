@@ -43,7 +43,7 @@ interface BookingInterface {
     fun updateBookingStatus(@Path("id") bookingId: Int, @Path("status") newStatus: Int): Call<Void>
 
     @PUT("api/Booking/{bookingId}")
-    fun updateBooking(@Path("bookingId") resourceId: String, @Body updatedResource: Booking): Call<Booking>
+    fun updateBooking(@Path("bookingId") resourceId: String, @Body updatedResource: Booking): Call<ResponseBody>
 
     @DELETE("api/Booking/{bookingId}")
     fun deleteBooking(@Path("bookingId") resourceId: String): Call<Booking>
