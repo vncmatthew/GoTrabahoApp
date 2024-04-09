@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextEditPrice" />
 
     <Button
-        android:id="@+id/buttonFreelancerEditServiceCancel"
+        android:id="@+id/buttonEditServiceCancel"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginTop="34dp"
@@ -90,7 +90,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextEditLocation" />
 
     <Button
-        android:id="@+id/buttonFreelancerEditServiceSave"
+        android:id="@+id/buttonEditServiceSave"
         android:layout_width="120dp"
         android:layout_height="50dp"
         android:layout_marginTop="34dp"
