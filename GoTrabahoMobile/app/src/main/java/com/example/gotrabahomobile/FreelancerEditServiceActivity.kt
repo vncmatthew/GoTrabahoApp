@@ -17,23 +17,30 @@ import retrofit2.Response
 class FreelancerEditServiceActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFreelancerEditServiceBinding
+    lateinit var etName: EditText
+    lateinit var etDescription: EditText
+    lateinit var etPrice: EditText
+    lateinit var etLocation: EditText
+    var Dprice = null
+    var name = ""
+    var description = ""
+    var price = ""
+    var location = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_freelancer_edit_service)
-
         binding = ActivityFreelancerEditServiceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 //        var name: EditText = findViewById(R.id.editTextEditServiceName)
 //        var nameString = name.toString()
 
-        var name = binding.editTextEditServiceName.text.toString()
-        var description = binding.editTextEditDescription.text.toString()
-        var priceEditText = binding.editTextEditPrice.text.toString()
-        var location = binding.editTextEditLocation.text.toString()
-        var price: Double? = null
+        etName = binding.editTextEditServiceName
+        etDescription = binding.editTextEditDescription
+        etPrice = binding.editTextEditPrice
+        etLocation = binding.editTextEditLocation
+//        var price: Double? = null
 
-        price = priceEditText.trim().toDoubleOrNull()
 
 
         binding.buttonEditServiceCancel.setOnClickListener {
@@ -42,13 +49,20 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
         }
 
         binding.buttonEditServiceSave.setOnClickListener{
-            if (price != null) {
+            name = etName.text.toString()
+            description = etDescription.text.toString()
+            price = etPrice.text.toString()
+            location = etLocation.text.toString()
+            Log.d("SaveButton", "$name, $description, $price, $location ")
+            if (price.isEmpty()) {
+                Toast.makeText(this, "Please enter a valid price", Toast.LENGTH_LONG).show()
+            } else if (price == "0") {
+                Toast.makeText(this, "Please enter a valid price", Toast.LENGTH_SHORT).show()
+            } else {
+                price = etPrice.text.toString()
                 editService(name, description, price.toDouble(), location)
-                Log.d("SaveButton", price.toString())
                 val intent = Intent(this@FreelancerEditServiceActivity, FreelancerServicesListActivity::class.java)
                 startActivity(intent)
-            } else {
-                Toast.makeText(this, "Please enter a valid price", Toast.LENGTH_SHORT).show()
             }
         }
     }
