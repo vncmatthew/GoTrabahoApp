@@ -13,10 +13,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.example.gotrabahomobile.DTO.ServiceDetails
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Rating
+import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
+import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
 import com.example.gotrabahomobile.Remote.RatingRemote.RatingInstance
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -43,6 +47,8 @@ class BookingDetailsActivity : AppCompatActivity() {
         val paymentButton = findViewById<Button>(R.id.buttonPayment)
         val reportBookingButton = findViewById<Button>(R.id.buttonReport)
 
+
+        getDetails()
         bookingStatus()
 
         rateButton.setOnClickListener {
@@ -297,12 +303,12 @@ class BookingDetailsActivity : AppCompatActivity() {
                         bookingStatus = 4,
                         serviceId = response.body()?.serviceId,
                         serviceFee = response.body()?.serviceFee,
-                        negotiationId = response.body()?.negotiationId
+                        negotiationId = null
                     )
                     book.updateBooking(response.body()?.bookingId.toString(), updatedBook).enqueue(object: retrofit2.Callback<ResponseBody>{
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             if(response.isSuccessful){
-                                Log.d("Check", "SuccessBook")
+                                Log.d("Booking", "Successfully Updated to 4")
                             }
                         }
 
@@ -311,10 +317,84 @@ class BookingDetailsActivity : AppCompatActivity() {
                         }
 
                     })
+
+                    val nego = NegotiationInstance.retrofitBuilder
+                    nego.deleteNegotiation(response.body()?.negotiationId).enqueue(object: retrofit2.Callback<ResponseBody>{
+                        override fun onResponse(
+                            call: Call<ResponseBody>,
+                            response: Response<ResponseBody>
+                        ) {
+                            if(response.isSuccessful){
+                                Log.d("Negotiation", "Successfully Deleted")
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+                    })
                 }
             }
 
             override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
+
+
+
+    private fun getDetails(){
+
+        val tvName = findViewById<TextView>(R.id.textViewBookingDetailsFreelancerName)
+        val tvService = findViewById<TextView>(R.id.textViewService)
+        val tvDesc = findViewById<TextView>(R.id.textViewDescription)
+        val tvPrice = findViewById<TextView>(R.id.textViewPriceDesc)
+        val tvLoc = findViewById<TextView>(R.id.textViewLocationDesc)
+        val tvRating = findViewById<TextView>(R.id.textViewRatingDesc)
+        val tvDate = findViewById<TextView>(R.id.textViewDateBookedDesc)
+        val tvStatus = findViewById<TextView>(R.id.textViewStatusDesc)
+
+        val book = BookingInstance.retrofitBuilder
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        book.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                if(response.isSuccessful){
+                    tvPrice.text = response.body()?.amount.toString()
+                    tvDate.text = response.body()?.bookingDatetime
+                    if(response.body()?.bookingStatus == 1){
+                        tvStatus.text = "Pending"
+                    }
+                    else if(response.body()?.bookingStatus == 2){
+                        tvStatus.text = "Ongoing"
+                    }
+                    else if(response.body()?.bookingStatus == 3 || response.body()?.bookingStatus == 4){
+                        tvStatus.text = "Completed"
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+        book.getServiceDetails(bookingId).enqueue(object: retrofit2.Callback<ServiceDetails>{
+            override fun onResponse(call: Call<ServiceDetails>, response: Response<ServiceDetails>) {
+                if(response.isSuccessful){
+                    tvName.text = response.body()?.freelancerName
+                    tvService.text = response.body()?.name
+                    tvDesc.text = response.body()?.description
+                    tvLoc.text = response.body()?.location
+                    tvRating.text = response.body()?.rating.toString()
+
+                }
+            }
+
+            override fun onFailure(call: Call<ServiceDetails>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 

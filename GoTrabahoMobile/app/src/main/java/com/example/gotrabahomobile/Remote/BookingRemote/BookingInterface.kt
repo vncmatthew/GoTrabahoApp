@@ -1,7 +1,9 @@
 package com.example.gotrabahomobile.Remote.BookingRemote
 
 import com.example.gotrabahomobile.DTO.BookingUserDTO
+import com.example.gotrabahomobile.DTO.ServiceDetails
 import com.example.gotrabahomobile.Model.Booking
+import com.example.gotrabahomobile.Model.Services
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.Body
@@ -18,6 +20,9 @@ interface BookingInterface {
     fun getBookings(): Call<List<Booking>>
     @GET("api/Booking/{bookingId}")
     fun getBooking(@Path("bookingId") bookingId: Int): Call<Booking>
+
+    @GET("api/Booking/ServiceDetails/{bookingId}")
+    fun getServiceDetails(@Path("bookingId") bookingId: Int): Call<ServiceDetails>
 
     @GET("api/Booking/BookingUser/{bookingId}")
     fun getUserBookings(@Path("bookingId") bookingId: Int): Call<List<BookingUserDTO>>

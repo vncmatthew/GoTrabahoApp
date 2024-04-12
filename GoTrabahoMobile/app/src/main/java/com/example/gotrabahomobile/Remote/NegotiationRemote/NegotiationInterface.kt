@@ -38,7 +38,7 @@ interface NegotiationInterface {
 
 
     @DELETE("api/Negotiation/{negotiationId}")
-    fun deleteNegotiation(@Path("negotiationId") resourceId: String): Call<Negotiation>
+    fun deleteNegotiation(@Path("negotiationId") resourceId: Int?): Call<ResponseBody>
 
     @PUT("api/Negotiation/{negotiationId}")
     fun updateNegotiation(@Path("negotiationId") resourceId: Int, @Body updatedResource: Negotiation): Call<Negotiation>
