@@ -59,6 +59,8 @@ class CustomerAccountFragment : Fragment() {
         val lastName = arguments?.getString("lastName")
         val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
+        val longitude = arguments?.getDouble("longitude")
+        val latitude = arguments?.getDouble("latitude")
         name.text = fullName
         Log.d("CheckMe", "${fullName}")
 
@@ -74,6 +76,13 @@ class CustomerAccountFragment : Fragment() {
         customCardViewRewards.setOnClickListener {
             val intent = Intent(requireActivity(), RewardsActivity::class.java)
             intent.putExtra("counter", counter)
+            intent.putExtra("userId", userId)
+            intent.putExtra("email", email)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("longitude", longitude)
+            intent.putExtra("latitude", latitude)
             startActivity(intent)
         }
 

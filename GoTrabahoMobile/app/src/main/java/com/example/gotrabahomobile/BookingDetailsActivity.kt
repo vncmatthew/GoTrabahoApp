@@ -33,7 +33,7 @@ import javax.security.auth.callback.Callback
 
 class BookingDetailsActivity : AppCompatActivity() {
     private var ratingNumber = 0
-    private var status = 3
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +51,10 @@ class BookingDetailsActivity : AppCompatActivity() {
         getDetails()
         bookingStatus()
 
+        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
+        backButton.setOnClickListener{
+            finish()
+        }
         rateButton.setOnClickListener {
             showRatingDialog()
         }
@@ -87,44 +91,58 @@ class BookingDetailsActivity : AppCompatActivity() {
         val paymentButton = findViewById<Button>(R.id.buttonPayment)
         val reportBookingButton = findViewById<Button>(R.id.buttonReport)
 
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        val call = BookingInstance.retrofitBuilder
+        call.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                if(response.isSuccessful)
+                {
+                    when (response.body()?.bookingStatus) {
+                        0 -> { //Pending
+                            rateButton.visibility = View.GONE
+                            messageButton.visibility = View.VISIBLE
+                            cancelBookingButton.visibility = View.VISIBLE
+                            paymentButton.visibility = View.GONE
+                            reportBookingButton.visibility = View.GONE
+                        }
+                        1 -> { //Ongoing
+                            rateButton.visibility = View.GONE
+                            messageButton.visibility = View.GONE
+                            cancelBookingButton.visibility = View.GONE
+                            paymentButton.visibility = View.GONE
+                            reportBookingButton.visibility = View.GONE
+                        }
+                        2 -> { //Service Done awaiting payment
+                            rateButton.visibility = View.GONE
+                            messageButton.visibility = View.GONE
+                            cancelBookingButton.visibility = View.GONE
+                            paymentButton.visibility = View.VISIBLE
+                            reportBookingButton.visibility = View.GONE
+                        }
+                        3 -> { //Payment Done
+                            rateButton.visibility = View.VISIBLE
+                            messageButton.visibility = View.GONE
+                            cancelBookingButton.visibility = View.GONE
+                            paymentButton.visibility = View.GONE
+                            reportBookingButton.visibility = View.VISIBLE
+                        }
+                        else -> {
+                            rateButton.visibility = View.GONE
+                            messageButton.visibility = View.GONE
+                            cancelBookingButton.visibility = View.GONE
+                            paymentButton.visibility = View.GONE
+                            reportBookingButton.visibility = View.GONE
+                        }
+                    }
+                }
+            }
 
-        when (status) {
-            0 -> { //Pending
-                rateButton.visibility = View.GONE
-                messageButton.visibility = View.VISIBLE
-                cancelBookingButton.visibility = View.VISIBLE
-                paymentButton.visibility = View.GONE
-                reportBookingButton.visibility = View.GONE
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
             }
-            1 -> { //Ongoing
-                rateButton.visibility = View.GONE
-                messageButton.visibility = View.GONE
-                cancelBookingButton.visibility = View.GONE
-                paymentButton.visibility = View.GONE
-                reportBookingButton.visibility = View.GONE
-            }
-            2 -> { //Service Done awaiting payment
-                rateButton.visibility = View.GONE
-                messageButton.visibility = View.GONE
-                cancelBookingButton.visibility = View.GONE
-                paymentButton.visibility = View.VISIBLE
-                reportBookingButton.visibility = View.GONE
-            }
-            3 -> { //Payment Done
-                rateButton.visibility = View.VISIBLE
-                messageButton.visibility = View.GONE
-                cancelBookingButton.visibility = View.GONE
-                paymentButton.visibility = View.GONE
-                reportBookingButton.visibility = View.VISIBLE
-            }
-            else -> {
-                rateButton.visibility = View.GONE
-                messageButton.visibility = View.GONE
-                cancelBookingButton.visibility = View.GONE
-                paymentButton.visibility = View.GONE
-                reportBookingButton.visibility = View.GONE
-            }
-        }
+
+        })
+
     }
 
     private fun showCancelServiceDialog() {

@@ -20,6 +20,13 @@ class RewardsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_rewards)
 
         val counter2 = intent.getIntExtra("counter", 1)
+        val userId = intent.getIntExtra("userId", 0)
+        val firstName = intent.getStringExtra("firstName")
+        val lastName = intent.getStringExtra("lastName")
+        val fullName = intent.getStringExtra("fullName")
+        val email = intent.getStringExtra("email")
+        val longitude = intent.getDoubleExtra("longitude", 0.0)
+        val latitude = intent.getDoubleExtra("latitude", 0.0)
 
         counter = counter2
 
@@ -35,7 +42,17 @@ class RewardsActivity : AppCompatActivity() {
 
 
             val intent = Intent(this, CustomerMainActivity::class.java)
+            Log.d("User", "${userId}")
+            Log.d("User", "${firstName}")
+            Log.d("User", "${lastName}")
             intent.putExtra("counter", counter)
+            intent.putExtra("userId", userId)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("email", email)
+            intent.putExtra("longitude", longitude)
+            intent.putExtra("latitude", latitude)
+            intent.putExtra("fullName", fullName)
             startActivity(intent)
         }
 
