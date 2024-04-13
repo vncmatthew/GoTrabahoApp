@@ -44,19 +44,53 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewResched" />
 
+            <TextView
+                android:id="@+id/textViewSetADate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="14dp"
+                android:text="Set a Date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewReschedDesc" />
+
             <EditText
-                android:id="@+id/editTextSetDateResched"
+                android:id="@+id/editTextSetDate"
                 android:layout_width="312dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_background_white"
                 android:ems="10"
                 android:hint="   Set Date"
-                android:inputType="textEmailAddress"
+                android:inputType="text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.485"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewReschedDesc" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewSetADate" />
+
+            <TextView
+                android:id="@+id/textViewReschedSetATime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="18dp"
+                android:layout_marginTop="14dp"
+                android:text="Set a Time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextSetDate" />
+
+            <EditText
+                android:id="@+id/editTextReschedSetTime"
+                android:layout_width="312dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edit_text_background_white"
+                android:ems="10"
+                android:hint="   Set Time"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.485"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewReschedSetATime" />
 
             <Button
                 android:id="@+id/buttonSetDateReschedConfirm"
@@ -71,7 +105,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSetDateResched" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextReschedSetTime" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

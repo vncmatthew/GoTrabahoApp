@@ -79,7 +79,7 @@
     <string name="setPriceDesc">Make sure that the set price is agreed by both parties.</string>
     <string name="setASched">Set A Schedule</string>
     <string name="setDate">Set Date</string>
-    <string name="setASchedDesc">Set a schedule for the service based on the dates the freelancer is available</string>
+    <string name="setASchedDesc">Set a schedule for the service</string>
     <string name="Resched">Reschedule Service</string>
     <string name="ReschedDesc">Set a new date to reschedule the service</string>
     <string name="cancelService">Cancel Service?</string>
