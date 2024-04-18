@@ -68,8 +68,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         }
 
         paymentButton.setOnClickListener {
-            val intent = Intent(this, PaymentActivity::class.java)
-            startActivity(intent)
+            getPayment()
         }
 
         reportBookingButton.setOnClickListener {
@@ -362,7 +361,28 @@ class BookingDetailsActivity : AppCompatActivity() {
 
     }
 
+    private fun getPayment(){
 
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        val email = intent.getStringExtra("email")
+        val book = BookingInstance.retrofitBuilder
+        book.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                if(response.isSuccessful){
+                    val intent = Intent(this@BookingDetailsActivity, PaymentActivity::class.java)
+                    intent.putExtra("bookingId", bookingId)
+                    intent.putExtra("email", email)
+
+                    startActivity(intent)
+                }
+            }
+
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
     private fun getDetails(){
 

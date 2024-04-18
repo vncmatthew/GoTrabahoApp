@@ -11,5 +11,8 @@ interface PaymentInterface {
     @POST("/generate-invoice/{negotiationId}")
     fun paymentBook(@Body request: PaymentDTO, @Path("negotiationId") negotiationId: Int ): Call<ResponseBody>
 
+    @POST("/generate-invoice-customer/{bookingId}")
+    fun paymentBookCustomer(@Body request: PaymentDTO, @Path("bookingId") bookingId: Int ): Call<ResponseBody>
+
 
 }

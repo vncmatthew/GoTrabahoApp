@@ -14,7 +14,7 @@ import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.databinding.LayoutActivityCardBinding
 
 
-class BookingUserAdapter(private val context: Context, private val bookingList: List<BookingUserDTO>) :
+class BookingUserAdapter(private val context: Context, private val bookingList: List<BookingUserDTO>, private val email: String?) :
     RecyclerView.Adapter<BookingUserAdapter.BookingViewHolder>() {
 
     inner class BookingViewHolder(val binding: LayoutActivityCardBinding) :
@@ -39,11 +39,13 @@ class BookingUserAdapter(private val context: Context, private val bookingList: 
             priceActivity.text = "₱${booking.amount}"
             serviceActivity.text = " ${booking.serviceType}"
             dateActivity.text = " ${booking.bookingDatetime}"
+
         }
         holder.binding.customerProfile.setOnClickListener {
             val intent = Intent(context, BookingDetailsActivity::class.java)
             intent.putExtra("bookingId", booking.bookingId)
             intent.putExtra("serviceType", booking.serviceType)
+            intent.putExtra("email", email)
             intent.putExtra("amount", booking.amount)
             intent.putExtra("amount", booking.serviceId)
             intent.putExtra("firstName",booking.freelancerFirst)

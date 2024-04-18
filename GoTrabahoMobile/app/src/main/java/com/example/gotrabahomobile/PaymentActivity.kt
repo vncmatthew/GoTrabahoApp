@@ -83,45 +83,144 @@ class PaymentActivity : AppCompatActivity() {
         val paymentInfo = PaymentDTO(email = userEmail)
         val negotiationId = intent.getIntExtra("negotiationId", 0)
         val bookingId = intent.getIntExtra("bookingId", 0)
+        if(negotiationId != 0) {
+            Paymentservice.paymentBook(paymentInfo, negotiationId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+                        if (response.isSuccessful) {
 
-        Paymentservice.paymentBook(paymentInfo, negotiationId).enqueue(object : Callback<ResponseBody> {
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                if (response.isSuccessful) {
+                            val jsonObject = response.body()
+                            val invoiceResponse =
+                                jsonObject?.let { JsonParser.parseString(it.string()).asJsonObject }
 
-                    val jsonObject = response.body()
-                    val invoiceResponse = jsonObject?.let { JsonParser.parseString(it.string()).asJsonObject }
+                            setupInvoiceLink(
+                                textInvoiceLink,
+                                invoiceResponse?.get("invoiceUrl")?.asString
+                            )
+                            Toast.makeText(
+                                this@PaymentActivity,
+                                "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            // Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
+                            Log.d(
+                                "Invoice URL",
+                                invoiceResponse?.toString() ?: "Example invoice link"
+                            )
+                            Log.d(
+                                "Invoice URL",
+                                invoiceResponse?.get("invoiceUrl")?.asString
+                                    ?: "Example invoice link"
+                            )
+                            val booking = BookingInstance.retrofitBuilder
+                            booking.updateBookingStatus(bookingId, 2)
+                                .enqueue(object : Callback<Void> {
+                                    override fun onResponse(
+                                        call: Call<Void>,
+                                        response: Response<Void>
+                                    ) {
+                                        val check = response.body()
+                                        if (response.isSuccessful) {
+                                            Log.d("SuccessPay", "Shce")
+                                        }
+                                    }
 
-                    setupInvoiceLink(textInvoiceLink, invoiceResponse?.get("invoiceUrl")?.asString)
-                    Toast.makeText(this@PaymentActivity, "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard", Toast.LENGTH_LONG).show()
-                   // Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
-                    Log.d("Invoice URL", invoiceResponse?.toString() ?: "Example invoice link")
-                    Log.d("Invoice URL", invoiceResponse?.get("invoiceUrl")?.asString?: "Example invoice link")
-                    val booking = BookingInstance.retrofitBuilder
-                    booking.updateBookingStatus(bookingId, 2).enqueue(object: Callback<Void>{
-                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                            val check = response.body()
-                            if(response.isSuccessful){
-                                Log.d("SuccessPay", "Shce")
-                            }
+                                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
+                        } else {
+                            // Handle error
+                            Toast.makeText(
+                                this@PaymentActivity,
+                                "Failed to generate invoice.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+                    }
 
-                        override fun onFailure(call: Call<Void>, t: Throwable) {
-                            TODO("Not yet implemented")
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        // Handle failure
+                        Toast.makeText(this@PaymentActivity, "Network error.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                })
+        }
+        else {
+            Paymentservice.paymentBookCustomer(paymentInfo, bookingId)
+                .enqueue(object : Callback<ResponseBody> {
+                    override fun onResponse(
+                        call: Call<ResponseBody>,
+                        response: Response<ResponseBody>
+                    ) {
+                        if (response.isSuccessful) {
+
+                            val jsonObject = response.body()
+                            val invoiceResponse =
+                                jsonObject?.let { JsonParser.parseString(it.string()).asJsonObject }
+
+                            setupInvoiceLink(
+                                textInvoiceLink,
+                                invoiceResponse?.get("invoiceUrl")?.asString
+                            )
+                            Toast.makeText(
+                                this@PaymentActivity,
+                                "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
+                                Toast.LENGTH_LONG
+                            ).show()
+                            // Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
+                            Log.d(
+                                "Invoice URL",
+                                invoiceResponse?.toString() ?: "Example invoice link"
+                            )
+                            Log.d(
+                                "Invoice URL",
+                                invoiceResponse?.get("invoiceUrl")?.asString
+                                    ?: "Example invoice link"
+                            )
+                            val booking = BookingInstance.retrofitBuilder
+                            booking.updateBookingStatus(bookingId, 3)
+                                .enqueue(object : Callback<Void> {
+                                    override fun onResponse(
+                                        call: Call<Void>,
+                                        response: Response<Void>
+                                    ) {
+                                        val check = response.body()
+                                        if (response.isSuccessful) {
+                                            Log.d("SuccessPay", "Shce")
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
+                        } else {
+                            // Handle error
+                            Toast.makeText(
+                                this@PaymentActivity,
+                                "Failed to generate invoice.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
+                    }
 
-                    })
+                    override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                        // Handle failure
+                        Toast.makeText(this@PaymentActivity, "Network error.", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                })
+        }
 
-                } else {
-                    // Handle error
-                    Toast.makeText(this@PaymentActivity, "Failed to generate invoice.", Toast.LENGTH_SHORT).show()
-                }
-            }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                // Handle failure
-                Toast.makeText(this@PaymentActivity, "Network error.", Toast.LENGTH_SHORT).show()
-            }
-        })
     }
 
     private fun setupInvoiceLink(textView: TextView, url: String?) {

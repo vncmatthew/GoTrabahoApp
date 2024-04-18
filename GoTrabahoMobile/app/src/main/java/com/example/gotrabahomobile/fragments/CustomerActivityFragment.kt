@@ -82,6 +82,7 @@ class CustomerActivityFragment : Fragment() {
     private fun getServiceList(){
         val booking = BookingInstance.retrofitBuilder
         val userId = arguments?.getInt("userId", 0) ?: 0
+        val email = arguments?.getString("email")
 
         booking.getUserBookings(userId).enqueue(object : Callback<List<BookingUserDTO>> {
             override fun onResponse(
@@ -94,7 +95,7 @@ class CustomerActivityFragment : Fragment() {
 
                     binding.activityRecycleView.apply {
                         rvAdapter =
-                            BookingUserAdapter(requireContext(), bookingList)
+                            BookingUserAdapter(requireContext(), bookingList, email)
                         adapter = rvAdapter
                         layoutManager = LinearLayoutManager(requireContext())
                     }
