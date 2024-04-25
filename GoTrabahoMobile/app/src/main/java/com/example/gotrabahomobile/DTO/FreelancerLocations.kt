@@ -8,5 +8,9 @@ data class FreelancerLocations(
     var longitude: Double?,
     var latitude: Double?,
     var name: String?,
-    var description: String?
+    var description: String?,
+    var rating: Float?,
+    var priceEstimate: Double?,
+    var location: String?
+
 )

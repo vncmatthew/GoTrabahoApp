@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -106,6 +107,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                 call: Call<List<FreelancerLocations>>,
                 response: Response<List<FreelancerLocations>>
             ) {
+                val userId = intent.getStringExtra("userId")
                 if (response.isSuccessful) {
                     response.body()?.let { freelancerLocations ->
                         for (freelancer in freelancerLocations) {
@@ -127,6 +129,17 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                             marker.setSnippet("Service Description: " + freelancer.description)
                             marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.map_arrow))
 
+                            marker.setOnMarkerClickListener{marker, map->
+                                val intent = Intent(this@FreelancerListMapViewActivity, FreelancerDetailsActivity::class.java)
+                                intent.putExtra("sqlId", userId)
+                                intent.putExtra("serviceName",freelancer.name)
+                                intent.putExtra("description",freelancer.description)
+                                intent.putExtra("location",freelancer.location)
+                                intent.putExtra("price",freelancer.priceEstimate)
+                                intent.putExtra("rating",freelancer.rating)
+                                startActivity(intent)
+                                true
+                            }
                             // Add the marker to the map
                             map.overlays.add(marker)
                         }
