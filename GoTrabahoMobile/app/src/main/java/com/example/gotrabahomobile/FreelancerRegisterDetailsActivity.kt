@@ -53,12 +53,12 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
 
         //birthdate
-/*        val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
+        val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
         birthdateEditText.inputType = InputType.TYPE_NULL
 
         birthdateEditText.setOnClickListener {
             showDatePickerDialog(birthdateEditText)
-        }*/
+        }
 
         val checkBox = findViewById<CheckBox>(R.id.checkBoxFreelancerTNC)
         val spannableString = SpannableString("I agree to the Terms and Conditions and Data Privacy")
@@ -90,7 +90,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             Log.d("hello", insertCustomer().toString())
         }
 
-        //setBirthdayEditText() //date format
+
     }
 
     private fun showDialog() {
@@ -109,7 +109,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-/*    private fun showDatePickerDialog(birthdateEditText: EditText) {
+    private fun showDatePickerDialog(birthdateEditText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
@@ -128,73 +128,8 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             day
         )
         datePickerDialog.show()
-    }*/
+    }
 
-
-    //date format
-//    fun setBirthdayEditText() {
-//        val birthdateText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
-//        birthdateText.addTextChangedListener(object : TextWatcher {
-//
-//            private var current = ""
-//            private val yyyymmdd = "YYYYMMDD"
-//            private val cal = Calendar.getInstance()
-//
-//             override fun onTextChanged(p0: CharSequence?, p3: Int, p2: Int, p1: Int) {
-//                if (p0.toString() != current) {
-//                    var clean = p0.toString().replace("[^\\d.]|\\.".toRegex(), "")
-//                    val cleanC = current.replace("[^\\d.]|\\.".toRegex(), "")
-//
-//                    val cl = clean.length
-//                    var sel = cl
-//                    var i = 2
-//                    while (i <= cl && i < 6) {
-//                        sel++
-//                        i += 2
-//                    }
-//                    //Fix for pressing delete next to a forward slash
-//                    if (clean == cleanC) sel--
-//
-//                    if (clean.length < 8) {
-//                        clean = clean + yyyymmdd.substring(clean.length)
-//                    } else {
-//                        //This part makes sure that when we finish entering numbers
-//                        //the date is correct, fixing it otherwise
-//                        var day = Integer.parseInt(clean.substring(0, 4))
-//                        var mon = Integer.parseInt(clean.substring(4, 6))
-//                        var year = Integer.parseInt(clean.substring(6, 8))
-//
-////                        mon = if (mon < 1) 1 else if (mon > 12) 12 else mon
-////                        cal.set(Calendar.MONTH, mon - 1)
-////                        year = if (year < 1900) 1900 else if (year > 2100) 2100 else year
-////                        cal.set(Calendar.YEAR, year)
-//                        // ^ first set year for the line below to work correctly
-//                        //with leap years - otherwise, date e.g. 29/02/2012
-//                        //would be automatically corrected to 28/02/2012
-//
-//                        day = if (day > cal.getActualMaximum(Calendar.DATE)) cal.getActualMaximum(Calendar.DATE) else day
-//                        clean = String.format("%02d%02d%02d", day, mon, year)
-//                    }
-//
-//                    clean = String.format("%s-%s-%s", clean.substring(0, 4),
-//                        clean.substring(4, 6),
-//                        clean.substring(6, 8))
-//
-//                    sel = if (sel < 0) 0 else sel
-//                    current = clean
-//                    birthdateText.setText(current)
-//                    birthdateText.setSelection(if (sel < current.count()) sel else current.count())
-//                }
-//            }
-//
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//            }
-//
-//            override fun afterTextChanged(p0: Editable) {
-//
-//            }
-//        })
-//    }
 
     private fun insertCustomer(){
 

@@ -73,6 +73,10 @@ class CustomerAccountFragment : Fragment() {
             startActivity(intent)
         }
 
+        customCardViewLogout.setOnClickListener{
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
         customCardViewRewards.setOnClickListener {
             val intent = Intent(requireActivity(), RewardsActivity::class.java)
             intent.putExtra("counter", counter)

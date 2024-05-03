@@ -62,7 +62,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         val startPoint = GeoPoint(latitude, longitude);
         mapController.setCenter(startPoint);
         addFreelancerPins()
-        //addMarker()
+
 
     }
 

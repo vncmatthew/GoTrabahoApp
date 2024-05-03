@@ -80,6 +80,11 @@ class FreelancerAccountFragment : Fragment() {
             startActivity(intent)
         }
 
+        freelancerCardLogout.setOnClickListener{
+            val intent = Intent(requireActivity(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         freelancerCardEditServices.setOnClickListener{
             val intent = Intent(requireActivity(), FreelancerServicesListActivity::class.java)
             intent.putExtra("userId", userId)
