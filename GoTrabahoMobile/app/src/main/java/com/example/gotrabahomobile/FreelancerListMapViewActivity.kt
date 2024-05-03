@@ -127,7 +127,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                             Log.d("Freelancer", "${freelancer.name}")
                             Log.d("Freelancer", "${freelancer.description}")
                             marker.setSnippet("Service Description: " + freelancer.description)
-                            marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.map_arrow))
+                            marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.location_pin))
 
                             marker.setOnMarkerClickListener{marker, map->
                                 val intent = Intent(this@FreelancerListMapViewActivity, FreelancerDetailsActivity::class.java)
