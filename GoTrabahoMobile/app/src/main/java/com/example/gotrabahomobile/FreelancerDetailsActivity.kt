@@ -42,9 +42,6 @@ class FreelancerDetailsActivity : AppCompatActivity() {
         val description = intent.getStringExtra("description")
         val negotiation = intent.getIntExtra("negotiationId", 0)
 
-        val userId = intent.getStringExtra("userId")
-        val firstName = intent.getStringExtra("firstName")
-        val lastName = intent.getStringExtra("lastName")
 
         serviceName.text = name
         serviceRating.text = rating.toString()

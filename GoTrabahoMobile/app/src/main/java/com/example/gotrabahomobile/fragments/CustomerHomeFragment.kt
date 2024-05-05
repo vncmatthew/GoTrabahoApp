@@ -90,13 +90,13 @@ class CustomerHomeFragment : Fragment() {
 
         val longitude = arguments?.getDouble("longitude", 0.0) ?: 0
         val latitude = arguments?.getDouble("latitude", 0.0) ?: 0
-        val userId = arguments?.getString("userId")
+        val userId = arguments?.getInt("userId", 0) ?: 0
         val buttonMapView: Button = _binding!!.buttonMapView
         buttonMapView.setOnClickListener{
             val intent = Intent(requireContext(), FreelancerListMapViewActivity::class.java)
             intent.putExtra("longitude", longitude)
             intent.putExtra("latitude", latitude)
-            intent.putExtra("userId", userId)
+            intent.putExtra("sqlId", userId)
             startActivity(intent)
         }
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import com.google.firebase.auth.FirebaseAuth
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -74,7 +75,9 @@ class CustomerAccountFragment : Fragment() {
         }
 
         customCardViewLogout.setOnClickListener{
+            FirebaseAuth.getInstance().signOut();
             val intent = Intent(requireActivity(), LoginActivity::class.java)
+
             startActivity(intent)
         }
         customCardViewRewards.setOnClickListener {

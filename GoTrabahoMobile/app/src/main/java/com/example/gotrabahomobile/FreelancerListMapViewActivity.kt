@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.gotrabahomobile.DTO.FreelancerLocations
+import com.example.gotrabahomobile.Model.UserFirebase
 
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import org.osmdroid.config.Configuration.*
@@ -27,6 +28,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     private lateinit var map : MapView
+    var userList = java.util.ArrayList<UserFirebase>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_list_map_view)
@@ -122,7 +124,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                 call: Call<List<FreelancerLocations>>,
                 response: Response<List<FreelancerLocations>>
             ) {
-                val userId = intent.getStringExtra("userId")
+                val sqlId = intent.getIntExtra("sqlId", 0)
                 if (response.isSuccessful) {
                     response.body()?.let { freelancerLocations ->
                         for (freelancer in freelancerLocations) {
@@ -143,18 +145,22 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                             Log.d("Freelancer", "${freelancer.description}")
                             marker.setSnippet("Service Description: " + freelancer.description)
                             marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.location_pin))
+                            Log.d("SQELID", sqlId.toString())
+
 
                             marker.setOnMarkerClickListener{marker, map->
                                 val intent = Intent(this@FreelancerListMapViewActivity, FreelancerDetailsActivity::class.java)
-                                intent.putExtra("sqlId", userId)
-                                intent.putExtra("serviceName",freelancer.name)
-                                intent.putExtra("description",freelancer.description)
-                                intent.putExtra("location",freelancer.location)
-                                intent.putExtra("price",freelancer.priceEstimate)
-                                intent.putExtra("rating",freelancer.rating)
+                                intent.putExtra("sqlId", sqlId)
+                                intent.putExtra("serviceId", freelancer.serviceId)
+                                intent.putExtra("serviceName", freelancer.name)
+                                intent.putExtra("rating", freelancer.rating)
+                                intent.putExtra("location", freelancer.location)
+                                intent.putExtra("price", freelancer.priceEstimate)
+                                intent.putExtra("description", freelancer.description)
                                 startActivity(intent)
                                 true
                             }
+
                             // Add the marker to the map
                             map.overlays.add(marker)
                         }
