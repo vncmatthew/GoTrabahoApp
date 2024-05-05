@@ -60,7 +60,9 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         val longitude = intent.getDoubleExtra("longitude", 0.0)
         val latitude = intent.getDoubleExtra("latitude", 0.0)
         val startPoint = GeoPoint(latitude, longitude);
+
         mapController.setCenter(startPoint);
+        addCustomerPin()
         addFreelancerPins()
 
 
@@ -98,6 +100,19 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                 permissionsToRequest.toTypedArray(),
                 REQUEST_PERMISSIONS_REQUEST_CODE)
         }
+    }
+
+    private fun addCustomerPin() {
+        val longitude = intent.getDoubleExtra("longitude", 0.0)
+        val latitude = intent.getDoubleExtra("latitude", 0.0)
+        val startPoint = GeoPoint(latitude, longitude);
+
+        val startMarker = Marker(map)
+        startMarker.setPosition(startPoint)
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+        startMarker.setIcon(getResources().getDrawable(R.drawable.customer_pin))
+        map.getOverlays().add(startMarker)
+
     }
 
     private fun addFreelancerPins() {
