@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
@@ -40,8 +41,10 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
         etPrice = binding.editTextEditPrice
         etLocation = binding.editTextEditLocation
 //        var price: Double? = null
-
-
+        val backButton = findViewById<ImageButton>(R.id.back_buttonNavbar)
+        backButton.setOnClickListener {
+            finish()
+        }
 
         binding.buttonEditServiceCancel.setOnClickListener {
             Log.d("ButtonClick", "Cancel button clicked")
@@ -61,7 +64,7 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
             } else {
                 price = etPrice.text.toString()
                 editService(name, description, price.toDouble(), location)
-                val intent = Intent(this@FreelancerEditServiceActivity, FreelancerServicesListActivity::class.java)
+                val intent = Intent(this@FreelancerEditServiceActivity, FreelancerMainActivity::class.java)
                 startActivity(intent)
             }
         }

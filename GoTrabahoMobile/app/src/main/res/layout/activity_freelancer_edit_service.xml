@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar_no_notificationicon" />
+        layout="@layout/customer_toolbar_withbackbutton" />
 
     <TextView
         android:id="@+id/textViewEditServiceLabel"
