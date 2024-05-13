@@ -4,6 +4,7 @@ import com.example.gotrabahomobile.DTO.FreelancerDTO
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.FreelancerTesdaCertificate
+import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Model.proofOfExperience
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -15,6 +16,7 @@ import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -63,6 +65,9 @@ interface FreelancerInterface {
     @POST("api/Freelancer/CreateCertificate")
     fun insertCertificate(@Body request: FreelancerTesdaCertificate): Call<FreelancerTesdaCertificate>
 
+
+    @PATCH("api/Freelancer/Patch/{freelancerId}")
+    fun patchFreelancer(@Path("freelancerId") resourceId: Int, @Body updatedResource: Freelancer): Call<Freelancer>
     @Multipart
     @POST("api/Freelancer/CreateFreelancerCertificate")
     fun insertCertificateImage(

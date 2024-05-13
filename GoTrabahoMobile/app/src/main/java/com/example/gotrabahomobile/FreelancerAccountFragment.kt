@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Switch
+import android.widget.Toast
+import com.example.gotrabahomobile.Model.Freelancer
+import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,7 +30,7 @@ class FreelancerAccountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private lateinit var freelancerActivateStatus: Switch
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,7 +49,7 @@ class FreelancerAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val freelancerActivateStatus = view.findViewById<Switch>(R.id.ActiveStatusSwitch)
         val freelancerCardProfile = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerProfile)
         val freelancerCardAddNewService = view.findViewById<androidx.cardview.widget.CardView>(R.id.addNewService)
         val freelancerCardEditServices = view.findViewById<androidx.cardview.widget.CardView>(R.id.editServices)
@@ -57,7 +65,16 @@ class FreelancerAccountFragment : Fragment() {
 
         Log.d("FreelancerAccountFragment", freelancerId.toString())
         Log.d("FreelancerAccountFragment", "${email}")
+        freelancerActivateStatus?.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                changeStatusTrue()
+                Toast.makeText(requireActivity(), "Showing your Services", Toast.LENGTH_SHORT).show()
+            } else {
+                changeStatusFalse()
+                Toast.makeText(requireActivity(), "email or password invalid", Toast.LENGTH_SHORT).show()
+            }
 
+        }
         freelancerCardProfile.setOnClickListener{
             val intent = Intent(requireActivity(), FreelancerProfilePageActivity::class.java)
             intent.putExtra("userId", userId)
@@ -107,6 +124,52 @@ class FreelancerAccountFragment : Fragment() {
 //        }
 
 
+    }
+
+    fun changeStatusTrue(){
+
+
+        var freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
+        val call = FreelancerInstance.retrofitBuilder
+        val freelancer = Freelancer(
+            freelancerId = freelancerId,
+            verificationStatus = true
+            )
+        call.patchFreelancer(freelancerId, freelancer).enqueue(object: Callback<Freelancer>{
+            override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
+                if(response.isSuccessful){
+                    Log.d("Changed Bookings", "True")
+                }
+            }
+
+            override fun onFailure(call: Call<Freelancer>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun changeStatusFalse(){
+
+
+        var freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
+        val call = FreelancerInstance.retrofitBuilder
+        val freelancer = Freelancer(
+            freelancerId = freelancerId,
+            verificationStatus = false
+        )
+        call.patchFreelancer(freelancerId, freelancer).enqueue(object: Callback<Freelancer>{
+            override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
+                if(response.isSuccessful){
+                    Log.d("Changed Bookings", "True")
+                }
+            }
+
+            override fun onFailure(call: Call<Freelancer>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     companion object {
