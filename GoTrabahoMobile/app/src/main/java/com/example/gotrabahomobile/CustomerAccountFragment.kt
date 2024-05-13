@@ -50,7 +50,7 @@ class CustomerAccountFragment : Fragment() {
 
         val customCardViewProfile = view.findViewById<androidx.cardview.widget.CardView>(R.id.profile)
         val customCardViewRewards = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardRewards)
-
+        val customCardViewReportBug = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardReportBug)
         val customCardViewLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardLogout)
 
         val name = customCardViewProfile.findViewById<TextView>(R.id.customerName)
@@ -93,15 +93,10 @@ class CustomerAccountFragment : Fragment() {
             startActivity(intent)
         }
 
-//        customCardViewPaymentOptions.setOnClickListener {
-//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
-//            startActivity(intent)
-//        }
-//
-//        customCardViewLogout.setOnClickListener {
-//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
-//            startActivity(intent)
-//        }
+        customCardViewReportBug.setOnClickListener {
+            val intent = Intent(requireActivity(), CustomerBugReportActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {

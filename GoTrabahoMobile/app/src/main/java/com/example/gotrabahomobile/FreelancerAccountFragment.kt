@@ -1,6 +1,5 @@
 package com.example.gotrabahomobile
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -53,6 +52,7 @@ class FreelancerAccountFragment : Fragment() {
         val freelancerCardProfile = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerProfile)
         val freelancerCardAddNewService = view.findViewById<androidx.cardview.widget.CardView>(R.id.addNewService)
         val freelancerCardEditServices = view.findViewById<androidx.cardview.widget.CardView>(R.id.editServices)
+        val freelancerCardReportBug = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerReportBug)
 
         val freelancerCardLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerLogout)
 
@@ -113,16 +113,10 @@ class FreelancerAccountFragment : Fragment() {
             startActivity(intent)
         }
 
-//        freelancerCardPaymentOptions.setOnClickListener{
-//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
-//            startActivity(intent)
-//        }
-
-//        freelancerCardLogout.setOnClickListener{
-//            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
-//            startActivity(intent)
-//        }
-
+        freelancerCardReportBug.setOnClickListener {
+            val intent = Intent(requireActivity(), CustomerBugReportActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
