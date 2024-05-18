@@ -95,6 +95,7 @@ class CustomerAccountFragment : Fragment() {
 
         customCardViewReportBug.setOnClickListener {
             val intent = Intent(requireActivity(), BugReportActivity::class.java)
+            intent.putExtra("userId", userId)
             startActivity(intent)
         }
     }
