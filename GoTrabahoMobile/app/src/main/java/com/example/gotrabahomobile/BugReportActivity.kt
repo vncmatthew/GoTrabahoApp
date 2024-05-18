@@ -6,19 +6,19 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 
-class FreelancerBugReportActivity : AppCompatActivity() {
+class BugReportActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_freelancer_bug_report)
+        setContentView(R.layout.activity_bug_report)
 
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{
             finish()
         }
 
-        val submitReportButton = findViewById<Button>(R.id.buttonFreelancerReportBugSubmit)
-        val reportBugTitleEditText = findViewById<EditText>(R.id.editTextFreelancerReportBugTitle)
-        val reportBugDescEditText = findViewById<EditText>(R.id.editTextFreelancerReportBugDesc)
+        val submitReportButton = findViewById<Button>(R.id.buttonReportBugSubmit)
+        val reportBugTitleEditText = findViewById<EditText>(R.id.editTextReportBugTitle)
+        val reportBugDescEditText = findViewById<EditText>(R.id.editTextReportBugDesc)
 
         var title = reportBugTitleEditText.text.toString()
         var desc = reportBugDescEditText.text.toString()
@@ -26,6 +26,5 @@ class FreelancerBugReportActivity : AppCompatActivity() {
         submitReportButton.setOnClickListener {
 
         }
-
     }
 }

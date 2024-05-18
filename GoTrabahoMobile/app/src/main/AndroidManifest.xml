@@ -27,7 +27,7 @@
             android:name=".FreelancerBugReportActivity"
             android:exported="false" />
         <activity
-            android:name=".CustomerBugReportActivity"
+            android:name=".BugReportActivity"
             android:exported="false" />
         <activity
             android:name=".ConfirmedChatActivity"

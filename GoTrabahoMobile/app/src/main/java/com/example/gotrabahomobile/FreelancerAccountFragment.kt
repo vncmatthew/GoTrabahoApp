@@ -114,7 +114,7 @@ class FreelancerAccountFragment : Fragment() {
         }
 
         freelancerCardReportBug.setOnClickListener {
-            val intent = Intent(requireActivity(), CustomerBugReportActivity::class.java)
+            val intent = Intent(requireActivity(), BugReportActivity::class.java)
             startActivity(intent)
         }
 
