@@ -24,6 +24,13 @@
         <item>Carpentry</item>
     </string-array>
 
+    <string-array name="bugTypes">
+        <item>Visual/ User Interface Bug</item>
+        <item>Functional Bug (buttons etc.)</item>
+        <item>Content Bug (Information inaccuracy)</item>
+        <item>Suggestions</item>
+    </string-array>
+
     <string name="application">Application Form</string>
     <string name="activity">Activity</string>
     <string name="services">Services</string>

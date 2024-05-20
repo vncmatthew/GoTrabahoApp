@@ -3,9 +3,11 @@ package com.example.gotrabahomobile
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Spinner
 import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.example.gotrabahomobile.Model.BugReport
 import com.example.gotrabahomobile.Remote.BugReportRemote.BugReportInstance
@@ -15,7 +17,7 @@ import retrofit2.Response
 
 class BugReportActivity : AppCompatActivity() {
 
-
+private lateinit var reportBugTitleSpinner: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +29,15 @@ class BugReportActivity : AppCompatActivity() {
         }
 
         val submitReportButton = findViewById<Button>(R.id.buttonReportBugSubmit)
-        val reportBugTitleEditText = findViewById<EditText>(R.id.editTextReportBugTitle)
+        reportBugTitleSpinner = findViewById<Spinner>(R.id.dropdownReportBugTitle)
 
-
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.bugTypes,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        reportBugTitleSpinner.adapter = adapter
 
         submitReportButton.setOnClickListener {
             sendBugReport()
@@ -40,6 +48,11 @@ class BugReportActivity : AppCompatActivity() {
     fun sendBugReport(){
 
         var reportBugDescEditText = findViewById<EditText>(R.id.editTextReportBugDesc)
+
+
+
+
+        var title = reportBugTitleSpinner.toString()
         var desc = reportBugDescEditText.text.toString()
         val userId = intent.getIntExtra("userId", 0)
         val bugReport = BugReport(

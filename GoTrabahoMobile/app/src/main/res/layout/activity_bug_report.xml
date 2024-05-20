@@ -33,16 +33,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <EditText
-        android:id="@+id/editTextReportBugTitle"
+    <Spinner
+        android:id="@+id/dropdownReportBugTitle"
         android:layout_width="312dp"
         android:layout_height="60dp"
-        android:layout_marginTop="39dp"
-        android:background="@drawable/edit_text_background_white"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="Title"
+        app:thumbColor="#238ae6"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
@@ -58,7 +56,7 @@
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextReportBugTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/dropdownReportBugTitle" />
 
     <Button
         android:id="@+id/buttonReportBugSubmit"
