@@ -3,11 +3,15 @@ package com.example.gotrabahomobile
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ReportFragment.Companion.reportFragment
 import com.example.gotrabahomobile.Model.BugReport
 import com.example.gotrabahomobile.Remote.BugReportRemote.BugReportInstance
@@ -18,7 +22,7 @@ import retrofit2.Response
 class BugReportActivity : AppCompatActivity() {
 
 private lateinit var reportBugTitleSpinner: Spinner
-
+    var selectedFeature: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bug_report)
@@ -38,26 +42,33 @@ private lateinit var reportBugTitleSpinner: Spinner
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         reportBugTitleSpinner.adapter = adapter
+        reportBugTitleSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedFeature = parent.getItemAtPosition(position) as? String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Toast.makeText(this@BugReportActivity, "Please Select a Service", Toast.LENGTH_SHORT).show()
+            }
+        }
+
 
         submitReportButton.setOnClickListener {
-            sendBugReport()
+
+            sendBugReport(selectedFeature)
             finish()
         }
     }
 
-    fun sendBugReport(){
+    fun sendBugReport(feature: String?){
 
         var reportBugDescEditText = findViewById<EditText>(R.id.editTextReportBugDesc)
 
-
-
-
-        var title = reportBugTitleSpinner.toString()
         var desc = reportBugDescEditText.text.toString()
         val userId = intent.getIntExtra("userId", 0)
         val bugReport = BugReport(
             userID = userId,
-            featureID = "yes",
+            featureID = feature,
             description = desc
         )
         val call = BugReportInstance.retrofitBuilder

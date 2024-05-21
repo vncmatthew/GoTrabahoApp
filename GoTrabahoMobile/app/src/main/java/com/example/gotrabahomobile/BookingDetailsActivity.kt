@@ -206,7 +206,9 @@ class BookingDetailsActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             submitRatingToDatabase(ratingNumber)
+            deleteNego()
             alertDialog.dismiss()
+            finish()
         }
 
         alertDialog.show()
@@ -310,7 +312,6 @@ class BookingDetailsActivity : AppCompatActivity() {
 
                     })
 
-
                     val book = BookingInstance.retrofitBuilder
                     val updatedBook = Booking(
                         bookingId = response.body()?.bookingId,
@@ -334,7 +335,24 @@ class BookingDetailsActivity : AppCompatActivity() {
                         }
 
                     })
+                }
+            }
 
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
+
+    private fun deleteNego(){
+
+        val call = BookingInstance.retrofitBuilder
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        call.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                if(response.isSuccessful){
                     val nego = NegotiationInstance.retrofitBuilder
                     nego.deleteNegotiation(response.body()?.negotiationId).enqueue(object: retrofit2.Callback<ResponseBody>{
                         override fun onResponse(
@@ -345,7 +363,6 @@ class BookingDetailsActivity : AppCompatActivity() {
                                 Log.d("Negotiation", "Successfully Deleted")
                             }
                         }
-
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                             TODO("Not yet implemented")
                         }
@@ -358,7 +375,6 @@ class BookingDetailsActivity : AppCompatActivity() {
             }
 
         })
-
     }
 
     private fun getPayment(){
