@@ -75,8 +75,6 @@ class ChatActivity : AppCompatActivity() {
         }
 
         //get UserModel
-
-            var Id = intent.getIntExtra("serviceId", 0)
             var userId = intent.getStringExtra("userId")
             var firstName = intent.getStringExtra("firstName")
             var lastName = intent.getStringExtra("lastName")
@@ -181,7 +179,7 @@ class ChatActivity : AppCompatActivity() {
         updateButton.setOnClickListener {
 
             val sqlId = intent.getStringExtra("sqlId")
-            val serviceId: Int? = intent.getIntExtra("serviceId", 0)
+            val serviceId = intent.getIntExtra("serviceId", 0)
             val name = intent.getStringExtra("serviceName")
             val negotiationId = intent.getIntExtra("negotiationId", 0)
             val freelancerPrice = tvSetPrice.text.toString().toDoubleOrNull()
@@ -204,7 +202,7 @@ class ChatActivity : AppCompatActivity() {
                                     freelancerPrice = freelancerPrice
                                 )
                                 patchNegotiation(service.negotiationId!!, negotiation)
-                                checker(service.negotiationId, service.serviceId!!, service.customerId!! )
+                                checker(service.negotiationId, serviceId, service.customerId!! )
                                 btnConfirmSetPrice = dialogView.findViewById(R.id.buttonSetPriceConfirm)
                                 btnConfirmSetPrice.setOnClickListener {
                                     val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
@@ -296,13 +294,13 @@ class ChatActivity : AppCompatActivity() {
                                         serviceFee = finalPrice!! * 0.15,
                                         bookingStatus = 1,
                                         serviceId = serviceId,
-                                        negotiationId = negotiationId )
+                                        negotiationId = negotiationId)
 
                                     val book = BookingInstance.retrofitBuilder
-                                    book.insertBooking(newBooking).enqueue(object: Callback<ResponseBody>{
+                                    book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
                                         override fun onResponse(
-                                            call: Call<ResponseBody>,
-                                            response: Response<ResponseBody>
+                                            call: Call<Booking>,
+                                            response: Response<Booking>
                                         ) {
                                             val booking = response.body()
                                             if(response.isSuccessful){
@@ -325,7 +323,7 @@ class ChatActivity : AppCompatActivity() {
                                             Log.d("Check", "${booking}")
                                         }
 
-                                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                                        override fun onFailure(call: Call<Booking>, t: Throwable) {
                                             Log.d("Check", "${t}")
                                         }
 

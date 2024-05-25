@@ -319,7 +319,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                         bookingDatetime = response.body()?.bookingDatetime,
                         amount = response.body()?.amount,
                         bookingStatus = 4,
-                        serviceId = response.body()?.serviceId,
+                        serviceId = response.body()!!.serviceId,
                         serviceFee = response.body()?.serviceFee,
                         negotiationId = null
                     )

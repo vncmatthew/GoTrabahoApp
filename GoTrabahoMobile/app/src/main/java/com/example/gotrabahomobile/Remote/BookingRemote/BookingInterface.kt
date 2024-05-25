@@ -41,7 +41,7 @@ interface BookingInterface {
     ): Call<Int>
 
     @POST("api/Booking")
-    fun insertBooking(@Body request: Booking): Call<ResponseBody>
+    fun insertBooking(@Body request: Booking): Call<Booking>
 
 
     @PATCH("api/Booking/{id}/status/{status}")

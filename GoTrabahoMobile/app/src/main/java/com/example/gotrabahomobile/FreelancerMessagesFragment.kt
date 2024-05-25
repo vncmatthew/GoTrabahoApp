@@ -35,6 +35,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.lang.NullPointerException
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -195,13 +196,22 @@ class FreelancerMessagesFragment : Fragment() {
                     val service = ServicesInstance.retrofitBuilder
                     val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
 
-                    service.getServiceIdByFreelancer( 1, "Electrical"!! ).enqueue(object: Callback<Services>{
+                    service.getServiceIdByFreelancer( freelancerId, selectedService!! ).enqueue(object: Callback<Services>{
                         override fun onResponse(call: Call<Services>, response: Response<Services>) {
                             if(response.isSuccessful){
-                                val serviceId = response.body()!!.serviceId
-                                val serviceName = requireActivity().intent.getStringExtra("serviceName")
-                                val userAdapter = FreelancerChatAdapter(requireContext(), userList, serviceId!!, serviceName)
-                                userRecyclerView.adapter = userAdapter
+                                try {
+                                    val serviceId = response.body()!!.serviceId
+                                    val serviceName = response.body()!!.name
+                                    val userAdapter = FreelancerChatAdapter(
+                                        requireContext(),
+                                        userList,
+                                        serviceId!!,
+                                        serviceName
+                                    )
+                                    userRecyclerView.adapter = userAdapter
+                                }catch (e: NullPointerException){
+
+                                }
                             }
                         }
 

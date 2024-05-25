@@ -2,6 +2,7 @@ package com.example.gotrabahomobile.Helper
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +36,7 @@ class FreelancerChatAdapter(private val context: Context, private val userList: 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = userList[position]
         holder.txtUserName.text = user.firstName + " " + user.lastName
-
+        Log.d("SERVICE ID ERENM", serviceId.toString())
         holder.layoutUser.setOnClickListener {
             val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("serviceId", serviceId)
