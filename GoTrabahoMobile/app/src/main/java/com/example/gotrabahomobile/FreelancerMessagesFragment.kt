@@ -51,6 +51,7 @@ class FreelancerMessagesFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var selectedService: String? = null
+
     private lateinit var userRecyclerView: RecyclerView
     var userList = ArrayList<UserFirebase>()
     private var _binding: FragmentFreelancerMessagesBinding? = null
@@ -58,8 +59,19 @@ class FreelancerMessagesFragment : Fragment() {
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
 
+
     private val binding get() = _binding!!
     private lateinit var rvAdapter: ServiceAdapter
+
+
+//    var Id: Int = 0
+//    var userId: String = ""
+//    var freelancerId: String = ""
+//    var firstName: String = ""
+//    var lastName: String = ""
+//    var email: String = ""
+//
+//    var fullName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,10 +114,9 @@ class FreelancerMessagesFragment : Fragment() {
             val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
             startActivity(intent)
         }
-
         //select service spinner
         val spinner: Spinner = _binding!!.dropdownServices
-        Log.d("CustomerHomeFragment", "Spinner found: $spinner")
+        Log.d("FreelancerMessagesFragment", "Spinner found: $spinner")
 
         val adapter = ArrayAdapter.createFromResource(
             requireContext(),
@@ -114,7 +125,7 @@ class FreelancerMessagesFragment : Fragment() {
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
-        Log.d("CustomerHomeFragment", "Adapter set: ${spinner.adapter}")
+        Log.d("FreelancerMessagesFragment", "Adapter set: ${spinner.adapter}")
 
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -132,16 +143,6 @@ class FreelancerMessagesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //val chatButton: Button = view.findViewById(R.id.buttonTestFree)
-
-
-
-/*        chatButton.setOnClickListener {
-
-//            val intent = Intent(requireContext(), ChatActivity::class.java)
-//            startActivity(intent)
-        }*/
 
         userRecyclerView = _binding!!.rvFreelancerMessageList
 
@@ -194,7 +195,7 @@ class FreelancerMessagesFragment : Fragment() {
                     val service = ServicesInstance.retrofitBuilder
                     val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
 
-                    service.getServiceIdByFreelancer( freelancerId, selectedService!! ).enqueue(object: Callback<Services>{
+                    service.getServiceIdByFreelancer( 1, "Electrical"!! ).enqueue(object: Callback<Services>{
                         override fun onResponse(call: Call<Services>, response: Response<Services>) {
                             if(response.isSuccessful){
                                 val serviceId = response.body()!!.serviceId
@@ -205,16 +206,10 @@ class FreelancerMessagesFragment : Fragment() {
                         }
 
                         override fun onFailure(call: Call<Services>, t: Throwable) {
-                            TODO("Not yet implemented")
+                            Log.d("FreelancerMessagesFragment", "${t}")
                         }
 
                     })
-
-
-
-
-
-
             }
         })
     }
