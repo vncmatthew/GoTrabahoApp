@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -16,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.ChatAdapter
+import com.example.gotrabahomobile.Helper.NotificationUtil
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.Model.Negotiation
@@ -85,8 +85,6 @@ class ChatActivity : AppCompatActivity() {
             tvUserName.setText(firstName + " " + lastName)
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId!!)
-
-
 
 
         reference!!.addValueEventListener(object : ValueEventListener {
@@ -308,6 +306,9 @@ class ChatActivity : AppCompatActivity() {
                                         ) {
                                             val booking = response.body()
                                             if(response.isSuccessful){
+
+                                                //ADD NOTIFICATION
+                                                NotificationUtil.showNotification(this@ChatActivity, "Booking is Successful", "Your amount is " + finalPrice)
                                                 Toast.makeText(applicationContext, "Successfully Booked", Toast.LENGTH_SHORT).show()
                                                 Log.d("Check", "${booking}")
                                                 val serviceId: Int? = intent.getIntExtra("serviceId", 0)

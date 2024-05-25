@@ -15,6 +15,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gotrabahomobile.CustomerNotificationActivity
+import com.example.gotrabahomobile.DTO.ServicesWUserId
 import com.example.gotrabahomobile.FreelancerListMapViewActivity
 import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Services
@@ -52,7 +53,7 @@ class CustomerHomeFragment : Fragment() {
     var selectedService: String? = null
     var userList = ArrayList<UserFirebase>()
     private lateinit var rvAdapter: ServiceAdapter
-    private lateinit var serviceList: List<Services>
+    private lateinit var serviceList: List<ServicesWUserId>
     private var _binding: FragmentCustomerHomeBinding? = null
     private val binding get() = _binding!!
 
@@ -138,10 +139,10 @@ class CustomerHomeFragment : Fragment() {
         val service = ServicesInstance.retrofitBuilder
         val identification = arguments?.getInt("userId", 0) ?: 0
 
-        service.getServicesType(select).enqueue(object : Callback<List<Services>> {
+        service.getServicesType(select).enqueue(object : Callback<List<ServicesWUserId>> {
             override fun onResponse(
-                call: Call<List<Services>>,
-                response: Response<List<Services>>
+                call: Call<List<ServicesWUserId>>,
+                response: Response<List<ServicesWUserId>>
             ) {
                 if (response.isSuccessful && response.body() != null){
                     val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
@@ -193,7 +194,7 @@ class CustomerHomeFragment : Fragment() {
                     })
                 }
             }
-            override fun onFailure(call: Call<List<Services>>, t: Throwable) {
+            override fun onFailure(call: Call<List<ServicesWUserId>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 

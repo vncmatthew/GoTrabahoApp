@@ -182,39 +182,7 @@ class BookingsFragment : Fragment() {
         })
 
     }
-    private fun getServiceId() {
-        val call = ServicesInstance.retrofitBuilder
-        val freelancerId = arguments?.getInt("freelancerId", 0)
-        val nullableFreelancerId = freelancerId ?: 0
 
-        Log.d("BookingsFrag", nullableFreelancerId.toString())
-        selectedService?.let {
-            call.getServiceIdByFreelancer(nullableFreelancerId, it).enqueue(object:
-                Callback<List<Services>> {
-                override fun onResponse(call: Call<List<Services>>, response: Response<List<Services>>) {
-                    if (response.isSuccessful) {
-                        val services = response.body()
-
-                        val serviceId = services?.firstOrNull()?.serviceId
-                        if (serviceId != null) {
-                            val intent = Intent(requireContext(), FreelancerMessagesActivity::class.java)
-                            intent.putExtra("serviceId", serviceId)
-                            intent.putExtra("serviceName", services?.firstOrNull()?.name)
-                            startActivity(intent)
-                        } else {
-                            Toast.makeText(requireContext(), "No Service Id", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        Toast.makeText(requireContext(), "No Service Id", Toast.LENGTH_SHORT).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<List<Services>>, t: Throwable) {
-                    Log.d("Check", "{$t}")
-                }
-            })
-        }
-    }
     companion object {
         /**
          * Use this factory method to create a new instance of

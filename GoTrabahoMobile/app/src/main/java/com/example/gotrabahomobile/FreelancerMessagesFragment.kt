@@ -15,6 +15,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.DTO.ServicesWUserId
 import com.example.gotrabahomobile.Helper.FreelancerChatAdapter
 import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Chat
@@ -59,14 +60,7 @@ class FreelancerMessagesFragment : Fragment() {
 
     private val binding get() = _binding!!
     private lateinit var rvAdapter: ServiceAdapter
-//    var Id: Int = 0
-//    var userId: String = ""
-//    var freelancerId: String = ""
-//    var firstName: String = ""
-//    var lastName: String = ""
-//    var email: String = ""
-//
-//    var fullName: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -126,7 +120,6 @@ class FreelancerMessagesFragment : Fragment() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
-                getServiceList(selectedService)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -156,71 +149,7 @@ class FreelancerMessagesFragment : Fragment() {
         getUsersList()
 
     }
-    private fun getServiceList(select: String?){
-        val service = ServicesInstance.retrofitBuilder
-        val identification = arguments?.getInt("userId", 0) ?: 0
 
-        service.getServicesType(select).enqueue(object : Callback<List<Services>> {
-            override fun onResponse(
-                call: Call<List<Services>>,
-                response: Response<List<Services>>
-            ) {
-                if (response.isSuccessful && response.body() != null){
-                    val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-
-                    var userid = firebase.uid
-                    FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
-
-
-                    val databaseReference: DatabaseReference =
-                        FirebaseDatabase.getInstance().getReference("UserFirebase")
-                    databaseReference.addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-                            Log.d("DEBUG", "Path: ${dataSnapshot.ref.path}")
-                            Log.d("DEBUG", "Data: ${dataSnapshot.value}")
-                            val user = dataSnapshot.getValue(UserFirebase::class.java)
-                            Log.d("DEBUG", "User: $user")
-                        }
-
-                        override fun onCancelled(databaseError: DatabaseError) {
-                            Log.w("DEBUG", "Failed to read value.", databaseError.toException())
-                        }
-                    })
-
-                    databaseReference.addValueEventListener(object : ValueEventListener {
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-                        }
-
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            userList.clear()
-
-                            for (dataSnapShot: DataSnapshot in snapshot.children) {
-                                val user = dataSnapShot.getValue(UserFirebase::class.java)
-                                Log.d("TAG", "Value is: $user")
-                                if (!user!!.userId.equals(firebase.uid)) {
-
-                                    userList.add(user)
-                                }
-                            }
-                            serviceList = response.body()!!
-
-                            binding.rvFreelancerMessageList.apply {
-                                rvAdapter =
-                                    ServiceAdapter(serviceList, requireContext(), userList, identification)
-                                adapter = rvAdapter
-                                layoutManager = LinearLayoutManager(requireContext())
-                            }
-                        }
-                    })
-                }
-            }
-            override fun onFailure(call: Call<List<Services>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
 
     fun getUsersList() {
         Log.d("Tag", "Check")
@@ -261,11 +190,31 @@ class FreelancerMessagesFragment : Fragment() {
                         userList.add(user)
                     }
                 }
-                val serviceId = requireActivity().intent.getIntExtra("serviceId",0)
-                val serviceName = requireActivity().intent.getStringExtra("serviceName")
-                val userAdapter = FreelancerChatAdapter(requireContext(), userList, serviceId, serviceName)
 
-                userRecyclerView.adapter = userAdapter
+                    val service = ServicesInstance.retrofitBuilder
+                    val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
+
+                    service.getServiceIdByFreelancer( freelancerId, selectedService!! ).enqueue(object: Callback<Services>{
+                        override fun onResponse(call: Call<Services>, response: Response<Services>) {
+                            if(response.isSuccessful){
+                                val serviceId = response.body()!!.serviceId
+                                val serviceName = requireActivity().intent.getStringExtra("serviceName")
+                                val userAdapter = FreelancerChatAdapter(requireContext(), userList, serviceId!!, serviceName)
+                                userRecyclerView.adapter = userAdapter
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Services>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+
+
+
+
+
+
             }
         })
     }

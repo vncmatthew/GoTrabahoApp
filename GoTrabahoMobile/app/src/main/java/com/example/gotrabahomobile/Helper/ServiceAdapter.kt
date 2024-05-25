@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.DTO.ServicesWUserId
 import com.example.gotrabahomobile.FreelancerDetailsActivity
 import com.example.gotrabahomobile.LoginActivity
 import com.example.gotrabahomobile.Model.Services
@@ -16,7 +17,7 @@ import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.databinding.ItemLayoutBinding
 
 
-class ServiceAdapter(private val serviceList: List<Services>, private val context: Context, private val userList: ArrayList<UserFirebase>, private val identification: Int): RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder>() {
+class ServiceAdapter(private val serviceList: List<ServicesWUserId>, private val context: Context, private val userList: ArrayList<UserFirebase>, private val identification: Int): RecyclerView.Adapter<ServiceAdapter.ServiceViewHolder>() {
 
 
     inner class ServiceViewHolder(val binding: ItemLayoutBinding) :
@@ -37,7 +38,7 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
     override fun onBindViewHolder(holder: ServiceViewHolder, position: Int) {
         if (serviceList.isNotEmpty()) {
         val currentItem = serviceList[position]
-        val user = userList[position]
+        val user = userList.find{it.sqlId == currentItem.userId.toString()}
 
         holder.binding.apply{
             tvNameR.text = "Service Name: ${currentItem.name}"
@@ -47,7 +48,7 @@ class ServiceAdapter(private val serviceList: List<Services>, private val contex
         }
         holder.binding.btnChooseService.setOnClickListener{
             val intent = Intent(context, FreelancerDetailsActivity::class.java)
-            intent.putExtra("userId",user.userId)
+            intent.putExtra("userId",user!!.userId)
             intent.putExtra("firstName",user.firstName)
             intent.putExtra("lastName", user.lastName)
             intent.putExtra("sqlId", identification)

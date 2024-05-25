@@ -37,7 +37,7 @@ class FreelancerChatAdapter(private val context: Context, private val userList: 
         holder.txtUserName.text = user.firstName + " " + user.lastName
 
         holder.layoutUser.setOnClickListener {
-            val intent = Intent(context, ConfirmedChatActivity::class.java)
+            val intent = Intent(context, ChatActivity::class.java)
             intent.putExtra("serviceId", serviceId)
             intent.putExtra("serviceName", serviceName)
             intent.putExtra("userId",user.userId)
