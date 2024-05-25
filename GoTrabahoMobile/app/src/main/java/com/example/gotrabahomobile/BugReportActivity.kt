@@ -48,7 +48,7 @@ private lateinit var reportBugTitleSpinner: Spinner
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
-                Toast.makeText(this@BugReportActivity, "Please Select a Service", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@BugReportActivity, "Please Select a Title", Toast.LENGTH_SHORT).show()
             }
         }
 

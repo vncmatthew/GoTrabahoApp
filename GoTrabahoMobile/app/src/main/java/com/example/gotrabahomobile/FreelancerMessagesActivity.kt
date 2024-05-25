@@ -3,7 +3,11 @@ package com.example.gotrabahomobile
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +27,8 @@ class FreelancerMessagesActivity : AppCompatActivity() {
 
     private lateinit var userRecyclerView: RecyclerView
     var userList = ArrayList<UserFirebase>()
+    private lateinit var servicesSpinner: Spinner
+    var selectedService: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_messages)
@@ -37,6 +43,24 @@ class FreelancerMessagesActivity : AppCompatActivity() {
 /*        imgBack.setOnClickListener {
             onBackPressed()
         }*/
+        servicesSpinner = findViewById<Spinner>(R.id.dropdownServices)
+
+        val adapter = ArrayAdapter.createFromResource(
+            this,
+            R.array.serviceTypes,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        servicesSpinner.adapter = adapter
+        servicesSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedService = parent.getItemAtPosition(position) as? String
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Toast.makeText(this@FreelancerMessagesActivity, "Please Select a Service", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         getUsersList()
     }

@@ -10,12 +10,27 @@
         android:id="@+id/include"
         layout="@layout/toolbar_no_notificationicon" />
 
+    <Spinner
+        android:id="@+id/dropdownServices"
+        android:layout_width="400dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/rvFreelancerMessageList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        app:layout_constraintVertical_bias="1.0"
+        app:thumbColor="#238ae6" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFreelancerMessageList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include">
 

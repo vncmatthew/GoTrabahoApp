@@ -7,14 +7,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.FreelancerChatAdapter
+import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Chat
+import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.UserFirebase
+import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
 import com.example.gotrabahomobile.databinding.FragmentFreelancerMessagesBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -25,6 +31,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.messaging.FirebaseMessaging
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,14 +49,16 @@ class FreelancerMessagesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    var selectedService: String? = null
     private lateinit var userRecyclerView: RecyclerView
     var userList = ArrayList<UserFirebase>()
     private var _binding: FragmentFreelancerMessagesBinding? = null
-
+    private lateinit var serviceList: List<Services>
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
 
+    private val binding get() = _binding!!
+    private lateinit var rvAdapter: ServiceAdapter
 //    var Id: Int = 0
 //    var userId: String = ""
 //    var freelancerId: String = ""
@@ -98,6 +109,31 @@ class FreelancerMessagesFragment : Fragment() {
             startActivity(intent)
         }
 
+        //select service spinner
+        val spinner: Spinner = _binding!!.dropdownServices
+        Log.d("CustomerHomeFragment", "Spinner found: $spinner")
+
+        val adapter = ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.serviceTypes,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        Log.d("CustomerHomeFragment", "Adapter set: ${spinner.adapter}")
+
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedService = parent.getItemAtPosition(position) as? String
+                getServiceList(selectedService)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Toast.makeText(requireContext(), "Please Select a Service", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         return _binding!!.root
     }
 
@@ -119,6 +155,71 @@ class FreelancerMessagesFragment : Fragment() {
         userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         getUsersList()
 
+    }
+    private fun getServiceList(select: String?){
+        val service = ServicesInstance.retrofitBuilder
+        val identification = arguments?.getInt("userId", 0) ?: 0
+
+        service.getServicesType(select).enqueue(object : Callback<List<Services>> {
+            override fun onResponse(
+                call: Call<List<Services>>,
+                response: Response<List<Services>>
+            ) {
+                if (response.isSuccessful && response.body() != null){
+                    val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+
+                    var userid = firebase.uid
+                    FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
+
+
+                    val databaseReference: DatabaseReference =
+                        FirebaseDatabase.getInstance().getReference("UserFirebase")
+                    databaseReference.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            Log.d("DEBUG", "Path: ${dataSnapshot.ref.path}")
+                            Log.d("DEBUG", "Data: ${dataSnapshot.value}")
+                            val user = dataSnapshot.getValue(UserFirebase::class.java)
+                            Log.d("DEBUG", "User: $user")
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            Log.w("DEBUG", "Failed to read value.", databaseError.toException())
+                        }
+                    })
+
+                    databaseReference.addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            userList.clear()
+
+                            for (dataSnapShot: DataSnapshot in snapshot.children) {
+                                val user = dataSnapShot.getValue(UserFirebase::class.java)
+                                Log.d("TAG", "Value is: $user")
+                                if (!user!!.userId.equals(firebase.uid)) {
+
+                                    userList.add(user)
+                                }
+                            }
+                            serviceList = response.body()!!
+
+                            binding.rvFreelancerMessageList.apply {
+                                rvAdapter =
+                                    ServiceAdapter(serviceList, requireContext(), userList, identification)
+                                adapter = rvAdapter
+                                layoutManager = LinearLayoutManager(requireContext())
+                            }
+                        }
+                    })
+                }
+            }
+            override fun onFailure(call: Call<List<Services>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     fun getUsersList() {
