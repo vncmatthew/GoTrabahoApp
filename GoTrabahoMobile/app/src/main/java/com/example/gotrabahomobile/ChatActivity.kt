@@ -201,15 +201,8 @@ class ChatActivity : AppCompatActivity() {
                                     negotiationId = service.negotiationId,
                                     freelancerPrice = freelancerPrice
                                 )
-                                patchNegotiation(service.negotiationId!!, negotiation)
-                                checker(service.negotiationId, serviceId, service.customerId!! )
-                                btnConfirmSetPrice = dialogView.findViewById(R.id.buttonSetPriceConfirm)
-                                btnConfirmSetPrice.setOnClickListener {
-                                    val intent = Intent(this@ChatActivity, PaymentActivity::class.java)
-                                    intent.putExtra("email", email)
-                                    intent.putExtra("negotiationId", service.negotiationId)
-                                    startActivity(intent)
-                                }
+
+                                patchNegotiation2(service.negotiationId!!, negotiation, service.customerId!!)
                             }
                         }
                     }
@@ -229,7 +222,7 @@ class ChatActivity : AppCompatActivity() {
 
             }
 
-
+            alertDialog.dismiss()
         }
 
         closeButton.setOnClickListener {
@@ -249,6 +242,7 @@ class ChatActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.d("Warframe", "${response.body()}")
                     val serviceIdcustomer: Int? = intent.getIntExtra("serviceIdcustomer", 0)
+                    Log.d("ChatActivity", "$serviceIdcustomer")
                     val sqlId: Int? = intent.getIntExtra("sqlId",0)
                     Toast.makeText(this@ChatActivity, "Update successful", Toast.LENGTH_SHORT).show()
                     checker(negotiationId, serviceIdcustomer!!, sqlId!! )
@@ -270,7 +264,7 @@ class ChatActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun checker(negotiationId: Int, serviceId: Int, userId: Int){
 
-
+        val dialogView = layoutInflater.inflate(R.layout.set_price_dialog, null)
         val call = NegotiationInstance.retrofitBuilder
 
         call.getNegotiationPrice(negotiationId).enqueue(object: Callback<Double>{
@@ -295,7 +289,7 @@ class ChatActivity : AppCompatActivity() {
                                         bookingStatus = 1,
                                         serviceId = serviceId,
                                         negotiationId = negotiationId)
-
+                                    try {
                                     val book = BookingInstance.retrofitBuilder
                                     book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
                                         override fun onResponse(
@@ -328,6 +322,11 @@ class ChatActivity : AppCompatActivity() {
                                         }
 
                                     })
+                                    } catch (e: Exception) {
+                                        Log.e("RetrofitError", "Foreign Key Constraint Violation", e)
+                                        // Handle the error appropriately, e.g., show a message to the user
+                                    }
+
                                 }
                             }
                         }
@@ -352,5 +351,28 @@ class ChatActivity : AppCompatActivity() {
 
     }
 
+    private fun patchNegotiation2(negotiationId: Int, negotiation: Negotiation, userId: Int) {
+        val call = NegotiationInstance.retrofitBuilder
+        call.patchNegotiation(negotiationId, negotiation).enqueue(object : Callback<Negotiation> {
+            @RequiresApi(Build.VERSION_CODES.O)
+            override fun onResponse(call: Call<Negotiation>, response: Response<Negotiation>) {
+                if (response.isSuccessful) {
+                    Log.d("Warframe", "${response.body()}")
+                    val serviceId = intent.getIntExtra("serviceId", 0)
 
+                    Toast.makeText(this@ChatActivity, "Update successful", Toast.LENGTH_SHORT).show()
+                    checker(negotiationId, serviceId!!, userId!! )
+
+                } else {
+                    Log.d("Checkit", "${response.body()}")
+                    Toast.makeText(this@ChatActivity, "Update failed: ${response.message()}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Negotiation>, t: Throwable) {
+                Log.e("Checkit", "Update failed", t)
+                Toast.makeText(this@ChatActivity, "Update failed: ${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 }
