@@ -196,7 +196,7 @@ class FreelancerMessagesFragment : Fragment() {
                     val service = ServicesInstance.retrofitBuilder
                     val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
 
-                    service.getServiceIdByFreelancer( freelancerId, selectedService!! ).enqueue(object: Callback<Services>{
+                    service.getServiceIdByFreelancer(freelancerId, selectedService!! ).enqueue(object: Callback<Services>{
                         override fun onResponse(call: Call<Services>, response: Response<Services>) {
                             if(response.isSuccessful){
                                 try {
