@@ -206,7 +206,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             submitRatingToDatabase(ratingNumber)
-            deleteNego()
+            //deleteNego()
             alertDialog.dismiss()
             finish()
         }
@@ -346,7 +346,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
     }
 
-    private fun deleteNego(){
+    /*private fun deleteNego(){
 
         val call = BookingInstance.retrofitBuilder
         val bookingId = intent.getIntExtra("bookingId", 0)
@@ -375,7 +375,7 @@ class BookingDetailsActivity : AppCompatActivity() {
             }
 
         })
-    }
+    }*/
 
     private fun getPayment(){
 

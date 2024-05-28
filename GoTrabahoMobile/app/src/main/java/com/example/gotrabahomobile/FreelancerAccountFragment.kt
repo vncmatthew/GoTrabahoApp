@@ -11,6 +11,7 @@ import android.widget.Switch
 import android.widget.Toast
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
+import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -98,6 +99,7 @@ class FreelancerAccountFragment : Fragment() {
         }
 
         freelancerCardLogout.setOnClickListener{
+            FirebaseAuth.getInstance().signOut();
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
         }
