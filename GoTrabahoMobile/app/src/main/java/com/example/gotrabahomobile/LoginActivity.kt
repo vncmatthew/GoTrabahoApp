@@ -178,9 +178,10 @@ class LoginActivity : AppCompatActivity() {
                                                 var bro = freelancerId?.verificationStatus
 
                                                 if(bro == true){
+                                                    Log.d("Identification@", "${identification}")
                                                     val intent =
                                                         Intent(this@LoginActivity, FreelancerMainActivity::class.java)
-                                                    intent.putExtra("userID", sqlId)
+                                                    intent.putExtra("userId", identification)
                                                     intent.putExtra("freelancerId", freelancerId?.freelancerId)
                                                     intent.putExtra("firstName", firstName)
                                                     intent.putExtra("lastName", lastName)
@@ -188,6 +189,7 @@ class LoginActivity : AppCompatActivity() {
                                                     intent.putExtra("email", email)
                                                     intent.putExtra("userType", userType)
                                                     startActivity(intent)
+
                                                 }
                                                 else{
                                                      Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)

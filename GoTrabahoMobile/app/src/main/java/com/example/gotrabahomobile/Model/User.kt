@@ -33,6 +33,11 @@ data class User(
     @Expose
     var password: String? = null,
 
+    @SerializedName("accountMade")
+    @Expose
+    var accountMade: String? = null,
+
+
     @SerializedName("contactNumber")
     @Expose
     var contactNumber: String? = null,

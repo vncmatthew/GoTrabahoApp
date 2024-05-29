@@ -36,8 +36,8 @@ class FreelancerMainActivity : AppCompatActivity() {
 
 
 
-        val userId = intent.getIntExtra("sqlId", 0) ?: ""
-        val freelancerId = intent.getIntExtra("freelancerId", 0) ?: ""
+        val userId = intent.getIntExtra("userId", 0)
+        val freelancerId = intent.getIntExtra("freelancerId", 0)
         val firstName = intent.getStringExtra("firstName")
         val lastName = intent.getStringExtra("lastName")
         val fullName = intent.getStringExtra("fullName")
@@ -47,8 +47,8 @@ class FreelancerMainActivity : AppCompatActivity() {
         Log.d("FreelancerMainActivity", "${email}")
 
         val bundle = Bundle().apply {
-            putInt("userId", userId as Int)
-            putInt("freelancerId", freelancerId as Int)
+            putInt("userId", userId )
+            putInt("freelancerId", freelancerId)
             putString("email", email)
             putString("firstName", firstName)
             putString("lastName", lastName)

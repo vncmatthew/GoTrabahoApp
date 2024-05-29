@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.text.Spannable
@@ -23,6 +24,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
@@ -33,6 +35,7 @@ import retrofit2.Response
 
 import java.io.IOException
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
 import java.util.Locale
 
@@ -177,7 +180,8 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
     }
 
-    private fun registerCustomer(userType: Int, firstName: String, lastName: String,  email: String, password: String?, contactNumber: String?, birthdate: String, address1: String,
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun registerCustomer(userType: Int, firstName: String, lastName: String, email: String, password: String?, contactNumber: String?, birthdate: String, address1: String,
                                  address2: String, barangay: String, city: String, longitude: Double?, latitude: Double?) {
 
         val usersInput = User(
@@ -186,6 +190,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             lastName = lastName,
             email = email,
             password = password,
+            accountMade = LocalDate.now().toString(),
             contactNumber = contactNumber,
             birthdate = birthdate,
             address1 = address1,

@@ -22,6 +22,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.DTO.PaymentDTO
 import com.example.gotrabahomobile.Model.Booking
+import com.example.gotrabahomobile.Model.BookingSummary
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.PaymentRemote.PaymentInstance
@@ -31,12 +32,19 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 class PaymentActivity : AppCompatActivity() {
     private lateinit var btn_pay: Button
     private lateinit var userEmail: String
     private lateinit var textInvoiceLink: TextView
-
+    private lateinit var FreelancerName: TextView
+    private lateinit var Service: TextView
+    private lateinit var Date: TextView
+    private lateinit var Time: TextView
+    private lateinit var SetPrice: TextView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
@@ -47,11 +55,18 @@ class PaymentActivity : AppCompatActivity() {
         //display user email
         Log.d("PaymentActivity", "Bundle: $userEmail")
 
+
+        FreelancerName = findViewById(R.id.textViewBookingSummaryFreelancerName)
+        Service = findViewById(R.id.textViewBookingSummaryService)
+        Date = findViewById(R.id.textViewBookingSummaryDate)
+        Time = findViewById(R.id.textViewBookingSummaryTime)
+        SetPrice = findViewById(R.id.textViewBookingSummarySetPrice)
+
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{
             finish()
         }
-
+        getBookingSummary()
 
         btn_pay.setOnClickListener {
             paymentBooking()
@@ -61,22 +76,31 @@ class PaymentActivity : AppCompatActivity() {
 
 
     private fun getBookingSummary(){
+        var currentDateTime= LocalDateTime.now()
 
+        var time= currentDateTime.format(DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)).removeSuffix(" AM").removeSuffix(" PM")
         val bookingId = intent.getIntExtra("bookingId", 0)
         val call = BookingInstance.retrofitBuilder
-        call.getBooking(bookingId).enqueue(object: Callback<Booking>{
-            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+        call.getBookingSummary(bookingId).enqueue(object: Callback<BookingSummary>{
+            override fun onResponse(call: Call<BookingSummary>, response: Response<BookingSummary>) {
                 if(response.isSuccessful){
-
+                    val details = response.body()
+                    FreelancerName.text = "Freelancer: " + details!!.freelancerName
+                    Service.text = "Services: " + details!!.serviceName
+                    Date.text = "Date: " + details!!.date
+                    SetPrice.text = "Set Price: " + details!!.setPrice
+                    Time.text = "Time: " + time
                 }
             }
 
-            override fun onFailure(call: Call<Booking>, t: Throwable) {
+            override fun onFailure(call: Call<BookingSummary>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
         })
     }
+
+
     private fun paymentBooking() {
 
         val Paymentservice = PaymentInstance.retrofitBuilder

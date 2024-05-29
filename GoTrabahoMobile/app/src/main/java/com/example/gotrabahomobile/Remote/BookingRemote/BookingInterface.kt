@@ -3,6 +3,7 @@ package com.example.gotrabahomobile.Remote.BookingRemote
 import com.example.gotrabahomobile.DTO.BookingUserDTO
 import com.example.gotrabahomobile.DTO.ServiceDetails
 import com.example.gotrabahomobile.Model.Booking
+import com.example.gotrabahomobile.Model.BookingSummary
 import com.example.gotrabahomobile.Model.Services
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -33,6 +34,12 @@ interface BookingInterface {
         @Path("bookingStatus") bookingStatus: Int,
         @Path("serviceTypeName") serviceTypeName: String
     ): Call<List<Booking>>
+
+
+    @GET("api/Booking/BookingSummary/{bookingId}")
+    fun getBookingSummary(
+        @Path("bookingId") bookingId: Int
+    ): Call<BookingSummary>
 
     @GET("api/Booking/BookingUser/{userId}/{bookingStatus}")
     fun getCompletedBooking(

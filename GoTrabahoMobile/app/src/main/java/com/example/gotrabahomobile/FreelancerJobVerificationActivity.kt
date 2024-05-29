@@ -61,8 +61,8 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_job_verification)
 
-        ImgViewCertificate = findViewById(R.id.imageViewCertificate)
-        ImgViewProof = findViewById(R.id.imageViewProofOfWork)
+        ImgViewCertificate = findViewById(R.id.imageViewNewCertificate)
+        ImgViewProof = findViewById(R.id.imageViewNewProofOfWork)
         btnProof = findViewById(R.id.buttonUploadProofOfWork)
         btnCertificate = findViewById(R.id.buttonUploadCertificate)
         btnSignUp = findViewById(R.id.buttonApplicationPageSignUp)

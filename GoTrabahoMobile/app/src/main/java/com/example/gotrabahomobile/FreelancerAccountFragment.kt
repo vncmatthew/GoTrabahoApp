@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
@@ -54,7 +55,7 @@ class FreelancerAccountFragment : Fragment() {
         val freelancerCardAddNewService = view.findViewById<androidx.cardview.widget.CardView>(R.id.addNewService)
         val freelancerCardEditServices = view.findViewById<androidx.cardview.widget.CardView>(R.id.editServices)
         val freelancerCardReportBug = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerReportBug)
-
+        val name = freelancerCardProfile.findViewById<TextView>(R.id.customerName)
         val freelancerCardLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerLogout)
 
         val userId = arguments?.getInt("userId", 0) ?: 0
@@ -63,7 +64,10 @@ class FreelancerAccountFragment : Fragment() {
         val lastName = arguments?.getString("lastName")
         val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
-
+        name.text = fullName
+        Log.d("Identification@", "${userId}")
+        Log.d("Identification@", "${firstName}")
+        Log.d("Identification@", "${lastName}")
         Log.d("FreelancerAccountFragment", freelancerId.toString())
         Log.d("FreelancerAccountFragment", "${email}")
         freelancerActivateStatus?.setOnCheckedChangeListener { _, isChecked ->
