@@ -221,7 +221,7 @@ class FreelancerNewServiceJobVerificationActivity : AppCompatActivity() {
                             null,
                             null,
                             selectedService,
-                            false,
+                            0,
                             null,
                             null
                         )
@@ -387,7 +387,7 @@ class FreelancerNewServiceJobVerificationActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerService(freelancerId: Int, name: String?, description: String?, priceEstimate: Double?, serviceTypeName: String?, status: Boolean?, location: String?, rating: Float?) {
+    private fun registerService(freelancerId: Int, name: String?, description: String?, priceEstimate: Double?, serviceTypeName: String?, status: Int?, location: String?, rating: Float?) {
 
         val serviceInput = Services(
             freelancerId = freelancerId,

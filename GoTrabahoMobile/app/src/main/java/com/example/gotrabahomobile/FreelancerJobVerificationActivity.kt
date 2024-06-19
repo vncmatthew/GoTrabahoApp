@@ -207,7 +207,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                                         Log.d("TEST", "${call.toString()}")
 
                                         registerProof(freelancerId, nameProof, dateSent)
-                                        registerService(freelancerId, null, null, null,selectedService,false,null,null)
+                                        registerService(freelancerId, null, null, null,selectedService,0,null,null)
                                         service.insertCertificateImage(imagePartCertificate)
                                             .enqueue(object : Callback<FreelancerTesdaCertificate> {
                                                 override fun onResponse(call: Call<FreelancerTesdaCertificate>, response: Response<FreelancerTesdaCertificate>) {
@@ -357,7 +357,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerService(freelancerId: Int, name: String?, description: String?, priceEstimate: Double?, serviceTypeName: String?, status: Boolean?, location: String?, rating: Float?) {
+    private fun registerService(freelancerId: Int, name: String?, description: String?, priceEstimate: Double?, serviceTypeName: String?, status: Int?, location: String?, rating: Float?) {
 
         val serviceInput = Services(
             freelancerId = freelancerId,

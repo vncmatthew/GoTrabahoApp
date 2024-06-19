@@ -69,7 +69,8 @@ private lateinit var reportBugTitleSpinner: Spinner
         val bugReport = BugReport(
             userID = userId,
             featureID = feature,
-            description = desc
+            description = desc,
+            status = false
         )
         val call = BugReportInstance.retrofitBuilder
         call.insertBugReport(bugReport).enqueue(object: Callback<BugReport>{

@@ -5,4 +5,5 @@ data class BugReport(
     var userID: Int? = null,
     var featureID: String? = null,
     var description: String? = null,
+    var status: Boolean? = null
 )

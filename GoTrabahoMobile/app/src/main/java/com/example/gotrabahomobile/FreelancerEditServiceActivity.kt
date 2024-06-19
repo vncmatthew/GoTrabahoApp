@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -75,7 +74,7 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
         val service = ServicesInstance.retrofitBuilder
         val serviceId = intent.getIntExtra("serviceId", 0)
         val serviceTypName = intent.getStringExtra("serviceTypeName")
-        val status = intent.getBooleanExtra("status", true)
+        val status = intent.getIntExtra("status", 0)
         val rating = intent.getFloatExtra("rating", 0f)
         val freelancerId = intent.getIntExtra("freelancerId", 0)
 

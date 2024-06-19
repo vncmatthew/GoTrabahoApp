@@ -11,7 +11,7 @@ data class Services(
     var description: String? = null,
     var priceEstimate: Double? = null,
     var serviceTypeName: String? = null,
-    var status: Boolean? = null,
+    var status: Int? = null,
     var location: String? = null,
     var rating: Float? = null
 ): Parcelable
