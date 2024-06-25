@@ -98,6 +98,7 @@ class CustomerActivityFragment : Fragment() {
                             BookingUserAdapter(requireContext(), bookingList, email)
                         adapter = rvAdapter
                         layoutManager = LinearLayoutManager(requireContext())
+
                     }
                 }
             }

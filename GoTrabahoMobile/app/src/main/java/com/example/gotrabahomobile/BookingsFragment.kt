@@ -44,9 +44,6 @@ class BookingsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var _binding: FragmentBookingsBinding? = null
-    var userList = ArrayList<UserFirebase>()
-    private lateinit var rvsAdapter: ServiceAdapter
-    private lateinit var serviceList: List<Services>
     private lateinit var rvAdapter: BookingFreelancerAdapter
     private lateinit var bookingList: List<Booking>
     var selectedService: String? = null

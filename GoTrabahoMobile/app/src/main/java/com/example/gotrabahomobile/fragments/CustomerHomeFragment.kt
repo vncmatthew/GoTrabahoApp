@@ -189,9 +189,12 @@ class CustomerHomeFragment : Fragment() {
                                     ServiceAdapter(serviceList, requireContext(), userList, identification)
                                 adapter = rvAdapter
                                 layoutManager = LinearLayoutManager(requireContext())
+
                             }
                         }
                     })
+
+
                 }
             }
             override fun onFailure(call: Call<List<ServicesWUserId>>, t: Throwable) {

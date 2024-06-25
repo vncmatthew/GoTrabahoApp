@@ -88,7 +88,9 @@ class PaymentActivity : AppCompatActivity() {
                     FreelancerName.text = "Freelancer: " + details!!.freelancerName
                     Service.text = "Services: " + details!!.serviceName
                     Date.text = "Date: " + details!!.date
-                    SetPrice.text = "Set Price: " + details!!.setPrice
+                    SetPrice.text = "Price Breakdown: \n" +
+                                    "Commission Fee 15% (for Freelancer) = " + "₱" + (details!!.setPrice * 0.15) +
+                                    "\n Total price =  " + "₱ " + details!!.setPrice
                     Time.text = "Time: " + time
                 }
             }
