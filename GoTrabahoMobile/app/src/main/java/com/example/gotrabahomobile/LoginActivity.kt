@@ -1,6 +1,14 @@
 package com.example.gotrabahomobile
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
@@ -14,6 +22,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
@@ -30,6 +41,8 @@ import retrofit2.Response
 import java.util.HashMap
 
 class LoginActivity : AppCompatActivity() {
+
+
 
     private lateinit var auth: FirebaseAuth
     private lateinit var databaseReference: DatabaseReference
@@ -56,6 +69,12 @@ class LoginActivity : AppCompatActivity() {
         txt_signup.text = spanString
         txt_signup.movementMethod = LinkMovementMethod.getInstance()
         btn_login.setOnClickListener{loginUser()}
+
+
+
+        btn_login.setOnClickListener{
+        loginUser()
+        }
 
 
     }
@@ -177,7 +196,7 @@ class LoginActivity : AppCompatActivity() {
                                                 val freelancerId = response.body()
                                                 var bro = freelancerId?.verificationStatus
 
-                                                if(bro == true){
+                                                if (bro == 1 || bro == 3) {
                                                     Log.d("Identification@", "${identification}")
                                                     val intent =
                                                         Intent(this@LoginActivity, FreelancerMainActivity::class.java)
@@ -191,7 +210,7 @@ class LoginActivity : AppCompatActivity() {
                                                     startActivity(intent)
 
                                                 }
-                                                else{
+                                                else if(bro == 0){
                                                      Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)
                                                         intent.putExtra("userID", sqlId)
                                                         intent.putExtra("freelancerId", freelancerId?.freelancerId)

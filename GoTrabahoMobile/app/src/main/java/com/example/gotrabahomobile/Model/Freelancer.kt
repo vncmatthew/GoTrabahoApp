@@ -22,7 +22,7 @@ data class Freelancer(
 
     @SerializedName("verificationStatus")
     @Expose
-    var verificationStatus: Boolean? = false,
+    var verificationStatus: Int? = null,
 
     @SerializedName("totalIncome")
     @Expose

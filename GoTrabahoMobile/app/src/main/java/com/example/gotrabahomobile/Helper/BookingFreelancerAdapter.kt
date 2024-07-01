@@ -1,20 +1,35 @@
 package com.example.gotrabahomobile.Helper
 
+import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.BookingsFragment
+import com.example.gotrabahomobile.CustomerMessagesFragment
 import com.example.gotrabahomobile.FreelancerDetailsActivity
 import com.example.gotrabahomobile.FreelancerEditServiceActivity
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.PaymentActivity
+import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
@@ -29,7 +44,9 @@ import java.time.format.DateTimeFormatter
 
 class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context, private val email: String?, private val status: Int): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
 
-
+    val CHANNEL_ID ="channelID"
+    val CHANNEL_NAME ="channelName"
+    val NOTIF_ID = 0
     inner class BookingViewHolder(val binding: BookingLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -48,7 +65,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
         val currentItem = bookingList[position]
         val call = ServicesInstance.retrofitBuilder
-
+        createNotifChannel()
         currentItem.serviceId?.let {
             call.getService(it).enqueue(object : Callback<Services> {
                 override fun onResponse(call: Call<Services>, response: Response<Services>) {
@@ -63,6 +80,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                     response: Response<User>
                                 ) {
                                     if (response.isSuccessful) {
+
                                         var user = response.body()
                                         holder.binding.apply {
                                             if (user != null) {
@@ -116,6 +134,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                                 "Booking",
                                                                 "Successfully Updated to 4"
                                                             )
+                                                            notifMessage("The booking has been completed", "Thank you for your service")
                                                         }
                                                     }
 
@@ -195,4 +214,54 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
         })
     }
+
+    private fun notifMessage(Title:String, Text:String){
+        val intentT =Intent(context, context::class.java)
+        val pendingIntent = TaskStackBuilder.create(context).run{
+            addNextIntentWithParentStack(intentT)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val notif = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setContentTitle(Title)
+            .setContentText(Text)
+            .setSmallIcon(R.drawable.logo_blue_noname)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        val notifManger = NotificationManagerCompat.from(context)
+        if (ActivityCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        notifManger.notify(NOTIF_ID,notif)
+    }
+
+
+    private fun createNotifChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH).apply {
+                lightColor = Color.BLUE
+                enableLights(true)
+            }
+            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+
+
+
+
 }

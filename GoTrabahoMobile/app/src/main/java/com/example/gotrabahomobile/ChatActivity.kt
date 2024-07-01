@@ -1,7 +1,14 @@
 package com.example.gotrabahomobile
 
+import android.Manifest
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +19,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.ChatAdapter
@@ -39,11 +49,15 @@ import java.util.ArrayList
 @Suppress("DEPRECATION")
 class ChatActivity : AppCompatActivity() {
 
+
+    val CHANNEL_ID ="channelID"
+    val CHANNEL_NAME ="channelName"
+    val NOTIF_ID = 0
+
     private lateinit var etMessage: EditText
     private lateinit var btnSendMessage: ImageButton
     private lateinit var btnSetPrice: Button
     private lateinit var btnConfirmSetPrice: Button
-//    private lateinit var imgBack: ImageView
     private lateinit var tvUserName: TextView
     private lateinit var tvSetPrice:TextView
     private lateinit var chatRecyclerView: RecyclerView
@@ -65,6 +79,9 @@ class ChatActivity : AppCompatActivity() {
         btnSendMessage = findViewById(R.id.btnSendMessage)
         tvUserName = findViewById(R.id.tvUserName)
         btnSetPrice = findViewById(R.id.buttonChatSetPrice)
+
+
+        createNotifChannel()
 
 
 
@@ -116,7 +133,6 @@ class ChatActivity : AppCompatActivity() {
             showDialog()
 
         }
-
 
     }
 
@@ -203,6 +219,7 @@ class ChatActivity : AppCompatActivity() {
                                 )
 
                                 patchNegotiation2(service.negotiationId!!, negotiation, service.customerId!!)
+                                notifMessage("Price has been Updated", "The price is ${freelancerPrice}")
                             }
                         }
                     }
@@ -218,7 +235,7 @@ class ChatActivity : AppCompatActivity() {
                     customerPrice = freelancerPrice
                 )
                 patchNegotiation(negotiationId, negotiation)
-
+                notifMessage("Price has been Updated", "The price is ${freelancerPrice}")
 
             }
 
@@ -300,9 +317,8 @@ class ChatActivity : AppCompatActivity() {
                                             if(response.isSuccessful){
 
                                                 //ADD NOTIFICATION
-                                                NotificationUtil.showNotification(this@ChatActivity, "Booking is Successful", "Your amount is " + finalPrice)
-                                                Toast.makeText(applicationContext, "Successfully Booked", Toast.LENGTH_SHORT).show()
-                                                Log.d("Check", "${booking}")
+
+                                                notifMessage("Booking is Successful", "Booking has been made")
                                                 val serviceId: Int? = intent.getIntExtra("serviceId", 0)
 
                                                 if (serviceId != 0){
@@ -375,4 +391,49 @@ class ChatActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun createNotifChannel(){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH).apply {
+                lightColor= Color.BLUE
+                enableLights(true)
+            }
+            val manager=getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
+    }
+
+    private fun notifMessage(Title:String, Text:String){
+        val intentT =Intent(this, ChatActivity::class.java)
+        val pendingIntent = TaskStackBuilder.create(this).run{
+            addNextIntentWithParentStack(intentT)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val notif = NotificationCompat.Builder(this@ChatActivity, CHANNEL_ID)
+            .setContentTitle(Title)
+            .setContentText(Text)
+            .setSmallIcon(R.drawable.logo_blue_noname)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        val notifManger = NotificationManagerCompat.from(this)
+        if (ActivityCompat.checkSelfPermission(
+                this@ChatActivity,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        notifManger.notify(NOTIF_ID,notif)
+    }
+
 }

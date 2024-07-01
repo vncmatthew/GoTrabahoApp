@@ -134,7 +134,7 @@ class FreelancerAccountFragment : Fragment() {
         val call = FreelancerInstance.retrofitBuilder
         val freelancer = Freelancer(
             freelancerId = freelancerId,
-            verificationStatus = true
+            verificationStatus = 1
             )
         call.patchFreelancer(freelancerId, freelancer).enqueue(object: Callback<Freelancer>{
             override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
@@ -157,7 +157,7 @@ class FreelancerAccountFragment : Fragment() {
         val call = FreelancerInstance.retrofitBuilder
         val freelancer = Freelancer(
             freelancerId = freelancerId,
-            verificationStatus = false
+            verificationStatus = 3
         )
         call.patchFreelancer(freelancerId, freelancer).enqueue(object: Callback<Freelancer>{
             override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {

@@ -1,6 +1,10 @@
 package com.example.gotrabahomobile
 
+import android.Manifest
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.FreelancerChatAdapter
@@ -34,7 +41,6 @@ private const val ARG_PARAM2 = "param2"
 private lateinit var userRecyclerView: RecyclerView
 var userList = ArrayList<UserFirebase>()
 private var _binding: FragmentCustomerMessagesBinding? = null
-
 var firebaseUser: FirebaseUser? = null
 var reference: DatabaseReference? = null
 
@@ -179,4 +185,7 @@ class CustomerMessagesFragment : Fragment() {
                 }
             }
     }
+
+
+
 }
