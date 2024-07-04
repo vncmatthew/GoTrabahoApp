@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Helper.BookingFreelancerAdapter
@@ -113,9 +114,15 @@ class BookingsFragment : Fragment() {
 
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
 
-        tabLayout.addTab(tabLayout.newTab().setText("Pending"))
-        tabLayout.addTab(tabLayout.newTab().setText("Ongoing"))
-        tabLayout.addTab(tabLayout.newTab().setText("Completed"))
+        tabLayout.addTab(tabLayout.newTab().setText("Pending").apply {
+            tabLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.pending_tab)
+        })
+        tabLayout.addTab(tabLayout.newTab().setText("Ongoing").apply {
+            tabLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.ongoing_tab)
+        })
+        tabLayout.addTab(tabLayout.newTab().setText("Completed").apply {
+            tabLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.completed_tab)
+        })
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
