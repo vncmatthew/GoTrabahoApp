@@ -7,9 +7,15 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Toast
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
+import com.google.firebase.auth.AuthCredential
+import com.google.firebase.auth.EmailAuthProvider
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +28,8 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
         val tvFirstName = findViewById<EditText>(R.id.editTextProfileFreelancerFirstName)
         val tvLastName = findViewById<EditText>(R.id.editTextProfileFreelancerLastName)
         val tvPhone = findViewById<EditText>(R.id.editTextProfileFreelancerPhone)
+        val tvCPass = findViewById<EditText>(R.id.editTextProfileFreelancerConfirmNewPassword)
+        val tvPass = findViewById<EditText>(R.id.editTextProfileFreelancerNewPassword)
 
         val cancelButton: Button = findViewById(R.id.buttonFreelancerEditProfileCancel)
         cancelButton.setOnClickListener {
@@ -34,7 +42,8 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
 
             val firstName = tvFirstName.text?.toString()
             val lastName = tvLastName.text?.toString()
-
+            val password = tvCPass.text?.toString()
+            val OldPassword = tvPass.text?.toString()
             val phone = tvPhone.text?.toString()
             val userId = intent.getIntExtra("userId",0)
             val updateUser = User(
@@ -43,19 +52,18 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
                 lastName = lastName,
                 contactNumber = phone
             )
-            updateUser(updateUser)
+            updateUser(updateUser, password!!,OldPassword!!)
 
         }
     }
 
-    private fun updateUser(updateUser: User){
+    private fun updateUser(updateUser: User, password: String, oldpassword:String){
         val userId = intent.getIntExtra("userId",0)
-
+        val email = intent.getStringExtra("email")
         val call = UserInstance.retrofitBuilder
         call.patchUser(userId, updateUser).enqueue(object: Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful) {
-                    // Assuming you want to log the successful response body
                     val user = response.body()
                     if (user != null) {
                         Log.d("Successf", "User updated successfully: $user")
@@ -63,10 +71,39 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
                         Log.d("Successf", "User updated successfully, but response body is null")
                     }
 
+                    val call = UserInstance.retrofitBuilder
+                    val userF: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+                    val credential: AuthCredential = EmailAuthProvider.getCredential(email!!, oldpassword)
+                    userF?.reauthenticate(credential)?.addOnCompleteListener { task ->
+                        userF?.updatePassword(password)?.addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Log.d("Successful", "Password Successfully Changed in Firebase")
+                            } else {
+                                // Failed to update password
+                            }
+                        }
+                    }
+                    call.changePassword(email!!, password).enqueue(object: Callback<ResponseBody>{
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            if(response.isSuccessful)
+                            {
+                                FirebaseAuth.getInstance().signOut();
+                                val intent = Intent(this@FreelancerProfilePageActivity, LoginActivity::class.java)
+                                intent.putExtra("userId", userId)
+                                startActivity(intent)
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Successfully Changed Password",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
 
-                    val intent = Intent(this@FreelancerProfilePageActivity, CustomerMainActivity::class.java)
-                    intent.putExtra("userId", userId)
-                    startActivity(intent)
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
                 } else {
                     Log.d("Tag", "Response is not successful. Code: ${response.code()}, Message: ${response.message()}")
                 }
@@ -77,5 +114,6 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
             }
 
         })
+
     }
 }

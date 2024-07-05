@@ -6,6 +6,7 @@ import com.example.gotrabahomobile.Model.Negotiation
 import com.example.gotrabahomobile.Model.User
 import okhttp3.ResponseBody
 import retrofit2.Call
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -33,6 +34,9 @@ interface UserInterface {
     fun registerUser(@Body request: User): Call<User>
     @POST("api/Login")
     fun loginUser(@Body request: Login): Call<User>
+
+    @POST("api/Login/ChangePassword/{email}/{password}")
+    fun changePassword(@Path("email") email:String, @Path("password") password:String): Call<ResponseBody>
 
     @PUT("api/User{userId}")
     fun updateUser(@Path("userId") resourceId: String, @Body updatedResource: User): Call<User>

@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerPhone" />
 
     <EditText
-        android:id="@+id/editTextNewPassword"
+        android:id="@+id/editTextCustomerNewPassword"
         android:layout_width="312dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
@@ -98,7 +98,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewChangePassword" />
 
     <EditText
-        android:id="@+id/editTextConfirmNewPassword"
+        android:id="@+id/editTextCustomerConfirmNewPassword"
         android:layout_width="312dp"
         android:layout_height="60dp"
         android:layout_marginTop="6dp"
@@ -108,7 +108,7 @@
         android:hint="Confirm New Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCustomerNewPassword" />
 
     <Button
         android:id="@+id/buttonEditCustomerProfileCancel"
@@ -121,9 +121,9 @@
         android:textColor="@color/white"
         android:textSize="14dp"
         app:cornerRadius="14dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextNewPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editTextCustomerNewPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmNewPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCustomerConfirmNewPassword" />
 
     <Button
         android:id="@+id/buttonEditCustomerProfileSave"
@@ -137,7 +137,7 @@
         android:textSize="14dp"
         app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/editTextNewPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmNewPassword" />
+        app:layout_constraintStart_toStartOf="@+id/editTextCustomerNewPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextCustomerConfirmNewPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

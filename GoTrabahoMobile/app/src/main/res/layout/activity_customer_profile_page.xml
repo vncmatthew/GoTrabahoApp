@@ -85,20 +85,20 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerPhone" />
 
     <EditText
-        android:id="@+id/editTextNewPassword"
+        android:id="@+id/editTextProfileCustomerNewPassword"
         android:layout_width="312dp"
         android:layout_height="60dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/edit_text_background_white"
         android:ems="10"
+        android:hint="Old Password"
         android:inputType="textPassword"
-        android:hint="New Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewChangePassword" />
 
     <EditText
-        android:id="@+id/editTextConfirmNewPassword"
+        android:id="@+id/editTextProfileCustomerConfirmNewPassword"
         android:layout_width="312dp"
         android:layout_height="60dp"
         android:layout_marginTop="6dp"
@@ -108,7 +108,7 @@
         android:hint="Confirm New Password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNewPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerNewPassword" />
 
     <Button
         android:id="@+id/buttonEditCustomerProfileCancel"
@@ -121,9 +121,9 @@
         android:textColor="@color/white"
         android:textSize="14dp"
         app:cornerRadius="14dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextNewPassword"
+        app:layout_constraintEnd_toEndOf="@+id/editTextProfileCustomerNewPassword"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmNewPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerConfirmNewPassword" />
 
     <Button
         android:id="@+id/buttonEditCustomerProfileSave"
@@ -137,8 +137,8 @@
         android:textSize="14dp"
         app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/editTextNewPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextConfirmNewPassword" />
+        app:layout_constraintStart_toStartOf="@+id/editTextProfileCustomerNewPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextProfileCustomerConfirmNewPassword" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
