@@ -58,5 +58,5 @@ interface BookingInterface {
     fun updateBooking(@Path("bookingId") resourceId: String, @Body updatedResource: Booking): Call<ResponseBody>
 
     @DELETE("api/Booking/{bookingId}")
-    fun deleteBooking(@Path("bookingId") resourceId: String): Call<Booking>
+    fun deleteBooking(@Path("bookingId") resourceId: Int): Call<Booking>
 }

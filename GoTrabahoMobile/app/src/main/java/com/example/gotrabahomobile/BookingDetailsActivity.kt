@@ -22,6 +22,7 @@ import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
 import com.example.gotrabahomobile.Remote.RatingRemote.RatingInstance
+import com.example.gotrabahomobile.fragments.CustomerActivityFragment
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -80,7 +81,7 @@ class BookingDetailsActivity : AppCompatActivity() {
     }
 
     private fun bookingStatus() {
-        //bookingStatus 0 - Pending, 1 - Ongoing, 2 - Service Done awaiting payment, 3 - Payment Done
+        //bookingStatus 0 - Pending, 1 - Ongoing, 2 - Service Done awaiting payment, 3 - Payment Done, 4 - Rating Done, 5 - Cancelled
 
         //buttons 1
         val rateButton = findViewById<Button>(R.id.buttonRate)
@@ -181,7 +182,8 @@ class BookingDetailsActivity : AppCompatActivity() {
         }
 
         yesButton.setOnClickListener {
-            alertDialog.dismiss()
+            updateBooking()
+
         }
 
         alertDialog.show()
@@ -206,7 +208,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener {
             submitRatingToDatabase(ratingNumber)
-            //deleteNego()
+            deleteNego()
             alertDialog.dismiss()
             finish()
         }
@@ -346,7 +348,50 @@ class BookingDetailsActivity : AppCompatActivity() {
 
     }
 
-    /*private fun deleteNego(){
+    private fun updateBooking(){
+        val call = BookingInstance.retrofitBuilder
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        call.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                if(response.isSuccessful){
+                    deleteNego()
+                    val book = BookingInstance.retrofitBuilder
+                    val updatedBook = Booking(
+                        bookingId = response.body()?.bookingId,
+                        customerId = response.body()?.customerId,
+                        bookingDatetime = response.body()?.bookingDatetime,
+                        amount = response.body()?.amount,
+                        bookingStatus = 5,
+                        serviceId = response.body()!!.serviceId,
+                        serviceFee = response.body()?.serviceFee,
+                        negotiationId = null
+                    )
+                    book.updateBooking(response.body()?.bookingId.toString(), updatedBook).enqueue(object: retrofit2.Callback<ResponseBody>{
+                        override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                            if(response.isSuccessful){
+                                Log.d("Booking", "Successfully Updated to 5")
+                                val userId = intent.getIntExtra("sqlId", 0)
+                                val intent = Intent(this@BookingDetailsActivity, CustomerMainActivity::class.java)
+                                intent.putExtra("userId", userId)
+                                startActivity(intent)
+                            }
+                        }
+
+                        override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                }
+            }
+
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+    private fun deleteNego(){
 
         val call = BookingInstance.retrofitBuilder
         val bookingId = intent.getIntExtra("bookingId", 0)
@@ -375,7 +420,7 @@ class BookingDetailsActivity : AppCompatActivity() {
             }
 
         })
-    }*/
+    }
 
     private fun getPayment(){
 
