@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
@@ -23,6 +24,7 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -58,13 +60,19 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         }
 
         val checkBox = findViewById<CheckBox>(R.id.checkBoxCustomerTNC)
+        val freelancerSignUp = findViewById<TextView>(R.id.textViewCustomerSignUp)
+        val signIn = findViewById<TextView>(R.id.textViewSignIn)
         val spannableString = SpannableString("I agree to the Terms and Conditions and Data Privacy")
+        val spannableStringFSignUp = SpannableString("Looking for the Freelancer Sign Up page?")
+        val spannableStringSignIn = SpannableString("Already have an account? Sign In")
 
-        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+        val fsignupSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 // Show the dialog when the text is clicked
-                showDialog()
+                val intent = Intent(this@CustomerRegisterDetailsActivity, FreelancerRegisterDetailsActivity::class.java)
+                startActivity(intent)
             }
+
 
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
@@ -73,7 +81,46 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             }
         }
 
-        spannableString.setSpan(clickableSpan,  16,  50, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val signInSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Show the dialog when the text is clicked
+                val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE // Set the text color
+                ds.isUnderlineText = true // Set the text to be underlined
+            }
+        }
+
+        spannableStringFSignUp.setSpan(fsignupSpan, 16, 34, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        freelancerSignUp.text = spannableStringFSignUp
+        freelancerSignUp.movementMethod = LinkMovementMethod.getInstance()
+
+        spannableStringSignIn.setSpan(signInSpan, 25, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        signIn.text = spannableStringSignIn
+        signIn.movementMethod = LinkMovementMethod.getInstance()
+
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Show the dialog when the text is clicked
+                showDialog()
+            }
+
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE // Set the text color
+                ds.isUnderlineText = true // Set the text to be underlined
+            }
+        }
+
+
+
+        spannableString.setSpan(clickableSpan,  15,  52, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         checkBox.text = spannableString
         checkBox.movementMethod = LinkMovementMethod.getInstance() // Enable clickable text
 

@@ -15,6 +15,7 @@ import android.text.Editable
 import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
@@ -57,6 +58,50 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
         //birthdate
         val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
+        val customerSignUp = findViewById<TextView>(R.id.textViewCustomerSignUp)
+        val signIn = findViewById<TextView>(R.id.textViewSignIn)
+
+        val spanCSignUp = SpannableString("Looking for the Customer Sign Up page?")
+        val spanSignUp = SpannableString("Already have an account? Sign In")
+
+        val csignupSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Show the dialog when the text is clicked
+                val intent = Intent(this@FreelancerRegisterDetailsActivity, CustomerRegisterDetailsActivity::class.java)
+                startActivity(intent)
+            }
+
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE // Set the text color
+                ds.isUnderlineText = true // Set the text to be underlined
+            }
+        }
+
+        val signInSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Show the dialog when the text is clicked
+                val intent = Intent(this@FreelancerRegisterDetailsActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
+
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = Color.BLUE // Set the text color
+                ds.isUnderlineText = true // Set the text to be underlined
+            }
+        }
+
+        spanCSignUp.setSpan(csignupSpan, 16, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        customerSignUp.text = spanCSignUp
+        customerSignUp.movementMethod = LinkMovementMethod.getInstance()
+
+        spanSignUp.setSpan(signInSpan, 25, 32, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        signIn.text = spanSignUp
+        signIn.movementMethod = LinkMovementMethod.getInstance()
+
         birthdateEditText.inputType = InputType.TYPE_NULL
 
         birthdateEditText.setOnClickListener {
@@ -79,7 +124,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             }
         }
 
-        spannableString.setSpan(clickableSpan,  16,  50, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(clickableSpan,  15,  52, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         checkBox.text = spannableString
         checkBox.movementMethod = LinkMovementMethod.getInstance() // Enable clickable text
 

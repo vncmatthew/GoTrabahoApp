@@ -70,7 +70,7 @@
         \n \n (ex. Certificate of employment, previous works or projects)</string>
     <string name="jobver_details">Please upload a picture or a file of your TESDA certificate that coincides with the service you selected. We need this to check your eligibility and ensure that quality service is provided.</string>
 
-    <string name="application_confirmation" tools:ignore="ExtraTranslation">Your application is currently being reviewed. Please wait while we confirm you application.</string>
+    <string name="application_confirmation" tools:ignore="ExtraTranslation">Your application is currently being reviewed. Please wait while we confirm your application.</string>
     <string name="title_activity_freelancer_main">FreelancerMainActivity</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
