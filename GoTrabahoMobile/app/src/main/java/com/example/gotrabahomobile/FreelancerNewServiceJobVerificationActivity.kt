@@ -217,12 +217,9 @@ class FreelancerNewServiceJobVerificationActivity : AppCompatActivity() {
                         registerProof(freelancerId, nameProof, dateSent)
                         registerService(
                             freelancerId,
-                            "Name of your Service",
-                            "Description:",
-                            0.0,
                             selectedService,
                             0,
-                            null, 
+                            null,
                             null
                         )
                         service.insertCertificateImage(imagePartCertificate)
@@ -387,13 +384,13 @@ class FreelancerNewServiceJobVerificationActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerService(freelancerId: Int, name: String?, description: String?, priceEstimate: Double?, serviceTypeName: String?, status: Int?, location: String?, rating: Float?) {
+    private fun registerService(freelancerId: Int, serviceTypeName: String?, status: Int?, location: String?, rating: Float?) {
 
         val serviceInput = Services(
             freelancerId = freelancerId,
-            name = name,
-            description = description,
-            priceEstimate = priceEstimate,
+            name = "Register your Service",
+            description = "Description:",
+            priceEstimate = 0.0,
             serviceTypeName = serviceTypeName,
             status = status,
             location = location,
