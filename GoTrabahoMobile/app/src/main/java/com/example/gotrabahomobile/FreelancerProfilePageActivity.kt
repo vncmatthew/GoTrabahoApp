@@ -25,9 +25,8 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_profile_page)
 
-        val tvFirstName = findViewById<EditText>(R.id.editTextProfileFreelancerFirstName)
-        val tvLastName = findViewById<EditText>(R.id.editTextProfileFreelancerLastName)
-        val tvPhone = findViewById<EditText>(R.id.editTextProfileFreelancerPhone)
+
+
         val tvCPass = findViewById<EditText>(R.id.editTextProfileFreelancerConfirmNewPassword)
         val tvPass = findViewById<EditText>(R.id.editTextProfileFreelancerNewPassword)
 
@@ -40,17 +39,11 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
         val saveProfileButton: Button = findViewById(R.id.buttonFreelancerEditProfileSave)
         saveProfileButton.setOnClickListener{
 
-            val firstName = tvFirstName.text?.toString()
-            val lastName = tvLastName.text?.toString()
             val password = tvCPass.text?.toString()
             val OldPassword = tvPass.text?.toString()
-            val phone = tvPhone.text?.toString()
             val userId = intent.getIntExtra("userId",0)
             val updateUser = User(
                 userId = userId,
-                firstName = firstName,
-                lastName = lastName,
-                contactNumber = phone
             )
             updateUser(updateUser, password!!,OldPassword!!)
 
