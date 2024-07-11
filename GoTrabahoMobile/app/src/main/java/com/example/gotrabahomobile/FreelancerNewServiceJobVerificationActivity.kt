@@ -217,12 +217,12 @@ class FreelancerNewServiceJobVerificationActivity : AppCompatActivity() {
                         registerProof(freelancerId, nameProof, dateSent)
                         registerService(
                             freelancerId,
-                            null,
-                            null,
-                            null,
+                            "Name of your Service",
+                            "Description:",
+                            0.0,
                             selectedService,
                             0,
-                            null,
+                            null, 
                             null
                         )
                         service.insertCertificateImage(imagePartCertificate)
