@@ -33,25 +33,19 @@ class CustomerProfilePageActivity : AppCompatActivity() {
             finish()
         }
         val btnSaveProfile = findViewById<Button>(R.id.buttonEditCustomerProfileSave)
-        val tvFirstName = findViewById<EditText>(R.id.editTextProfileCustomerFirstName)
-        val tvLastName = findViewById<EditText>(R.id.editTextProfileCustomerLastName)
-        val tvPhone = findViewById<EditText>(R.id.editTextProfileCustomerPhone)
         val tvCPass = findViewById<EditText>(R.id.editTextProfileCustomerConfirmNewPassword)
         val tvPass = findViewById<EditText>(R.id.editTextProfileCustomerNewPassword)
 
 
         btnSaveProfile.setOnClickListener {
-            val firstName = tvFirstName.text?.toString()
+
             val pass = tvCPass.text?.toString()
             val oldpass = tvPass.text?.toString()
-            val lastName = tvLastName.text?.toString()
-            val phone = tvPhone.text?.toString()
+
             val userId = intent.getIntExtra("userId",0)
             val updateUser = User(
                 userId = userId,
-                firstName = firstName,
-                lastName = lastName,
-                contactNumber = phone
+
             )
             updateUser(updateUser, pass!!, oldpass!!)
 
