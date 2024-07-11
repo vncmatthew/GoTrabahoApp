@@ -127,11 +127,8 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val btnCustomer = findViewById<Button>(R.id.buttonCustomerSignUp)
 
         btnCustomer.setOnClickListener {
-            Log.d("RegisterActivity", "Before registerData")
-
-            Log.d("RegisterActivity", "After registerData")
             insertCustomer()
-            Log.d("hello", insertCustomer().toString())
+
         }
 
 
@@ -222,7 +219,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
         val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
         startActivity(intent)
-        return
+
 
 
     }

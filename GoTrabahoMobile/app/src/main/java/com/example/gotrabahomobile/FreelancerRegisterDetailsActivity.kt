@@ -227,7 +227,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
         intent.putExtra("email", email)
         startActivity(intent)
-        return
+
 
 
     }
