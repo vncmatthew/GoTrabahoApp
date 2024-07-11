@@ -50,13 +50,16 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
 
             holder.binding.buttonDeleteService.setOnClickListener {
                 val service = ServicesInstance.retrofitBuilder
-                service.deleteService(services.serviceId.toString()).enqueue(object: Callback<Services>{
+                service.deleteService(services.serviceId!!).enqueue(object: Callback<Services>{
                     override fun onResponse(call: Call<Services>, response: Response<Services>) {
-                        Toast.makeText(
-                            context,
-                            "Successfully Deleted The Service",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        if (response.isSuccessful)
+                        {
+                            Toast.makeText(
+                                context,
+                                "Successfully Deleted The Service",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
 
                     override fun onFailure(call: Call<Services>, t: Throwable) {

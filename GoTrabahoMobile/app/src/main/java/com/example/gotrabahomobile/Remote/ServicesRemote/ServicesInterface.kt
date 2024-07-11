@@ -41,8 +41,8 @@ interface ServicesInterface {
     @PUT("api/Services/{serviceId}")
     fun updateServices(@Path("serviceId") resourceId: String, @Body updatedResource: Services): Call<Services>
 
-    @DELETE("api/Services/freelancer/{serviceId}")
-    fun deleteService(@Path("serviceId") resourceId: String): Call<Services>
+    @DELETE("api/Services/{serviceId}")
+    fun deleteService(@Path("serviceId") resourceId: Int): Call<Services>
 
     @GET("api/Services/List/{serviceTypeName}")
     fun getServicesType(@Path("serviceTypeName") serviceTypeName: String?): Call<List<ServicesWUserId>>
