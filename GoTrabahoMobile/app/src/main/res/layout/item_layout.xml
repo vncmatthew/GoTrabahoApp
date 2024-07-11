@@ -17,53 +17,59 @@
 
         <TextView
             android:id="@+id/tvNameR"
-            android:layout_width="0dp"
+            android:layout_width="356dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="Name"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.185"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvRatingR"
-            android:layout_width="0dp"
+            android:layout_width="356dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
             android:text="Rating"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.185"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvNameR" />
 
         <TextView
             android:id="@+id/tvLocationR"
-            android:layout_width="0dp"
+            android:layout_width="356dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:text="Location"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.185"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvRatingR" />
 
         <TextView
             android:id="@+id/tvPriceR"
-            android:layout_width="0dp"
+            android:layout_width="356dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Price Estimate"
+            android:text="Price Estimate: ₱"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/btnChooseService"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.185"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLocationR" />
+            app:layout_constraintTop_toBottomOf="@+id/tvLocationR"
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/btnChooseService"
             android:layout_width="150dp"
             android:layout_height="40dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="10dp"
             android:backgroundTint="@color/gt_blue"
             android:text="Choose Service"
             app:layout_constraintBottom_toBottomOf="parent"

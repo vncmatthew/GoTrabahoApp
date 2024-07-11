@@ -42,9 +42,9 @@ class ServiceAdapter(private val serviceList: List<ServicesWUserId>, private val
 
         holder.binding.apply{
             tvNameR.text = "Service Name: ${currentItem.name}"
-            tvLocationR.text = "Location Name: ${currentItem.location}"
+            tvLocationR.text = "Location: ${currentItem.location}"
             tvRatingR.text = "Rating: ${currentItem.rating}"
-            tvPriceR.text = "Price Estimate: ${currentItem.priceEstimate}"
+            tvPriceR.text = "Price Estimate: ₱ ${currentItem.priceEstimate}"
         }
         holder.binding.btnChooseService.setOnClickListener{
             val intent = Intent(context, FreelancerDetailsActivity::class.java)

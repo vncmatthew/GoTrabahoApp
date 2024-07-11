@@ -64,7 +64,7 @@ class RewardsActivity : AppCompatActivity() {
     }
 
     private fun updateRewardCircles() {
-        counter++
+//        counter++
         Log.d("RewardsAct", "counter = $counter")
         val rewardGrid: GridLayout = findViewById(R.id.rewardGrid)
 

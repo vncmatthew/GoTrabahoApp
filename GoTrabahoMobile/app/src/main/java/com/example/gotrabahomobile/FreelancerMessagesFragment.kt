@@ -109,12 +109,7 @@ class FreelancerMessagesFragment : Fragment() {
         }
 
 
-        val notifButton: ImageButton = _binding!!.include.notifNavbar
 
-        notifButton.setOnClickListener {
-            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
-            startActivity(intent)
-        }
         //select service spinner
         val spinner: Spinner = _binding!!.dropdownServices
         Log.d("FreelancerMessagesFragment", "Spinner found: $spinner")

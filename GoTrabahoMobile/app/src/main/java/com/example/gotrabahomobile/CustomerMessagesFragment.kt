@@ -89,12 +89,6 @@ class CustomerMessagesFragment : Fragment() {
             Log.d("FreelancerMessagesFrag", userId.toString())
         }
 
-        val notifButton: ImageButton = _binding!!.include.notifNavbar
-
-        notifButton.setOnClickListener {
-            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
-            startActivity(intent)
-        }
 
         return _binding!!.root
     }

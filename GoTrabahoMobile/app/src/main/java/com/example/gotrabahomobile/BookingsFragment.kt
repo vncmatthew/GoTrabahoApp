@@ -88,12 +88,6 @@ class BookingsFragment : Fragment() {
             }
         }
 
-        val notifButton: ImageButton = _binding!!.include.notifNavbar
-
-        notifButton.setOnClickListener {
-            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
-            startActivity(intent)
-        }
 
         return _binding!!.root
     }
@@ -114,15 +108,9 @@ class BookingsFragment : Fragment() {
 
         val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
 
-        tabLayout.addTab(tabLayout.newTab().setText("Pending").apply {
-            tabLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.pending_tab)
-        })
-        tabLayout.addTab(tabLayout.newTab().setText("Ongoing").apply {
-            tabLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.ongoing_tab)
-        })
-        tabLayout.addTab(tabLayout.newTab().setText("Completed").apply {
-            tabLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.completed_tab)
-        })
+        tabLayout.addTab(tabLayout.newTab().setText("Pending"))
+        tabLayout.addTab(tabLayout.newTab().setText("Ongoing"))
+        tabLayout.addTab(tabLayout.newTab().setText("Completed"))
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {

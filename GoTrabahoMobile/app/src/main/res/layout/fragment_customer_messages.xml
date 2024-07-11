@@ -9,7 +9,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/customer_toolbar" />
+        layout="@layout/toolbar_no_notificationicon" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvCustomerMessageList"

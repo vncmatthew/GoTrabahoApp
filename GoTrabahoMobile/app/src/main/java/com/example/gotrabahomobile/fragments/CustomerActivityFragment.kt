@@ -57,12 +57,6 @@ class CustomerActivityFragment : Fragment() {
         // Inflate the layout for this fragment
         getServiceList()
 
-        val notifButton: ImageButton = _binding!!.include.notifNavbar
-
-        notifButton.setOnClickListener {
-            val intent = Intent(requireContext(), CustomerNotificationActivity::class.java)
-            startActivity(intent)
-        }
 
         return _binding!!.root
     }
