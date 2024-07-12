@@ -202,7 +202,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                             }
 
                             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                                TODO("Not yet implemented")
+                                    Log.d("Negotiation Error", "{$t}")
                             }
                         })
                 }
