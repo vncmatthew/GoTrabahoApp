@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.DTO.ServicesDTO
+import com.example.gotrabahomobile.DTO.UserDetails
 import com.example.gotrabahomobile.FreelancerEditServiceActivity
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
@@ -15,7 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FreelancerServiceListAdapter(private val servicesList: List<Services>, private val context: Context) : RecyclerView.Adapter<FreelancerServiceListAdapter.ServiceListViewHolder>() {
+class FreelancerServiceListAdapter(private val servicesList: List<Services>, private val context: Context, private val UserDetails: UserDetails) : RecyclerView.Adapter<FreelancerServiceListAdapter.ServiceListViewHolder>() {
 
     inner class ServiceListViewHolder(val binding: ListItemServicesListEditDeleteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -45,6 +46,11 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
                 intent.putExtra("status", services.status)
                 intent.putExtra("rating", services.rating)
                 intent.putExtra("freelancerId", services.freelancerId)
+                intent.putExtra("userId", UserDetails.userId)
+                intent.putExtra("firstName", UserDetails.firstName)
+                intent.putExtra("lastName", UserDetails.lastName)
+                intent.putExtra("fullName", UserDetails.fullName)
+                intent.putExtra("email", UserDetails.email)
                 context.startActivity(intent)
             }
 

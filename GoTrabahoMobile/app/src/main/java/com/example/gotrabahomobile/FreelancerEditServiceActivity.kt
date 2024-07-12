@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
+import com.example.gotrabahomobile.DTO.UserDetails
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.ActivityFreelancerEditServiceBinding
@@ -63,7 +64,22 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
             } else {
                 price = etPrice.text.toString()
                 editService(name, description, price.toDouble(), location)
+
+
+                val userId = intent.getIntExtra("userId", 0)
+                val firstName = intent.getStringExtra("firstName") ?: ""
+                val lastName = intent.getStringExtra("lastName") ?: ""
+                val fullName = intent.getStringExtra("fullName") ?: ""
+                val email = intent.getStringExtra("email") ?: ""
+                val freelancerId = intent.getIntExtra("freelancerId", 0)
+
                 val intent = Intent(this@FreelancerEditServiceActivity, FreelancerMainActivity::class.java)
+                intent.putExtra("userId", userId)
+                intent.putExtra("firstName", firstName)
+                intent.putExtra("lastName", lastName)
+                intent.putExtra("fullName", fullName)
+                intent.putExtra("email", email)
+                intent.putExtra("freelancerId", freelancerId)
                 startActivity(intent)
             }
         }

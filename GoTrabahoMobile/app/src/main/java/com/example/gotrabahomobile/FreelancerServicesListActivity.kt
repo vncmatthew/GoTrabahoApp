@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.DTO.ServicesDTO
+import com.example.gotrabahomobile.DTO.UserDetails
 import com.example.gotrabahomobile.Helper.FreelancerServiceListAdapter
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
@@ -80,6 +81,16 @@ class FreelancerServicesListActivity : AppCompatActivity() {
          val service = ServicesInstance.retrofitBuilder
          val freelancerId = intent.getIntExtra("freelancerId", 0)
 
+        val userDetails = UserDetails(
+            userId = intent.getIntExtra("userId", 0),
+            freelancerId = intent.getIntExtra("freelancerId", 0),
+            firstName = intent.getStringExtra("firstName") ?: "",
+            lastName = intent.getStringExtra("lastName") ?: "",
+            fullName = intent.getStringExtra("fullName") ?: "",
+            email = intent.getStringExtra("email") ?: ""
+        )
+
+        val user =
         service.getFreelancerServices(freelancerId).enqueue(object: Callback<List<Services>>{
             override fun onResponse(
                 call: Call<List<Services>>,
@@ -88,7 +99,7 @@ class FreelancerServicesListActivity : AppCompatActivity() {
                 servicesList = response.body()!!
 
                 binding.servicesListRecycler.apply{
-                    rvAdapter = FreelancerServiceListAdapter(servicesList, this@FreelancerServicesListActivity)
+                    rvAdapter = FreelancerServiceListAdapter(servicesList, this@FreelancerServicesListActivity, userDetails)
                     adapter = rvAdapter
                     layoutManager = LinearLayoutManager(this@FreelancerServicesListActivity)
                 }
