@@ -131,7 +131,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                             messageButton.visibility = View.GONE
                             cancelBookingButton.visibility = View.GONE
                             paymentButton.visibility = View.GONE
-                            reportBookingButton.visibility = View.GONE
+                            reportBookingButton.visibility = View.VISIBLE
                         }
                     }
                 }
@@ -409,14 +409,14 @@ class BookingDetailsActivity : AppCompatActivity() {
                             }
                         }
                         override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                            TODO("Not yet implemented")
+                            Log.d("Negotiation", "{$t}")
                         }
                     })
                 }
             }
 
             override fun onFailure(call: Call<Booking>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("Negotiation", "{$t}")
             }
 
         })
