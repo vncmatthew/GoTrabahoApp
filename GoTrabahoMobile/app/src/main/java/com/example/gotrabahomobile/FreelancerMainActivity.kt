@@ -53,6 +53,7 @@ class FreelancerMainActivity : AppCompatActivity() {
             putString("firstName", firstName)
             putString("lastName", lastName)
             putString("fullName", fullName)
+
         }
 
         val bookingsFragment = BookingsFragment().apply { arguments = bundle }

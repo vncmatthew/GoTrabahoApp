@@ -95,12 +95,26 @@ class CustomerMainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     // Safely attempt to convert the ResponseBody to a string
                     val bookingId = response.body()
+                    val email = intent.getStringExtra("email")
+                    val firstName = intent.getStringExtra("firstName")
+                    val lastName = intent.getStringExtra("lastName")
+                    val fullName = intent.getStringExtra("fullName")
+                    val longitude = intent.getDoubleExtra("longitude", 0.0)
+                    val latitude = intent.getDoubleExtra("latitude", 0.0)
+                    val userId = intent.getIntExtra("userId", 0)
 
                     Log.d("Booking", "${bookingId}")
                     if(bookingId != 0) {
                         val intent =
                             Intent(this@CustomerMainActivity, BookingDetailsActivity::class.java)
                         intent.putExtra("bookingId", bookingId)
+                        intent.putExtra("email",email)
+                        intent.putExtra("firstName", firstName)
+                        intent.putExtra("lastName",lastName)
+                        intent.putExtra("fullName",fullName)
+                        intent.putExtra("longitude",longitude)
+                        intent.putExtra("latitude",latitude)
+                        intent.putExtra("userId",userId)
                         startActivity(intent)
                     }
 

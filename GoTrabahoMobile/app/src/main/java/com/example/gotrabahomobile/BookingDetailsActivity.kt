@@ -369,10 +369,24 @@ class BookingDetailsActivity : AppCompatActivity() {
                     book.updateBooking(response.body()?.bookingId.toString(), updatedBook).enqueue(object: retrofit2.Callback<ResponseBody>{
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                             if(response.isSuccessful){
+
+                                val email = intent.getStringExtra("email")
+                                val firstName = intent.getStringExtra("firstName")
+                                val lastName = intent.getStringExtra("lastName")
+                                val fullName = intent.getStringExtra("fullName")
+                                val longitude = intent.getDoubleExtra("longitude", 0.0)
+                                val latitude = intent.getDoubleExtra("latitude", 0.0)
                                 Log.d("Booking", "Successfully Updated to 5")
                                 val userId = intent.getIntExtra("sqlId", 0)
                                 val intent = Intent(this@BookingDetailsActivity, CustomerMainActivity::class.java)
                                 intent.putExtra("userId", userId)
+                                intent.putExtra("email",email)
+                                intent.putExtra("firstName", firstName)
+                                intent.putExtra("lastName",lastName)
+                                intent.putExtra("fullName",fullName)
+                                intent.putExtra("longitude",longitude)
+                                intent.putExtra("latitude",latitude)
+                                intent.putExtra("userId",userId)
                                 startActivity(intent)
                             }
                         }
