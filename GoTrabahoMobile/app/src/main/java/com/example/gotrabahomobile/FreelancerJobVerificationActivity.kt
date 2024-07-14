@@ -252,11 +252,14 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                                                 }
                                             })
                                         Log.d("Resort", "$userId")
-                                        val intent = Intent(this@FreelancerJobVerificationActivity, ApplicationConfirmationActivity::class.java)
-                                        intent.putExtra("email", email)
-                                        intent.putExtra("userId", userId)
-                                        startActivity(intent)
-                                        return
+
+                                        if (validateInputs(selectedService)){
+                                            val intent = Intent(this@FreelancerJobVerificationActivity, ApplicationConfirmationActivity::class.java)
+                                            intent.putExtra("email", email)
+                                            intent.putExtra("userId", userId)
+                                            startActivity(intent)
+                                            return
+                                        }
                                     }
 
 
@@ -394,6 +397,18 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Exception: ", t)
             }
         })
+    }
+
+    fun validateInputs(
+        selectedType: String?
+    ): Boolean {
+        if (selectedType.equals("Service Type")
+        ) {
+            Toast.makeText(this, "Please select a valid service", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
 

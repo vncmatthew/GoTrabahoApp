@@ -183,12 +183,15 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
 
                         }
                         Log.d("Resort", "$userId")
+                        if (validateInputs(selectedItem)){
+                            val intent = Intent(this@FreelancerIdentityVerificationActivity, FreelancerJobVerificationActivity::class.java)
+                            intent.putExtra("userId", userId)
+                            intent.putExtra("email", email)
+                            startActivity(intent)
+                            return
+                        }
 
-                        val intent = Intent(this@FreelancerIdentityVerificationActivity, FreelancerJobVerificationActivity::class.java)
-                        intent.putExtra("userId", userId)
-                        intent.putExtra("email", email)
-                        startActivity(intent)
-                        return
+
                     } else {
                         Log.d("MainActivity", "Failed to connect: " + response.code())
 
@@ -265,6 +268,18 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Exception: ", t)
             }
         })
+    }
+
+    fun validateInputs(
+        selectedType: String?
+    ): Boolean {
+        if (selectedType.equals("ID TYPE")
+        ) {
+            Toast.makeText(this, "Please select a valid ID", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        return true
     }
 
 }

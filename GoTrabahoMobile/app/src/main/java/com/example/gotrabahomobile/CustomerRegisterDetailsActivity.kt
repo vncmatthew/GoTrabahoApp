@@ -211,18 +211,70 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val latitude = currentLatitude
         val longitude = currentLongitude
 
-
-        registerCustomer(userType, firstName, lastName,  email, password, contactNumber, birthdate, address1,
-            address2, barangay, city, longitude, latitude)
-
-        intent.putExtra("email", email)
-
-        val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
-        startActivity(intent)
+        if (validateInputs(firstName, lastName, email, address1, address2, barangay, city, password, contactNumber)) {
+            registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
+                address2, barangay, city, longitude, latitude)
+            val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
     }
+
+    val phoneNumberPattern = "^0[0-9]{3}[0-9]{3}[0-9]{4}$".toRegex()
+
+    fun isValidPhoneNumber(phoneNumber: String): Boolean {
+        return phoneNumberPattern.matches(phoneNumber.trim())
+    }
+    fun validateInputs(
+        firstName: String?,
+        lastName: String?,
+        email: String?,
+        address1: String?,
+        address2: String?,
+        barangay: String?,
+        city: String?,
+        password: String?,
+        contactNumber: String?
+    ): Boolean {
+        if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
+            address1.isNullOrEmpty()  || barangay.isNullOrEmpty() ||
+            city.isNullOrEmpty()  || contactNumber.isNullOrEmpty()
+        ) {
+            Toast.makeText(this, "All fields must be filled out", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (password?.length ?: 0 < 7) {
+            Toast.makeText(this, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (!email.contains("@")) {
+            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (!isValidPhoneNumber(contactNumber)) {
+            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        val latLong = getLatLongFromAddress(this, address1, address2!!, barangay, city)
+        if (latLong == null) {
+            Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        val (latitude, longitude) = latLong!!
+        println("Latitude: $latitude, Longitude: $longitude")
+        currentLongitude = longitude
+        currentLatitude = latitude
+
+        return true
+    }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun registerCustomer(userType: Int, firstName: String, lastName: String, email: String, password: String?, contactNumber: String?, birthdate: String, address1: String,
@@ -270,7 +322,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Exception: ", t)
             }
         })
-}
+    }
 
 
 
