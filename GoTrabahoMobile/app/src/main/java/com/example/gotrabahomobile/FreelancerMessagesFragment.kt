@@ -125,6 +125,12 @@ class FreelancerMessagesFragment : Fragment() {
         Log.d("FreelancerMessagesFragment", "Adapter set: ${spinner.adapter}")
 
         var isFirstTimeInitialization = true
+        val savedService = sharedPreferences.getString("selectedServiceKey", null)
+        savedService?.let {
+            val position = adapter.getPosition(it)
+            spinner.setSelection(position)
+        }
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
