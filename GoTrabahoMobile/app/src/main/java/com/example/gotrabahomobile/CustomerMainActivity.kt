@@ -43,7 +43,6 @@ class CustomerMainActivity : AppCompatActivity() {
 
         Log.d("CustomerMain", userId.toString())
 
-        // Create a Bundle and put the data into it
         val bundle = Bundle().apply {
             putInt("userId", userId)
             putString("email", email)
@@ -55,19 +54,19 @@ class CustomerMainActivity : AppCompatActivity() {
             AddRating()
         }
 
-        // Instantiate fragments with the bundle
+
         val customerHomeFragment = CustomerHomeFragment().apply { arguments = bundle }
         val customerActivityFragment = CustomerActivityFragment().apply { arguments = bundle }
         val customerMessagesFragment = CustomerMessagesFragment().apply { arguments = bundle }
         val customerAccountFragment = CustomerAccountFragment().apply { arguments = bundle }
 
-        // Replace the initial fragment
+
         replaceFragment(customerHomeFragment)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED) {
 
-            // Request the permission
+
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.POST_NOTIFICATIONS),
@@ -93,7 +92,7 @@ class CustomerMainActivity : AppCompatActivity() {
         call.getCompletedBooking(userId,3).enqueue(object: Callback<Int>{
             override fun onResponse(call: Call<Int>, response: Response<Int>) {
                 if (response.isSuccessful) {
-                    // Safely attempt to convert the ResponseBody to a string
+
                     val bookingId = response.body()
                     val email = intent.getStringExtra("email")
                     val firstName = intent.getStringExtra("firstName")
@@ -134,13 +133,12 @@ class CustomerMainActivity : AppCompatActivity() {
         when (requestCode) {
             MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // Permission was granted, you can access the file now
+                    Log.d("Success!", "permission given")
                 } else {
-                    // Permission was denied, handle the denial
+                    Log.d("Denied!", "permission denied")
                 }
                 return
             }
-            // ... (handle other permission requests)
         }
     }
     private fun replaceFragment(fragment: Fragment) {

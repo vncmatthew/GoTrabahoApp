@@ -80,7 +80,7 @@ class CustomerHomeFragment : Fragment() {
         _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
 
 
-        //map view button
+
 
         val longitude = arguments?.getDouble("longitude", 0.0) ?: 0
         val latitude = arguments?.getDouble("latitude", 0.0) ?: 0

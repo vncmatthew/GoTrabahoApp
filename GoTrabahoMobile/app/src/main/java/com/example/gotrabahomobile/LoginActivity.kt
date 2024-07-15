@@ -122,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
                         val latitude = user.latitude
                         val fullName = "$firstName $lastName"
                         if (userID != null) {
-                        registerUser(email, pass ,firstName,lastName, fullName, userID.toString(), userType, longitude, latitude, userID)
+                        LoginUser(email, pass ,firstName,lastName, fullName, userID.toString(), userType, longitude, latitude, userID)
                         }else {
                             Toast.makeText(this@LoginActivity, "Connection Error", Toast.LENGTH_SHORT).show()
                         }
@@ -138,38 +138,9 @@ class LoginActivity : AppCompatActivity() {
         })
     }
 
-    private fun registerUser(email:String,password:String,firstName:String?, lastName:String?, fullName:String?, sqlId: String?, userType: Int?,
+    private fun LoginUser(email:String,password:String,firstName:String?, lastName:String?, fullName:String?, sqlId: String?, userType: Int?,
                              longitude: Double?, latitude: Double?, identification: Int?){
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnCompleteListener(this){
-                if (it.isSuccessful){
-                    val user: FirebaseUser? = auth.currentUser
-                    val userId:String = user!!.uid
-
-                    databaseReference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId)
-
-                    val hashMap: HashMap<String, String> = HashMap()
-                    hashMap.put("userId",userId)
-                    if (firstName != null) {
-                        hashMap.put("firstname", firstName)
-                    }
-                    if (lastName != null) {
-                        hashMap.put("lastName",lastName)
-                    }
-                    if (sqlId != null) {
-                        hashMap.put("sqlId",sqlId)
-                    }
-
-                    databaseReference.setValue(hashMap).addOnCompleteListener(this){
-                        if (it.isSuccessful){
-                            //open home activity
-                            Log.d("CHECK", "Successfully Registered")
-                        }
-                    }
-                }
-
-                else{
-                    auth!!.signInWithEmailAndPassword(email, password)
+                    auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) {
                             if (it.isSuccessful) {
 
@@ -229,8 +200,6 @@ class LoginActivity : AppCompatActivity() {
                                         }
                                     })
                                 }
-                                startActivity(intent)
-                                finish()
                             } else {
                                 Toast.makeText(
                                     applicationContext,
@@ -240,11 +209,11 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                 }
-            }
+
     }
 
 
 
-}
+
 
 

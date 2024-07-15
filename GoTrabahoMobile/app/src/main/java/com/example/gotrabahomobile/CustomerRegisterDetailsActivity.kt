@@ -31,6 +31,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +44,7 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
+import java.util.HashMap
 import java.util.Locale
 
 class CustomerRegisterDetailsActivity : AppCompatActivity() {
@@ -46,12 +52,12 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private var currentLatitude: Double? = null
     private var currentLongitude: Double? = null
-
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_register_details)
-
+        auth = FirebaseAuth.getInstance()
         val birthdateEditText = findViewById<EditText>(R.id.editTextCustomerBirthdate)
         birthdateEditText.inputType = InputType.TYPE_NULL
 
@@ -212,6 +218,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val longitude = currentLongitude
 
         if (validateInputs(firstName, lastName, email, address1, address2, barangay, city, password, contactNumber)) {
+
             registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
                 address2, barangay, city, longitude, latitude)
             val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
@@ -277,7 +284,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun registerCustomer(userType: Int, firstName: String, lastName: String, email: String, password: String?, contactNumber: String?, birthdate: String, address1: String,
+    private fun registerCustomer(userType: Int, firstName: String, lastName: String, email: String, password: String, contactNumber: String?, birthdate: String, address1: String,
                                  address2: String, barangay: String, city: String, longitude: Double?, latitude: Double?) {
 
         val usersInput = User(
@@ -299,10 +306,64 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val userService = UserInstance.retrofitBuilder
         userService.registerUser(usersInput).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
-                Log.i(TAG, "The response is " + response.message());
-                Log.i(TAG, "The response is " + response.body());
+
 
                 if (response.isSuccessful) {
+
+                    userService.getEmail(email).enqueue(object:Callback<Int>{
+                        override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                            if(response.isSuccessful) {
+                                auth.createUserWithEmailAndPassword(email, password)
+                                    .addOnCompleteListener(this@CustomerRegisterDetailsActivity) { task ->
+                                        if (task.isSuccessful) {
+                                            val user = auth.currentUser
+                                            val userId = user?.uid
+                                                ?: return@addOnCompleteListener // Safely handle null uid
+
+                                            val databaseReference = FirebaseDatabase.getInstance()
+                                                .getReference("UserFirebase").child(userId)
+                                            val hashMap: HashMap<String, Any?> = HashMap()
+                                            hashMap["userId"] = userId
+                                            firstName?.let { hashMap["firstname"] = it }
+                                            lastName?.let { hashMap["lastName"] = it }
+                                            response.body().toString().let { hashMap["sqlId"] = it }
+
+                                            databaseReference.setValue(hashMap)
+                                                .addOnCompleteListener { dbTask ->
+                                                    if (dbTask.isSuccessful) {
+                                                        // Navigate to home activity or update UI
+                                                        Log.d("CHECK", "Successfully Registered")
+                                                        // Placeholder for navigation
+                                                        // navigateToHomeActivity()
+                                                    } else {
+                                                        Log.e(
+                                                            "FirebaseOperation",
+                                                            "Failed to add data.",
+                                                            dbTask.exception
+                                                        )
+                                                        // Handle database operation failure
+                                                    }
+                                                }
+                                        } else {
+                                            Log.e(
+                                                "AuthOperation",
+                                                "Failed to create user.",
+                                                task.exception
+                                            )
+                                            // Handle auth operation failure
+                                        }
+                                    }
+                            }
+                        }
+
+                        override fun onFailure(call: Call<Int>, t: Throwable) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                    Log.i(TAG, "The response is " + response.message());
+                    Log.i(TAG, "The response is " + response.body());
+
                     val users = response.body()
                     if(users != null){
                         Toast.makeText(this@CustomerRegisterDetailsActivity, "Register", Toast.LENGTH_SHORT).show()

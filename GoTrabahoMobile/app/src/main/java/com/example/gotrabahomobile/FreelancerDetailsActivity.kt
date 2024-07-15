@@ -97,19 +97,17 @@ class FreelancerDetailsActivity : AppCompatActivity() {
                                 startActivity(intent)
 
                         } else {
-                        // Handle the case where the negotiation object is null
+
                         Log.e(ContentValues.TAG, "Negotiation object is null")
                     }
                 }
                 else {
-                    // Handle the error response
                     Log.d("MainActivity", "Response code: ${response.message()}")
 
                 }
             }
 
             override fun onFailure(call: Call<Negotiation>, t: Throwable) {
-                // Handle network or other exceptions
                 Log.d("MainActivity", "Exception: ", t)
             }
         })

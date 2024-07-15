@@ -181,10 +181,10 @@ class ChatActivity : AppCompatActivity() {
     private fun showDialog() {
         val dialogView = layoutInflater.inflate(R.layout.set_price_dialog, null)
 
-        // Find the close button from the dialogView
+
         val closeButton = dialogView.findViewById<ImageButton>(R.id.close_button)
 
-        // Find the tvSetPrice from the dialogView
+
         val tvSetPrice = dialogView.findViewById<EditText>(R.id.editTextSetPrice)
 
         val alertDialog = AlertDialog.Builder(this@ChatActivity)
@@ -201,7 +201,7 @@ class ChatActivity : AppCompatActivity() {
             val freelancerPrice = tvSetPrice.text.toString().toDoubleOrNull()
 
             Log.d("ChatActivity", email.toString())
-
+            //Service side Negotiation
             if (serviceId != 0) {
                 val track = NegotiationInstance.retrofitBuilder
                 track.getNegotiationTracker("$sqlId$serviceId$name").enqueue(object : Callback<Negotiation> {
@@ -228,6 +228,7 @@ class ChatActivity : AppCompatActivity() {
                         Toast.makeText(this@ChatActivity, "Failed to get negotiation tracker", Toast.LENGTH_SHORT).show()
                     }
                 })
+                //User Side Negotiation
             } else {
 
                 val negotiation = Negotiation(
@@ -250,7 +251,7 @@ class ChatActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
-
+//User Side Negotiation
     private fun patchNegotiation(negotiationId: Int, negotiation: Negotiation) {
         val call = NegotiationInstance.retrofitBuilder
         call.patchNegotiation(negotiationId, negotiation).enqueue(object : Callback<Negotiation> {
@@ -340,7 +341,6 @@ class ChatActivity : AppCompatActivity() {
                                     })
                                     } catch (e: Exception) {
                                         Log.e("RetrofitError", "Foreign Key Constraint Violation", e)
-                                        // Handle the error appropriately, e.g., show a message to the user
                                     }
 
                                 }
@@ -366,7 +366,7 @@ class ChatActivity : AppCompatActivity() {
 
 
     }
-
+    //This is for Freelancer Side Negotiation
     private fun patchNegotiation2(negotiationId: Int, negotiation: Negotiation, userId: Int) {
         val call = NegotiationInstance.retrofitBuilder
         call.patchNegotiation(negotiationId, negotiation).enqueue(object : Callback<Negotiation> {
