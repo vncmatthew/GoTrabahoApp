@@ -111,7 +111,7 @@ class BookingsFragment : Fragment() {
         tabLayout.addTab(tabLayout.newTab().setText("Pending"))
         tabLayout.addTab(tabLayout.newTab().setText("Ongoing"))
         tabLayout.addTab(tabLayout.newTab().setText("Completed"))
-        tabLayout.selectTab(tabLayout.getTabAt(0))
+
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
 

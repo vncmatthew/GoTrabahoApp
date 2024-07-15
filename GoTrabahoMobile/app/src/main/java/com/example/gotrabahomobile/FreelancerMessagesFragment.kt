@@ -1,7 +1,6 @@
 package com.example.gotrabahomobile
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -60,7 +59,7 @@ class FreelancerMessagesFragment : Fragment() {
     private lateinit var serviceList: List<Services>
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
-    private lateinit var sharedPreferences: SharedPreferences
+
 
     private val binding get() = _binding!!
     private lateinit var rvAdapter: ServiceAdapter
@@ -124,18 +123,10 @@ class FreelancerMessagesFragment : Fragment() {
         spinner.adapter = adapter
         Log.d("FreelancerMessagesFragment", "Adapter set: ${spinner.adapter}")
 
-        var isFirstTimeInitialization = true
+
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
-                val editor = sharedPreferences.edit()
-                editor.putString("selectedServiceKey", selectedService)
-                editor.apply()
-                if (!isFirstTimeInitialization) {
-                    refreshFragment()
-                } else {
-                    isFirstTimeInitialization = false
-                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -156,14 +147,7 @@ class FreelancerMessagesFragment : Fragment() {
 
     }
 
-    private fun refreshFragment() {
-        val supportFragmentManager = childFragmentManager
-        val tag = javaClass.name
-        supportFragmentManager.beginTransaction()
-            .detach(this)
-            .attach(this)
-            .commitNow()
-    }
+
     fun getUsersList() {
         Log.d("Tag", "Check")
         val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
