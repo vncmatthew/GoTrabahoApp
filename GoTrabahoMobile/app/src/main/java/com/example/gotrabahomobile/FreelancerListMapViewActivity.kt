@@ -22,8 +22,6 @@ import com.example.gotrabahomobile.Model.UserFirebase
 
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.ActivityFreelancerListMapViewBinding
-import com.example.gotrabahomobile.databinding.ActivityFreelancerMainBinding
-import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -47,12 +45,14 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     private lateinit var map : MapView
     private lateinit var serviceList: List<ServicesWUserId>
-    private lateinit var binding: ActivityFreelancerListMapViewBinding
+    private lateinit var _binding: ActivityFreelancerListMapViewBinding
+    private val binding get() = _binding!!
+
     var selectedService: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityFreelancerListMapViewBinding.inflate(layoutInflater)
+        _binding = ActivityFreelancerListMapViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //handle permissions first, before map is created. not depicted here
@@ -68,7 +68,6 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         //tile servers will get you banned based on this string.
 
         //inflate and create the map
-        setContentView(R.layout.activity_freelancer_list_map_view)
 
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{
@@ -76,14 +75,13 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         }
 
         //select service spinner
-        val spinner: Spinner = binding.spinnerMapServiceName
-        Log.d("FreelancerListMapView", "Spinner found: $spinner")
+        val spinner: Spinner = binding!!.spinnerMapServiceName
+        Log.d("FreelancerListMapView", "Spinner found: $spinner.")
 
         val adapter = ArrayAdapter.createFromResource(
             this@FreelancerListMapViewActivity,
             R.array.serviceTypes,
-            android.R.layout.simple_spinner_item
-        )
+            android.R.layout.simple_spinner_item)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
         Log.d("FreelancerListMapView", "Adapter set: ${spinner.adapter}")
@@ -92,6 +90,8 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
+                Log.d("SelectedService", "{$selectedService}")
+                addFreelancerPins(selectedService!!)
 
             }
 
@@ -99,11 +99,8 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                 Toast.makeText(this@FreelancerListMapViewActivity, "Please Select a Service", Toast.LENGTH_SHORT).show()
             }
         }
-
-
         map = findViewById<MapView>(R.id.mapview)
         map.setTileSource(TileSourceFactory.MAPNIK)
-
         val mapController = map.controller
         mapController.setZoom(20.20)
         val longitude = intent.getDoubleExtra("longitude", 0.0)
@@ -112,7 +109,10 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
 
         mapController.setCenter(startPoint);
         addCustomerPin()
-        addFreelancerPins()
+
+
+
+
 
 
     }
@@ -225,8 +225,8 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
 
     }
 
-    private fun addFreelancerPins() {
-        val call = ServicesInstance.retrofitBuilder.getServiceLocations()
+    private fun addFreelancerPins(selectedService: String) {
+        val call = ServicesInstance.retrofitBuilder.getServiceLocations(selectedService!!)
         call.enqueue(object : Callback<List<FreelancerLocations>> {
             override fun onResponse(
                 call: Call<List<FreelancerLocations>>,
@@ -316,33 +316,6 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                                 }
                             })
 
-                            //-----------------------------------------------------------
-/*                            // Create a marker for each freelancer location
-                            val marker = Marker(map)
-                            marker.position = geoPoint
-                            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-                            marker.setTitle("Service Name: " + freelancer.name)
-                            Log.d("Freelancer", "${freelancer.name}")
-                            Log.d("Freelancer", "${freelancer.description}")
-                            marker.setSnippet("Service Description: " + freelancer.description)
-                            marker.setIcon(ContextCompat.getDrawable(this@FreelancerListMapViewActivity, R.drawable.location_pin))
-                            Log.d("SQELID", sqlId.toString())
-                            marker.setOnMarkerClickListener{marker, map->
-                                val intent = Intent(this@FreelancerListMapViewActivity, FreelancerDetailsActivity::class.java)
-                                intent.putExtra("sqlId", sqlId)
-                                intent.putExtra("serviceId", freelancer.serviceId)
-                                intent.putExtra("serviceName",freelancer.name)
-                                intent.putExtra("description",freelancer.description)
-                                intent.putExtra("location",freelancer.location)
-                                intent.putExtra("price",freelancer.priceEstimate)
-                                intent.putExtra("rating",freelancer.rating)
-                                startActivity(intent)
-                                true
-                            }
-
-
-                            // Add the marker to the map
-                            map.overlays.add(marker)*/
                         }
                         map.invalidate() // Refresh the map to show the new markers
                     }
@@ -357,49 +330,4 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
     }
 
 
-  /*  private fun addMarker(){
-
-        val service = ServicesInstance.retrofitBuilder
-
-        service.getServiceLocations().enqueue(object : Callback<List<FreelancerLocations>>{
-            override fun onResponse(
-                call: Call<List<FreelancerLocations>>,
-                response: Response<List<FreelancerLocations>>
-            ) {
-                if(response.isSuccessful){
-                    response.body().let{
-                        if (it != null) {
-                            for(freelancer in it){
-                                Log.i("Check", "onResponse: ${freelancer.latitude}")
-                                Log.i("Check", "onResponse: ${freelancer.longitude}")
-                            }
-                        }
-                    }
-                }
-            }
-
-            override fun onFailure(call: Call<List<FreelancerLocations>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }*/
-
-
-    /*private fun requestPermissionsIfNecessary(String[] permissions) {
-            val permissionsToRequest = ArrayList<String>();
-        permissions.forEach { permission ->
-        if (ContextCompat.checkSelfPermission(this, permission)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Permission is not granted
-            permissionsToRequest.add(permission);
-        }
-    }
-        if (permissionsToRequest.size() > 0) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    permissionsToRequest.toArray(new String[0]),
-                    REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-    }*/
 }
