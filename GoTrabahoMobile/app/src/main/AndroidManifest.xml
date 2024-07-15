@@ -25,22 +25,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".FreelancerBugReportActivity"
-            android:exported="false" />
-        <activity
             android:name=".BugReportActivity"
             android:exported="false" />
         <activity
             android:name=".ConfirmedChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ASampleChatActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FreelancerNotificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CustomerNotificationActivity"
             android:exported="false" />
         <activity
             android:name=".FreelancerNewServiceJobVerificationActivity"
@@ -59,17 +47,6 @@
             android:exported="false" />
         <activity
             android:name=".BookingDetailsActivity"
-            android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
-            android:name=".FreelancerMessagesActivity"
             android:exported="false">
 
             <!-- <intent-filter> -->
@@ -138,17 +115,6 @@
             android:name=".ApplicationConfirmationActivity"
             android:exported="false" />
         <activity
-            android:name=".FreelancerBookingsPageActivity"
-            android:exported="false">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
-        <activity
             android:name=".FreelancerDetailsActivity"
             android:exported="false" />
         <activity
@@ -158,9 +124,7 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-        <activity
-            android:name=".FreelancerListListViewActivity"
-            android:exported="false" />
+
         <activity
             android:name=".FreelancerJobVerificationActivity"
             android:exported="false">
@@ -219,17 +183,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".StartupActivity"
-            android:exported="false">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
     </application>
 
 </manifest>

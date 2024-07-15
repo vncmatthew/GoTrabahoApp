@@ -10,15 +10,12 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.gotrabahomobile.CustomerNotificationActivity
 import com.example.gotrabahomobile.DTO.ServicesWUserId
 import com.example.gotrabahomobile.FreelancerListMapViewActivity
 import com.example.gotrabahomobile.Helper.ServiceAdapter
-import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
