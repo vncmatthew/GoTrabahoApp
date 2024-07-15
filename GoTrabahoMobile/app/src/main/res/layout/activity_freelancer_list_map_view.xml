@@ -10,29 +10,14 @@
         android:id="@+id/include"
         layout="@layout/customer_toolbar_withbackbutton" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/textView6"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="14dp"-->
-<!--        android:text="Map View"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/include" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/textView7"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="4dp"-->
-<!--        android:text="Plumbing"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textView6" />-->
+    <Spinner
+        android:id="@+id/spinnerMapServiceName"
+        android:layout_width="184dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include" />
 
     <LinearLayout
         android:layout_width="417dp"
@@ -42,7 +27,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include">
+        app:layout_constraintTop_toBottomOf="@+id/spinnerServiceNameMap">
+
 
         <org.osmdroid.views.MapView
             android:id="@+id/mapview"

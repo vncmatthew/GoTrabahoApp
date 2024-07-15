@@ -5,17 +5,25 @@ import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gotrabahomobile.DTO.FreelancerLocations
+import com.example.gotrabahomobile.DTO.ServicesWUserId
 import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.UserFirebase
 
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
+import com.example.gotrabahomobile.databinding.ActivityFreelancerListMapViewBinding
+import com.example.gotrabahomobile.databinding.ActivityFreelancerMainBinding
+import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -38,9 +46,14 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
 
     private val REQUEST_PERMISSIONS_REQUEST_CODE = 1
     private lateinit var map : MapView
+    private lateinit var serviceList: List<ServicesWUserId>
+    private lateinit var binding: ActivityFreelancerListMapViewBinding
+    var selectedService: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_freelancer_list_map_view)
+
+        binding = ActivityFreelancerListMapViewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //handle permissions first, before map is created. not depicted here
 
@@ -60,6 +73,31 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{
             finish()
+        }
+
+        //select service spinner
+        val spinner: Spinner = binding.spinnerMapServiceName
+        Log.d("FreelancerListMapView", "Spinner found: $spinner")
+
+        val adapter = ArrayAdapter.createFromResource(
+            this@FreelancerListMapViewActivity,
+            R.array.serviceTypes,
+            android.R.layout.simple_spinner_item
+        )
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+        Log.d("FreelancerListMapView", "Adapter set: ${spinner.adapter}")
+
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                selectedService = parent.getItemAtPosition(position) as? String
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+                Toast.makeText(this@FreelancerListMapViewActivity, "Please Select a Service", Toast.LENGTH_SHORT).show()
+            }
         }
 
 
@@ -97,6 +135,67 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         map.onPause()  //needed for compass, my location overlays, v6.0.0 and up
     }
 
+    private fun getServiceList(select: String?){
+        val service = ServicesInstance.retrofitBuilder
+        val identification = intent?.getIntExtra("userId", 0) ?: 0
+
+        service.getServicesType(select).enqueue(object : Callback<List<ServicesWUserId>> {
+            override fun onResponse(
+                call: Call<List<ServicesWUserId>>,
+                response: Response<List<ServicesWUserId>>
+            ) {
+                if (response.isSuccessful && response.body() != null){
+                    val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
+
+                    var userid = firebase.uid
+                    FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
+
+
+                    val databaseReference: DatabaseReference =
+                        FirebaseDatabase.getInstance().getReference("UserFirebase")
+                    databaseReference.addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            Log.d("DEBUG", "Path: ${dataSnapshot.ref.path}")
+                            Log.d("DEBUG", "Data: ${dataSnapshot.value}")
+                            val user = dataSnapshot.getValue(UserFirebase::class.java)
+                            Log.d("DEBUG", "User: $user")
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            Log.w("DEBUG", "Failed to read value.", databaseError.toException())
+                        }
+                    })
+
+                    databaseReference.addValueEventListener(object : ValueEventListener {
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(this@FreelancerListMapViewActivity, error.message, Toast.LENGTH_SHORT).show()
+                        }
+
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            userList.clear()
+
+                            for (dataSnapShot: DataSnapshot in snapshot.children) {
+                                val user = dataSnapShot.getValue(UserFirebase::class.java)
+                                Log.d("TAG", "Value is: $user")
+                                if (!user!!.userId.equals(firebase.uid)) {
+
+                                    userList.add(user)
+                                }
+                            }
+                            serviceList = response.body()!!
+
+                        }
+                    })
+
+
+                }
+            }
+            override fun onFailure(call: Call<List<ServicesWUserId>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         val permissionsToRequest = ArrayList<String>()
