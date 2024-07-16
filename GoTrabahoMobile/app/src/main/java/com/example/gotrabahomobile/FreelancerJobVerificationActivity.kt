@@ -77,7 +77,9 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
         }
 
         btnSignUp.setOnClickListener {
-            getEmail()
+            if (validateInputs(selectedService)) {
+                getEmail()
+            }
         }
         val serviceTypesArray = resources.getStringArray(R.array.serviceTypes)
         val serviceTypesList = serviceTypesArray.toMutableList()
@@ -253,13 +255,13 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                                             })
                                         Log.d("Resort", "$userId")
 
-                                        if (validateInputs(selectedService)){
+
                                             val intent = Intent(this@FreelancerJobVerificationActivity, ApplicationConfirmationActivity::class.java)
                                             intent.putExtra("email", email)
                                             intent.putExtra("userId", userId)
                                             startActivity(intent)
                                             return
-                                        }
+
                                     }
 
 
@@ -399,17 +401,26 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
         })
     }
 
+
+
     fun validateInputs(
-        selectedType: String?
+        selectedService: String?
     ): Boolean {
-        if (selectedType.equals("Service Type")
+        if (selectedService.equals("Service Type")
         ) {
-            Toast.makeText(this, "Please select a valid service", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerJobVerificationActivity, "Please select a valid ID", Toast.LENGTH_SHORT).show()
             return false
         }
 
+        if (ImagePathProof.isNullOrEmpty()) {
+            Toast.makeText(this, "Please submit a government ID", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (ImagePathCertificate.isNullOrEmpty()) {
+            Toast.makeText(this, "Please submit a government ID", Toast.LENGTH_SHORT).show()
+            return false
+        }
         return true
     }
-
 
 }

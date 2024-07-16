@@ -55,6 +55,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     private var currentLongitude: Double? = null
     private lateinit var auth: FirebaseAuth
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_register_details)
@@ -184,6 +185,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun insertCustomer(){
 
 
@@ -311,10 +313,10 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val userService = UserInstance.retrofitBuilder
         userService.registerUser(usersInput).enqueue(object : Callback<User> {
             override fun onResponse(call: Call<User>, response: Response<User>) {
-                Log.i(ContentValues.TAG, "The response is " + response.message());
-                Log.i(ContentValues.TAG, "The response is " + response.body());
+
 
                 if (response.isSuccessful) {
+
                     userService.getEmail(email).enqueue(object:Callback<Int>{
                         override fun onResponse(call: Call<Int>, response: Response<Int>) {
                             if(response.isSuccessful) {
@@ -339,15 +341,14 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                                                     Log.d("CHECK", "Successfully Registered")
                                                 }
                                             }
-
-                                        } else {
-                                            Log.e(
-                                                "AuthOperation",
-                                                "Failed to create user.",
-                                                task.exception
-                                            )
-                                            // Handle auth operation failure
                                         }
+                                        else{
+                                            task.exception?.let { exception ->
+                                                Log.e("FirebaseAuthError", "Failed to create user", exception)
+                                            }
+                                        }
+
+
                                     }
                             }
                         }
@@ -357,6 +358,9 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                         }
 
                     })
+                    Log.i(ContentValues.TAG, "The response is " + response.message());
+                    Log.i(ContentValues.TAG, "The response is " + response.body());
+
                     val users = response.body()
                     if(users != null){
                         Toast.makeText(this@FreelancerRegisterDetailsActivity, "Register", Toast.LENGTH_SHORT).show()

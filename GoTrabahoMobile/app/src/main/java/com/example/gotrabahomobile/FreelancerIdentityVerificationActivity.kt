@@ -6,6 +6,7 @@ import android.content.CursorLoader
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -86,8 +87,9 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
             )
         }
         buttonUpload.setOnClickListener{
-
-            getEmail()
+            if (validateInputs(selectedItem)) {
+                getEmail()
+            }
         }
 
         }
@@ -183,13 +185,13 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
 
                         }
                         Log.d("Resort", "$userId")
-                        if (validateInputs(selectedItem)){
+
                             val intent = Intent(this@FreelancerIdentityVerificationActivity, FreelancerJobVerificationActivity::class.java)
                             intent.putExtra("userId", userId)
                             intent.putExtra("email", email)
                             startActivity(intent)
                             return
-                        }
+
 
 
                     } else {
@@ -275,10 +277,14 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
     ): Boolean {
         if (selectedType.equals("ID TYPE")
         ) {
-            Toast.makeText(this, "Please select a valid ID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerIdentityVerificationActivity, "Please select a valid ID", Toast.LENGTH_SHORT).show()
             return false
         }
-
+            Log.d("IMAGEPATH", "{${ImagePath.toString()}")
+        if (ImagePath.isNullOrEmpty()) {
+            Toast.makeText(this, "Please submit a government ID", Toast.LENGTH_SHORT).show()
+            return false
+        }
         return true
     }
 
