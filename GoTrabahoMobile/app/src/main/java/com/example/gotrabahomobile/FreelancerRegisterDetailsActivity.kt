@@ -333,22 +333,13 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                                             lastName?.let { hashMap["lastName"] = it }
                                             response.body().toString().let { hashMap["sqlId"] = it }
 
-                                            databaseReference.setValue(hashMap)
-                                                .addOnCompleteListener { dbTask ->
-                                                    if (dbTask.isSuccessful) {
-                                                        // Navigate to home activity or update UI
-                                                        Log.d("CHECK", "Successfully Registered")
-                                                        // Placeholder for navigation
-                                                        // navigateToHomeActivity()
-                                                    } else {
-                                                        Log.e(
-                                                            "FirebaseOperation",
-                                                            "Failed to add data.",
-                                                            dbTask.exception
-                                                        )
-                                                        // Handle database operation failure
-                                                    }
+                                            databaseReference.setValue(hashMap).addOnCompleteListener(this@FreelancerRegisterDetailsActivity){
+                                                if (it.isSuccessful){
+                                                    //open home activity
+                                                    Log.d("CHECK", "Successfully Registered")
                                                 }
+                                            }
+
                                         } else {
                                             Log.e(
                                                 "AuthOperation",

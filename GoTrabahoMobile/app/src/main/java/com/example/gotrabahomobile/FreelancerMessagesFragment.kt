@@ -1,7 +1,9 @@
 package com.example.gotrabahomobile
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -56,23 +58,13 @@ class FreelancerMessagesFragment : Fragment() {
     private lateinit var userRecyclerView: RecyclerView
     var userList = ArrayList<UserFirebase>()
     private var _binding: FragmentFreelancerMessagesBinding? = null
-    private lateinit var serviceList: List<Services>
     var firebaseUser: FirebaseUser? = null
     var reference: DatabaseReference? = null
+    private lateinit var sharedPreferences: SharedPreferences
 
 
-    private val binding get() = _binding!!
-    private lateinit var rvAdapter: ServiceAdapter
 
 
-//    var Id: Int = 0
-//    var userId: String = ""
-//    var freelancerId: String = ""
-//    var firstName: String = ""
-//    var lastName: String = ""
-//    var email: String = ""
-//
-//    var fullName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +92,7 @@ class FreelancerMessagesFragment : Fragment() {
 
             firebaseUser = FirebaseAuth.getInstance().currentUser
             reference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId!!.toString())
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
             Log.d("FreelancerMessagesFrag", "Button Clicked")
             Log.d("FreelancerMessagesFrag", "${email}")
@@ -123,10 +116,30 @@ class FreelancerMessagesFragment : Fragment() {
         spinner.adapter = adapter
         Log.d("FreelancerMessagesFragment", "Adapter set: ${spinner.adapter}")
 
+        var isFirstTimeInitialization = true
+        val savedService = sharedPreferences.getString("selectedServiceKey", null)
+        savedService?.let {
+            val position = adapter.getPosition(it)
+            spinner.setSelection(position)
+        }
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
+                val editor = sharedPreferences.edit()
+                editor.putString("selectedServiceKey", selectedService)
+                editor.apply()
+                getUsersList(selectedService!!)
+                if (!isFirstTimeInitialization) {
+                    var frg: Fragment? = null
+                    frg = childFragmentManager.findFragmentByTag("FreelancerMessagesFragment") ?: return
+                    val ft = childFragmentManager.beginTransaction()
+                    ft.detach(frg!!)
+                    ft.attach(frg!!)
+                    ft.commit()
+                } else {
+                    isFirstTimeInitialization = false
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -143,13 +156,14 @@ class FreelancerMessagesFragment : Fragment() {
         userRecyclerView = _binding!!.rvFreelancerMessageList
 
         userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        getUsersList()
+        //getUsersList()
 
     }
 
 
-    fun getUsersList() {
+    fun getUsersList(serviceSelect: String) {
         Log.d("Tag", "Check")
+        Log.d("Working", "{$serviceSelect}")
         val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
         var userid = firebase.uid
         FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
@@ -191,7 +205,7 @@ class FreelancerMessagesFragment : Fragment() {
                     val service = ServicesInstance.retrofitBuilder
                     val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
 
-                    service.getServiceIdByFreelancer(freelancerId, selectedService!! ).enqueue(object: Callback<Services>{
+                    service.getServiceIdByFreelancer(freelancerId, serviceSelect ).enqueue(object: Callback<Services>{
                         override fun onResponse(call: Call<Services>, response: Response<Services>) {
                             if(response.isSuccessful){
                                 try {
