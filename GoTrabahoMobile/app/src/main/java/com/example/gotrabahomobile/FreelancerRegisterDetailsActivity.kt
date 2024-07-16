@@ -212,6 +212,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val barangay = barangayText.text.toString()
         val city = cityText.text.toString()
         val password = passwordText.text.toString()
+        val confirmPass = confirmPassText.text.toString()
         val contactNumber = phoneNumberText.text.toString()
         val latLong = getLatLongFromAddress(this, address1, address2, barangay, city)
         if (latLong != null) {
@@ -226,7 +227,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val longitude = currentLongitude
 
 
-        if (validateInputs(firstName, lastName, email, address1, address2, barangay, city, password, contactNumber)) {
+        if (validateInputs(firstName, lastName, email, address1, address2, barangay, city, password, confirmPass, contactNumber)) {
             registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
                 address2, barangay, city, longitude, latitude)
             val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
@@ -236,7 +237,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
     }
 
-    val phoneNumberPattern = "^0[0-9]{3}[0-9]{3}[0-9]{4}$".toRegex()
+    val phoneNumberPattern = "^09[0-9]{2}[0-9]{3}[0-9]{4}$".toRegex()
 
     fun isValidPhoneNumber(phoneNumber: String): Boolean {
         return phoneNumberPattern.matches(phoneNumber.trim())
@@ -250,34 +251,40 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         barangay: String?,
         city: String?,
         password: String?,
+        confirmPass: String?,
         contactNumber: String?
     ): Boolean {
         if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
             address1.isNullOrEmpty() || barangay.isNullOrEmpty() ||
             city.isNullOrEmpty()  || contactNumber.isNullOrEmpty()
         ) {
-            Toast.makeText(this, "All fields must be filled out", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerRegisterDetailsActivity, "All fields must be filled out", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (password?.length ?: 0 < 7) {
-            Toast.makeText(this, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (!email.contains("@")) {
-            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Invalid email format", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (!isValidPhoneNumber(contactNumber)) {
-            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Invalid phone number format", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (password?.equals(confirmPass) == false){
+            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Confirm Password and Password are not the same", Toast.LENGTH_SHORT).show()
             return false
         }
 
         val latLong = getLatLongFromAddress(this, address1, address2!!, barangay, city)
         if (latLong == null) {
-            Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Address not found", Toast.LENGTH_SHORT).show()
             return false
         }
 

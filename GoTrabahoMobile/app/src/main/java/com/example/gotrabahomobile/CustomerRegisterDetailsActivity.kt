@@ -204,6 +204,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val barangay = barangayText.text.toString()
         val city = cityText.text.toString()
         val password = passwordText.text.toString()
+        val confirmPass = confirmPassText.text.toString()
         val contactNumber = phoneNumberText.text.toString()
         val latLong = getLatLongFromAddress(this, address1, address2, barangay, city)
         if (latLong != null) {
@@ -217,7 +218,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val latitude = currentLatitude
         val longitude = currentLongitude
 
-        if (validateInputs(firstName, lastName, email, address1, address2, barangay, city, password, contactNumber)) {
+        if (validateInputs(firstName, lastName, email, address1, address2, barangay, city, password, confirmPass, contactNumber)) {
 
             registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
                 address2, barangay, city, longitude, latitude)
@@ -229,7 +230,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
     }
 
-    val phoneNumberPattern = "^0[0-9]{3}[0-9]{3}[0-9]{4}$".toRegex()
+    val phoneNumberPattern = "^09[0-9]{2}[0-9]{3}[0-9]{4}$".toRegex()
 
     fun isValidPhoneNumber(phoneNumber: String): Boolean {
         return phoneNumberPattern.matches(phoneNumber.trim())
@@ -243,6 +244,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         barangay: String?,
         city: String?,
         password: String?,
+        confirmPass: String?,
         contactNumber: String?
     ): Boolean {
         if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
@@ -255,6 +257,11 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
         if (password?.length ?: 0 < 7) {
             Toast.makeText(this, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
+        if (password?.equals(confirmPass) == false){
+            Toast.makeText(this, "Confirm Password and Password are not the same", Toast.LENGTH_SHORT).show()
             return false
         }
 
