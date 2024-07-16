@@ -193,8 +193,8 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
 
                                         val nameProof = email + "Proof.jpg"
                                         val nameCertificate = email + "Certificate.jpg"
-                                        val fileProof = File(ImagePathProof)
-                                        val fileCertificate = File(ImagePathCertificate)
+                                        val fileProof = File(ImagePathCertificate)
+                                        val fileCertificate = File(ImagePathProof)
                                         val dateSent = LocalDate.now().toString()
 
                                         val requestBodyP = RequestBody.create("multipart/form-data".toMediaTypeOrNull(), fileProof)
