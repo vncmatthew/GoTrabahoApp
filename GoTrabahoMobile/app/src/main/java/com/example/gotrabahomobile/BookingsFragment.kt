@@ -2,8 +2,6 @@ package com.example.gotrabahomobile
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -50,7 +48,6 @@ class BookingsFragment : Fragment() {
     private lateinit var rvAdapter: BookingFreelancerAdapter
     private lateinit var bookingList: List<Booking>
     var selectedService: String? = null
-    private lateinit var handler: Handler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,34 +95,52 @@ class BookingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        handler = Handler(Looper.getMainLooper())
+        val userId = arguments?.getInt("userId", 0) ?: 0
+        val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
+        val firstName = arguments?.getString("firstName")
+        val lastName = arguments?.getString("lastName")
+        val email = arguments?.getString("email")
+        val fullName = arguments?.getString("fullName")
 
-        // Schedule the Runnable to run every second
-        scheduleUpdate()
+
+
+        Log.d("BookingsFragment", email.toString())
+
+        val tabLayout = view.findViewById<TabLayout>(R.id.tabLayout)
+
+        tabLayout.addTab(tabLayout.newTab().setText("Pending"))
+        tabLayout.addTab(tabLayout.newTab().setText("Ongoing"))
+        tabLayout.addTab(tabLayout.newTab().setText("Completed"))
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab) {
+
+                when (tab.position) {
+                    0 -> {
+                        selectedService?.let { getBookingList(1, it) }
+                    }
+                    1 -> {
+                        selectedService?.let { getBookingList(2, it) }
+                    }
+                    2 -> {
+                        selectedService?.let { getBookingList(3, it) }
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+            }
+
+        })
+
+
+
+        Log.d("BookingsFragment", freelancerId.toString())
+        Log.d("BookingsFragment", "${email}")
     }
-
-
-    private fun scheduleUpdate() {
-        handler.postDelayed({
-            // Update the content of the Fragment
-            updateContent()
-
-            // Schedule the next update
-            scheduleUpdate()
-        }, 1000) // Delay in milliseconds (1000ms = 1 second)
-    }
-
-    private fun updateContent() {
-        // Your code to update the Fragment's content goes here
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        // Cancel scheduled updates when the Fragment is destroyed
-        handler.removeCallbacksAndMessages(null)
-    }
-
 
     private fun getBookingList(status: Int, selectedService: String){
         val service = BookingInstance.retrofitBuilder

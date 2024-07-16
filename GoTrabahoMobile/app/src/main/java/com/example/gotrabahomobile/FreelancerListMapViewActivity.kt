@@ -2,6 +2,7 @@ package com.example.gotrabahomobile
 
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -31,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.messaging.FirebaseMessaging
 import org.osmdroid.config.Configuration.*
+import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
@@ -46,6 +48,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
     private lateinit var map : MapView
     private lateinit var serviceList: List<ServicesWUserId>
     private lateinit var _binding: ActivityFreelancerListMapViewBinding
+    private lateinit var sharedPreferences: SharedPreferences
     private val binding get() = _binding!!
 
     var selectedService: String? = null
@@ -54,6 +57,13 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
 
         _binding = ActivityFreelancerListMapViewBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Configuration.getInstance().load(this@FreelancerListMapViewActivity, PreferenceManager.getDefaultSharedPreferences(this@FreelancerListMapViewActivity))
+
+        // Initialize the MapView
+        map = findViewById<MapView>(R.id.mapview)
+        map.setTileSource(TileSourceFactory.MAPNIK)
+        map.controller.setZoom(20.20)
 
         //handle permissions first, before map is created. not depicted here
 
@@ -73,6 +83,8 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         backButton.setOnClickListener{
             finish()
         }
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
 
         //select service spinner
         val spinner: Spinner = binding!!.spinnerMapServiceName
@@ -85,13 +97,26 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
         Log.d("FreelancerListMapView", "Adapter set: ${spinner.adapter}")
-
-
+        var isFirstTimeInitialization = true
+        val savedService = sharedPreferences.getString("selectedServiceKey", null)
+        savedService?.let {
+            val position = adapter.getPosition(it)
+            spinner.setSelection(position)
+        }
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
                 Log.d("SelectedService", "{$selectedService}")
+                val editor = sharedPreferences.edit()
+                editor.putString("selectedServiceKey", selectedService)
+                editor.apply()
                 addFreelancerPins(selectedService!!)
+                if (!isFirstTimeInitialization) {
+                    finish()
+                    startActivity(intent)
+                } else {
+                    isFirstTimeInitialization = false
+                }
 
             }
 
@@ -99,6 +124,7 @@ class FreelancerListMapViewActivity : AppCompatActivity() {
                 Toast.makeText(this@FreelancerListMapViewActivity, "Please Select a Service", Toast.LENGTH_SHORT).show()
             }
         }
+
         map = findViewById<MapView>(R.id.mapview)
         map.setTileSource(TileSourceFactory.MAPNIK)
         val mapController = map.controller
