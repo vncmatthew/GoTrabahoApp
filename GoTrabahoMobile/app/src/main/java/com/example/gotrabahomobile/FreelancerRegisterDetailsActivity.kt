@@ -334,11 +334,15 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                                             firstName?.let { hashMap["firstname"] = it }
                                             lastName?.let { hashMap["lastName"] = it }
                                             response.body().toString().let { hashMap["sqlId"] = it }
+                                            Log.d("CHECK", "HashMap: $hashMap")
 
-                                            databaseReference.setValue(hashMap).addOnCompleteListener(this@FreelancerRegisterDetailsActivity){
-                                                if (it.isSuccessful){
-                                                    //open home activity
+                                            databaseReference.setValue(hashMap).addOnCompleteListener(this@FreelancerRegisterDetailsActivity) { task ->
+                                                if (task.isSuccessful) {
                                                     Log.d("CHECK", "Successfully Registered")
+                                                    // Open home activity or proceed further
+                                                } else {
+                                                    Log.e("FirebaseDBError", "Failed to insert data", task.exception)
+                                                    Toast.makeText(this@FreelancerRegisterDetailsActivity, "Failed to register user data", Toast.LENGTH_SHORT).show()
                                                 }
                                             }
                                         }

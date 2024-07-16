@@ -408,16 +408,16 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
     ): Boolean {
         if (selectedService.equals("Service Type")
         ) {
-            Toast.makeText(this@FreelancerJobVerificationActivity, "Please select a valid ID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@FreelancerJobVerificationActivity, "Please select a valid Service", Toast.LENGTH_SHORT).show()
             return false
         }
 
         if (ImagePathProof.isNullOrEmpty()) {
-            Toast.makeText(this, "Please submit a government ID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please submit a Proof", Toast.LENGTH_SHORT).show()
             return false
         }
         if (ImagePathCertificate.isNullOrEmpty()) {
-            Toast.makeText(this, "Please submit a government ID", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Please submit a Certificate", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
