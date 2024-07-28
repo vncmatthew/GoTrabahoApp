@@ -20,6 +20,11 @@
         android:name="com.example.gotrabahomobile.FreelancerAccountFragment"
         android:label="fragment_freelancer_account"
         tools:layout="@layout/fragment_freelancer_account" />
+    <fragment
+        android:id="@+id/freelancerNegotiationFragment"
+        android:name="com.example.gotrabahomobile.FreelancerNegotiationFragment"
+        android:label="fragment_freelancer_negotiation"
+        tools:layout="@layout/fragment_freelancer_negotiation" />
 
 
 </navigation>

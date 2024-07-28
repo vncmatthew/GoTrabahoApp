@@ -59,6 +59,7 @@ class FreelancerMainActivity : AppCompatActivity() {
         val bookingsFragment = BookingsFragment().apply { arguments = bundle }
         val freelancerMessagesFragment = FreelancerMessagesFragment().apply { arguments = bundle }
         val freelancerAccountFragment = FreelancerAccountFragment().apply { arguments = bundle }
+        val freelancerNegotiationFragment = FreelancerNegotiationFragment().apply { arguments = bundle }
 
 
         replaceFragment(bookingsFragment)
@@ -66,6 +67,7 @@ class FreelancerMainActivity : AppCompatActivity() {
         binding.freelancerBottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.bookingsFragment -> replaceFragment(bookingsFragment)
+                R.id.freelancerNegotiationFragment -> replaceFragment(freelancerNegotiationFragment)
                 R.id.freelancerMessagesFragment -> replaceFragment(freelancerMessagesFragment)
                 R.id.freelancerAccountFragment -> replaceFragment(freelancerAccountFragment)
                 else -> false
