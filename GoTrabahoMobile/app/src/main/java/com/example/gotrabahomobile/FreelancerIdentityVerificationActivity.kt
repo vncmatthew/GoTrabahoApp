@@ -155,7 +155,7 @@ class FreelancerIdentityVerificationActivity : AppCompatActivity() {
                             val imagePart = MultipartBody.Part.createFormData("imageFile", name, requestBody)
 
                             val governmentId = name
-                            val verificationStatus = 1
+                            val verificationStatus = 0
                             val totalIncome = 0
 
                             registerFreelancer(userId, idType, governmentId, verificationStatus, totalIncome)

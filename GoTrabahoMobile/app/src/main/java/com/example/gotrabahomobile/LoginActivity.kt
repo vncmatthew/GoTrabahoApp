@@ -182,6 +182,7 @@ class LoginActivity : AppCompatActivity() {
 
                                                 }
                                                 else if(bro == 0){
+                                                     val intent =
                                                      Intent(this@LoginActivity, ApplicationConfirmationActivity::class.java)
                                                         intent.putExtra("userID", sqlId)
                                                         intent.putExtra("freelancerId", freelancerId?.freelancerId)

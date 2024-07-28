@@ -48,9 +48,9 @@ class ServiceAdapter(private val serviceList: List<ServicesWUserId>, private val
         }
         holder.binding.btnChooseService.setOnClickListener{
             val intent = Intent(context, FreelancerDetailsActivity::class.java)
-            intent.putExtra("userId",user!!.userId)
-            intent.putExtra("firstName",user.firstName)
-            intent.putExtra("lastName", user.lastName)
+            intent.putExtra("userId", user?.userId)
+            intent.putExtra("firstName",user?.firstName)
+            intent.putExtra("lastName", user?.lastName)
             intent.putExtra("sqlId", identification)
             intent.putExtra("serviceId", currentItem.serviceId)
             intent.putExtra("serviceName", currentItem.name)
