@@ -324,7 +324,9 @@ class BookingDetailsActivity : AppCompatActivity() {
                         bookingStatus = 4,
                         serviceId = response.body()!!.serviceId,
                         serviceFee = response.body()?.serviceFee,
-                        negotiationId = null
+                        negotiationId = null,
+                        refundFreelancer = response.body()!!.refundFreelancer,
+                        paymentStatus = response.body()!!.paymentStatus
                     )
                     book.updateBooking(response.body()?.bookingId.toString(), updatedBook).enqueue(object: retrofit2.Callback<ResponseBody>{
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -365,7 +367,9 @@ class BookingDetailsActivity : AppCompatActivity() {
                         bookingStatus = 5,
                         serviceId = response.body()!!.serviceId,
                         serviceFee = response.body()?.serviceFee,
-                        negotiationId = null
+                        negotiationId = null,
+                        refundFreelancer = response.body()!!.refundFreelancer,
+                        paymentStatus = response.body()!!.paymentStatus
                     )
                     book.updateBooking(response.body()?.bookingId.toString(), updatedBook).enqueue(object: retrofit2.Callback<ResponseBody>{
                         override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

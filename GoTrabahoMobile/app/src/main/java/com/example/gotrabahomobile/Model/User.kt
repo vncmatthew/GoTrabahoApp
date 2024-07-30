@@ -70,15 +70,8 @@ data class User(
     @Expose
     var latitude: Double? = null,
 
-    @SerializedName("merit")
-    @Expose
-    var merit: Int? =  null,
-
     @SerializedName("status")
     @Expose
     var status: Boolean? = false,
 
-    @SerializedName("fine")
-    @Expose
-    var fine: Int? =  null
 )

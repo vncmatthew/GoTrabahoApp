@@ -112,7 +112,9 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                 bookingStatus = 3,
                                                 serviceId = currentItem.serviceId,
                                                 serviceFee = currentItem.serviceFee,
-                                                negotiationId = null
+                                                negotiationId = null,
+                                                paymentStatus =  currentItem.paymentStatus,
+                                                refundFreelancer = currentItem.refundFreelancer
                                             )
                                             book.updateBooking(
                                                 currentItem.bookingId.toString(),

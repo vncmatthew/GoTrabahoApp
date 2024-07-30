@@ -8,4 +8,6 @@ data class Booking(
     var bookingStatus: Int? = null,
     var serviceId: Int ,
     var serviceFee: Double? = null,
-    var negotiationId: Int? = null)
+    var negotiationId: Int? = null,
+    var paymentStatus: Boolean? = null,
+    var refundFreelancer: Int? = null)

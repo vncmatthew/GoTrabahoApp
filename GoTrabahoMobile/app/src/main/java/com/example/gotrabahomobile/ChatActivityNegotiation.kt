@@ -307,7 +307,9 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                         serviceFee = finalPrice!! * 0.15,
                                         bookingStatus = 1,
                                         serviceId = serviceId,
-                                        negotiationId = negotiationId)
+                                        negotiationId = negotiationId,
+                                        paymentStatus = false,
+                                        refundFreelancer = 0)
                                     try {
                                     val book = BookingInstance.retrofitBuilder
                                     book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
