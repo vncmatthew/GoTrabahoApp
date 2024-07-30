@@ -79,8 +79,6 @@ class BookingsFragment : Fragment() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
-
-//                getBookingList(selectedService)
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {

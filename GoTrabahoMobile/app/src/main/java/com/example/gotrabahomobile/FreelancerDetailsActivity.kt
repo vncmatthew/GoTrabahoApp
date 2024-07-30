@@ -8,12 +8,14 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
 import com.example.gotrabahomobile.Model.Negotiation
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.HashMap
 
 class FreelancerDetailsActivity : AppCompatActivity() {
 
@@ -81,14 +83,23 @@ class FreelancerDetailsActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val negotiation = response.body()
                     if (negotiation != null) {
-
+                                val chatTracker = "nego${sqlId}${negotiation?.serviceId}"
                                 val lastName = intent.getStringExtra("lastName")
                                 val firstName = intent.getStringExtra("firstName")
                                 val name = intent.getStringExtra("serviceName")
+
+                                createBookingChatEntry(chatTracker, userId!!) { success ->
+                                    if (success) {
+                                        println("BookingChat entry created successfully")
+                                    } else {
+                                        println("Failed to create BookingChat entry")
+                                    }
+                                }
                                 val intent =
-                                    Intent(this@FreelancerDetailsActivity, ChatActivity::class.java)
+                                    Intent(this@FreelancerDetailsActivity, ChatActivityNegotiation::class.java)
                                 intent.putExtra("negotiationId", negotiation?.negotiationId)
                                 intent.putExtra("serviceName", name)
+                                intent.putExtra("chatroomId", chatTracker)
                                 intent.putExtra("userId", userId)
                                 intent.putExtra("sqlId", sqlId)
                                 intent.putExtra("lastName", lastName)
@@ -111,5 +122,30 @@ class FreelancerDetailsActivity : AppCompatActivity() {
                 Log.d("MainActivity", "Exception: ", t)
             }
         })
+    }
+
+    fun createBookingChatEntry(chatroomId: String, freelancerId: String, callback: (Boolean) -> Unit) {
+        val bookingChatRef = FirebaseDatabase.getInstance().getReference("ChatRoom")
+        val bookingChatId = bookingChatRef.push().key ?: return
+        firebaseUser = FirebaseAuth.getInstance().currentUser
+
+        if (firebaseUser != null) {
+            val hashMap: HashMap<String, Any?> = HashMap()
+            hashMap["customerId"] = firebaseUser!!.uid
+            hashMap["freelancerId"] = freelancerId
+            hashMap["chatroomId"] = chatroomId
+
+            bookingChatRef.child(bookingChatId).setValue(hashMap)
+                .addOnSuccessListener {
+                    callback(true)
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("Firebase", "Error creating BookingChat entry: ", exception)
+                    callback(false)
+                }
+        } else {
+            Log.w("Firebase", "Error: No authenticated user found.")
+            callback(false)
+        }
     }
 }

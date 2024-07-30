@@ -23,6 +23,7 @@ import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
 import com.example.gotrabahomobile.Remote.RatingRemote.RatingInstance
 import com.example.gotrabahomobile.fragments.CustomerActivityFragment
+import com.google.firebase.database.FirebaseDatabase
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
@@ -412,6 +413,7 @@ class BookingDetailsActivity : AppCompatActivity() {
         call.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
             override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
                 if(response.isSuccessful){
+                    val booking = response.body()
                     val nego = NegotiationInstance.retrofitBuilder
                     nego.deleteNegotiation(response.body()?.negotiationId).enqueue(object: retrofit2.Callback<ResponseBody>{
                         override fun onResponse(
@@ -419,6 +421,14 @@ class BookingDetailsActivity : AppCompatActivity() {
                             response: Response<ResponseBody>
                         ) {
                             if(response.isSuccessful){
+                                val tracker = "nego" + booking?.customerId + booking?.serviceId
+                                deleteChatroom(tracker) { success ->
+                                    if (success) {
+                                        Log.d("Success","Chatroom deleted successfully")
+                                    } else {
+                                        Log.d("Failed","Failed to delete chatroom")
+                                    }
+                                }
                                 Log.d("Negotiation", "Successfully Deleted")
                             }
                         }
@@ -434,6 +444,19 @@ class BookingDetailsActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
+        val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
+
+        chatroomRef.removeValue()
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Firebase", "Error deleting chatroom: ", exception)
+                callback(false)
+            }
     }
 
     private fun getPayment(){

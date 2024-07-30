@@ -1,28 +1,18 @@
 package com.example.gotrabahomobile
 
-import android.Manifest
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gotrabahomobile.Helper.FreelancerChatAdapter
-import com.example.gotrabahomobile.Model.Chat
+import com.example.gotrabahomobile.Helper.ChatUserAdapter
+import com.example.gotrabahomobile.Model.ChatRoom
 import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.databinding.FragmentCustomerMessagesBinding
-import com.example.gotrabahomobile.databinding.FragmentFreelancerMessagesBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -43,6 +33,9 @@ var userList = ArrayList<UserFirebase>()
 private var _binding: FragmentCustomerMessagesBinding? = null
 var firebaseUser: FirebaseUser? = null
 var reference: DatabaseReference? = null
+var bookingDatabase: DatabaseReference? = null
+var database: DatabaseReference? = null
+
 
 /**
  * A simple [Fragment] subclass.
@@ -81,7 +74,7 @@ class CustomerMessagesFragment : Fragment() {
 
             firebaseUser = FirebaseAuth.getInstance().currentUser
             reference = FirebaseDatabase.getInstance().getReference("UserFirebase").child(userId!!.toString())
-
+            bookingDatabase = FirebaseDatabase.getInstance().getReference("ChatRoom")
             Log.d("FreelancerMessagesFrag", "Button Clicked")
             Log.d("FreelancerMessagesFrag", "${email}")
             Log.d("FreelancerMessagesFrag", "${fullName}")
@@ -96,68 +89,49 @@ class CustomerMessagesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //val chatButton: Button = view.findViewById(R.id.buttonTestFree)
-
-
-
-        /*        chatButton.setOnClickListener {
-
-        //            val intent = Intent(requireContext(), ChatActivity::class.java)
-        //            startActivity(intent)
-                }*/
 
         userRecyclerView = _binding!!.rvCustomerMessageList
 
         userRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-        getUsersList()
+        getChatRooms()
 
     }
-    fun getUsersList() {
+
+
+    fun getChatRooms() {
         Log.d("Tag", "Check")
         val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-        var userid = firebase.uid
-        FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
+        val userId = firebase.uid
+        FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userId")
 
-        val databaseReference: DatabaseReference =
-            FirebaseDatabase.getInstance().getReference("UserFirebase")
-        databaseReference.addValueEventListener(object : ValueEventListener {
+        val bookingChatRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("ChatRoom")
+        bookingChatRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.d("DEBUG", "Path: ${dataSnapshot.ref.path}")
-                Log.d("DEBUG", "Data: ${dataSnapshot.value}")
-                val user = dataSnapshot.getValue(UserFirebase::class.java)
-                Log.d("DEBUG", "User: $user")
+                val chatroomList = mutableListOf<ChatRoom>()
+
+                for (dataSnapShot: DataSnapshot in dataSnapshot.children) {
+                    val chatroom = dataSnapShot.getValue(ChatRoom::class.java)
+                    if (chatroom != null && (chatroom.customerId == userId || chatroom.freelancerId == userId)) {
+                        chatroomList.add(chatroom)
+                    }
+                }
+
+                displayChatRooms(chatroomList)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("DEBUG", "Failed to read value.", databaseError.toException())
+                Toast.makeText(requireContext(), databaseError.message, Toast.LENGTH_SHORT).show()
             }
         })
+    }
 
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-            }
+    fun displayChatRooms(chatroomList: List<ChatRoom>) {
+        val serviceId = requireActivity().intent.getIntExtra("serviceId", 0)
+        val serviceName = requireActivity().intent.getStringExtra("serviceName")
+        val chatRoomAdapter = ChatUserAdapter(requireContext(), chatroomList as ArrayList<ChatRoom>, serviceId, serviceName)
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
-
-                for (dataSnapShot: DataSnapshot in snapshot.children) {
-                    val user = dataSnapShot.getValue(UserFirebase::class.java)
-                    val chat = dataSnapShot.getValue(Chat::class.java)
-                    Log.d("TAG", "Value is: $user")
-                    if (!user!!.userId.equals(firebase.uid)) {
-                        Log.d("List of Users", "Value is: $user")
-                        Log.d("List of Active Users", "Value is: $user")
-                        userList.add(user)
-                    }
-                }
-                val serviceId = requireActivity().intent.getIntExtra("serviceId",0)
-                val serviceName = requireActivity().intent.getStringExtra("serviceName")
-                val userAdapter = FreelancerChatAdapter(requireContext(), userList, serviceId, serviceName)
-
-                userRecyclerView.adapter = userAdapter
-            }
-        })
+        userRecyclerView.adapter = chatRoomAdapter
     }
 
     companion object {

@@ -1,6 +1,5 @@
 package com.example.gotrabahomobile
 
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -11,20 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gotrabahomobile.DTO.ServicesWUserId
-import com.example.gotrabahomobile.Helper.FreelancerChatAdapter
-import com.example.gotrabahomobile.Helper.ServiceAdapter
-import com.example.gotrabahomobile.Model.Chat
+import com.example.gotrabahomobile.Helper.ChatUserAdapter
+import com.example.gotrabahomobile.Model.ChatRoom
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
-import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
 import com.example.gotrabahomobile.databinding.FragmentFreelancerMessagesBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -129,7 +123,7 @@ class FreelancerMessagesFragment : Fragment() {
                 val editor = sharedPreferences.edit()
                 editor.putString("selectedServiceKey", selectedService)
                 editor.apply()
-                getUsersList(selectedService!!)
+                getChatRooms(selectedService!!)
                 if (!isFirstTimeInitialization) {
                     var frg: Fragment? = null
                     frg = childFragmentManager.findFragmentByTag("FreelancerMessagesFragment") ?: return
@@ -161,74 +155,81 @@ class FreelancerMessagesFragment : Fragment() {
     }
 
 
-    fun getUsersList(serviceSelect: String) {
+    private fun getChatRooms(selectService: String) {
         Log.d("Tag", "Check")
-        Log.d("Working", "{$serviceSelect}")
         val firebase: FirebaseUser = FirebaseAuth.getInstance().currentUser!!
-        var userid = firebase.uid
-        FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userid")
+        val userId = firebase.uid
+        FirebaseMessaging.getInstance().subscribeToTopic("/topics/$userId")
 
-        val databaseReference: DatabaseReference =
-            FirebaseDatabase.getInstance().getReference("UserFirebase")
-        databaseReference.addValueEventListener(object : ValueEventListener {
+        val bookingChatRef: DatabaseReference = FirebaseDatabase.getInstance().getReference("ChatRoom")
+        bookingChatRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                Log.d("DEBUG", "Path: ${dataSnapshot.ref.path}")
-                Log.d("DEBUG", "Data: ${dataSnapshot.value}")
-                val user = dataSnapshot.getValue(UserFirebase::class.java)
-                Log.d("DEBUG", "User: $user")
+                val chatroomList = mutableListOf<ChatRoom>()
+                Log.d("UserId Check", "$userId")
+                for (dataSnapShot: DataSnapshot in dataSnapshot.children) {
+                    val chatroom = dataSnapShot.getValue(ChatRoom::class.java)
+                    Log.d("Checker", "${chatroom?.freelancerId}")
+                    if (chatroom != null && (chatroom.customerId == userId || chatroom.freelancerId == userId) && !chatroom.chatroomId.contains("nego")) {
+                        chatroomList.add(chatroom)
+                    }
+                }
+
+                fetchChatRoomsForService(chatroomList, selectService)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
                 Log.w("DEBUG", "Failed to read value.", databaseError.toException())
+                Toast.makeText(requireContext(), databaseError.message, Toast.LENGTH_SHORT).show()
             }
         })
+    }
 
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-            }
 
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
+    private fun fetchChatRoomsForService(chatroomList: List<ChatRoom>, serviceSelect: String) {
+        val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("UserFirebase")
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val userIdSet = chatroomList.flatMap { listOf(it.customerId, it.freelancerId) }.toSet()
+                val userList = mutableListOf<UserFirebase>()
 
-                for (dataSnapShot: DataSnapshot in snapshot.children) {
+                for (dataSnapShot: DataSnapshot in dataSnapshot.children) {
                     val user = dataSnapShot.getValue(UserFirebase::class.java)
-                    val chat = dataSnapShot.getValue(Chat::class.java)
-                    Log.d("TAG", "Value is: $user")
-                    if (!user!!.userId.equals(firebase.uid)) {
-                        Log.d("List of Users", "Value is: $user")
-                        Log.d("List of Active Users", "Value is: $user")
+                    if (user != null && user.userId in userIdSet) {
                         userList.add(user)
                     }
                 }
 
-                    val service = ServicesInstance.retrofitBuilder
-                    val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
+                val service = ServicesInstance.retrofitBuilder
+                val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
 
-                    service.getServiceIdByFreelancer(freelancerId, serviceSelect ).enqueue(object: Callback<Services>{
-                        override fun onResponse(call: Call<Services>, response: Response<Services>) {
-                            if(response.isSuccessful){
-                                try {
-                                    val serviceId = response.body()!!.serviceId
-                                    val serviceName = response.body()!!.name
-                                    val userAdapter = FreelancerChatAdapter(
-                                        requireContext(),
-                                        userList,
-                                        serviceId!!,
-                                        serviceName
-                                    )
-                                    userRecyclerView.adapter = userAdapter
-                                }catch (e: NullPointerException){
-
-                                }
+                service.getServiceIdByFreelancer(freelancerId, serviceSelect).enqueue(object : Callback<Services> {
+                    override fun onResponse(call: Call<Services>, response: Response<Services>) {
+                        if (response.isSuccessful) {
+                            try {
+                                val serviceId = response.body()!!.serviceId
+                                val serviceName = response.body()!!.name
+                                val chatRoomAdapter = ChatUserAdapter(
+                                    requireContext(),
+                                    chatroomList as ArrayList<ChatRoom>,
+                                    serviceId!!,
+                                    serviceName
+                                )
+                                userRecyclerView.adapter = chatRoomAdapter
+                            } catch (e: NullPointerException) {
+                                Log.e("Service Error", "Service details are missing")
                             }
                         }
+                    }
 
-                        override fun onFailure(call: Call<Services>, t: Throwable) {
-                            Log.d("FreelancerMessagesFragment", "${t}")
-                        }
+                    override fun onFailure(call: Call<Services>, t: Throwable) {
+                        Log.e("FreelancerMessagesFragment", t.toString())
+                    }
+                })
+            }
 
-                    })
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("DEBUG", "Failed to read value.", databaseError.toException())
+                Toast.makeText(requireContext(), databaseError.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

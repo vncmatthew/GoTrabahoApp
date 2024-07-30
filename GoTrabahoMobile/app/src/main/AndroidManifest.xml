@@ -103,14 +103,17 @@
             android:name=".CustomerProfilePageActivity"
             android:exported="false" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".ChatActivityNegotiation"
             android:exported="false">
-
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
+
+        <activity
+        android:name=".ChatActivity"
+        android:exported="false" />
         <activity
             android:name=".ApplicationConfirmationActivity"
             android:exported="false" />

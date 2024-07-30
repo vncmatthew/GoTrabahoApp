@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.example.gotrabahomobile" />
-                  <option name="mobileSdkAppId" value="1:1016906740562:android:00b5d9e4d9b24f8031008b" />
-                  <option name="projectId" value="gotrabahochat" />
-                  <option name="projectNumber" value="1016906740562" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -14,17 +14,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gotrabahomobile.BookingsFragment
-import com.example.gotrabahomobile.CustomerMessagesFragment
-import com.example.gotrabahomobile.FreelancerDetailsActivity
-import com.example.gotrabahomobile.FreelancerEditServiceActivity
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.User
@@ -36,6 +29,7 @@ import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 
 import com.example.gotrabahomobile.databinding.BookingLayoutBinding
+import com.google.firebase.database.FirebaseDatabase
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -188,6 +182,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
         val call = BookingInstance.retrofitBuilder
         call.getBooking(bookingId!!).enqueue(object : retrofit2.Callback<Booking> {
             override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                val booking = response.body()
                 if (response.isSuccessful) {
                     val nego = NegotiationInstance.retrofitBuilder
                     nego.deleteNegotiation(response.body()?.negotiationId)
@@ -197,6 +192,14 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                 response: Response<ResponseBody>
                             ) {
                                 if (response.isSuccessful) {
+                                    val tracker = "nego" + booking?.customerId + booking?.serviceId
+                                    deleteChatroom(tracker) { success ->
+                                        if (success) {
+                                            Log.d("Success","Chatroom deleted successfully")
+                                        } else {
+                                            Log.d("Failed","Failed to delete chatroom")
+                                        }
+                                    }
                                     Log.d("Negotiation", "Successfully Deleted")
                                 }
                             }
@@ -261,7 +264,18 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }
 
 
+    fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
+        val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
 
+        chatroomRef.removeValue()
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Firebase", "Error deleting chatroom: ", exception)
+                callback(false)
+            }
+    }
 
 
 }

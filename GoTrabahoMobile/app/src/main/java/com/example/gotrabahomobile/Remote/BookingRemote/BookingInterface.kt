@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile.Remote.BookingRemote
 
+import com.example.gotrabahomobile.DTO.BookingByServiceDTO
 import com.example.gotrabahomobile.DTO.BookingUserDTO
 import com.example.gotrabahomobile.DTO.ServiceDetails
 import com.example.gotrabahomobile.Model.Booking
@@ -24,7 +25,7 @@ interface BookingInterface {
 
     @GET("api/Booking/ServiceDetails/{bookingId}")
     fun getServiceDetails(@Path("bookingId") bookingId: Int): Call<ServiceDetails>
-
+    
     @GET("api/Booking/BookingUser/{bookingId}")
     fun getUserBookings(@Path("bookingId") bookingId: Int): Call<List<BookingUserDTO>>
 
