@@ -131,15 +131,18 @@ class ChatActivity: AppCompatActivity() {
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 chatList.clear()
-                for (dataSnapShot in snapshot.children) {
-                    val chat = dataSnapShot.getValue(Chat::class.java)
-                    if (chat != null && (chat.senderId == senderId && chat.receiverId == receiverId) ||
-                        (chat!!.senderId == receiverId && chat!!.receiverId == senderId)
-                    ) {
-                        chatList.add(chat)
+                for (dataSnapshot in snapshot.children) {
+                    val chat = dataSnapshot.getValue(Chat::class.java)
+                    // Check if chat is not null before proceeding
+                    if (chat != null) {
+                        // Simplify the condition by removing redundant negations and the unsafe non-null assertion
+                        if ((chat.senderId == senderId && chat.receiverId == receiverId) ||
+                            (chat.senderId == receiverId && chat.receiverId == senderId)
+                        ) {
+                            chatList.add(chat)
+                        }
                     }
                 }
-
                 val chatAdapter = ChatAdapter(this@ChatActivity, chatList)
 
                 chatRecyclerView.adapter = chatAdapter

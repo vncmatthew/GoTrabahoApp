@@ -1,16 +1,22 @@
 package com.example.gotrabahomobile
 
 
+import android.Manifest
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableString
@@ -29,22 +35,29 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.lifecycle.lifecycleScope
+import com.example.gotrabahomobile.DTO.ReverseGeoCodeResponse
 import com.example.gotrabahomobile.Helper.CitySpinnerAdapter
 import com.example.gotrabahomobile.Model.Cities
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.ArchiveRecordRemote.CityInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import io.ktor.client.HttpClient
+import io.ktor.client.request.get
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.serializer
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 import java.io.IOException
+import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
@@ -53,11 +66,15 @@ import java.util.Locale
 
 class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
     private var currentLatitude: Double? = null
     private var currentLongitude: Double? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var citySpinner: Spinner
+
+    private lateinit var locationManager: LocationManager
+    private lateinit var locationListener: LocationListener
+    private var MY_PERMISSIONS_REQUEST_LOCATION = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_register_details)
@@ -69,7 +86,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             showDatePickerDialog(birthdateEditText)
         }
         citySpinner = findViewById(R.id.spinnerCustomerCity)
-        fetchCities()
+
         val checkBox = findViewById<CheckBox>(R.id.checkBoxCustomerTNC)
         val freelancerSignUp = findViewById<TextView>(R.id.textViewCustomerSignUp)
         val signIn = findViewById<TextView>(R.id.textViewSignIn)
@@ -142,8 +159,95 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
         }
 
+        val jsonDecoder = Json { ignoreUnknownKeys = true }
+        locationManager = (getSystemService(Context.LOCATION_SERVICE) as LocationManager?)!!
+        var isFirstFetchCompleted = false
+        val reverseGeoCodeResponseSerializer = serializer<ReverseGeoCodeResponse>()
+        locationListener = object : LocationListener {
+            override fun onLocationChanged(location: android.location.Location) {
+                if (!isFirstFetchCompleted) {
+                    val lat =14.6100
+                    val lon = 120.9893
+                    val url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon&zoom=18&addressdetails=1"
 
+                    lifecycleScope.launch { // Use viewModelScope if you're in a ViewModel
+                        try {
+                            val client = HttpClient()
+                            val httpResponse: HttpResponse = client.get(url)
+                            val responseBody: String = httpResponse.bodyAsText(Charset.forName("UTF-8"))
+                            val response: ReverseGeoCodeResponse = jsonDecoder.decodeFromString(
+                                ReverseGeoCodeResponse.serializer(), responseBody)
+                            val address = response.display_name
+                            println("Address: $address")
+                            extractAddressComponents(address!!)
+                            val cityName = extractAddressComponents(address!!)
+                            if (cityName != null) {
+                                fetchCities(cityName)
+                            } else {
+                                // Handle the case where the city name couldn't be extracted
+                                Log.w("extractAddressComponents", "Failed to extract city name from address")
+                            }
+                            isFirstFetchCompleted = true // Set the flag to true after the first successful fetch
+                        } catch (e: Exception) {
+                            println("Error fetching address: ${e.message}")
+                        }
+                    }
+                }
+            }
 
+            override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {}
+
+            override fun onProviderEnabled(provider: String) {}
+
+            override fun onProviderDisabled(provider: String) {}
+        }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission is not granted
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user asynchronously
+            } else {
+                // Request permissions
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), MY_PERMISSIONS_REQUEST_LOCATION)
+            }
+        } else {
+            // Permission has already been granted
+        }
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+
+    }
+
+    fun extractAddressComponents(fullAddress: String): String? {
+
+        val address1StartIndex = 0
+        val address1EndIndex = fullAddress.indexOf(", ", address1StartIndex)
+        val address2StartIndex = address1EndIndex + 2
+        val address2EndIndex = fullAddress.indexOf(", ", address2StartIndex)
+        val barangayStartIndex = address2EndIndex + 2 // Skip past the second comma and space
+        val barangayEndIndex = fullAddress.indexOf(", ", barangayStartIndex)
+        val cityStartIndex = barangayEndIndex + 2
+        val cityEndIndex = fullAddress.length
+
+        val address1 = fullAddress.substring(address1StartIndex, address1EndIndex)
+        val address2 = fullAddress.substring(address2StartIndex, address2EndIndex)
+        val barangay = fullAddress.substring(barangayStartIndex, barangayEndIndex)
+        val cityChose = fullAddress.substring(cityStartIndex, cityEndIndex)
+
+        Log.d("Address 1:", address1)
+        Log.d("Address 2:", address2)
+        Log.d("Barangay:", barangay)
+        Log.d("City:", cityChose)
+        val address1Text = findViewById<EditText>(R.id.editTextCustomerAddress1)
+        val address2Text = findViewById<EditText>(R.id.editTextCustomerAddress2)
+        val  barangayText = findViewById<EditText>(R.id.editTextCustomerBarangey)
+
+        address1Text.text = Editable.Factory.getInstance().newEditable(address1)
+        address2Text.text = Editable.Factory.getInstance().newEditable(address2)
+        barangayText.text = Editable.Factory.getInstance().newEditable(barangay)
+        return cityChose
     }
 
     private fun showDialog() {
@@ -295,7 +399,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         return true
     }
 
-    private fun fetchCities() {
+    private fun fetchCities(cityName: String?) {
         val call = CityInstance.retrofitBuilder
         call.getCities().enqueue(object : Callback<List<Cities>> {
             override fun onResponse(call: Call<List<Cities>>, response: Response<List<Cities>>) {
@@ -304,14 +408,25 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
                     if (citiesResponse != null) {
                         val adapter = CitySpinnerAdapter(this@CustomerRegisterDetailsActivity, citiesResponse)
                         citySpinner.adapter = adapter
+
+
+                        val matchingCityIndex = citiesResponse.indexOfFirst {cityName!!.contains(it.cityName!!)  ?: false }
+
+
+                        if (matchingCityIndex != -1) {
+                            citySpinner.setSelection(matchingCityIndex)
+                        } else {
+
+                            Log.w("fetchCities", "No city found that contains '${cityName ?: ""}'")
+                        }
                     }
                 } else {
-                    Log.e(TAG, "Error fetching cities")
+                    Log.e(ContentValues.TAG, "Error fetching cities")
                 }
             }
 
             override fun onFailure(call: Call<List<Cities>>, t: Throwable) {
-                Log.e(TAG, "Error fetching cities", t)
+                Log.e(ContentValues.TAG, "Error fetching cities", t)
             }
         })
     }

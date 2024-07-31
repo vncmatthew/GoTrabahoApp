@@ -4,8 +4,7 @@ plugins {
     id("kotlin-parcelize")
     id("com.google.gms.google-services")
     id("androidx.navigation.safeargs")
-
-
+    id ("org.jetbrains.kotlin.plugin.serialization") version "2.0.20-RC"
 }
 
 
@@ -79,6 +78,11 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
     implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
     implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
+
+    implementation ("org.danilopianini:khttp:1.3.2")
+
+    implementation ("io.ktor:ktor-client-android:2.3.12")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
 
 }

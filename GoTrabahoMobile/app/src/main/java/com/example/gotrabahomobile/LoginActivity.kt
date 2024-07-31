@@ -1,7 +1,10 @@
 package com.example.gotrabahomobile
 
+import android.Manifest
 import android.content.Intent
-import android.os.Build
+import android.content.pm.PackageManager
+import android.location.LocationListener
+import android.location.LocationManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
@@ -15,24 +18,27 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+import kotlinx.serialization.json.Json
+
 class LoginActivity : AppCompatActivity() {
 
 
-
+    private lateinit var locationManager: LocationManager
+    private lateinit var locationListener: LocationListener
     private lateinit var auth: FirebaseAuth
+    private var MY_PERMISSIONS_REQUEST_LOCATION = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,9 +48,13 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         val btn_login = findViewById<Button>(R.id.buttonLogin)
         val txt_signup = findViewById<TextView>(R.id.textViewNoAccount)
-
+        val jsonDecoder = Json { ignoreUnknownKeys = true }
         val text = "Don't have an account? Sign Up"
         val spanString = SpannableString(text)
+
+
+        checkLocationPermissions()
+
 
         val signupText = object: ClickableSpan() {
             override fun onClick(widget: View) {
@@ -69,6 +79,39 @@ class LoginActivity : AppCompatActivity() {
     }
 
 
+    private fun checkLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission is not granted
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Show an explanation to the user asynchronously
+            } else {
+                // Request permissions
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), MY_PERMISSIONS_REQUEST_LOCATION)
+            }
+        } else {
+            // Permission has already been granted
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            MY_PERMISSIONS_REQUEST_LOCATION -> {
+                // If request is cancelled, the result arrays are empty.
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // permission was granted, yay!
+                } else {
+                    // permission denied, boo!
+                }
+                return
+            }
+            else -> {
+                // Ignore all other requests.
+            }
+        }
+    }
     private fun loginUser() {
         val edit_Email = findViewById<EditText>(R.id.editTextLoginEmailAddress)
         val edit_Pass = findViewById<EditText>(R.id.editTextLoginPassword)
@@ -105,7 +148,6 @@ class LoginActivity : AppCompatActivity() {
                         val userID = user.userId
                         val firstName = user.firstName
                         val lastName = user.lastName
-
                         val userType = user.userType
                         val longitude = user.longitude
                         val latitude = user.latitude
