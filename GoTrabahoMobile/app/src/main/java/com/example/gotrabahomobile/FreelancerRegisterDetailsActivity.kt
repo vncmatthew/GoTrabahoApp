@@ -32,7 +32,10 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import com.example.gotrabahomobile.Helper.CitySpinnerAdapter
+import com.example.gotrabahomobile.Model.Cities
 import com.example.gotrabahomobile.Model.User
+import com.example.gotrabahomobile.Remote.ArchiveRecordRemote.CityInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -54,6 +57,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     private var currentLatitude: Double? = null
     private var currentLongitude: Double? = null
     private lateinit var auth: FirebaseAuth
+    private lateinit var citySpinner: Spinner
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +65,8 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_freelancer_register_details)
         auth = FirebaseAuth.getInstance()
 
-
+        citySpinner = findViewById(R.id.spinnerFreelancerCity)
+        fetchCities()
         //birthdate
         val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
         val customerSignUp = findViewById<TextView>(R.id.textViewCustomerSignUp)
@@ -163,6 +168,26 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+    private fun fetchCities() {
+        val call = CityInstance.retrofitBuilder
+        call.getCities().enqueue(object : Callback<List<Cities>> {
+            override fun onResponse(call: Call<List<Cities>>, response: Response<List<Cities>>) {
+                if (response.isSuccessful) {
+                    val citiesResponse = response.body()
+                    if (citiesResponse != null) {
+                        val adapter = CitySpinnerAdapter(this@FreelancerRegisterDetailsActivity, citiesResponse)
+                        citySpinner.adapter = adapter
+                    }
+                } else {
+                    Log.e(ContentValues.TAG, "Error fetching cities")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Cities>>, t: Throwable) {
+                Log.e(ContentValues.TAG, "Error fetching cities", t)
+            }
+        })
+    }
     private fun showDatePickerDialog(birthdateEditText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
@@ -199,9 +224,10 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val address1Text = findViewById<EditText>(R.id.editTextFreelancerAddress1)
         val address2Text = findViewById<EditText>(R.id.editTextFreelancerAddress2)
         val barangayText = findViewById<EditText>(R.id.editTextFreelancerBarangey)
-        val cityText = findViewById<EditText>(R.id.editTextFreelancerCity)
         val userType = 2
 
+        val selectedCity = citySpinner.selectedItem as Cities
+        val cityId = selectedCity.cityId
 
         val firstName = firstNameText.text.toString()
         val lastName = lastNameText.text.toString()
@@ -210,11 +236,10 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val address1 = address1Text.text.toString()
         val address2 = address2Text.text.toString()
         val barangay = barangayText.text.toString()
-        val city = cityText.text.toString()
         val password = passwordText.text.toString()
         val confirmPass = confirmPassText.text.toString()
         val contactNumber = phoneNumberText.text.toString()
-        val latLong = getLatLongFromAddress(this, address1, address2, barangay, city)
+        val latLong = getLatLongFromAddress(this, address1, address2, barangay, selectedCity.cityName!!)
         if (latLong != null) {
             val (latitude, longitude) = latLong
             println("Latitude: $latitude, Longitude: $longitude")
@@ -227,9 +252,9 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val longitude = currentLongitude
 
 
-        if (validateInputs(firstName, lastName, email, address1, address2, barangay, city, password, confirmPass, contactNumber)) {
+        if (validateInputs(firstName, lastName, email, address1, address2, barangay, selectedCity.cityName, password, confirmPass, contactNumber)) {
             registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
-                address2, barangay, city, longitude, latitude)
+                address2, barangay, cityId!!, longitude, latitude)
             val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
             intent.putExtra("email", email)
             startActivity(intent)
@@ -299,7 +324,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun registerCustomer(userType: Int, firstName: String, lastName: String, email: String, password: String, contactNumber: String?, birthdate: String, address1: String,
-                                 address2: String, barangay: String, city: String, longitude: Double?, latitude: Double?) {
+                                 address2: String, barangay: String, city: Int, longitude: Double?, latitude: Double?) {
 
         val usersInput = User(
             userType = userType,

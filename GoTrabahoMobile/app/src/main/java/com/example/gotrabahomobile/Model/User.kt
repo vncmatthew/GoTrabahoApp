@@ -60,7 +60,7 @@ data class User(
 
     @SerializedName("city")
     @Expose
-    var city: String? = null,
+    var city: Int? = null,
 
     @SerializedName("longitude")
     @Expose

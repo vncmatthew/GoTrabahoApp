@@ -190,15 +190,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerAddress2" />
 
-        <EditText
-            android:id="@+id/editTextFreelancerCity"
+        <Spinner
+            android:id="@+id/spinnerFreelancerCity"
             android:layout_width="312dp"
             android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="City"
-            android:inputType="text"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerBarangey" />
@@ -207,11 +203,11 @@
             android:id="@+id/checkBoxFreelancerTNC"
             android:layout_width="312dp"
             android:layout_height="42dp"
-            android:layout_marginTop="15dp"
             android:text=" "
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextFreelancerCity" />
+            app:layout_constraintTop_toBottomOf="@+id/spinnerFreelancerCity" />
 
         <Button
             android:id="@+id/buttonFreelancerContinue1"
