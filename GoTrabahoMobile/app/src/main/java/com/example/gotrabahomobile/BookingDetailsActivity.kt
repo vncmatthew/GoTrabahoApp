@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -43,6 +44,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
         //buttons 1
         val rateButton = findViewById<Button>(R.id.buttonRate)
+
         val messageButton = findViewById<Button>(R.id.buttonMessage)
         //buttons 2
         val cancelBookingButton = findViewById<Button>(R.id.buttonCancelBooking)
@@ -206,9 +208,10 @@ class BookingDetailsActivity : AppCompatActivity() {
         closeButton.setOnClickListener {
             alertDialog.dismiss()
         }
-
+        val commentText = findViewById<EditText>(R.id.editTextRatingComments)
+        val textRating = commentText.text.toString()
         submitButton.setOnClickListener {
-            submitRatingToDatabase(ratingNumber)
+            submitRatingToDatabase(ratingNumber, textRating)
             deleteNego()
             alertDialog.dismiss()
             finish()
@@ -284,7 +287,7 @@ class BookingDetailsActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun submitRatingToDatabase(ratingNumber: Int) {
+    private fun submitRatingToDatabase(ratingNumber: Int, comment: String ) {
 
         val call = BookingInstance.retrofitBuilder
         val bookingId = intent.getIntExtra("bookingId", 0)
@@ -294,7 +297,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     val newRating = Rating(
                         star = ratingNumber.toBigDecimal(),
                         bookingId = response.body()?.bookingId?.toInt(),
-
+                        comments = comment,
                         dateRecorded = LocalDate.now().toString(),
                         customerId = response.body()?.customerId
                     )

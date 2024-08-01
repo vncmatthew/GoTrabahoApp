@@ -6,7 +6,7 @@ data class Booking(
     var bookingDatetime: String? = null,
     var amount: Double? = null,
     var bookingStatus: Int? = null,
-    var serviceId: Int ,
+    var serviceId: Int? = null ,
     var serviceFee: Double? = null,
     var negotiationId: Int? = null,
     var paymentStatus: Boolean? = null,

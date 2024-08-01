@@ -14,6 +14,9 @@ interface RatingInterface {
     @GET("api/Rating")
     fun getRatings(): Call<List<Rating>>
 
+    @GET("api/Rating/RatingPerService/{serviceId}")
+    fun getRatingPerService(@Path("serviceId") serviceId:Int): Call<List<Rating>>
+
     @POST("api/Rating")
     fun insertRating(@Body request: Rating): Call<ResponseBody>
 

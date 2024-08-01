@@ -322,27 +322,25 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                             response: Response<Booking>
                                         ) {
                                             val booking = response.body()
-                                            if(response.isSuccessful){
-
+                                            if(response.isSuccessful) {
+                                                if (booking!!.equals("Successfully Created"))
+                                                {
                                                 //ADD NOTIFICATION
 
-                                                notifMessage("Booking is Successful", "Booking has been made")
-                                                val serviceId: Int? = intent.getIntExtra("serviceId", 0)
+                                                    notifMessage(
+                                                        "Booking is Successful",
+                                                        "Booking has been made"
+                                                    )
+                                                val serviceId: Int? =
+                                                    intent.getIntExtra("serviceId", 0)
                                                 var userIdFirebase = intent.getStringExtra("userId")
-                                                if (serviceId != 0){
+                                                if (serviceId != 0) {
 
-                                                createBookingChatEntry(booking!!.bookingId.toString(), userIdFirebase!!,firebaseUser!!.uid)
-                                                { success ->
-                                                    if (success) {
-                                                        println("BookingChat entry created successfully")
-                                                    } else {
-                                                        println("Failed to create BookingChat entry")
-                                                    }
-                                                }
-                                                Intent(this@ChatActivityNegotiation, FreelancerMainActivity::class.java)
-                                                startActivity(intent)
-                                                }else {
-                                                    createBookingChatEntry(booking!!.bookingId.toString(), firebaseUser!!.uid, userIdFirebase!!)
+                                                    createBookingChatEntry(
+                                                        booking!!.bookingId.toString(),
+                                                        userIdFirebase!!,
+                                                        firebaseUser!!.uid
+                                                    )
                                                     { success ->
                                                         if (success) {
                                                             println("BookingChat entry created successfully")
@@ -350,10 +348,35 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                                             println("Failed to create BookingChat entry")
                                                         }
                                                     }
-                                                    Intent(this@ChatActivityNegotiation, CustomerMainActivity::class.java)
+                                                    Intent(
+                                                        this@ChatActivityNegotiation,
+                                                        FreelancerMainActivity::class.java
+                                                    )
+                                                    startActivity(intent)
+                                                } else {
+                                                    createBookingChatEntry(
+                                                        booking!!.bookingId.toString(),
+                                                        firebaseUser!!.uid,
+                                                        userIdFirebase!!
+                                                    )
+                                                    { success ->
+                                                        if (success) {
+                                                            println("BookingChat entry created successfully")
+                                                        } else {
+                                                            println("Failed to create BookingChat entry")
+                                                        }
+                                                    }
+                                                    Intent(
+                                                        this@ChatActivityNegotiation,
+                                                        CustomerMainActivity::class.java
+                                                    )
                                                     startActivity(intent)
                                                 }
-
+                                            }
+                                                else if(booking.equals("A booking with the same user and freelancer already exists."))
+                                                {
+                                                    Toast.makeText(this@ChatActivityNegotiation, "A booking with the same user and freelancer already exists", Toast.LENGTH_SHORT).show()
+                                                }
                                             }
                                             Log.d("Check", "${booking}")
                                         }
