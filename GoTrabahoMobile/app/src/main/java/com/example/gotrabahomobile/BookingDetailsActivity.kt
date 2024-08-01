@@ -1,7 +1,15 @@
 package com.example.gotrabahomobile
 
+import android.Manifest
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.TaskStackBuilder
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
 import android.media.Image
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +24,9 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import com.example.gotrabahomobile.DTO.ServiceDetails
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Rating
@@ -36,7 +47,9 @@ import javax.security.auth.callback.Callback
 
 class BookingDetailsActivity : AppCompatActivity() {
     private var ratingNumber = 0
-
+    val CHANNEL_ID ="channelID"
+    val CHANNEL_NAME ="channelName"
+    val NOTIF_ID = 0
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +67,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
         getDetails()
         bookingStatus()
-
+        createNotifChannel()
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{
             finish()
@@ -284,6 +297,65 @@ class BookingDetailsActivity : AppCompatActivity() {
                 star5.setImageResource(R.drawable.star_filled)
             }
         }
+    }
+
+    private fun cancelBooking(){
+        val book = BookingInstance.retrofitBuilder
+
+        val bookingId = intent.getIntExtra("bookingId", 0)
+        book.getBooking(bookingId).enqueue(object: retrofit2.Callback<Booking>{
+            override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                val currentItem = response.body()
+                if(response.isSuccessful){
+                    val updatedBook = Booking(
+                        bookingId = currentItem!!.bookingId,
+                        customerId = currentItem!!.customerId,
+                        bookingDatetime = currentItem.bookingDatetime,
+                        amount = currentItem.amount,
+                        bookingStatus = 6,
+                        serviceId = currentItem.serviceId,
+                        serviceFee = currentItem.serviceFee,
+                        negotiationId = null,
+                        paymentStatus =  currentItem.paymentStatus,
+                        refundFreelancer = 1
+                    )
+
+                    book.updateBooking(
+                        currentItem.bookingId.toString(),
+                        updatedBook
+                    ).enqueue(
+                        object : retrofit2.Callback<ResponseBody> {
+                            override fun onResponse(
+                                call: Call<ResponseBody>,
+                                response: Response<ResponseBody>
+                            ) {
+                                if (response.isSuccessful) {
+                                    Log.d(
+                                        "Booking",
+                                        "Successfully Updated to 4"
+                                    )
+                                    notifMessage("The booking has been cancelled", "Thank you for your service")
+                                }
+                            }
+
+                            override fun onFailure(
+                                call: Call<ResponseBody>,
+                                t: Throwable
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
+
+                    deleteNego()
+                }
+            }
+
+            override fun onFailure(call: Call<Booking>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -543,6 +615,44 @@ class BookingDetailsActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    private fun notifMessage(Title:String, Text:String){
+        val intentT =Intent(this@BookingDetailsActivity, this@BookingDetailsActivity::class.java)
+        val pendingIntent = TaskStackBuilder.create(this@BookingDetailsActivity).run{
+            addNextIntentWithParentStack(intentT)
+            getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
+
+        val notif = NotificationCompat.Builder(this@BookingDetailsActivity, CHANNEL_ID)
+            .setContentTitle(Title)
+            .setContentText(Text)
+            .setSmallIcon(R.drawable.logo_blue_noname)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        val notifManger = NotificationManagerCompat.from(this@BookingDetailsActivity)
+        if (ActivityCompat.checkSelfPermission(
+                this@BookingDetailsActivity,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+        notifManger.notify(NOTIF_ID,notif)
+    }
+
+
+    private fun createNotifChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH).apply {
+                lightColor = Color.BLUE
+                enableLights(true)
+            }
+            val manager = this@BookingDetailsActivity.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            manager.createNotificationChannel(channel)
+        }
     }
 
 }

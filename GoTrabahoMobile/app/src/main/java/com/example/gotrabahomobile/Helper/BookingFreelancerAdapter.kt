@@ -102,6 +102,50 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                             context.startActivity(intent)
                                         }
 
+                                        holder.binding.btnCancelFreelancer.setOnClickListener() {
+                                            val book = BookingInstance.retrofitBuilder
+                                            val updatedBook = Booking(
+                                                bookingId = currentItem.bookingId,
+                                                customerId = currentItem.customerId,
+                                                bookingDatetime = currentItem.bookingDatetime,
+                                                amount = currentItem.amount,
+                                                bookingStatus = 6,
+                                                serviceId = currentItem.serviceId,
+                                                serviceFee = currentItem.serviceFee,
+                                                negotiationId = null,
+                                                paymentStatus =  currentItem.paymentStatus,
+                                                refundFreelancer = 1
+                                            )
+                                            book.updateBooking(
+                                                currentItem.bookingId.toString(),
+                                                updatedBook
+                                            ).enqueue(
+                                                object : retrofit2.Callback<ResponseBody> {
+                                                    override fun onResponse(
+                                                        call: Call<ResponseBody>,
+                                                        response: Response<ResponseBody>
+                                                    ) {
+                                                        if (response.isSuccessful) {
+                                                            Log.d(
+                                                                "Booking",
+                                                                "Successfully Updated to 4"
+                                                            )
+                                                            notifMessage("The booking has been completed", "Thank you for your service")
+                                                        }
+                                                    }
+
+                                                    override fun onFailure(
+                                                        call: Call<ResponseBody>,
+                                                        t: Throwable
+                                                    ) {
+                                                        TODO("Not yet implemented")
+                                                    }
+
+                                                })
+
+                                            deleteNego(currentItem.bookingId!!)
+
+                                        }
                                         holder.binding.btnSetToCompleted.setOnClickListener {
                                             val book = BookingInstance.retrofitBuilder
                                             val updatedBook = Booking(
@@ -155,6 +199,8 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                         if (status == 3) {
                                             holder.binding.btnPayServiceFee.visibility = View.GONE
                                             holder.binding.btnSetToCompleted.visibility = View.GONE
+                                            holder.binding.btnCancelFreelancer.visibility = View.GONE
+
                                         }
 
 
@@ -241,13 +287,6 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 Manifest.permission.POST_NOTIFICATIONS
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return
         }
         notifManger.notify(NOTIF_ID,notif)

@@ -88,7 +88,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/buttonCancelFreelancer"
+            android:id="@+id/btnCancelFreelancer"
             android:layout_width="100dp"
             android:layout_height="40dp"
             android:backgroundTint="#CD1515"
