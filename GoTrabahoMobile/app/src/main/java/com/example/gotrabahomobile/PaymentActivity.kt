@@ -122,10 +122,16 @@ class PaymentActivity : AppCompatActivity() {
                             val invoiceResponse =
                                 jsonObject?.let { JsonParser.parseString(it.string()).asJsonObject }
 
-                            setupInvoiceLink(
+                            val url = Uri.parse(invoiceResponse?.get("invoiceUrl")?.asString)
+                            val intent = Intent(Intent.ACTION_VIEW, url)
+                            startActivity(intent)
+
+/*                            setupInvoiceLink(
                                 textInvoiceLink,
                                 invoiceResponse?.get("invoiceUrl")?.asString
-                            )
+                            )*/
+
+
                             Toast.makeText(
                                 this@PaymentActivity,
                                 "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
@@ -190,10 +196,11 @@ class PaymentActivity : AppCompatActivity() {
                             val invoiceResponse =
                                 jsonObject?.let { JsonParser.parseString(it.string()).asJsonObject }
 
-                            setupInvoiceLink(
-                                textInvoiceLink,
-                                invoiceResponse?.get("invoiceUrl")?.asString
-                            )
+                            val url = Uri.parse(invoiceResponse?.get("invoiceUrl")?.asString)
+                            val intent = Intent(Intent.ACTION_VIEW, url)
+                                startActivity(intent)
+
+
                             Toast.makeText(
                                 this@PaymentActivity,
                                 "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",

@@ -2,12 +2,14 @@ package com.example.gotrabahomobile.Remote.ServicesRemote
 
 import com.example.gotrabahomobile.DTO.FreelancerLocations
 import com.example.gotrabahomobile.DTO.ServicesWUserId
+import com.example.gotrabahomobile.Model.Freelancer
 
 import com.example.gotrabahomobile.Model.Services
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -28,6 +30,9 @@ interface ServicesInterface {
 
     @GET("api/Services/ServiceList/{freelancerId}")
     fun getFreelancerServices(@Path("freelancerId") freelancerId: Int): Call<List<Services>>
+
+    @PATCH("api/Services/Patch")
+    fun patchServices(@Body updatedResource: Services): Call<Services>
 
     @GET("api/Services/{serviceId}")
     fun getService(@Path("serviceId") serviceId: Int): Call<Services>

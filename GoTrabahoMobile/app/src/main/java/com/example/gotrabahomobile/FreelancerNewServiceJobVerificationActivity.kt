@@ -393,6 +393,7 @@ class FreelancerNewServiceJobVerificationActivity : AppCompatActivity() {
             priceEstimate = 0.0,
             serviceTypeName = serviceTypeName,
             status = status,
+            showService = false,
             location = location,
             rating = rating)
 

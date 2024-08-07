@@ -209,7 +209,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
                                         Log.d("TEST", "${call.toString()}")
 
                                         registerProof(freelancerId, nameProof, dateSent)
-                                        registerService(freelancerId, null, null, null,selectedService,0,null,null)
+                                        registerService(freelancerId, "Insert Name: ", "Insert Description:", 0.0,selectedService,0,null,null)
                                         service.insertCertificateImage(imagePartCertificate)
                                             .enqueue(object : Callback<FreelancerTesdaCertificate> {
                                                 override fun onResponse(call: Call<FreelancerTesdaCertificate>, response: Response<FreelancerTesdaCertificate>) {
@@ -371,6 +371,7 @@ class FreelancerJobVerificationActivity : AppCompatActivity() {
             priceEstimate = priceEstimate,
             serviceTypeName = serviceTypeName,
             status = status,
+            showService = false,
             location = location,
             rating = rating)
 

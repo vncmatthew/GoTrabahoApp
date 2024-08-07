@@ -51,6 +51,7 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
                 intent.putExtra("lastName", UserDetails.lastName)
                 intent.putExtra("fullName", UserDetails.fullName)
                 intent.putExtra("email", UserDetails.email)
+                intent.putExtra("showService", services.showService)
                 context.startActivity(intent)
             }
 

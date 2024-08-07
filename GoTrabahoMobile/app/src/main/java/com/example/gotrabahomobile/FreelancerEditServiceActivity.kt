@@ -8,7 +8,9 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import com.example.gotrabahomobile.DTO.UserDetails
+import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.Services
+import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.ActivityFreelancerEditServiceBinding
 import retrofit2.Call
@@ -93,6 +95,7 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
         val status = intent.getIntExtra("status", 0)
         val rating = intent.getFloatExtra("rating", 0f)
         val freelancerId = intent.getIntExtra("freelancerId", 0)
+        val showService = intent.getBooleanExtra("showService", false)
 
 
         val updatedService = Services(
@@ -103,6 +106,7 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
             priceEstimate = price,
             serviceTypeName = serviceTypName,
             status = status,
+            showService = showService,
             location = location,
             rating = rating
 
@@ -127,5 +131,49 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
         })
 
 
+    }
+
+    fun changeStatusTrue(){
+
+        val serviceId = intent.getIntExtra("serviceId", 0)
+        val call = ServicesInstance.retrofitBuilder
+        val services = Services(
+            serviceId = serviceId,
+            showService = true
+        )
+        call.patchServices(services).enqueue(object: Callback<Services>{
+            override fun onResponse(call: Call<Services>, response: Response<Services>) {
+                if(response.isSuccessful){
+                    Log.d("Changed Bookings", "True")
+                }
+            }
+
+            override fun onFailure(call: Call<Services>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun changeStatusFalse(){
+
+        val serviceId = intent.getIntExtra("serviceId", 0)
+        val call = ServicesInstance.retrofitBuilder
+        val services = Services(
+            serviceId = serviceId,
+            showService = false
+        )
+        call.patchServices(services).enqueue(object: Callback<Services>{
+            override fun onResponse(call: Call<Services>, response: Response<Services>) {
+                if(response.isSuccessful){
+                    Log.d("Changed Bookings", "False")
+                }
+            }
+
+            override fun onFailure(call: Call<Services>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
 }
