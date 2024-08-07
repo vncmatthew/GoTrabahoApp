@@ -7,6 +7,8 @@
     <string name="customer">Customer</string>
     <string name="freelancer">Freelancer</string>
 
+    <string name="required">Required</string>
+
     <string-array name="idType">
         <item>ID TYPE</item>
         <item>Driver\'s License</item>
@@ -232,6 +234,16 @@
     <string name="status_completed">Completed</string>
 
     <string name="customerName">Peter Griffin</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="birthdate">Birthdate</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="address_1">Address 1</string>
+    <string name="address_2">Address 2</string>
+    <string name="barangay">Barangay</string>
 
 
 </resources>

@@ -37,103 +37,177 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewLogoSignUp" />
 
-        <EditText
-            android:id="@+id/editTextCustomerFirstName"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="First Name"
-            android:inputType="text"
-            android:textColor="@color/black"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/firstNameContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="30dp"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.48"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSignUp" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewSignUp">
 
-        <EditText
-            android:id="@+id/editTextCustomerLastName"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Last Name"
-            android:inputType="text"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerFirstName" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/firstNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/first_name"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextCustomerBirthdate"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Birthdate"
-            android:inputType="date"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/lastNameContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerLastName" />
+            app:layout_constraintTop_toBottomOf="@+id/firstNameContainer">
 
-        <EditText
-            android:id="@+id/editTextCustomerPhoneNumber"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="phone"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerBirthdate" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/lastNameEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/last_name"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextCustomerEmailAddress"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textEmailAddress"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/birthdateContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerPhoneNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/lastNameContainer">
 
-        <EditText
-            android:id="@+id/editTextCustomerPassword"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerEmailAddress" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/birthdateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:inputType="date"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/birthdate"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextCustomerConfirmPassword"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Confirm Password"
-            android:inputType="textPassword"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneNumberContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:helperText="@string/required"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:prefixText="+63"
+            app:prefixTextColor="@android:color/black"
+            app:helperTextTextColor="@android:color/holo_red_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/birthdateContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneNumberEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:maxLength="10"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/phone_number"
+                android:inputType="number"
+                app:layout_constraintStart_toStartOf="parent" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/phoneNumberContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/emailEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/email"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="16"
+            app:passwordToggleEnabled="true"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:maxLength="16"
+                android:inputType="textPassword"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/password"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/confirmPasswordContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="16"
+            app:passwordToggleEnabled="true"
+            android:layout_marginTop="20dp"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/passwordContainer">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/confirmPasswordEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:maxLength="16"
+                android:inputType="textPassword"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/confirm_password"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/textViewAddress"
@@ -146,47 +220,105 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerConfirmPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordContainer"/>
 
-        <EditText
-            android:id="@+id/editTextCustomerAddress1"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Address 1"
-            android:inputType="text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/address1Container"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewAddress" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewAddress">
 
-        <EditText
-            android:id="@+id/editTextCustomerAddress2"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Address 2"
-            android:inputType="text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerAddress1" />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/address1EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/address_1"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextCustomerBarangey"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:background="@drawable/edit_text_background_white"
-            android:ems="10"
-            android:hint="Barangay"
-            android:inputType="text"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/address2Container"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerAddress2" />
+            app:layout_constraintTop_toBottomOf="@+id/address1Container">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/address2EditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/address_2"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/barangayContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            app:helperText="@string/required"
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/address2Container">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/barangayEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lines="1"
+                android:background="@drawable/edit_text_background_white"
+                android:hint="@string/barangay"
+                app:layout_constraintStart_toStartOf="parent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+                <Spinner
+                    android:id="@+id/spinnerCustomerCity"
+                    android:layout_width="312dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.494"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/barangayContainer" />
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--            android:id="@+id/cityContainer"-->
+<!--            android:layout_width="350dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginHorizontal="20dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            app:helperText="@string/required"-->
+<!--            app:helperTextTextColor="@android:color/holo_red_dark"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/barangayContainer">-->
+
+<!--            <AutoCompleteTextView-->
+<!--                android:id="@+id/cityEditText"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="City"-->
+<!--                android:inputType="none"-->
+<!--                android:background="@drawable/edit_text_background_white"-->
+<!--                />-->
+
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <CheckBox
             android:id="@+id/checkBoxCustomerTNC"
@@ -233,15 +365,6 @@
             app:layout_constraintHorizontal_bias="0.49"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewCustomerSignUp" />
-
-        <Spinner
-            android:id="@+id/spinnerCustomerCity"
-            android:layout_width="312dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editTextCustomerBarangey" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

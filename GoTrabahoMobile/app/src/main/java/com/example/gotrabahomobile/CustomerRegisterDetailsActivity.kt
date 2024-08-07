@@ -22,10 +22,13 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
+import android.util.Patterns
 import android.view.View
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -43,12 +46,14 @@ import com.example.gotrabahomobile.Model.Cities
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.ArchiveRecordRemote.CityInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import kotlinx.android.extensions.ContainerOptions
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
@@ -78,8 +83,12 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_customer_register_details)
+        phoneFocusListener()
+        emailFocusListener()
+        passwordFocusListener()
+        firstNameFocusListener()
         auth = FirebaseAuth.getInstance()
-        val birthdateEditText = findViewById<EditText>(R.id.editTextCustomerBirthdate)
+        val birthdateEditText = findViewById<EditText>(R.id.birthdateEditText)
         birthdateEditText.inputType = InputType.TYPE_NULL
 
         birthdateEditText.setOnClickListener {
@@ -90,14 +99,21 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val checkBox = findViewById<CheckBox>(R.id.checkBoxCustomerTNC)
         val freelancerSignUp = findViewById<TextView>(R.id.textViewCustomerSignUp)
         val signIn = findViewById<TextView>(R.id.textViewSignIn)
-        val spannableString = SpannableString("I agree to the Terms and Conditions and Data Privacy")
+        val spannableString =
+            SpannableString("I agree to the Terms and Conditions and Data Privacy")
         val spannableStringFSignUp = SpannableString("Looking for the Freelancer Sign Up page?")
         val spannableStringSignIn = SpannableString("Already have an account? Sign In")
+//
+//        focusListener()
+
 
         val fsignupSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
                 // Show the dialog when the text is clicked
-                val intent = Intent(this@CustomerRegisterDetailsActivity, FreelancerRegisterDetailsActivity::class.java)
+                val intent = Intent(
+                    this@CustomerRegisterDetailsActivity,
+                    FreelancerRegisterDetailsActivity::class.java
+                )
                 startActivity(intent)
             }
 
@@ -148,7 +164,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
 
 
 
-        spannableString.setSpan(clickableSpan,  15,  52, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        spannableString.setSpan(clickableSpan, 15, 52, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         checkBox.text = spannableString
         checkBox.movementMethod = LinkMovementMethod.getInstance() // Enable clickable text
 
@@ -166,17 +182,20 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: android.location.Location) {
                 if (!isFirstFetchCompleted) {
-                    val lat =14.6100
+                    val lat = 14.6100
                     val lon = 120.9893
-                    val url = "https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon&zoom=18&addressdetails=1"
+                    val url =
+                        "https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon&zoom=18&addressdetails=1"
 
                     lifecycleScope.launch { // Use viewModelScope if you're in a ViewModel
                         try {
                             val client = HttpClient()
                             val httpResponse: HttpResponse = client.get(url)
-                            val responseBody: String = httpResponse.bodyAsText(Charset.forName("UTF-8"))
+                            val responseBody: String =
+                                httpResponse.bodyAsText(Charset.forName("UTF-8"))
                             val response: ReverseGeoCodeResponse = jsonDecoder.decodeFromString(
-                                ReverseGeoCodeResponse.serializer(), responseBody)
+                                ReverseGeoCodeResponse.serializer(), responseBody
+                            )
                             val address = response.display_name
                             println("Address: $address")
                             extractAddressComponents(address!!)
@@ -185,9 +204,13 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
                                 fetchCities(cityName)
                             } else {
                                 // Handle the case where the city name couldn't be extracted
-                                Log.w("extractAddressComponents", "Failed to extract city name from address")
+                                Log.w(
+                                    "extractAddressComponents",
+                                    "Failed to extract city name from address"
+                                )
                             }
-                            isFirstFetchCompleted = true // Set the flag to true after the first successful fetch
+                            isFirstFetchCompleted =
+                                true // Set the flag to true after the first successful fetch
                         } catch (e: Exception) {
                             println("Error fetching address: ${e.message}")
                         }
@@ -202,21 +225,43 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             override fun onProviderDisabled(provider: String) {}
         }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             // Permission is not granted
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            ) {
                 // Show an explanation to the user asynchronously
             } else {
                 // Request permissions
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION), MY_PERMISSIONS_REQUEST_LOCATION)
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    ),
+                    MY_PERMISSIONS_REQUEST_LOCATION
+                )
             }
         } else {
             // Permission has already been granted
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            0,
+            0f,
+            locationListener
+        )
 
     }
 
@@ -240,9 +285,9 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         Log.d("Address 2:", address2)
         Log.d("Barangay:", barangay)
         Log.d("City:", cityChose)
-        val address1Text = findViewById<EditText>(R.id.editTextCustomerAddress1)
-        val address2Text = findViewById<EditText>(R.id.editTextCustomerAddress2)
-        val  barangayText = findViewById<EditText>(R.id.editTextCustomerBarangey)
+        val address1Text = findViewById<EditText>(R.id.address1EditText)
+        val address2Text = findViewById<EditText>(R.id.address2EditText)
+        val barangayText = findViewById<EditText>(R.id.barangayEditText)
 
         address1Text.text = Editable.Factory.getInstance().newEditable(address1)
         address2Text.text = Editable.Factory.getInstance().newEditable(address2)
@@ -287,19 +332,19 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    private fun insertCustomer(){
+    private fun insertCustomer() {
 
 
-        val firstNameText = findViewById<EditText>(R.id.editTextCustomerFirstName)
-        val lastNameText = findViewById<EditText>(R.id.editTextCustomerLastName)
-        val birthdateText = findViewById<EditText>(R.id.editTextCustomerBirthdate)
-        val phoneNumberText = findViewById<EditText>(R.id.editTextCustomerPhoneNumber)
-        val emailText = findViewById<EditText>(R.id.editTextCustomerEmailAddress)
-        val passwordText = findViewById<EditText>(R.id.editTextCustomerPassword)
-        val confirmPassText = findViewById<EditText>(R.id.editTextCustomerConfirmPassword)
-        val address1Text = findViewById<EditText>(R.id.editTextCustomerAddress1)
-        val address2Text = findViewById<EditText>(R.id.editTextCustomerAddress2)
-        val barangayText = findViewById<EditText>(R.id.editTextCustomerBarangey)
+        val firstNameText = findViewById<EditText>(R.id.firstNameEditText)
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText)
+        val birthdateText = findViewById<EditText>(R.id.birthdateEditText)
+        val phoneNumberText = findViewById<EditText>(R.id.phoneNumberEditText)
+        val emailText = findViewById<EditText>(R.id.emailEditText)
+        val passwordText = findViewById<EditText>(R.id.passwordEditText)
+        val confirmPassText = findViewById<EditText>(R.id.confirmPasswordEditText)
+        val address1Text = findViewById<EditText>(R.id.address1EditText)
+        val address2Text = findViewById<EditText>(R.id.address2EditText)
+        val barangayText = findViewById<EditText>(R.id.barangayEditText)
 
         val userType = 1
         val selectedCity = citySpinner.selectedItem as Cities
@@ -316,7 +361,8 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val password = passwordText.text.toString()
         val confirmPass = confirmPassText.text.toString()
         val contactNumber = phoneNumberText.text.toString()
-        val latLong = getLatLongFromAddress(this, address1, address2, barangay, selectedCity.cityName!!)
+        val latLong =
+            getLatLongFromAddress(this, address1, address2, barangay, selectedCity.cityName!!)
         if (latLong != null) {
             val (latitude, longitude) = latLong
             println("Latitude: $latitude, Longitude: $longitude")
@@ -328,76 +374,293 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val latitude = currentLatitude
         val longitude = currentLongitude
 
-        if (validateInputs(firstName, lastName, email, address1, address2, barangay, selectedCity.cityName, password, confirmPass, contactNumber)) {
-
-            registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
-                address2, barangay, cityId!!, longitude, latitude)
+            registerCustomer(
+                userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
+                address2, barangay, cityId!!, longitude, latitude
+            )
             val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
             startActivity(intent)
-        }
 
 
 
     }
 
-    val phoneNumberPattern = "^09[0-9]{2}[0-9]{3}[0-9]{4}$".toRegex()
 
-    fun isValidPhoneNumber(phoneNumber: String): Boolean {
-        return phoneNumberPattern.matches(phoneNumber.trim())
+
+    private fun firstNameFocusListener() {
+        val firstNameText = findViewById<EditText>(R.id.firstNameEditText)
+        val firstNameContainer = findViewById<TextInputLayout>(R.id.firstNameContainer)
+
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText)
+        val lastNameContainer = findViewById<TextInputLayout>(R.id.lastNameContainer)
+
+        val address1Text = findViewById<EditText>(R.id.address1EditText)
+        val address1Container = findViewById<TextInputLayout>(R.id.address1Container)
+
+        val barangayText = findViewById<EditText>(R.id.barangayEditText)
+        val barangayContainer = findViewById<TextInputLayout>(R.id.barangayContainer)
+
+        firstNameText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                firstNameContainer.helperText = validFirstName()
+            }
+        }
+        lastNameText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                lastNameContainer.helperText = validLastName()
+            }
+        }
+        address1Text.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                address1Container.helperText = validAddress1()
+            }
+        }
+        barangayText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                barangayContainer.helperText = validBarangay()
+            }
+        }
     }
-    fun validateInputs(
-        firstName: String?,
-        lastName: String?,
-        email: String?,
-        address1: String?,
-        address2: String?,
-        barangay: String?,
-        city: String?,
-        password: String?,
-        confirmPass: String?,
-        contactNumber: String?
-    ): Boolean {
-        if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
-            address1.isNullOrEmpty()  || barangay.isNullOrEmpty() ||
-            city.isNullOrEmpty()  || contactNumber.isNullOrEmpty()
-        ) {
-            Toast.makeText(this, "All fields must be filled out", Toast.LENGTH_SHORT).show()
-            return false
+
+    private fun validFirstName(): String?
+    {
+        val firstNameText = findViewById<EditText>(R.id.firstNameEditText).text.toString()
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText).text.toString()
+        if (firstNameText.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (firstNameText.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+    private fun validLastName(): String?
+    {
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText).text.toString()
+        if (lastNameText.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (lastNameText.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+    private fun validAddress1(): String?
+    {
+        val address1Text = findViewById<EditText>(R.id.address1EditText).text.toString()
+        if (address1Text.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (address1Text.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+    private fun validBarangay(): String?
+    {
+        val barangayText = findViewById<EditText>(R.id.barangayEditText).text.toString()
+        if (barangayText.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (barangayText.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+
+    private fun phoneFocusListener() {
+        val phoneNumberText = findViewById<EditText>(R.id.phoneNumberEditText)
+        val phoneNumberContainer = findViewById<TextInputLayout>(R.id.phoneNumberContainer)
+
+        phoneNumberText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                phoneNumberContainer.helperText = validPhone()
+            }
+        }
+    }
+
+    private fun validPhone(): String?
+    {
+        val phoneNumber = findViewById<EditText>(R.id.phoneNumberEditText).text.toString()
+        if (phoneNumber.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (!phoneNumber.matches("^9[0-9]{2}[0-9]{3}[0-9]{4}$".toRegex()))
+        {
+            return "Must be a Valid Phone Number"
+        }
+        if (phoneNumber.length != 10)
+        {
+            return "Must be 10 digits"
         }
 
-        if (password?.length ?: 0 < 7) {
-            Toast.makeText(this, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
-            return false
+        return null
+    }
+
+    private fun emailFocusListener() {
+        val emailText = findViewById<EditText>(R.id.emailEditText)
+        val emailContainer = findViewById<TextInputLayout>(R.id.emailContainer)
+
+        emailText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                emailContainer.helperText = validEmail()
+            }
+        }
+    }
+
+    private fun validEmail(): String?
+    {
+        val email = findViewById<EditText>(R.id.emailEditText).text.toString()
+        if (email.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            return "Invalid Email Address"
+        }
+        return null
+    }
+
+    private fun passwordFocusListener() {
+        val passwordText = findViewById<EditText>(R.id.passwordEditText)
+        val passwordContainer = findViewById<TextInputLayout>(R.id.passwordContainer)
+
+        val confirmPasswordText = findViewById<EditText>(R.id.confirmPasswordEditText)
+        val confirmPasswordContainer = findViewById<TextInputLayout>(R.id.confirmPasswordContainer)
+
+        passwordText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                passwordContainer.helperText = validPassword()
+            }
         }
 
-        if (password?.equals(confirmPass) == false){
-            Toast.makeText(this, "Confirm Password and Password are not the same", Toast.LENGTH_SHORT).show()
-            return false
+        confirmPasswordText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                confirmPasswordContainer.helperText = validConfirmPassword()
+            }
         }
 
-        if (!email.contains("@")) {
-            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
-            return false
-        }
 
-        if (!isValidPhoneNumber(contactNumber)) {
-            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show()
-            return false
-        }
 
-        val latLong = getLatLongFromAddress(this, address1, address2!!, barangay, city)
-        if (latLong == null) {
-            Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show()
-            return false
-        }
 
-        val (latitude, longitude) = latLong!!
-        println("Latitude: $latitude, Longitude: $longitude")
-        currentLongitude = longitude
-        currentLatitude = latitude
+    }
+
+    private fun validPassword(): String?
+    {
+        val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
+        if (password.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (password.length < 7)
+        {
+            return "Minimum of 7 Character Password"
+        }
+        return null
+    }
+
+    private fun validConfirmPassword(): String?
+    {
+        val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
+        val confirmPassword = findViewById<EditText>(R.id.confirmPasswordEditText).text.toString()
+        if (confirmPassword.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (confirmPassword.length < 7)
+        {
+            return "Minimum of 7 Character Password"
+        }
+        if (password != confirmPassword)
+        {
+            return "Confirm Password does not match"
+        }
+        return null
+    }
+
+    fun validateInputs(): Boolean {
+        phoneFocusListener()
+        emailFocusListener()
+        passwordFocusListener()
+        firstNameFocusListener()
 
         return true
     }
+//    fun validateInputs(
+//        firstName: String?,
+//        lastName: String?,
+//        email: String?,
+//        address1: String?,
+//        address2: String?,
+//        barangay: String?,
+//        city: String?,
+//        password: String?,
+//        confirmPass: String?,
+//        contactNumber: String?
+//    ): Boolean {
+//        if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
+//            address1.isNullOrEmpty()  || barangay.isNullOrEmpty() ||
+//            city.isNullOrEmpty()  || contactNumber.isNullOrEmpty()
+//        ) {
+//            Toast.makeText(this, "All fields must be filled out", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (password?.length ?: 0 < 7) {
+//            Toast.makeText(this, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (password?.equals(confirmPass) == false){
+//            Toast.makeText(this, "Confirm Password and Password are not the same", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (!email.contains("@")) {
+//            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (!isValidPhoneNumber(contactNumber)) {
+//            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        val latLong = getLatLongFromAddress(this, address1, address2!!, barangay, city)
+//        if (latLong == null) {
+//            Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        val (latitude, longitude) = latLong!!
+//        println("Latitude: $latitude, Longitude: $longitude")
+//        currentLongitude = longitude
+//        currentLatitude = latitude
+//
+//        return true
+//    }
 
     private fun fetchCities(cityName: String?) {
         val call = CityInstance.retrofitBuilder

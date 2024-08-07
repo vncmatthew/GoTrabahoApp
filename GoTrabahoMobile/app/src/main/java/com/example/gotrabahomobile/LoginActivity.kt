@@ -24,6 +24,7 @@ import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import retrofit2.Call
@@ -70,7 +71,8 @@ class LoginActivity : AppCompatActivity() {
         btn_login.setOnClickListener{loginUser()}
 
 
-
+        passwordFocusListener()
+        emailFocusListener()
         btn_login.setOnClickListener{
         loginUser()
         }
@@ -112,19 +114,18 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
+
     private fun loginUser() {
-        val edit_Email = findViewById<EditText>(R.id.editTextLoginEmailAddress)
-        val edit_Pass = findViewById<EditText>(R.id.editTextLoginPassword)
+        val edit_Email = findViewById<EditText>(R.id.emailEditText)
+        val edit_Pass = findViewById<EditText>(R.id.passwordEditText)
+        val passwordContainer = findViewById<TextInputLayout>(R.id.passwordContainer)
 
         val email = edit_Email.text.toString()
         val pass = edit_Pass.text.toString()
 
         if (email.isEmpty() || pass.isEmpty()) {
-            Toast.makeText(
-                this@LoginActivity,
-                "The email and password fields are required",
-                Toast.LENGTH_SHORT
-            ).show()
+            passwordContainer.helperText = "The email and password fields are required"
             return
         }
 
@@ -161,6 +162,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else {
                     Toast.makeText(this@LoginActivity, "The email and/or password is incorrect", Toast.LENGTH_SHORT).show()
+                    passwordContainer.helperText = "Password or Email is invalid"
                 }
         }
             override fun onFailure(call: Call<User>, t: Throwable) {
@@ -172,6 +174,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun LoginUser(email:String,password:String,firstName:String?, lastName:String?, fullName:String?, sqlId: String?, userType: Int?,
                              longitude: Double?, latitude: Double?, identification: Int?){
+                    val passwordContainer = findViewById<TextInputLayout>(R.id.passwordContainer)
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) {
                             if (it.isSuccessful) {
@@ -239,11 +242,78 @@ class LoginActivity : AppCompatActivity() {
                                     "email or password invalid",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                passwordContainer.helperText = "Password or Email is invalid"
                             }
                         }
                 }
 
+    private fun emailFocusListener() {
+        val emailText = findViewById<EditText>(R.id.emailEditText)
+        val emailContainer = findViewById<TextInputLayout>(R.id.emailContainer)
+
+        emailText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                emailContainer.helperText = validEmail()
+            }
+        }
     }
+
+    private fun validEmail(): String?
+    {
+        val email = findViewById<EditText>(R.id.emailEditText).text.toString()
+        if (email.isNullOrEmpty())
+        {
+            return "Email Required"
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            return "Invalid Email Address"
+        }
+        return null
+    }
+
+    private fun passwordFocusListener() {
+        val passwordText = findViewById<EditText>(R.id.passwordEditText)
+        val passwordContainer = findViewById<TextInputLayout>(R.id.passwordContainer)
+
+        passwordText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                passwordContainer.helperText = validPassword()
+            }
+        }
+
+
+
+
+    }
+
+    private fun validPassword(): String?
+    {
+        val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
+        if (password.isNullOrEmpty())
+        {
+            return "Password Required"
+        }
+        if (password.length < 7)
+        {
+            return "Minimum of 7 Character Password"
+        }
+        return null
+    }
+
+    private fun wrongPassword(): String?
+    {
+        val passwordText = findViewById<EditText>(R.id.passwordEditText)
+        val passwordContainer = findViewById<TextInputLayout>(R.id.passwordContainer)
+
+        return "Password or Email is wrong"
+    }
+
+}
+
+
 
 
 
