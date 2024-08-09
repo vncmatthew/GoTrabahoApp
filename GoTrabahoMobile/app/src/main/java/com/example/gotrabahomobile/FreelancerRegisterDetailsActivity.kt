@@ -25,6 +25,7 @@ import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -44,6 +45,7 @@ import com.example.gotrabahomobile.Model.Cities
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.Remote.ArchiveRecordRemote.CityInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -82,12 +84,16 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_freelancer_register_details)
+        phoneFocusListener()
+        emailFocusListener()
+        passwordFocusListener()
+        firstNameFocusListener()
         auth = FirebaseAuth.getInstance()
 
         citySpinner = findViewById(R.id.spinnerFreelancerCity)
 
         //birthdate
-        val birthdateEditText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
+        val birthdateEditText = findViewById<EditText>(R.id.birthdateEditText)
         val customerSignUp = findViewById<TextView>(R.id.textViewCustomerSignUp)
         val signIn = findViewById<TextView>(R.id.textViewSignIn)
 
@@ -250,9 +256,9 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         Log.d("Address 2:", address2)
         Log.d("Barangay:", barangay)
         Log.d("City:", cityChose)
-        val address1Text = findViewById<EditText>(R.id.editTextFreelancerAddress1)
-        val address2Text = findViewById<EditText>(R.id.editTextFreelancerAddress2)
-        val  barangayText = findViewById<EditText>(R.id.editTextFreelancerBarangey)
+        val address1Text = findViewById<EditText>(R.id.address1EditText)
+        val address2Text = findViewById<EditText>(R.id.address2EditText)
+        val  barangayText = findViewById<EditText>(R.id.barangayEditText)
 
         address1Text.text = Editable.Factory.getInstance().newEditable(address1)
         address2Text.text = Editable.Factory.getInstance().newEditable(address2)
@@ -307,11 +313,22 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             }
         })
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showDatePickerDialog(birthdateEditText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentDate = LocalDate.now()
+        val currentYear = currentDate.year
+
+        val minAge = currentYear - 18
+
+        val maxDateCalendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, minAge)
+            set(Calendar.MONTH, Calendar.DECEMBER)
+            set(Calendar.DAY_OF_MONTH, 31)
+        }
 
         val datePickerDialog = DatePickerDialog(
             this,
@@ -325,6 +342,9 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             month,
             day
         )
+
+        datePickerDialog.datePicker.maxDate = maxDateCalendar.timeInMillis
+
         datePickerDialog.show()
     }
 
@@ -333,16 +353,16 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
     private fun insertCustomer(){
 
 
-        val firstNameText = findViewById<EditText>(R.id.editTextFreelancerFirstName)
-        val lastNameText = findViewById<EditText>(R.id.editTextFreelancerLastName)
-        val birthdateText = findViewById<EditText>(R.id.editTextFreelancerBirthdate)
-        val phoneNumberText = findViewById<EditText>(R.id.editTextFreelancerPhoneNumber)
-        val emailText = findViewById<EditText>(R.id.editTextFreelancerEmailAddress)
-        val passwordText = findViewById<EditText>(R.id.editTextFreelancerPassword)
-        val confirmPassText = findViewById<EditText>(R.id.editTextFreelancerConfirmPassword)
-        val address1Text = findViewById<EditText>(R.id.editTextFreelancerAddress1)
-        val address2Text = findViewById<EditText>(R.id.editTextFreelancerAddress2)
-        val barangayText = findViewById<EditText>(R.id.editTextFreelancerBarangey)
+        val firstNameText = findViewById<EditText>(R.id.firstNameEditText)
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText)
+        val birthdateText = findViewById<EditText>(R.id.birthdateEditText)
+        val phoneNumberText = findViewById<EditText>(R.id.phoneNumberEditText)
+        val emailText = findViewById<EditText>(R.id.emailEditText)
+        val passwordText = findViewById<EditText>(R.id.passwordEditText)
+        val confirmPassText = findViewById<EditText>(R.id.confirmPasswordEditText)
+        val address1Text = findViewById<EditText>(R.id.address1EditText)
+        val address2Text = findViewById<EditText>(R.id.address2EditText)
+        val barangayText = findViewById<EditText>(R.id.barangayEditText)
         val userType = 2
 
         val selectedCity = citySpinner.selectedItem as Cities
@@ -371,74 +391,279 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
         val longitude = currentLongitude
 
 
-        if (validateInputs(firstName, lastName, email, address1, address2, barangay, selectedCity.cityName, password, confirmPass, contactNumber)) {
             registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
                 address2, barangay, cityId!!, longitude, latitude)
             val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
             intent.putExtra("email", email)
             startActivity(intent)
+    }
+
+    private fun firstNameFocusListener() {
+        val firstNameText = findViewById<EditText>(R.id.firstNameEditText)
+        val firstNameContainer = findViewById<TextInputLayout>(R.id.firstNameContainer)
+
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText)
+        val lastNameContainer = findViewById<TextInputLayout>(R.id.lastNameContainer)
+
+        val address1Text = findViewById<EditText>(R.id.address1EditText)
+        val address1Container = findViewById<TextInputLayout>(R.id.address1Container)
+
+        val barangayText = findViewById<EditText>(R.id.barangayEditText)
+        val barangayContainer = findViewById<TextInputLayout>(R.id.barangayContainer)
+
+        firstNameText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                firstNameContainer.helperText = validFirstName()
+            }
         }
+        lastNameText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                lastNameContainer.helperText = validLastName()
+            }
+        }
+        address1Text.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                address1Container.helperText = validAddress1()
+            }
+        }
+        barangayText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                barangayContainer.helperText = validBarangay()
+            }
+        }
+    }
+
+    private fun validFirstName(): String?
+    {
+        val firstNameText = findViewById<EditText>(R.id.firstNameEditText).text.toString()
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText).text.toString()
+        if (firstNameText.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (firstNameText.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+    private fun validLastName(): String?
+    {
+        val lastNameText = findViewById<EditText>(R.id.lastNameEditText).text.toString()
+        if (lastNameText.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (lastNameText.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+    private fun validAddress1(): String?
+    {
+        val address1Text = findViewById<EditText>(R.id.address1EditText).text.toString()
+        if (address1Text.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (address1Text.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+    private fun validBarangay(): String?
+    {
+        val barangayText = findViewById<EditText>(R.id.barangayEditText).text.toString()
+        if (barangayText.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (barangayText.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+
+    private fun phoneFocusListener() {
+        val phoneNumberText = findViewById<EditText>(R.id.phoneNumberEditText)
+        val phoneNumberContainer = findViewById<TextInputLayout>(R.id.phoneNumberContainer)
+
+        phoneNumberText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                phoneNumberContainer.helperText = validPhone()
+            }
+        }
+    }
+
+    private fun validPhone(): String?
+    {
+        val phoneNumber = findViewById<EditText>(R.id.phoneNumberEditText).text.toString()
+        if (phoneNumber.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (!phoneNumber.matches("^9[0-9]{2}[0-9]{3}[0-9]{4}$".toRegex()))
+        {
+            return "Must be a Valid Phone Number"
+        }
+        if (phoneNumber.length != 10)
+        {
+            return "Must be 10 digits"
+        }
+
+        return null
+    }
+
+    private fun emailFocusListener() {
+        val emailText = findViewById<EditText>(R.id.emailEditText)
+        val emailContainer = findViewById<TextInputLayout>(R.id.emailContainer)
+
+        emailText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                emailContainer.helperText = validEmail()
+            }
+        }
+    }
+
+    private fun validEmail(): String?
+    {
+        val email = findViewById<EditText>(R.id.emailEditText).text.toString()
+        if (email.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+        {
+            return "Invalid Email Address"
+        }
+        return null
+    }
+
+    private fun passwordFocusListener() {
+        val passwordText = findViewById<EditText>(R.id.passwordEditText)
+        val passwordContainer = findViewById<TextInputLayout>(R.id.passwordContainer)
+
+        val confirmPasswordText = findViewById<EditText>(R.id.confirmPasswordEditText)
+        val confirmPasswordContainer = findViewById<TextInputLayout>(R.id.confirmPasswordContainer)
+
+        passwordText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                passwordContainer.helperText = validPassword()
+            }
+        }
+
+        confirmPasswordText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                confirmPasswordContainer.helperText = validConfirmPassword()
+            }
+        }
+
+
+
 
     }
 
-    val phoneNumberPattern = "^09[0-9]{2}[0-9]{3}[0-9]{4}$".toRegex()
-
-    fun isValidPhoneNumber(phoneNumber: String): Boolean {
-        return phoneNumberPattern.matches(phoneNumber.trim())
+    private fun validPassword(): String?
+    {
+        val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
+        if (password.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (password.length < 7)
+        {
+            return "Minimum of 7 Character Password"
+        }
+        return null
     }
-    fun validateInputs(
-        firstName: String?,
-        lastName: String?,
-        email: String?,
-        address1: String?,
-        address2: String?,
-        barangay: String?,
-        city: String?,
-        password: String?,
-        confirmPass: String?,
-        contactNumber: String?
-    ): Boolean {
-        if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
-            address1.isNullOrEmpty() || barangay.isNullOrEmpty() ||
-            city.isNullOrEmpty()  || contactNumber.isNullOrEmpty()
-        ) {
-            Toast.makeText(this@FreelancerRegisterDetailsActivity, "All fields must be filled out", Toast.LENGTH_SHORT).show()
-            return false
+
+    private fun validConfirmPassword(): String?
+    {
+        val password = findViewById<EditText>(R.id.passwordEditText).text.toString()
+        val confirmPassword = findViewById<EditText>(R.id.confirmPasswordEditText).text.toString()
+        if (confirmPassword.isNullOrEmpty())
+        {
+            return "Required"
         }
-
-        if (password?.length ?: 0 < 7) {
-            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
-            return false
+        if (confirmPassword.length < 7)
+        {
+            return "Minimum of 7 Character Password"
         }
-
-        if (!email.contains("@")) {
-            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Invalid email format", Toast.LENGTH_SHORT).show()
-            return false
+        if (password != confirmPassword)
+        {
+            return "Confirm Password does not match"
         }
-
-        if (!isValidPhoneNumber(contactNumber)) {
-            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Invalid phone number format", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        if (password?.equals(confirmPass) == false){
-            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Confirm Password and Password are not the same", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        val latLong = getLatLongFromAddress(this, address1, address2!!, barangay, city)
-        if (latLong == null) {
-            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Address not found", Toast.LENGTH_SHORT).show()
-            return false
-        }
-
-        val (latitude, longitude) = latLong!!
-        println("Latitude: $latitude, Longitude: $longitude")
-        currentLongitude = longitude
-        currentLatitude = latitude
-
-        return true
+        return null
     }
+
+//    fun validateInputs(
+//        firstName: String?,
+//        lastName: String?,
+//        email: String?,
+//        address1: String?,
+//        address2: String?,
+//        barangay: String?,
+//        city: String?,
+//        password: String?,
+//        confirmPass: String?,
+//        contactNumber: String?
+//    ): Boolean {
+//        if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
+//            address1.isNullOrEmpty() || barangay.isNullOrEmpty() ||
+//            city.isNullOrEmpty()  || contactNumber.isNullOrEmpty()
+//        ) {
+//            Toast.makeText(this@FreelancerRegisterDetailsActivity, "All fields must be filled out", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (password?.length ?: 0 < 7) {
+//            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (!email.contains("@")) {
+//            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Invalid email format", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (!isValidPhoneNumber(contactNumber)) {
+//            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Invalid phone number format", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        if (password?.equals(confirmPass) == false){
+//            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Confirm Password and Password are not the same", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        val latLong = getLatLongFromAddress(this, address1, address2!!, barangay, city)
+//        if (latLong == null) {
+//            Toast.makeText(this@FreelancerRegisterDetailsActivity, "Address not found", Toast.LENGTH_SHORT).show()
+//            return false
+//        }
+//
+//        val (latitude, longitude) = latLong!!
+//        println("Latitude: $latitude, Longitude: $longitude")
+//        currentLongitude = longitude
+//        currentLatitude = latitude
+//
+//        return true
+//    }
 
 
     @RequiresApi(Build.VERSION_CODES.O)

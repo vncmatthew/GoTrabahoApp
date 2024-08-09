@@ -311,11 +311,22 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         alertDialog.show()
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showDatePickerDialog(birthdateEditText: EditText) {
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val currentDate = LocalDate.now()
+        val currentYear = currentDate.year
+
+        val minAge = currentYear - 18
+
+        val maxDateCalendar = Calendar.getInstance().apply {
+            set(Calendar.YEAR, minAge)
+            set(Calendar.MONTH, Calendar.DECEMBER)
+            set(Calendar.DAY_OF_MONTH, 31)
+        }
 
         val datePickerDialog = DatePickerDialog(
             this,
@@ -329,6 +340,9 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             month,
             day
         )
+
+        datePickerDialog.datePicker.maxDate = maxDateCalendar.timeInMillis
+
         datePickerDialog.show()
     }
 
@@ -600,14 +614,6 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         return null
     }
 
-    fun validateInputs(): Boolean {
-        phoneFocusListener()
-        emailFocusListener()
-        passwordFocusListener()
-        firstNameFocusListener()
-
-        return true
-    }
 //    fun validateInputs(
 //        firstName: String?,
 //        lastName: String?,
