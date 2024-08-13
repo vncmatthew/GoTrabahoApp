@@ -408,6 +408,9 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         val lastNameText = findViewById<EditText>(R.id.lastNameEditText)
         val lastNameContainer = findViewById<TextInputLayout>(R.id.lastNameContainer)
 
+        val birthdateText = findViewById<EditText>(R.id.birthdateEditText)
+        val birthdateContainer = findViewById<TextInputLayout>(R.id.birthdateContainer)
+
         val address1Text = findViewById<EditText>(R.id.address1EditText)
         val address1Container = findViewById<TextInputLayout>(R.id.address1Container)
 
@@ -424,6 +427,12 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             if(!focused)
             {
                 lastNameContainer.helperText = validLastName()
+            }
+        }
+        birthdateText.setOnFocusChangeListener { _, focused ->
+            if(!focused)
+            {
+                birthdateContainer.helperText = validBirthdate()
             }
         }
         address1Text.setOnFocusChangeListener { _, focused ->
@@ -491,6 +500,20 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
             return "Required"
         }
         if (barangayText.isNotEmpty())
+        {
+            return " "
+        }
+        return null
+    }
+
+    private fun validBirthdate(): String?
+    {
+        val bdayText = findViewById<EditText>(R.id.birthdateEditText).text.toString()
+        if (bdayText.isNullOrEmpty())
+        {
+            return "Required"
+        }
+        if (bdayText.isNotEmpty())
         {
             return " "
         }

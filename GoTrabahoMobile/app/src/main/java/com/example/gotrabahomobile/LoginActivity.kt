@@ -162,7 +162,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else {
                     Toast.makeText(this@LoginActivity, "The email and/or password is incorrect", Toast.LENGTH_SHORT).show()
-                    passwordContainer.helperText = "Password or Email is invalid"
+                    passwordContainer.helperText = "The email and/or password is incorrect"
                 }
         }
             override fun onFailure(call: Call<User>, t: Throwable) {
@@ -174,7 +174,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun LoginUser(email:String,password:String,firstName:String?, lastName:String?, fullName:String?, sqlId: String?, userType: Int?,
                              longitude: Double?, latitude: Double?, identification: Int?){
-                    val passwordContainer = findViewById<TextInputLayout>(R.id.passwordContainer)
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) {
                             if (it.isSuccessful) {
@@ -242,7 +241,6 @@ class LoginActivity : AppCompatActivity() {
                                     "email or password invalid",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                passwordContainer.helperText = "Password or Email is invalid"
                             }
                         }
                 }
