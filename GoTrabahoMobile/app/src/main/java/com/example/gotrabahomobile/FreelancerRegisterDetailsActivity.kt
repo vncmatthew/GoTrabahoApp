@@ -719,9 +719,11 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
                     userService.getEmail(email).enqueue(object:Callback<Int>{
                         override fun onResponse(call: Call<Int>, response: Response<Int>) {
                             if(response.isSuccessful) {
+                                Log.d("First Name", "first anme: $firstName")
                                 auth.createUserWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(this@FreelancerRegisterDetailsActivity) { task ->
                                         if (task.isSuccessful) {
+                                            Log.d("First Name", "first anme: $firstName")
                                             val user = auth.currentUser
                                             val userId = user?.uid
                                                 ?: return@addOnCompleteListener // Safely handle null uid

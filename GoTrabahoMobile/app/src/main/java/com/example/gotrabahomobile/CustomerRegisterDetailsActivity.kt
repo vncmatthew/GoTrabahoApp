@@ -598,10 +598,6 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
                 confirmPasswordContainer.helperText = validConfirmPassword()
             }
         }
-
-
-
-
     }
 
     private fun validPassword(): String?
@@ -754,6 +750,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
                                 auth.createUserWithEmailAndPassword(email, password)
                                     .addOnCompleteListener(this@CustomerRegisterDetailsActivity) { task ->
                                         if (task.isSuccessful) {
+                                            Log.d("First Name", "first anme: $firstName")
                                             val user = auth.currentUser
                                             val userId = user?.uid
                                                 ?: return@addOnCompleteListener // Safely handle null uid

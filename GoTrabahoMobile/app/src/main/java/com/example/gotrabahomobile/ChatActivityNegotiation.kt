@@ -12,6 +12,8 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.widget.Button
@@ -82,7 +84,6 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
 
         createNotifChannel()
-
 
 
         //back button
@@ -227,6 +228,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
                                 patchNegotiation2(service.negotiationId!!, negotiation, service.customerId!!)
                                 notifMessage("Price has been Updated", "The price is ${freelancerPrice}")
+                                showBookingConfirmationToast()
                             }
                         }
                     }
@@ -245,6 +247,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                 patchNegotiation(negotiationId, negotiation)
                 notifMessage("Price has been Updated", "The price is ${freelancerPrice}")
                 showBookingConfirmationToast()
+
             }
 
             alertDialog.dismiss()
@@ -258,17 +261,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
         alertDialog.show()
     }
 
-    fun showBookingConfirmationToast() {
-        val layoutInflater = this.layoutInflater
-        val layout = layoutInflater.inflate(R.layout.toast_background, findViewById(R.id.toast_container))
 
-        with(Toast(this)) {
-            duration = Toast.LENGTH_SHORT
-            view = layout
-            setGravity(Gravity.BOTTOM, 0, 40)
-            show()
-        }
-    }
 
 //User Side Negotiation
     private fun patchNegotiation(negotiationId: Int, negotiation: Negotiation) {
@@ -436,7 +429,6 @@ class ChatActivityNegotiation : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.d("Warframe", "${response.body()}")
                     val serviceId = intent.getIntExtra("serviceId", 0)
-
                     Toast.makeText(this@ChatActivityNegotiation, "Update successful", Toast.LENGTH_SHORT).show()
                     checker(negotiationId, serviceId!!, userId!! )
 
@@ -515,6 +507,26 @@ class ChatActivityNegotiation : AppCompatActivity() {
                     callback(false)
                 }
 
+    }
+
+    private fun bookingConfirmationToast() {
+        val layoutInflater = this.layoutInflater
+        val layout = layoutInflater.inflate(R.layout.toast_background, findViewById(R.id.toast_container))
+
+        with(Toast(this)) {
+            duration = Toast.LENGTH_SHORT
+            view = layout
+            setGravity(Gravity.BOTTOM, 0, 40)
+            show()
+        }
+    }
+
+    fun showBookingConfirmationToast() {
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            bookingConfirmationToast()
+
+            }, 10000)
     }
 
 
