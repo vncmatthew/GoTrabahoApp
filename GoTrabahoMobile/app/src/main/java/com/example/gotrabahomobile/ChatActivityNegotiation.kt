@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile
 
 import android.Manifest
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -12,6 +13,7 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -242,7 +244,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                 )
                 patchNegotiation(negotiationId, negotiation)
                 notifMessage("Price has been Updated", "The price is ${freelancerPrice}")
-
+                showBookingConfirmationToast()
             }
 
             alertDialog.dismiss()
@@ -254,6 +256,18 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
 
         alertDialog.show()
+    }
+
+    fun showBookingConfirmationToast() {
+        val layoutInflater = this.layoutInflater
+        val layout = layoutInflater.inflate(R.layout.toast_background, findViewById(R.id.toast_container))
+
+        with(Toast(this)) {
+            duration = Toast.LENGTH_SHORT
+            view = layout
+            setGravity(Gravity.BOTTOM, 0, 40)
+            show()
+        }
     }
 
 //User Side Negotiation

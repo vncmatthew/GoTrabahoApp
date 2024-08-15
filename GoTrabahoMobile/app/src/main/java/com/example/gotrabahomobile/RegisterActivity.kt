@@ -1,11 +1,14 @@
 package com.example.gotrabahomobile
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.style.ClickableSpan
+import android.view.Gravity
 import android.view.View
 import android.widget.Button
+import android.widget.Toast
 
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +31,5 @@ class RegisterActivity : AppCompatActivity() {
 
 
     }
-
 
 }
