@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -24,6 +24,12 @@
         android:theme="@style/Theme.GoTrabahoMobile"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".CustomerProfileMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CustomerEditAddressActivity"
+            android:exported="false" />
         <activity
             android:name=".BugReportActivity"
             android:exported="false" />
@@ -105,15 +111,15 @@
         <activity
             android:name=".ChatActivityNegotiation"
             android:exported="false">
+
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-
         <activity
-        android:name=".ChatActivity"
-        android:exported="false" />
+            android:name=".ChatActivity"
+            android:exported="false" />
         <activity
             android:name=".ApplicationConfirmationActivity"
             android:exported="false" />
@@ -127,7 +133,6 @@
         <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-
         <activity
             android:name=".FreelancerJobVerificationActivity"
             android:exported="false">
@@ -186,7 +191,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

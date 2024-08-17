@@ -33,9 +33,12 @@ class CustomerProfilePageActivity : AppCompatActivity() {
             finish()
         }
         val btnSaveProfile = findViewById<Button>(R.id.buttonEditCustomerProfileSave)
-        val tvCPass = findViewById<EditText>(R.id.editTextProfileCustomerConfirmNewPassword)
-        val tvPass = findViewById<EditText>(R.id.editTextProfileCustomerNewPassword)
+        val tvCPass = findViewById<EditText>(R.id.newPasswordEditText)
+        val tvPass = findViewById<EditText>(R.id.oldPasswordEditText)
 
+        val userId = intent.getIntExtra("userId",0)
+        val email = intent.getStringExtra("email")
+        Log.d("CustomerProfile", "userid: $userId , email: $email" )
 
         btnSaveProfile.setOnClickListener {
 

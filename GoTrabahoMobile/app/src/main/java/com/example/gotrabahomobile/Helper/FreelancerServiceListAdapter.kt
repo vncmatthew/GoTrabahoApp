@@ -1,15 +1,22 @@
 package com.example.gotrabahomobile.Helper
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.DTO.ServicesDTO
 import com.example.gotrabahomobile.DTO.UserDetails
 import com.example.gotrabahomobile.FreelancerEditServiceActivity
+import com.example.gotrabahomobile.FreelancerServicesListActivity
+import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.Services
+import com.example.gotrabahomobile.R
+import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.ListItemServicesListEditDeleteBinding
 import retrofit2.Call
@@ -31,15 +38,60 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
     override fun getItemCount(): Int {
         return servicesList.size
     }
+    fun changeStatusTrue(){
+        val intent = Intent(context, FreelancerEditServiceActivity::class.java)
+        var freelancerId = intent.getIntExtra("freelancerId", 0)
+        val call = FreelancerInstance.retrofitBuilder
+        val freelancer = Freelancer(
+            freelancerId = freelancerId,
+            verificationStatus = 1
+        )
+        call.patchFreelancer(freelancerId, freelancer).enqueue(object: Callback<Freelancer>{
+            override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
+                if(response.isSuccessful){
+                    Log.d("Changed Bookings", "True")
+                }
+            }
+
+            override fun onFailure(call: Call<Freelancer>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun changeStatusFalse(){
+
+        val intent = Intent(context, FreelancerEditServiceActivity::class.java)
+        var freelancerId = intent.getIntExtra("freelancerId", 0)
+        val call = FreelancerInstance.retrofitBuilder
+        val freelancer = Freelancer(
+            freelancerId = freelancerId,
+            verificationStatus = 3
+        )
+        call.patchFreelancer(freelancerId, freelancer).enqueue(object: Callback<Freelancer>{
+            override fun onResponse(call: Call<Freelancer>, response: Response<Freelancer>) {
+                if(response.isSuccessful){
+                    Log.d("Changed Bookings", "True")
+                }
+            }
+
+            override fun onFailure(call: Call<Freelancer>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
     override fun onBindViewHolder(holder: ServiceListViewHolder, position: Int) {
         val services = servicesList[position]
 
-        holder.binding.apply{
+        holder.binding.apply {
             editInfoServiceName.text = "${services.name}"
             editInfoDescription.text = "${services.description}"
             editInfoPrice.text = "${services.priceEstimate}"
 
-            holder.binding.buttonEditService.setOnClickListener{
+            holder.binding.buttonEditService.setOnClickListener {
                 val intent = Intent(context, FreelancerEditServiceActivity::class.java)
                 intent.putExtra("serviceId", services.serviceId)
                 intent.putExtra("serviceTypeName", services.serviceTypeName)
@@ -57,10 +109,9 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
 
             holder.binding.buttonDeleteService.setOnClickListener {
                 val service = ServicesInstance.retrofitBuilder
-                service.deleteService(services.serviceId!!).enqueue(object: Callback<Services>{
+                service.deleteService(services.serviceId!!).enqueue(object : Callback<Services> {
                     override fun onResponse(call: Call<Services>, response: Response<Services>) {
-                        if (response.isSuccessful)
-                        {
+                        if (response.isSuccessful) {
                             Toast.makeText(
                                 context,
                                 "Successfully Deleted The Service",
@@ -76,9 +127,21 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
                 })
             }
 
+            holder.binding.ActiveStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    changeStatusTrue()
+                    switchLabel.text = "Active"
+
+                } else {
+                    changeStatusFalse()
+                    switchLabel.text = "Inactive"
+                }
+
+
+            }
+
         }
+
+
     }
-
-
-
 }

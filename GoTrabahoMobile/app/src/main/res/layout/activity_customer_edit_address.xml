@@ -4,101 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CustomerProfilePageActivity">
+    tools:context=".CustomerEditAddressActivity">
 
     <include
         android:id="@+id/include"
-        layout="@layout/toolbar_no_notificationicon" />
+        layout="@layout/customer_toolbar_withbackbutton" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Change Password"
-        android:textSize="20sp"
+        android:layout_marginTop="40dp"
+        android:text="Edit Address"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/oldPasswordContainer"
+        android:id="@+id/customerNewAddress1Container"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        app:passwordToggleEnabled="true"
+        android:layout_marginTop="10dp"
         app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/oldPasswordEditText"
+            android:id="@+id/customerNewAddress1EditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:lines="1"
-            android:maxLength="16"
-            android:inputType="textPassword"
             android:background="@drawable/edit_text_background_white"
-            android:hint="Old Password"
+            android:hint="@string/address_1"
             app:layout_constraintStart_toStartOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/newPasswordContainer"
+        android:id="@+id/customerNewAddress2Container"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="20dp"
-        app:passwordToggleEnabled="true"
-        app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/oldPasswordContainer">
+        app:layout_constraintTop_toBottomOf="@+id/customerNewAddress1Container">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newPasswordEditText"
+            android:id="@+id/customerNewAddress2EditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:lines="1"
-            android:maxLength="16"
-            android:inputType="textPassword"
             android:background="@drawable/edit_text_background_white"
-            android:hint="New Password"
+            android:hint="@string/address_2"
             app:layout_constraintStart_toStartOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/buttonEditCustomerProfileCancel"
-        android:layout_width="120dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/customerNewBarangayContainer"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        app:helperTextTextColor="@android:color/holo_red_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customerNewAddress2Container">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/customerNewBarangayEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:background="@drawable/edit_text_background_white"
+            android:hint="@string/barangay"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/spinnerNewCustomerCity"
+        android:layout_width="312dp"
         android:layout_height="60dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="150dp"
-        android:backgroundTint="@color/gt_red_cancel"
-        android:text="Cancel"
-        android:textColor="@color/white"
-        android:textSize="14dp"
-        app:cornerRadius="14dp"
-        app:layout_constraintEnd_toEndOf="@+id/oldPasswordContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/newPasswordContainer" />
+        app:layout_constraintTop_toBottomOf="@+id/customerNewBarangayContainer" />
 
     <Button
         android:id="@+id/buttonEditCustomerProfileSave"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginStart="150dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="40dp"
         android:backgroundTint="@color/gt_green"
         android:text="Save"
         android:textColor="@color/white"
         android:textSize="14dp"
         app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/oldPasswordContainer"
-        app:layout_constraintTop_toBottomOf="@+id/newPasswordContainer" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerNewCustomerCity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

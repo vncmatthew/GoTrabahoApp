@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Switch
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +30,7 @@ class FreelancerServicesListActivity : AppCompatActivity() {
     private lateinit var rvAdapter: FreelancerServiceListAdapter
     private lateinit var binding: ActivityFreelancerServicesListBinding
 
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -41,9 +45,6 @@ class FreelancerServicesListActivity : AppCompatActivity() {
             finish()
         }
 
-
-
-
         val servicesListRecyclerView = findViewById<RecyclerView>(R.id.servicesListRecycler)
 
 
@@ -55,7 +56,7 @@ class FreelancerServicesListActivity : AppCompatActivity() {
 
     }
 
-    private fun showConfirmDeleteDialog() {
+    fun showConfirmDeleteDialog() {
         val deleteView = LayoutInflater.from(this).inflate(R.layout.dialog_delete_service, null)
 
         val buttonNo = deleteView.findViewById<Button>(R.id.buttonDeleteServiceNo)

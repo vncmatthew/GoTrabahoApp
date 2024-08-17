@@ -68,7 +68,7 @@ class CustomerAccountFragment : Fragment() {
 
         customCardViewProfile.setOnClickListener {
 
-            val intent = Intent(requireActivity(), CustomerProfilePageActivity::class.java)
+            val intent = Intent(requireActivity(), CustomerProfileMenuActivity::class.java)
             intent.putExtra("userId", userId)
             intent.putExtra("email", email)
             startActivity(intent)

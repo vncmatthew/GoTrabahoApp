@@ -24,10 +24,10 @@
 
             <TextView
                 android:id="@+id/editInfoServiceName"
-                android:layout_width="300dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="215dp"
+                android:layout_height="24dp"
                 android:layout_marginStart="18dp"
+                android:layout_marginTop="16dp"
                 android:text="Plumbing"
                 android:textColor="@color/black"
                 android:textSize="20sp"
@@ -58,6 +58,29 @@
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editInfoDescription" />
+
+            <TextView
+                android:id="@+id/switchLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="17dp"
+                android:text="Inactive"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/ActiveStatusSwitch"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/editInfoServiceName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Switch
+                android:id="@+id/ActiveStatusSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/buttonEditService"
