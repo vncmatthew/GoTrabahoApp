@@ -101,8 +101,7 @@ class FreelancerServicesListActivity : AppCompatActivity() {
                 servicesList = response.body()!!
 
                 binding.servicesListRecycler.apply{
-                    val freelancerId = intent.getIntExtra("freelancerId", 0)
-                    rvAdapter = FreelancerServiceListAdapter(servicesList, this@FreelancerServicesListActivity, userDetails, freelancerId)
+                    rvAdapter = FreelancerServiceListAdapter(servicesList, this@FreelancerServicesListActivity, userDetails)
                     adapter = rvAdapter
                     layoutManager = LinearLayoutManager(this@FreelancerServicesListActivity)
                 }
