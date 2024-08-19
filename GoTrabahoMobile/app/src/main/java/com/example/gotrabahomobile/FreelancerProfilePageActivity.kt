@@ -27,8 +27,8 @@ class FreelancerProfilePageActivity : AppCompatActivity() {
 
 
 
-        val tvCPass = findViewById<EditText>(R.id.editTextProfileFreelancerConfirmNewPassword)
-        val tvPass = findViewById<EditText>(R.id.editTextProfileFreelancerNewPassword)
+        val tvCPass = findViewById<EditText>(R.id.newPasswordEditText)
+        val tvPass = findViewById<EditText>(R.id.oldPasswordEditText)
 
         val cancelButton: Button = findViewById(R.id.buttonFreelancerEditProfileCancel)
         cancelButton.setOnClickListener {

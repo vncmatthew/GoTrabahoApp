@@ -10,94 +10,183 @@
         android:id="@+id/include"
         layout="@layout/toolbar_no_notificationicon" />
 
+<!--    <TextView-->
+<!--        android:id="@+id/textView2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:text="Edit Profile"-->
+<!--        android:textSize="20sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/include" />-->
+
+<!--    <ImageView-->
+<!--        android:id="@+id/avatar"-->
+<!--        android:layout_width="100dp"-->
+<!--        android:layout_height="100dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:scaleType="fitXY"-->
+<!--        android:src="@drawable/icon_profile"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.498"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textView2" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/textViewChangePassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:text="Change Password"-->
+<!--        android:textSize="14sp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/avatar" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/editTextProfileFreelancerNewPassword"-->
+<!--        android:layout_width="312dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="18dp"-->
+<!--        android:background="@drawable/edit_text_background_white"-->
+<!--        android:ems="10"-->
+<!--        android:hint="Old Password"-->
+<!--        android:inputType="textPassword"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textViewChangePassword" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/editTextProfileFreelancerConfirmNewPassword"-->
+<!--        android:layout_width="312dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="6dp"-->
+<!--        android:background="@drawable/edit_text_background_white"-->
+<!--        android:ems="10"-->
+<!--        android:hint="New Password"-->
+<!--        android:inputType="textPassword"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerNewPassword" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/buttonFreelancerEditProfileCancel"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginStart="48dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:backgroundTint="@color/gt_red_cancel"-->
+<!--        android:text="Cancel"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="14dp"-->
+<!--        app:cornerRadius="14dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerConfirmNewPassword" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/buttonFreelancerEditProfileSave"-->
+<!--        android:layout_width="120dp"-->
+<!--        android:layout_height="60dp"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_marginEnd="48dp"-->
+<!--        android:backgroundTint="@color/gt_green"-->
+<!--        android:text="Save"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:textSize="14dp"-->
+<!--        app:cornerRadius="14dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerConfirmNewPassword" />-->
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Edit Profile"
+        android:text="Change Password"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="12dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/icon_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-    <TextView
-        android:id="@+id/textViewChangePassword"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/oldPasswordContainer"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Change Password"
-        android:textSize="14sp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        app:passwordToggleEnabled="true"
+        app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/avatar" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-    <EditText
-        android:id="@+id/editTextProfileFreelancerNewPassword"
-        android:layout_width="312dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="18dp"
-        android:background="@drawable/edit_text_background_white"
-        android:ems="10"
-        android:hint="Old Password"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewChangePassword" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/oldPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:maxLength="16"
+            android:inputType="textPassword"
+            android:background="@drawable/edit_text_background_white"
+            android:hint="Old Password"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editTextProfileFreelancerConfirmNewPassword"
-        android:layout_width="312dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/edit_text_background_white"
-        android:ems="10"
-        android:hint="New Password"
-        android:inputType="textPassword"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/newPasswordContainer"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        app:passwordToggleEnabled="true"
+        app:helperText TextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerNewPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/oldPasswordContainer">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/newPasswordEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:maxLength="16"
+            android:inputType="textPassword"
+            android:background="@drawable/edit_text_background_white"
+            android:hint="New Password"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/buttonFreelancerEditProfileCancel"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:layout_marginStart="48dp"
         android:layout_marginTop="12dp"
+        android:layout_marginEnd="150dp"
         android:backgroundTint="@color/gt_red_cancel"
         android:text="Cancel"
         android:textColor="@color/white"
         android:textSize="14dp"
         app:cornerRadius="14dp"
+        app:layout_constraintEnd_toEndOf="@+id/oldPasswordContainer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerConfirmNewPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/newPasswordContainer" />
 
     <Button
         android:id="@+id/buttonFreelancerEditProfileSave"
         android:layout_width="120dp"
         android:layout_height="60dp"
+        android:layout_marginStart="150dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="48dp"
         android:backgroundTint="@color/gt_green"
         android:text="Save"
         android:textColor="@color/white"
         android:textSize="14dp"
         app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextProfileFreelancerConfirmNewPassword" />
-
+        app:layout_constraintStart_toStartOf="@+id/oldPasswordContainer"
+        app:layout_constraintTop_toBottomOf="@+id/newPasswordContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

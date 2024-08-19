@@ -81,7 +81,7 @@ class FreelancerAccountFragment : Fragment() {
 
         }
         freelancerCardProfile.setOnClickListener{
-            val intent = Intent(requireActivity(), FreelancerProfilePageActivity::class.java)
+            val intent = Intent(requireActivity(), FreelancerProfileMenuActivity::class.java)
             intent.putExtra("userId", userId)
             intent.putExtra("freelancerId", freelancerId)
             intent.putExtra("firstName", firstName)
