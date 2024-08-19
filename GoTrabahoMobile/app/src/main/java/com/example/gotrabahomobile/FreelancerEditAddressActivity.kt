@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.location.Address
@@ -10,8 +11,10 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import com.example.gotrabahomobile.Helper.CitySpinnerAdapter
 import com.example.gotrabahomobile.Model.Cities
 import com.example.gotrabahomobile.Model.User
+import com.example.gotrabahomobile.Remote.ArchiveRecordRemote.CityInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,7 +45,8 @@ class FreelancerEditAddressActivity : AppCompatActivity() {
         val lastName = intent.getStringExtra("lastName")
         val fullName = intent.getStringExtra("fullName")
         val buttonSave = findViewById<Button>(R.id.buttonEditFreelancerProfileSave)
-
+        fetchCities()
+        
         buttonSave.setOnClickListener {
             insertAddress()
             val intent = Intent(this, FreelancerProfilePageActivity::class.java)
@@ -128,6 +132,29 @@ class FreelancerEditAddressActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         return null
+    }
+
+    private fun fetchCities() {
+        val call = CityInstance.retrofitBuilder
+        call.getCities().enqueue(object : Callback<List<Cities>> {
+            override fun onResponse(call: Call<List<Cities>>, response: Response<List<Cities>>) {
+                if (response.isSuccessful) {
+                    val citiesResponse = response.body()
+                    if (citiesResponse != null) {
+                        val adapter = CitySpinnerAdapter(this@FreelancerEditAddressActivity, citiesResponse)
+                        citySpinner.adapter = adapter
+
+
+                    }
+                } else {
+                    Log.e(ContentValues.TAG, "Error fetching cities")
+                }
+            }
+
+            override fun onFailure(call: Call<List<Cities>>, t: Throwable) {
+                Log.e(ContentValues.TAG, "Error fetching cities", t)
+            }
+        })
     }
 
 }
