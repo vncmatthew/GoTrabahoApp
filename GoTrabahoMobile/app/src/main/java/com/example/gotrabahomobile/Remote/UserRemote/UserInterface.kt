@@ -44,8 +44,8 @@ interface UserInterface {
     @DELETE("api/User/{userId}")
     fun deleteUser(@Path("userId") resourceId: String): Call<User>
 
-    @PATCH("api/User/Patch/{userId}")
-    fun patchUser(@Path("userId") resourceId: Int, @Body updatedResource: User): Call<User>
+    @PATCH("api/User/Patch")
+    fun patchUser(@Body updatedResource: User): Call<User>
 
 
 }

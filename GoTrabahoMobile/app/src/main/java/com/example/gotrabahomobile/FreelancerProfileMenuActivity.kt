@@ -39,7 +39,13 @@ class FreelancerProfileMenuActivity : AppCompatActivity() {
         }
 
         cardEditAddress.setOnClickListener {
-            val intent = Intent(this, CustomerEditAddressActivity::class.java)
+            val intent = Intent(this, FreelancerEditAddressActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("freelancerId", freelancerId)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
     }

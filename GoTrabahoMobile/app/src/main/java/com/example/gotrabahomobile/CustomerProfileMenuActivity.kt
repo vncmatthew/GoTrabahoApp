@@ -24,6 +24,8 @@ class CustomerProfileMenuActivity : AppCompatActivity() {
 
         cardEditAddress.setOnClickListener {
             val intent = Intent(this, CustomerEditAddressActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("email", email)
             startActivity(intent)
         }
     }
