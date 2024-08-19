@@ -23,7 +23,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class FreelancerServiceListAdapter(private val servicesList: List<Services>, private val context: Context, private val UserDetails: UserDetails) : RecyclerView.Adapter<FreelancerServiceListAdapter.ServiceListViewHolder>() {
+class FreelancerServiceListAdapter(private val servicesList: List<Services>, private val context: Context, private val UserDetails: UserDetails, private val freelancerId: Int) : RecyclerView.Adapter<FreelancerServiceListAdapter.ServiceListViewHolder>() {
 
     inner class ServiceListViewHolder(val binding: ListItemServicesListEditDeleteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -40,7 +40,6 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
     }
     fun changeStatusTrue(){
         val intent = Intent(context, FreelancerEditServiceActivity::class.java)
-        var freelancerId = intent.getIntExtra("freelancerId", 0)
         val call = FreelancerInstance.retrofitBuilder
         val freelancer = Freelancer(
             freelancerId = freelancerId,
@@ -63,7 +62,7 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
     fun changeStatusFalse(){
 
         val intent = Intent(context, FreelancerEditServiceActivity::class.java)
-        var freelancerId = intent.getIntExtra("freelancerId", 0)
+
         val call = FreelancerInstance.retrofitBuilder
         val freelancer = Freelancer(
             freelancerId = freelancerId,

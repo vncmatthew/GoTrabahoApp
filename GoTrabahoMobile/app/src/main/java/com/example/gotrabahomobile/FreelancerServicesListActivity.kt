@@ -94,13 +94,15 @@ class FreelancerServicesListActivity : AppCompatActivity() {
         val user =
         service.getFreelancerServices(freelancerId).enqueue(object: Callback<List<Services>>{
             override fun onResponse(
+
                 call: Call<List<Services>>,
                 response: Response<List<Services>>
             ) {
                 servicesList = response.body()!!
 
                 binding.servicesListRecycler.apply{
-                    rvAdapter = FreelancerServiceListAdapter(servicesList, this@FreelancerServicesListActivity, userDetails)
+                    val freelancerId = intent.getIntExtra("freelancerId", 0)
+                    rvAdapter = FreelancerServiceListAdapter(servicesList, this@FreelancerServicesListActivity, userDetails, freelancerId)
                     adapter = rvAdapter
                     layoutManager = LinearLayoutManager(this@FreelancerServicesListActivity)
                 }

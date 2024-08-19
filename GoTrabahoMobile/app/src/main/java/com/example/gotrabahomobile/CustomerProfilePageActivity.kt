@@ -62,7 +62,7 @@ class CustomerProfilePageActivity : AppCompatActivity() {
         val userId = intent.getIntExtra("userId",0)
         val email = intent.getStringExtra("email")
         val call = UserInstance.retrofitBuilder
-        call.patchUser(userId, updateUser).enqueue(object: Callback<User>{
+        call.patchUser( updateUser).enqueue(object: Callback<User>{
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful) {
                     val user = response.body()
