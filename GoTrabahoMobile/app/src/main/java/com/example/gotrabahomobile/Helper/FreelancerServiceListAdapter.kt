@@ -32,10 +32,11 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
     override fun getItemCount(): Int {
         return servicesList.size
     }
-    fun changeStatusTrue(serviceId: Int){
+    fun changeStatusTrue(serviceId: Int, freelancerId: Int){
         val call = ServicesInstance.retrofitBuilder
         val services = Services(
             serviceId = serviceId,
+            freelancerId = freelancerId,
             showService = true
         )
         call.patchServices(services).enqueue(object: Callback<Services>{
@@ -52,12 +53,13 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
         })
     }
 
-    fun changeStatusFalse(serviceId: Int){
+    fun changeStatusFalse(serviceId: Int, freelancerId: Int){
 
 
         val call = ServicesInstance.retrofitBuilder
         val services = Services(
             serviceId = serviceId,
+            freelancerId = freelancerId,
             showService = false
         )
         call.patchServices(services).enqueue(object: Callback<Services>{
@@ -120,11 +122,11 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
 
             holder.binding.ActiveStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
-                    changeStatusTrue(services.serviceId!!)
+                    changeStatusTrue(services.serviceId!!, services.freelancerId!!)
                     switchLabel.text = "Active"
 
                 } else {
-                    changeStatusFalse(services.serviceId!!)
+                    changeStatusFalse(services.serviceId!!, services.freelancerId!!)
                     switchLabel.text = "Inactive"
                 }
 
