@@ -8,9 +8,8 @@
 
     <item
         android:id="@+id/freelancerNegotiationFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:title="Negotiations" />
+        android:title="Negotiations"
+        android:icon="@drawable/activity_icon_notext" />
     <item
         android:id="@+id/freelancerMessagesFragment"
         android:title="Messages"

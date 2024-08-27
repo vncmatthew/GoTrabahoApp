@@ -166,7 +166,7 @@ class BookingsFragment : Fragment() {
             }
 
             override fun onFailure(call: Call<List<Booking>>, t: Throwable) {
-                TODO("Not yet implemented")
+                Log.d("BookingsFragmentChecker", "${t}")
             }
 
         })
