@@ -1,7 +1,6 @@
 package com.example.gotrabahomobile
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -64,6 +63,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
     private lateinit var tvUserName: TextView
     private lateinit var tvSetPrice:TextView
     private lateinit var chatRecyclerView: RecyclerView
+    private var price:Double? = null
     private val email: String? = null
     private var userData: UserFirebase? = null
     var topic = ""
@@ -313,8 +313,9 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                 if(check == true){
                                     try {
                                     val book = BookingInstance.retrofitBuilder
-                                    var price = 0.0
+
                                     book.getBookingDiscount(userId).enqueue(object:Callback<ResponseBody>{
+
                                         override fun onResponse(
                                             call: Call<ResponseBody>,
                                             response: Response<ResponseBody>
@@ -322,10 +323,12 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                             if(response.isSuccessful){
                                              var body = response.body()
                                              if(body!!.equals(true)){
+                                                 Log.d("Nego", "true")
                                                  if (finalPrice != null) {
                                                      price = finalPrice - 100
                                                  }
                                              }else{
+                                                 Log.d("Nego", "false")
                                                  price = finalPrice!!
                                              }
                                             }
@@ -409,6 +412,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                             }
                                                 else if(booking.equals("A booking with the same user and freelancer already exists."))
                                                 {
+
                                                     Toast.makeText(this@ChatActivityNegotiation, "A booking with the same user and freelancer already exists", Toast.LENGTH_SHORT).show()
                                                 }
                                             }

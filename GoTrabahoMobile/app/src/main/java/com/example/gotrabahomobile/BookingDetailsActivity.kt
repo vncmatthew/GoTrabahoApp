@@ -10,14 +10,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.media.Image
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -30,19 +28,14 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.gotrabahomobile.DTO.ServiceDetails
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Rating
-import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
 import com.example.gotrabahomobile.Remote.RatingRemote.RatingInstance
-import com.example.gotrabahomobile.fragments.CustomerActivityFragment
 import com.google.firebase.database.FirebaseDatabase
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Response
-import java.sql.Date
-import java.text.DateFormat
 import java.time.LocalDate
-import javax.security.auth.callback.Callback
 
 
 class BookingDetailsActivity : AppCompatActivity() {
@@ -317,7 +310,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                         serviceFee = currentItem.serviceFee,
                         negotiationId = null,
                         paymentStatus =  currentItem.paymentStatus,
-                        refundFreelancer = 1
+                        refundFreelancer = 0
                     )
 
                     book.updateBooking(
