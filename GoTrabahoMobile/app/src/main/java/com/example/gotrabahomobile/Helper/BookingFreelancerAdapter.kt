@@ -19,6 +19,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gotrabahomobile.Model.Booking
+import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.Model.Services
 import com.example.gotrabahomobile.Model.User
 import com.example.gotrabahomobile.PaymentActivity
@@ -29,7 +30,10 @@ import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 
 import com.example.gotrabahomobile.databinding.BookingLayoutBinding
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -304,7 +308,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }
 
 
-    fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
+/*    fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
         val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
 
         chatroomRef.removeValue()
@@ -315,6 +319,54 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 Log.w("Firebase", "Error deleting chatroom: ", exception)
                 callback(false)
             }
+    }*/
+
+    fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
+        val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
+
+
+        chatroomRef.removeValue()
+            .addOnSuccessListener {
+
+                deleteAssociatedChats(chatroomId, callback)
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Firebase", "Error deleting chatroom: ", exception)
+                callback(false)
+            }
+    }
+
+    private fun deleteAssociatedChats(chatroomId: String, callback: (Boolean) -> Unit) {
+        val chatsRef = FirebaseDatabase.getInstance().getReference("Chat")
+
+
+        val query = chatsRef.orderByChild("chatroomId").equalTo(chatroomId)
+
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val chatsToDelete = mutableListOf<Chat>()
+
+                for (chatSnapshot in dataSnapshot.children) {
+                    val chat = chatSnapshot.getValue(Chat::class.java)
+                    if (chat != null) {
+                        chatsToDelete.add(chat)
+                    }
+                }
+
+
+                for (chat in chatsToDelete) {
+                    val chatRef = FirebaseDatabase.getInstance().getReference("Chat").child(chat.chatroomId).child(chat.receiverId)
+                    chatRef.removeValue()
+                }
+
+                callback(true)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Firebase", "Error deleting associated chats: ", error.toException())
+                callback(false)
+            }
+        })
     }
 
 
