@@ -42,6 +42,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -310,19 +311,45 @@ class ChatActivityNegotiation : AppCompatActivity() {
                             var check = response.body()
                             if (response.isSuccessful){
                                 if(check == true){
+                                    try {
+                                    val book = BookingInstance.retrofitBuilder
+                                    var price = 0.0
+                                    book.getBookingDiscount(userId).enqueue(object:Callback<ResponseBody>{
+                                        override fun onResponse(
+                                            call: Call<ResponseBody>,
+                                            response: Response<ResponseBody>
+                                        ) {
+                                            if(response.isSuccessful){
+                                             var body = response.body()
+                                             if(body!!.equals(true)){
+                                                 if (finalPrice != null) {
+                                                     price = finalPrice - 100
+                                                 }
+                                             }else{
+                                                 price = finalPrice!!
+                                             }
+                                            }
+                                        }
 
+                                        override fun onFailure(
+                                            call: Call<ResponseBody>,
+                                            t: Throwable
+                                        ) {
+                                            TODO("Not yet implemented")
+                                        }
+
+                                    })
                                     var newBooking = Booking(
                                         customerId = userId,
                                         bookingDatetime = LocalDate.now().toString(),
-                                        amount = finalPrice,
+                                        amount = price,
                                         serviceFee = finalPrice!! * 0.15,
                                         bookingStatus = 1,
                                         serviceId = serviceId,
                                         negotiationId = negotiationId,
                                         paymentStatus = false,
                                         refundFreelancer = 0)
-                                    try {
-                                    val book = BookingInstance.retrofitBuilder
+
                                     book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
                                         override fun onResponse(
                                             call: Call<Booking>,

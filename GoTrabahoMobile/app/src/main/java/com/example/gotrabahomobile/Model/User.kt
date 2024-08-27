@@ -2,6 +2,7 @@ package com.example.gotrabahomobile.Model
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import com.google.type.DateTime
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -73,5 +74,13 @@ data class User(
     @SerializedName("status")
     @Expose
     var status: Boolean? = false,
+
+    @SerializedName("BanStartDate")
+    @Expose
+    var BanStartDate: DateTime? = null,
+
+    @SerializedName("BanEndDate")
+    @Expose
+    var BanEndDate: DateTime? = null
 
 )
