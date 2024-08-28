@@ -311,15 +311,17 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                     try {
                                     val book = BookingInstance.retrofitBuilder
 
-                                    book.getBookingDiscount(userId).enqueue(object:Callback<ResponseBody>{
+                                    book.getBookingDiscount(userId).enqueue(object:Callback<Boolean>{
 
                                         override fun onResponse(
-                                            call: Call<ResponseBody>,
-                                            response: Response<ResponseBody>
+                                            call: Call<Boolean>,
+                                            response: Response<Boolean>
                                         ) {
                                             if(response.isSuccessful){
-                                             var body = response.body()
-                                             if(body!!.equals(true)){
+                                             val body = response.body()
+                                                Log.d("Discount", "${body.toString()}")
+                                                if(body!!.equals(true)){
+                                                 Log.d("Nego", "${body}")
                                                  Log.d("Nego", "true")
                                                  if (finalPrice != null) {
 
@@ -407,7 +409,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                                      })
                                                  }
                                              }else if(body!!.equals(false)){
-                                                 Log.d("Nego", "false")
+                                                 Log.d("Discount2", "false")
                                                  var newBooking = Booking(
                                                      customerId = userId,
                                                      bookingDatetime = LocalDate.now().toString(),
@@ -491,11 +493,12 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
                                                  })
                                              }
+                                                Log.d("Nego1", "${body}")
                                             }
                                         }
 
                                         override fun onFailure(
-                                            call: Call<ResponseBody>,
+                                            call: Call<Boolean>,
                                             t: Throwable
                                         ) {
                                             TODO("Not yet implemented")

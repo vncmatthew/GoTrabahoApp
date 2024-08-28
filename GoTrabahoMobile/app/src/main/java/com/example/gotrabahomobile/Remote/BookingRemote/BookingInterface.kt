@@ -45,7 +45,7 @@ interface BookingInterface {
     @GET("api/Booking/bookingCount/{customerId}")
     fun getBookingDiscount(
         @Path("customerId") customerId: Int
-    ): Call<ResponseBody>
+    ): Call<Boolean>
 
     @GET("api/Booking/BookingUser/{userId}/{bookingStatus}")
     fun getCompletedBooking(
