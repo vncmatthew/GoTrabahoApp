@@ -379,7 +379,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }
 
     private fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
-        val chatroomRef = FirebaseDatabase.getInstance().getReference("ChatRoom").child(chatroomId)
+        val chatroomRef = FirebaseDatabase.getInstance().getReference("ChatRooms").child(chatroomId)
 
         chatroomRef.removeValue()
             .addOnSuccessListener {
