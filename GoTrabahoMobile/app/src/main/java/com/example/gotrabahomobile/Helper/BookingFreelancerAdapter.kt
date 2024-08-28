@@ -38,6 +38,7 @@ import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.concurrent.atomic.AtomicInteger
 
 class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context, private val email: String?, private val status: Int): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
 
@@ -94,6 +95,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                 "Amount: ${currentItem.amount}"
                                         }
                                         holder.binding.btnPayServiceFee.setOnClickListener() {
+                                            deleteNego(currentItem.bookingId!!)
                                             val intent =
                                                 Intent(context, PaymentActivity::class.java)
                                             intent.putExtra(
@@ -103,6 +105,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                             intent.putExtra("bookingId", currentItem.bookingId)
                                             intent.putExtra("email", email)
                                             context.startActivity(intent)
+
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
@@ -244,7 +247,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                             ) {
                                 if (response.isSuccessful) {
                                     val tracker = "nego" + booking?.customerId + booking?.serviceId
-                                    deleteChatroom(tracker) { success ->
+                                    deleteChatroomWithChats(tracker) { success ->
                                         if (success) {
                                             Log.d("Success","Chatroom deleted successfully")
                                         } else {
@@ -321,24 +324,18 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
             }
     }*/
 
-    fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
-        val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
-
-
-        chatroomRef.removeValue()
-            .addOnSuccessListener {
-
-                deleteAssociatedChats(chatroomId, callback)
-            }
-            .addOnFailureListener { exception ->
-                Log.w("Firebase", "Error deleting chatroom: ", exception)
+    fun deleteChatroomWithChats(chatroomId: String, callback: (Boolean) -> Unit) {
+        deleteAssociatedChats(chatroomId) { success ->
+            if (success) {
+                deleteChatroom(chatroomId, callback)
+            } else {
                 callback(false)
             }
+        }
     }
 
     private fun deleteAssociatedChats(chatroomId: String, callback: (Boolean) -> Unit) {
         val chatsRef = FirebaseDatabase.getInstance().getReference("Chat")
-
 
         val query = chatsRef.orderByChild("chatroomId").equalTo(chatroomId)
 
@@ -353,13 +350,25 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                     }
                 }
 
+                val deleteOperations = AtomicInteger(chatsToDelete.size)
+                if (deleteOperations.get() == 0) {
+                    callback(true) // No chats to delete, callback with success
+                    return
+                }
 
                 for (chat in chatsToDelete) {
                     val chatRef = FirebaseDatabase.getInstance().getReference("Chat").child(chat.chatroomId).child(chat.receiverId)
                     chatRef.removeValue()
+                        .addOnSuccessListener {
+                            if (deleteOperations.decrementAndGet() == 0) {
+                                callback(true) // All chats deleted successfully
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.w("Firebase", "Error deleting chat: ", exception)
+                            callback(false) // Failure in deleting a chat
+                        }
                 }
-
-                callback(true)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -367,6 +376,19 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 callback(false)
             }
         })
+    }
+
+    private fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
+        val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
+
+        chatroomRef.removeValue()
+            .addOnSuccessListener {
+                callback(true)
+            }
+            .addOnFailureListener { exception ->
+                Log.w("Firebase", "Error deleting chatroom: ", exception)
+                callback(false)
+            }
     }
 
 
