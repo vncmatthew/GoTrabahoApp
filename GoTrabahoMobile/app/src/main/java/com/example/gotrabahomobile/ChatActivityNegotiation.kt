@@ -301,9 +301,6 @@ class ChatActivityNegotiation : AppCompatActivity() {
             override fun onResponse(call: Call<Double>, response: Response<Double>) {
                 if (response.isSuccessful) {
                     val finalPrice = response.body()
-                    var price: Double? = null
-
-
                     val call = NegotiationInstance.retrofitBuilder
                     call.getPriceChecker(negotiationId).enqueue(object: Callback<Boolean>{
                         override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
@@ -325,11 +322,174 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                              if(body!!.equals(true)){
                                                  Log.d("Nego", "true")
                                                  if (finalPrice != null) {
-                                                     price = finalPrice - 100
+
+                                                     var newBooking = Booking(
+                                                         customerId = userId,
+                                                         bookingDatetime = LocalDate.now().toString(),
+                                                         amount = finalPrice - 100,
+                                                         serviceFee = finalPrice!! * 0.15,
+                                                         bookingStatus = 1,
+                                                         serviceId = serviceId,
+                                                         negotiationId = negotiationId,
+                                                         paymentStatus = false,
+                                                         refundFreelancer = 0)
+
+                                                     book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
+                                                         override fun onResponse(
+                                                             call: Call<Booking>,
+                                                             response: Response<Booking>
+                                                         ) {
+                                                             val booking = response.body()
+                                                             if(response.isSuccessful) {
+                                                                 if (booking!!.equals("Successfully Created"))
+                                                                 {
+                                                                     //ADD NOTIFICATION
+
+                                                                     notifMessage(
+                                                                         "Booking is Successful",
+                                                                         "Booking has been made"
+                                                                     )
+                                                                     val serviceId: Int? =
+                                                                         intent.getIntExtra("serviceId", 0)
+                                                                     var userIdFirebase = intent.getStringExtra("userId")
+                                                                     if (serviceId != 0) {
+
+                                                                         createBookingChatEntry(
+                                                                             booking!!.bookingId.toString(),
+                                                                             userIdFirebase!!,
+                                                                             firebaseUser!!.uid
+                                                                         )
+                                                                         { success ->
+                                                                             if (success) {
+                                                                                 println("BookingChat entry created successfully")
+                                                                             } else {
+                                                                                 println("Failed to create BookingChat entry")
+                                                                             }
+                                                                         }
+                                                                         Intent(
+                                                                             this@ChatActivityNegotiation,
+                                                                             FreelancerMainActivity::class.java
+                                                                         )
+                                                                         startActivity(intent)
+                                                                     } else {
+                                                                         createBookingChatEntry(
+                                                                             booking!!.bookingId.toString(),
+                                                                             firebaseUser!!.uid,
+                                                                             userIdFirebase!!
+                                                                         )
+                                                                         { success ->
+                                                                             if (success) {
+                                                                                 println("BookingChat entry created successfully")
+                                                                             } else {
+                                                                                 println("Failed to create BookingChat entry")
+                                                                             }
+                                                                         }
+                                                                         Intent(
+                                                                             this@ChatActivityNegotiation,
+                                                                             CustomerMainActivity::class.java
+                                                                         )
+                                                                         startActivity(intent)
+                                                                     }
+                                                                 }
+                                                                 else if(booking.equals("A booking with the same user and freelancer already exists."))
+                                                                 {
+
+                                                                     Toast.makeText(this@ChatActivityNegotiation, "A booking with the same user and freelancer already exists", Toast.LENGTH_SHORT).show()
+                                                                 }
+                                                             }
+                                                             Log.d("Check", "${booking}")
+                                                         }
+
+                                                         override fun onFailure(call: Call<Booking>, t: Throwable) {
+                                                             Log.d("Check", "${t}")
+                                                         }
+
+                                                     })
                                                  }
                                              }else{
                                                  Log.d("Nego", "false")
-                                                 price = finalPrice!!
+                                                 var newBooking = Booking(
+                                                     customerId = userId,
+                                                     bookingDatetime = LocalDate.now().toString(),
+                                                     amount = finalPrice,
+                                                     serviceFee = finalPrice!! * 0.15,
+                                                     bookingStatus = 1,
+                                                     serviceId = serviceId,
+                                                     negotiationId = negotiationId,
+                                                     paymentStatus = false,
+                                                     refundFreelancer = 0)
+
+                                                 book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
+                                                     override fun onResponse(
+                                                         call: Call<Booking>,
+                                                         response: Response<Booking>
+                                                     ) {
+                                                         val booking = response.body()
+                                                         if(response.isSuccessful) {
+                                                             if (booking!!.equals("Successfully Created"))
+                                                             {
+                                                                 //ADD NOTIFICATION
+
+                                                                 notifMessage(
+                                                                     "Booking is Successful",
+                                                                     "Booking has been made"
+                                                                 )
+                                                                 val serviceId: Int? =
+                                                                     intent.getIntExtra("serviceId", 0)
+                                                                 var userIdFirebase = intent.getStringExtra("userId")
+                                                                 if (serviceId != 0) {
+
+                                                                     createBookingChatEntry(
+                                                                         booking!!.bookingId.toString(),
+                                                                         userIdFirebase!!,
+                                                                         firebaseUser!!.uid
+                                                                     )
+                                                                     { success ->
+                                                                         if (success) {
+                                                                             println("BookingChat entry created successfully")
+                                                                         } else {
+                                                                             println("Failed to create BookingChat entry")
+                                                                         }
+                                                                     }
+                                                                     Intent(
+                                                                         this@ChatActivityNegotiation,
+                                                                         FreelancerMainActivity::class.java
+                                                                     )
+                                                                     startActivity(intent)
+                                                                 } else {
+                                                                     createBookingChatEntry(
+                                                                         booking!!.bookingId.toString(),
+                                                                         firebaseUser!!.uid,
+                                                                         userIdFirebase!!
+                                                                     )
+                                                                     { success ->
+                                                                         if (success) {
+                                                                             println("BookingChat entry created successfully")
+                                                                         } else {
+                                                                             println("Failed to create BookingChat entry")
+                                                                         }
+                                                                     }
+                                                                     Intent(
+                                                                         this@ChatActivityNegotiation,
+                                                                         CustomerMainActivity::class.java
+                                                                     )
+                                                                     startActivity(intent)
+                                                                 }
+                                                             }
+                                                             else if(booking.equals("A booking with the same user and freelancer already exists."))
+                                                             {
+
+                                                                 Toast.makeText(this@ChatActivityNegotiation, "A booking with the same user and freelancer already exists", Toast.LENGTH_SHORT).show()
+                                                             }
+                                                         }
+                                                         Log.d("Check", "${booking}")
+                                                     }
+
+                                                     override fun onFailure(call: Call<Booking>, t: Throwable) {
+                                                         Log.d("Check", "${t}")
+                                                     }
+
+                                                 })
                                              }
                                             }
                                         }
@@ -342,88 +502,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                         }
 
                                     })
-                                    var newBooking = Booking(
-                                        customerId = userId,
-                                        bookingDatetime = LocalDate.now().toString(),
-                                        amount = price,
-                                        serviceFee = finalPrice!! * 0.15,
-                                        bookingStatus = 1,
-                                        serviceId = serviceId,
-                                        negotiationId = negotiationId,
-                                        paymentStatus = false,
-                                        refundFreelancer = 0)
 
-                                    book.insertBooking(newBooking).enqueue(object: Callback<Booking>{
-                                        override fun onResponse(
-                                            call: Call<Booking>,
-                                            response: Response<Booking>
-                                        ) {
-                                            val booking = response.body()
-                                            if(response.isSuccessful) {
-                                                if (booking!!.equals("Successfully Created"))
-                                                {
-                                                //ADD NOTIFICATION
-
-                                                    notifMessage(
-                                                        "Booking is Successful",
-                                                        "Booking has been made"
-                                                    )
-                                                val serviceId: Int? =
-                                                    intent.getIntExtra("serviceId", 0)
-                                                var userIdFirebase = intent.getStringExtra("userId")
-                                                if (serviceId != 0) {
-
-                                                    createBookingChatEntry(
-                                                        booking!!.bookingId.toString(),
-                                                        userIdFirebase!!,
-                                                        firebaseUser!!.uid
-                                                    )
-                                                    { success ->
-                                                        if (success) {
-                                                            println("BookingChat entry created successfully")
-                                                        } else {
-                                                            println("Failed to create BookingChat entry")
-                                                        }
-                                                    }
-                                                    Intent(
-                                                        this@ChatActivityNegotiation,
-                                                        FreelancerMainActivity::class.java
-                                                    )
-                                                    startActivity(intent)
-                                                } else {
-                                                    createBookingChatEntry(
-                                                        booking!!.bookingId.toString(),
-                                                        firebaseUser!!.uid,
-                                                        userIdFirebase!!
-                                                    )
-                                                    { success ->
-                                                        if (success) {
-                                                            println("BookingChat entry created successfully")
-                                                        } else {
-                                                            println("Failed to create BookingChat entry")
-                                                        }
-                                                    }
-                                                    Intent(
-                                                        this@ChatActivityNegotiation,
-                                                        CustomerMainActivity::class.java
-                                                    )
-                                                    startActivity(intent)
-                                                }
-                                            }
-                                                else if(booking.equals("A booking with the same user and freelancer already exists."))
-                                                {
-
-                                                    Toast.makeText(this@ChatActivityNegotiation, "A booking with the same user and freelancer already exists", Toast.LENGTH_SHORT).show()
-                                                }
-                                            }
-                                            Log.d("Check", "${booking}")
-                                        }
-
-                                        override fun onFailure(call: Call<Booking>, t: Throwable) {
-                                            Log.d("Check", "${t}")
-                                        }
-
-                                    })
                                     } catch (e: Exception) {
                                         Log.e("RetrofitError", "Foreign Key Constraint Violation", e)
                                     }
