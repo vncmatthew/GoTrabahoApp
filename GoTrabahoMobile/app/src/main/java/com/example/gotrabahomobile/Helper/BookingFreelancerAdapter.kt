@@ -95,7 +95,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                 "Amount: ${currentItem.amount}"
                                         }
                                         holder.binding.btnPayServiceFee.setOnClickListener() {
-                                            deleteNego(currentItem.bookingId!!)
+
                                             val intent =
                                                 Intent(context, PaymentActivity::class.java)
                                             intent.putExtra(
@@ -335,7 +335,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }
 
     private fun deleteAssociatedChats(chatroomId: String, callback: (Boolean) -> Unit) {
-        val chatsRef = FirebaseDatabase.getInstance().getReference("Chat")
+        val chatsRef = FirebaseDatabase.getInstance().getReference("ChatMessages")
 
         val query = chatsRef.orderByChild("chatroomId").equalTo(chatroomId)
 
@@ -357,7 +357,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 }
 
                 for (chat in chatsToDelete) {
-                    val chatRef = FirebaseDatabase.getInstance().getReference("Chat").child(chat.chatroomId).child(chat.receiverId)
+                    val chatRef = FirebaseDatabase.getInstance().getReference("ChatMessages").child(chat.chatroomId).child(chat.senderId)
                     chatRef.removeValue()
                         .addOnSuccessListener {
                             if (deleteOperations.decrementAndGet() == 0) {
@@ -379,7 +379,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }
 
     private fun deleteChatroom(chatroomId: String, callback: (Boolean) -> Unit) {
-        val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
+        val chatroomRef = FirebaseDatabase.getInstance().getReference("ChatRooms").child(chatroomId)
 
         chatroomRef.removeValue()
             .addOnSuccessListener {
@@ -390,6 +390,5 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 callback(false)
             }
     }
-
 
 }
