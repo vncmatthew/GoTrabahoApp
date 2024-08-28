@@ -63,7 +63,6 @@ class ChatActivityNegotiation : AppCompatActivity() {
     private lateinit var tvUserName: TextView
     private lateinit var tvSetPrice:TextView
     private lateinit var chatRecyclerView: RecyclerView
-    private var price:Double? = null
     private val email: String? = null
     private var userData: UserFirebase? = null
     var topic = ""
@@ -302,7 +301,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
             override fun onResponse(call: Call<Double>, response: Response<Double>) {
                 if (response.isSuccessful) {
                     val finalPrice = response.body()
-
+                    var price: Double? = null
 
 
                     val call = NegotiationInstance.retrofitBuilder
@@ -310,6 +309,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                         override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                             var check = response.body()
                             if (response.isSuccessful){
+
                                 if(check == true){
                                     try {
                                     val book = BookingInstance.retrofitBuilder
