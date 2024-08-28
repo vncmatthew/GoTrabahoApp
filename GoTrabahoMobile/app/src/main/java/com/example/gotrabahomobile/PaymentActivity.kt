@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Spannable
@@ -21,7 +20,6 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.example.gotrabahomobile.DTO.PaymentDTO
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.BookingSummary
@@ -77,7 +75,6 @@ class PaymentActivity : AppCompatActivity() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getBookingSummary(){
         var currentDateTime= LocalDateTime.now()
 
