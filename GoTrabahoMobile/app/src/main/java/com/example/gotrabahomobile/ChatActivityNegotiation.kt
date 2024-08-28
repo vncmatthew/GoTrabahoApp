@@ -406,7 +406,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
                                                      })
                                                  }
-                                             }else{
+                                             }else if(body!!.equals(false)){
                                                  Log.d("Nego", "false")
                                                  var newBooking = Booking(
                                                      customerId = userId,
