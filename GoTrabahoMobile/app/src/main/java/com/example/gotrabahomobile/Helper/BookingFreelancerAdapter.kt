@@ -335,7 +335,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }
 
     private fun deleteAssociatedChats(chatroomId: String, callback: (Boolean) -> Unit) {
-        val chatsRef = FirebaseDatabase.getInstance().getReference("Chat ")
+        val chatsRef = FirebaseDatabase.getInstance().getReference("Chat")
 
         val query = chatsRef.orderByChild("chatroomId").equalTo(chatroomId)
 
