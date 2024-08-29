@@ -110,11 +110,29 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
-
-                                            deleteNego(currentItem.bookingId!!)
-
-
                                             val book = BookingInstance.retrofitBuilder
+
+                                            currentItem.bookingId?.let { it2 ->
+                                                book.getBooking(it2).enqueue(object : Callback<Booking> {
+                                                    override fun onResponse(
+                                                        call: Call<Booking>,
+                                                        response: Response<Booking>
+                                                    ) {
+                                                        if(response.isSuccessful){
+                                                            negoIdholder = response.body()!!.negotiationId
+                                                        }
+                                                    }
+
+                                                    override fun onFailure(
+                                                        call: Call<Booking>,
+                                                        t: Throwable
+                                                    ) {
+                                                        TODO("Not yet implemented")
+                                                    }
+
+                                                })
+                                            }
+
                                             val updatedBook = Booking(
                                                 bookingId = currentItem.bookingId,
                                                 customerId = currentItem.customerId,
@@ -154,13 +172,11 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
                                                 })
 
-
+                                            deleteNego(currentItem.bookingId!!)
 
                                         }
+
                                         holder.binding.btnSetToCompleted.setOnClickListener {
-
-
-
 
                                             val book = BookingInstance.retrofitBuilder
 
