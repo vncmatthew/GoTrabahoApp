@@ -45,6 +45,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     val CHANNEL_ID ="channelID"
     val CHANNEL_NAME ="channelName"
     val NOTIF_ID = 0
+    private var negoIdholder: Int? = null
     inner class BookingViewHolder(val binding: BookingLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -109,6 +110,10 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
+
+                                            deleteNego(currentItem.bookingId!!)
+
+
                                             val book = BookingInstance.retrofitBuilder
                                             val updatedBook = Booking(
                                                 bookingId = currentItem.bookingId,
@@ -134,9 +139,9 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                         if (response.isSuccessful) {
                                                             Log.d(
                                                                 "Booking",
-                                                                "Successfully Updated to 4"
+                                                                "Successfully Updated to 6"
                                                             )
-                                                            notifMessage("The booking has been completed", "Thank you for your service")
+                                                            notifMessage("The booking has been cancelled", "Thank you for your service")
                                                         }
                                                     }
 
@@ -149,11 +154,36 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
                                                 })
 
-                                            deleteNego(currentItem.bookingId!!)
+
 
                                         }
                                         holder.binding.btnSetToCompleted.setOnClickListener {
+
+
+
+
                                             val book = BookingInstance.retrofitBuilder
+
+                                            currentItem.bookingId?.let { it2 ->
+                                                book.getBooking(it2).enqueue(object : Callback<Booking> {
+                                                    override fun onResponse(
+                                                        call: Call<Booking>,
+                                                        response: Response<Booking>
+                                                    ) {
+                                                        if(response.isSuccessful){
+                                                            negoIdholder = response.body()!!.negotiationId
+                                                        }
+                                                    }
+
+                                                    override fun onFailure(
+                                                        call: Call<Booking>,
+                                                        t: Throwable
+                                                    ) {
+                                                        TODO("Not yet implemented")
+                                                    }
+
+                                                })
+                                            }
                                             val updatedBook = Booking(
                                                 bookingId = currentItem.bookingId,
                                                 customerId = currentItem.customerId,
@@ -239,7 +269,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 val booking = response.body()
                 if (response.isSuccessful) {
                     val nego = NegotiationInstance.retrofitBuilder
-                    nego.deleteNegotiation(response.body()?.negotiationId)
+                    nego.deleteNegotiation(negoIdholder)
                         .enqueue(object : retrofit2.Callback<ResponseBody> {
                             override fun onResponse(
                                 call: Call<ResponseBody>,
