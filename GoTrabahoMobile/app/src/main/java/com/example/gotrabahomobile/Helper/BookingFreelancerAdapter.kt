@@ -383,49 +383,64 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }*/
 
     fun deleteChatroomAndAssociatedChats(chatroomId: String, completion: (Boolean) -> Unit) {
-        val chatRoomRef = FirebaseDatabase.getInstance().getReference("ChatRoom").child(chatroomId)
+        val chatRoomRef = FirebaseDatabase.getInstance().getReference("ChatRoom")
 
-        chatRoomRef.get().addOnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.e("Firebase", "Error fetching ChatRoom: ", task.exception)
-                completion(false)
-                return@addOnCompleteListener
-            }
+        val query = chatRoomRef.orderByChild("chatroomId").equalTo(chatroomId)
 
-            val chatRoom = task.result.getValue(ChatRoom::class.java)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var chatRoomData: ChatRoom? = null
 
-            if (chatRoom == null) {
-                Log.w("Firebase", "ChatRoom not found")
-                completion(false)
-                return@addOnCompleteListener
-            }
-
-            // Delete associated chats
-            val chatsRef = FirebaseDatabase.getInstance().getReference("Chat")
-            val query = chatsRef.orderByChild("chatroomId").equalTo(chatRoom.chatroomId)
-
-            deleteChats(query) { success ->
-                if (!success) {
-                    Log.e("Firebase", "Failed to delete associated chats")
-                    completion(false)
-                    return@deleteChats
+                for (child in dataSnapshot.children) {
+                    chatRoomData = child.getValue(ChatRoom::class.java)
+                    if (chatRoomData != null) {
+                        break // We found the chat room, stop searching
+                    }
                 }
 
-                // Delete the chatroom
-                chatRoomRef.removeValue()
-                    .addOnSuccessListener {
-                        Log.d("Firebase", "Successfully deleted chatroom and associated chats")
-                        completion(true)
+                if (chatRoomData == null) {
+                    Log.w("Firebase", "ChatRoom not found for bookingChatId $bookingChatId")
+                    completion(false)
+                    return
+                }
+
+                deleteAssociatedChats(chatRoomData.chatroomId) { success ->
+                    if (!success) {
+                        Log.e("Firebase", "Failed to delete associated chats")
+                        completion(false)
+                        return@deleteAssociatedChats
                     }
-                    .addOnFailureListener { exception ->
-                        Log.e("Firebase", "Error deleting ChatRoom: ", exception)
+
+                    // Delete the chatroom
+                    val chatRoomKey = dataSnapshot.children.first().key
+                    if (chatRoomKey != null) {
+                        chatRoomRef.child(chatRoomKey).removeValue()
+                            .addOnSuccessListener {
+                                Log.d("Firebase", "Successfully deleted chatroom and associated chats")
+                                completion(true)
+                            }
+                            .addOnFailureListener { exception ->
+                                Log.e("Firebase", "Error deleting ChatRoom: ", exception)
+                                completion(false)
+                            }
+                    } else {
+                        Log.w("Firebase", "ChatRoom key not found")
                         completion(false)
                     }
+                }
             }
-        }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w("Firebase", "Error fetching ChatRoom: ", error.toException())
+                completion(false)
+            }
+        })
     }
 
-    private fun deleteChats(query: Query, completion: (Boolean) -> Unit) {
+    private fun deleteAssociatedChats(chatroomId: String, completion: (Boolean) -> Unit) {
+        val chatsRef = FirebaseDatabase.getInstance().getReference("Chat")
+        val query = chatsRef.orderByChild("chatroomId").equalTo(chatroomId)
+
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val chatsToDelete = mutableListOf<DataSnapshot>()
