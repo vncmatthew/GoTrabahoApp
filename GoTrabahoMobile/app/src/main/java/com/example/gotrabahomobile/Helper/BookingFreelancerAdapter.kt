@@ -438,44 +438,16 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
     }
 
     private fun deleteAssociatedChats(chatroomId: String, completion: (Boolean) -> Unit) {
-        val chatsRef = FirebaseDatabase.getInstance().getReference("Chat")
-        val query = chatsRef.orderByChild("chatroomId").equalTo(chatroomId)
+        val chatroomRef = FirebaseDatabase.getInstance().getReference("Chat").child(chatroomId)
 
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val chatsToDelete = mutableListOf<DataSnapshot>()
-
-                for (child in dataSnapshot.children) {
-                    chatsToDelete.add(child)
-                }
-
-                var completedCount = 0
-
-                if (chatsToDelete.isEmpty()) {
-                    completion(true)
-                    return
-                }
-
-                for (chatSnapshot in chatsToDelete) {
-                    chatSnapshot.ref.removeValue()
-                        .addOnCompleteListener {
-                            completedCount++
-                            if (completedCount == chatsToDelete.size) {
-                                completion(true)
-                            }
-                        }
-                        .addOnFailureListener { exception ->
-                            Log.w("Firebase", "Error deleting chat: ", exception)
-                            completion(false)
-                        }
-                }
+        chatroomRef.removeValue()
+            .addOnSuccessListener {
+                completion(true)
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("Firebase", "Error deleting associated chats: ", error.toException())
+            .addOnFailureListener { exception ->
+                Log.w("Firebase", "Error deleting chatroom: ", exception)
                 completion(false)
             }
-        })
     }
 
 }
