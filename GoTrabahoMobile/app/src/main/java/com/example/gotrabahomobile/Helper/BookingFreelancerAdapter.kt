@@ -399,7 +399,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 }
 
                 if (chatRoomData == null) {
-                    Log.w("Firebase", "ChatRoom not found for bookingChatId $bookingChatId")
+                    Log.w("Firebase", "ChatRoom not found for bookingChatId $chatroomId")
                     completion(false)
                     return
                 }
