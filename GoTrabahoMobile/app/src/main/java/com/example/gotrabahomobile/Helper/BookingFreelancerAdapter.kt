@@ -112,7 +112,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
-                                      /*      val book = BookingInstance.retrofitBuilder
+                                            val book = BookingInstance.retrofitBuilder
 
                                             currentItem.bookingId?.let { it2 ->
                                                 book.getBooking(it2).enqueue(object : Callback<Booking> {
@@ -174,17 +174,8 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
                                                 })
 
-                                            deleteNego(currentItem.bookingId!!)*/
+                                            deleteNego(currentItem.bookingId!!)
 
-                                            deleteChatroomAndAssociatedChats("nego20921040") { success ->
-                                                if (success) {
-                                                    Log.d("Chat Deletion", "Successfully deleted chatroom and associated chats")
-                                                    // Handle success case
-                                                } else {
-                                                    Log.e("Chat Deletion", "Failed to delete chatroom or associated chats")
-                                                    // Handle failure case
-                                                }
-                                            }
 
                                         }
 
@@ -305,13 +296,15 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                             ) {
                                 if (response.isSuccessful) {
                                     val tracker = "nego" + booking?.customerId + booking?.serviceId
-/*                                    deleteChatroomWithChats(tracker) { success ->
+                                    deleteChatroomAndAssociatedChats(tracker) { success ->
                                         if (success) {
-                                            Log.d("Success","Chatroom deleted successfully")
+                                            Log.d("Chat Deletion", "Successfully deleted chatroom and associated chats")
+                                            // Handle success case
                                         } else {
-                                            Log.d("Failed","Failed to delete chatroom")
+                                            Log.e("Chat Deletion", "Failed to delete chatroom or associated chats")
+                                            // Handle failure case
                                         }
-                                    }*/
+                                    }
                                     Log.d("Negotiation", "Successfully Deleted")
                                 }
                             }
