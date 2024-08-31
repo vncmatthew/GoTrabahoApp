@@ -58,7 +58,6 @@ class PaymentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
 
-        textInvoiceLink = findViewById(R.id.textViewInvoiceLink)
         btn_pay = findViewById(R.id.buttonPayWithMaya)
         userEmail = intent.getStringExtra("email").toString()
         //display user email
@@ -142,11 +141,11 @@ class PaymentActivity : AppCompatActivity() {
                             )*/
 
 
-                            Toast.makeText(
-                                this@PaymentActivity,
-                                "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                this@PaymentActivity,
+//                                "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             // Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
                             Log.d(
                                 "Invoice URL",
@@ -212,11 +211,11 @@ class PaymentActivity : AppCompatActivity() {
                                 startActivity(intent)
 
 
-                            Toast.makeText(
-                                this@PaymentActivity,
-                                "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
-                                Toast.LENGTH_LONG
-                            ).show()
+//                            Toast.makeText(
+//                                this@PaymentActivity,
+//                                "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
+//                                Toast.LENGTH_LONG
+//                            ).show()
                             // Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
                             Log.d(
                                 "Invoice URL",
