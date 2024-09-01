@@ -166,7 +166,7 @@ class PaymentActivity : AppCompatActivity() {
                                         val check = response.body()
                                         if (response.isSuccessful) {
                                             Log.d("SuccessPay", "Shce")
-                                            deleteNego(bookingId)
+
                                         }
                                     }
 

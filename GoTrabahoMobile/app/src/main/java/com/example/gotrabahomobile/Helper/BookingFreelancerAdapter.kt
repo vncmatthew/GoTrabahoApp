@@ -98,12 +98,33 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                 "Amount: ${currentItem.amount}"
                                         }
                                         holder.binding.btnPayServiceFee.setOnClickListener() {
+                                            val book = BookingInstance.retrofitBuilder
 
+                                            currentItem.bookingId?.let { it2 ->
+                                                book.getBooking(it2).enqueue(object : Callback<Booking> {
+                                                    override fun onResponse(
+                                                        call: Call<Booking>,
+                                                        response: Response<Booking>
+                                                    ) {
+                                                        if(response.isSuccessful){
+                                                            negoIdholder = response.body()!!.negotiationId
+                                                        }
+                                                    }
+
+                                                    override fun onFailure(
+                                                        call: Call<Booking>,
+                                                        t: Throwable
+                                                    ) {
+                                                        TODO("Not yet implemented")
+                                                    }
+
+                                                })
+                                            }
                                             val intent =
                                                 Intent(context, PaymentActivity::class.java)
                                             intent.putExtra(
                                                 "negotiationId",
-                                                currentItem.negotiationId
+                                                negoIdholder
                                             )
                                             intent.putExtra("bookingId", currentItem.bookingId)
                                             intent.putExtra("email", email)
