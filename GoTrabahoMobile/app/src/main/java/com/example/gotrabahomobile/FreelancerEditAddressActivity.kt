@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Spinner
 import com.example.gotrabahomobile.Helper.CitySpinnerAdapter
 import com.example.gotrabahomobile.Model.Cities
@@ -37,6 +38,12 @@ class FreelancerEditAddressActivity : AppCompatActivity() {
         address1 = findViewById(R.id.freelancerNewAddress1EditText)
         address2 = findViewById(R.id.freelancerNewAddress2EditText)
         barangay = findViewById(R.id.freelancerNewBarangayEditText)
+
+        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
+
+        backButton.setOnClickListener{
+            finish()
+        }
 
         val userId = intent.getIntExtra("userId", 0)
         val email = intent.getStringExtra("email")
