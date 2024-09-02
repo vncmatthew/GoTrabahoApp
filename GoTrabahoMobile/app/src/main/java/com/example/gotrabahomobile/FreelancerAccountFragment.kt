@@ -57,6 +57,7 @@ class FreelancerAccountFragment : Fragment() {
         val freelancerCardReportBug = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerReportBug)
         val name = freelancerCardProfile.findViewById<TextView>(R.id.customerName)
         val freelancerCardLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerLogout)
+        val customCardViewAddPayment = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardAddPaymentMethod)
 
         val userId = arguments?.getInt("userId", 0) ?: 0
         val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
@@ -121,6 +122,12 @@ class FreelancerAccountFragment : Fragment() {
 
         freelancerCardReportBug.setOnClickListener {
             val intent = Intent(requireActivity(), BugReportActivity::class.java)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+
+        customCardViewAddPayment.setOnClickListener {
+            val intent = Intent(requireActivity(), AddPaymentMethodActivity::class.java)
             intent.putExtra("userId", userId)
             startActivity(intent)
         }

@@ -52,6 +52,7 @@ class CustomerAccountFragment : Fragment() {
         val customCardViewRewards = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardRewards)
         val customCardViewReportBug = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardReportBug)
         val customCardViewLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardLogout)
+        val customCardViewAddPayment = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardAddPaymentMethod)
 
         val name = customCardViewProfile.findViewById<TextView>(R.id.customerName)
         val counter = arguments?.getInt("counter", 0) ?: 0
@@ -95,6 +96,12 @@ class CustomerAccountFragment : Fragment() {
 
         customCardViewReportBug.setOnClickListener {
             val intent = Intent(requireActivity(), BugReportActivity::class.java)
+            intent.putExtra("userId", userId)
+            startActivity(intent)
+        }
+
+        customCardViewAddPayment.setOnClickListener {
+            val intent = Intent(requireActivity(), AddPaymentMethodActivity::class.java)
             intent.putExtra("userId", userId)
             startActivity(intent)
         }
