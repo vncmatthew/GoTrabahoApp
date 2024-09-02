@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageButton
 
 class FreelancerProfileMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +28,14 @@ class FreelancerProfileMenuActivity : AppCompatActivity() {
         val cardChangePassword = findViewById<androidx.cardview.widget.CardView>(R.id.changePasswordCard)
         val cardEditAddress = findViewById<androidx.cardview.widget.CardView>(R.id.editAddressCard)
 
+        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
+
+        backButton.setOnClickListener{
+            finish()
+        }
+
         cardChangePassword.setOnClickListener {
-            val intent = Intent(this, FreelancerProfilePageActivity::class.java)
+            val intent = Intent(this, FreelancerMainActivity::class.java)
             intent.putExtra("userId", userId)
             intent.putExtra("freelancerId", freelancerId)
             intent.putExtra("firstName", firstName)
@@ -48,5 +55,7 @@ class FreelancerProfileMenuActivity : AppCompatActivity() {
             intent.putExtra("email", email)
             startActivity(intent)
         }
+
+
     }
 }

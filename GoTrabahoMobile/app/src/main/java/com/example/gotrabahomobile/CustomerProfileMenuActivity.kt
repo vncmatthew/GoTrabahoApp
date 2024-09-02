@@ -3,6 +3,7 @@ package com.example.gotrabahomobile
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageButton
 
 class CustomerProfileMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,8 +16,14 @@ class CustomerProfileMenuActivity : AppCompatActivity() {
         val cardChangePassword = findViewById<androidx.cardview.widget.CardView>(R.id.changePasswordCard)
         val cardEditAddress = findViewById<androidx.cardview.widget.CardView>(R.id.editAddressCard)
 
+        val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
+
+        backButton.setOnClickListener{
+            finish()
+        }
+
         cardChangePassword.setOnClickListener {
-            val intent = Intent(this, CustomerProfilePageActivity::class.java)
+            val intent = Intent(this, CustomerMainActivity::class.java)
             intent.putExtra("userId", userId)
             intent.putExtra("email", email)
             startActivity(intent)

@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
+import android.widget.Toast
 import com.example.gotrabahomobile.Helper.CitySpinnerAdapter
 import com.example.gotrabahomobile.Model.Cities
 import com.example.gotrabahomobile.Model.User
@@ -56,13 +57,19 @@ class FreelancerEditAddressActivity : AppCompatActivity() {
         
         buttonSave.setOnClickListener {
             insertAddress()
-            val intent = Intent(this, FreelancerProfilePageActivity::class.java)
+            val intent = Intent(this@FreelancerEditAddressActivity, FreelancerAccountFragment::class.java)
             intent.putExtra("userId", userId)
             intent.putExtra("freelancerId", freelancerId)
             intent.putExtra("firstName", firstName)
             intent.putExtra("lastName", lastName)
             intent.putExtra("fullName", fullName)
             intent.putExtra("email", email)
+
+            Toast.makeText(
+                applicationContext,
+                "Successfully Updated Address",
+                Toast.LENGTH_SHORT
+            ).show()
             startActivity(intent)
         }
 

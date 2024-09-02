@@ -8,7 +8,7 @@
 
         <include
             android:id="@+id/include"
-            layout="@layout/toolbar_no_notificationicon"
+            layout="@layout/customer_toolbar_withbackbutton"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="0dp" />
 
