@@ -278,45 +278,36 @@
                 android:id="@+id/barangayEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:lines="1"
                 android:background="@drawable/edit_text_background_white"
                 android:hint="@string/barangay"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:lines="1"
+                app:layout_constraintStart_toStartOf="parent" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/cityContainer"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barangayContainer"
+            android:background="@drawable/edit_text_background_white">
                 <Spinner
                     android:id="@+id/spinnerCustomerCity"
-                    android:layout_width="312dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.494"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/barangayContainer" />
+                     />
+        </LinearLayout>
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-<!--            android:id="@+id/cityContainer"-->
-<!--            android:layout_width="350dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginHorizontal="20dp"-->
-<!--            android:layout_marginTop="20dp"-->
-<!--            app:helperText="@string/required"-->
-<!--            app:helperTextTextColor="@android:color/holo_red_dark"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/barangayContainer">-->
-
-<!--            <AutoCompleteTextView-->
-<!--                android:id="@+id/cityEditText"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="City"-->
-<!--                android:inputType="none"-->
-<!--                android:background="@drawable/edit_text_background_white"-->
-<!--                />-->
-
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <CheckBox
             android:id="@+id/checkBoxCustomerTNC"
@@ -325,7 +316,7 @@
             android:text=" "
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spinnerCustomerCity" />
+            app:layout_constraintTop_toBottomOf="@+id/cityContainer" />
 
         <Button
             android:id="@+id/buttonCustomerSignUp"

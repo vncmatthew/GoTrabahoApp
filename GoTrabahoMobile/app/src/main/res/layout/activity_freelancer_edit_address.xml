@@ -85,15 +85,29 @@
             app:layout_constraintStart_toStartOf="parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
+    <LinearLayout
+        android:id="@+id/cityContainer"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/freelancerNewBarangayContainer"
+        android:background="@drawable/edit_text_background_white">
     <Spinner
         android:id="@+id/spinnerNewFreelancerCity"
-        android:layout_width="312dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/freelancerNewBarangayContainer" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/buttonEditFreelancerProfileSave"
@@ -107,6 +121,6 @@
         app:cornerRadius="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerNewFreelancerCity" />
+        app:layout_constraintTop_toBottomOf="@+id/cityContainer" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
