@@ -345,6 +345,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                                              if(response.isSuccessful) {
                                                                  if (booking!!.equals("Successfully Created"))
                                                                  {
+                                                                     Toast.makeText(this@ChatActivityNegotiation, "A discount has been applied the final price is " + finalPrice, Toast.LENGTH_SHORT).show()
                                                                      //ADD NOTIFICATION
 
                                                                      notifMessage(
