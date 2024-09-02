@@ -21,6 +21,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -209,8 +210,7 @@ class BookingDetailsActivity : AppCompatActivity() {
 
         val closeButton = ratingView.findViewById<ImageButton>(R.id.close_button)
         val submitButton = ratingView.findViewById<Button>(R.id.buttonRateSubmit)
-
-
+        val commentText = ratingView.findViewById<EditText>(R.id.editTextRatingComments)
 
         val alertDialog = AlertDialog.Builder(this)
             .setView(ratingView)
@@ -219,12 +219,16 @@ class BookingDetailsActivity : AppCompatActivity() {
         closeButton.setOnClickListener {
             alertDialog.dismiss()
         }
-        val commentText = findViewById<EditText>(R.id.editTextRatingComments)
-        val textRating = commentText.text.toString()
+
         submitButton.setOnClickListener {
-            submitRatingToDatabase(ratingNumber, textRating)
-            alertDialog.dismiss()
-            finish()
+            val textRating = commentText.text.toString().trim()
+            if (ratingNumber > 0 && ratingNumber <= 5) {
+                submitRatingToDatabase(ratingNumber, textRating)
+                alertDialog.dismiss()
+                finish()
+            } else {
+                Toast.makeText(this, "Please select a rating", Toast.LENGTH_SHORT).show()
+            }
         }
 
         alertDialog.show()
@@ -242,7 +246,6 @@ class BookingDetailsActivity : AppCompatActivity() {
         star4.setOnClickListener{ handleStarClick(ratingView, 4)}
         star5.setOnClickListener{ handleStarClick(ratingView, 5)}
     }
-
     private fun handleStarClick(ratingView: View, starNumber: Int) {
         ratingNumber = starNumber
         updateStars(ratingView, starNumber)
