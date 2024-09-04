@@ -133,6 +133,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
+                                            
                                             val book = BookingInstance.retrofitBuilder
 
                                             currentItem.bookingId?.let { it2 ->

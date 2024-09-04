@@ -392,7 +392,7 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
                 userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
                 address2, barangay, cityId!!, longitude, latitude
             )
-            val intent = Intent(this@CustomerRegisterDetailsActivity, LoginActivity::class.java)
+            val intent = Intent(this@CustomerRegisterDetailsActivity, CustomerOTPActivity::class.java)
             startActivity(intent)
 
 

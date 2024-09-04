@@ -25,6 +25,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".CustomerOTPActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FreelancerOTPActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddPaymentMethodActivity"
+            android:exported="false" />
+        <activity
             android:name=".FreelancerEditAddressActivity"
             android:exported="false" />
         <activity

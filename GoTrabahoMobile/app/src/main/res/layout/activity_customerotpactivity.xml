@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CustomerOTPActivity">
+
+    <ImageView
+        android:id="@+id/imageViewLogoOTP"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/logo_blue_noname" />
+
+    <TextView
+        android:id="@+id/textViewOTP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Verify your Phone Number"
+        android:textColor="@color/gt_blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewLogoOTP" />
+
+    <TextView
+        android:id="@+id/cTextViewOTPInstructions"
+        android:layout_width="322dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:text="Type in the phone number you used to register and we will send an OTP to verify it"
+        android:textAlignment="center"
+        android:textColor="@color/gt_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOTP" />
+
+    <TextView
+        android:id="@+id/cTextViewPhoneNumberInfo"
+        android:visibility="gone"
+        android:layout_width="163dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="30dp"
+        android:text="An OTP was sent to"
+        android:textAlignment="center"
+        android:textColor="@color/gt_blue"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewOTP" />
+
+    <TextView
+        android:id="@+id/cTextViewPhoneNumber"
+        android:visibility="gone"
+        android:layout_width="400dp"
+        android:layout_height="27dp"
+        android:text=" "
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cTextViewPhoneNumberInfo" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cVerifyPhoneNumberContainer"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="10"
+        app:prefixText="+63"
+        app:prefixTextColor="@android:color/black"
+        app:helperTextTextColor="@android:color/holo_red_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cTextViewOTPInstructions">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cVerifyPhoneNumberEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/edit_text_background_white"
+            android:hint="@string/phone_number"
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="10"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/cButtonSendOTP"
+        android:layout_width="137dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/gt_blue"
+        android:text="Send OTP"
+        android:textSize="17sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cVerifyPhoneNumberContainer" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/cEnterOTPContainer"
+        android:visibility="gone"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="6"
+        app:helperTextTextColor="@android:color/holo_red_dark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cTextViewPhoneNumber">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/cEnterOTPEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:lines="1"
+            android:maxLength="6"
+            android:background="@drawable/edit_text_background_white"
+            android:hint="Enter OTP"
+            app:layout_constraintStart_toStartOf="parent"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/cButtonResendOTP"
+        android:visibility="gone"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/gt_blue"
+        android:text="Resend"
+        android:textSize="17sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cEnterOTPContainer" />
+
+    <Button
+        android:id="@+id/cButtonVerifyOTP"
+        android:visibility="gone"
+        android:layout_width="120dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/gt_green"
+        android:text="Verify"
+        android:textSize="17sp"
+        app:cornerRadius="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cButtonResendOTP" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
