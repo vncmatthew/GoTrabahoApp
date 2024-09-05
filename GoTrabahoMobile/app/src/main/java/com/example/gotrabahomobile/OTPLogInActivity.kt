@@ -23,20 +23,25 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import papaya.`in`.sendmail.SendMail
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
+import kotlin.random.nextInt
 
 class OTPLogInActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private var storedOtp: String? = null
+    var random : Int=0
+    var email : String=""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otplog_in)
         auth = FirebaseAuth.getInstance()
-
+        generateOTP()
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
         val emailContainer = findViewById<TextInputLayout>(R.id.emailContainer)
         val otpEditText = findViewById<EditText>(R.id.otpEditText)
@@ -80,79 +85,44 @@ class OTPLogInActivity : AppCompatActivity() {
                 verifyOTP.visibility = View.VISIBLE
 
                 emailContainer.helperText = " "
-                sendOTP(email)
+                generateOTP()
 
                 Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
             }
         }
 
         resendOTP.setOnClickListener {
-            val email = emailEditText.text.toString()
-            sendOTP(email)
+
+            var mail=SendMail("droidbytes11@gmail.com","ojjzedbyawubvwlv",email,"Login Signup app's OTP",
+                "Your OTP is -> $random")
+            mail.execute()
             Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
         }
 
         verifyOTP.setOnClickListener{
-            val email = emailEditText.text.toString()
+
             val OTPCode = otpEditText.text.toString()
-            verifyOTP(OTPCode, email)
-            startActivity(Intent(this@OTPLogInActivity, LoginActivity::class.java))
-        }
-
-    }
-
-    private fun sendOTP(email: String) {
-        val otp = generateOTP()
-        storedOtp = otp
-
-        // Send OTP via email using ACTION_SEND
-        sendEmailWithOTP(email, otp)
-        Toast.makeText(this, "OTP sent successfully", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun sendEmailWithOTP(email: String, otp: String) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "message/rfc822"
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Your OTP")
-        intent.putExtra(Intent.EXTRA_TEXT, "Your OTP is: $otp")
-
-        try {
-            startActivity(Intent.createChooser(intent, "Send email..."))
-        } catch (e: android.content.ActivityNotFoundException) {
-            Toast.makeText(this, "No email client installed.", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun verifyOTP(enteredOtp: String, email: String) {
-        if (storedOtp != null && enteredOtp.isNotEmpty()) {
-            if (storedOtp == enteredOtp) {
-                signInWithEmailPassword(email)
-            } else {
-                Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show()
-            }
-        } else {
-            Toast.makeText(this, "Please enter valid OTP", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun signInWithEmailPassword(email: String) {
-
-        auth.signInWithEmailAndPassword(email, "default_password")
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    val intent =
-                        Intent(this@OTPLogInActivity, CustomerMainActivity::class.java)
+            var password = intent.getStringExtra("password")
+            if(OTPCode.equals(random.toString()))
+            auth.createUserWithEmailAndPassword(email,password!!).addOnCompleteListener {
+                if(it.isSuccessful){
+                    var intent=Intent(this@OTPLogInActivity,CustomerMainActivity::class.java)
                     startActivity(intent)
-                } else {
-                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(this@OTPLogInActivity, it.exception?.message.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+
     }
 
-    private fun generateOTP(): String {
-        return (100000..999999).random().toString()
+    fun generateOTP(){
+        random = (100000..999999).random()
+        var email = intent.getStringExtra("email")
+        var mail=SendMail("droidbytes11@gmail.com","ojjzedbyawubvwlv",email,"Login Signup app's OTP",
+            "Your OTP is -> $random")
+        mail.execute()
     }
 
 /*private fun getUser(email:String)

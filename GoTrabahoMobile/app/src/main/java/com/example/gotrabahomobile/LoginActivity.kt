@@ -193,15 +193,18 @@ class LoginActivity : AppCompatActivity() {
 
                                 if(userType == 1) {
                                     val intent =
-                                        Intent(this@LoginActivity, CustomerMainActivity::class.java)
+                                        Intent(this@LoginActivity, OTPLogInActivity::class.java)
                                     intent.putExtra("sqlId", sqlId)
                                     intent.putExtra("userId", identification)
                                     intent.putExtra("email", email)
+                                    intent.putExtra("password", password)
                                     intent.putExtra("firstName", firstName)
                                     intent.putExtra("lastName", lastName)
                                     intent.putExtra("fullName", fullName)
                                     intent.putExtra("longitude", longitude)
                                     intent.putExtra("latitude", latitude)
+                                    intent.putExtra("userType", userType)
+
                                     startActivity(intent)
                                 }
                                 else if(userType == 2) {
@@ -217,13 +220,14 @@ class LoginActivity : AppCompatActivity() {
                                                 if (bro == 1 || bro == 3) {
                                                     Log.d("Identification@", "${identification}")
                                                     val intent =
-                                                        Intent(this@LoginActivity, FreelancerMainActivity::class.java)
+                                                        Intent(this@LoginActivity, OTPLogInActivity::class.java)
                                                     intent.putExtra("userId", identification)
                                                     intent.putExtra("freelancerId", freelancerId?.freelancerId)
                                                     intent.putExtra("firstName", firstName)
                                                     intent.putExtra("lastName", lastName)
                                                     intent.putExtra("fullName", fullName)
                                                     intent.putExtra("email", email)
+                                                    intent.putExtra("password", password)
                                                     intent.putExtra("userType", userType)
                                                     startActivity(intent)
 

@@ -85,4 +85,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
 
 
+    implementation ("com.github.1902shubh:SendMail:1.0.0")
+
 }
