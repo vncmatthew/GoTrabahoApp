@@ -76,6 +76,7 @@ class OTPLogInActivity : AppCompatActivity() {
                 verifyOTP.visibility = View.VISIBLE
 
                 emailContainer.helperText = " "
+                sendVerificationCode(email)
 
                 Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
             }
