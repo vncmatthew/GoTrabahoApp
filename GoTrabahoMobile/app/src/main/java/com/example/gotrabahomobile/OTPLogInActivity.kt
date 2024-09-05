@@ -14,19 +14,31 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
+import java.util.concurrent.TimeUnit
 
 class OTPLogInActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+    private var storedVerificationId: String? = null
+    private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otplog_in)
-
+        auth = FirebaseAuth.getInstance()
         val sendOTPButton = findViewById<Button>(R.id.sendOTPButton)
 
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
         val emailContainer = findViewById<TextInputLayout>(R.id.emailContainer)
 
         val logInTextView = findViewById<TextView>(R.id.textViewLogin)
-
+        val resendOTP = findViewById<TextView>(R.id.resendOTPButton)
         val spanLogIn = SpannableString("Log In with Email and Password")
 
         val logInSpan: ClickableSpan = object : ClickableSpan() {
@@ -40,7 +52,8 @@ class OTPLogInActivity : AppCompatActivity() {
         logInTextView.text = spanLogIn
         logInTextView.movementMethod = LinkMovementMethod.getInstance()
 
-        sendOTPButton.setOnClickListener {
+
+        resendOTP.setOnClickListener{
             //validations
             val email = emailEditText.text.toString()
             if(email.isEmpty()) {
@@ -54,8 +67,71 @@ class OTPLogInActivity : AppCompatActivity() {
                 emailContainer.helperText = " "
 
                 Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
+                sendVerificationCode(email)
                 startActivity(Intent(this@OTPLogInActivity, LoginActivity::class.java))
             }
         }
+        sendOTPButton.setOnClickListener {
+            verifyOTP(string)
+        }
+    }
+
+    private fun sendVerificationCode(email: String) {
+        val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                Toast.makeText(this@OTPLogInActivity, "Verification successful", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onVerificationFailed(e: FirebaseException) {
+                Toast.makeText(this@OTPLogInActivity, "Verification failed: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onCodeSent(
+                verificationId: String,
+                token: PhoneAuthProvider.ForceResendingToken
+            ) {
+                super.onCodeSent(verificationId, token)
+                storedVerificationId = verificationId
+                resendToken = token
+                Toast.makeText(this@OTPLogInActivity, "OTP sent successfully", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
+
+        if (resendToken != null) {
+            optionsBuilder.setForceResendingToken(resendToken!!)
+        }
+
+        optionsBuilder
+            .setPhoneNumber(email)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(callbacks)
+            .build()
+
+        PhoneAuthProvider.verifyPhoneNumber(optionsBuilder.build())
+    }
+    private fun verifyOTP(otp: String) {
+        if (storedVerificationId != null && otp.isNotEmpty()) {
+            val credential = PhoneAuthProvider.getCredential(storedVerificationId!!, otp)
+            signInWithPhoneAuthCredential(credential)
+        } else {
+            Toast.makeText(this, "Please enter valid OTP", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                    // Proceed to next activity or update UI accordingly
+                } else {
+                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
+                        Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
     }
 }
