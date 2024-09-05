@@ -32,13 +32,16 @@ class OTPLogInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otplog_in)
         auth = FirebaseAuth.getInstance()
-        val sendOTPButton = findViewById<Button>(R.id.sendOTPButton)
 
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
         val emailContainer = findViewById<TextInputLayout>(R.id.emailContainer)
+        val otpEditText = findViewById<EditText>(R.id.otpEditText)
+        val otpContainer = findViewById<TextInputLayout>(R.id.otpContainer)
 
         val logInTextView = findViewById<TextView>(R.id.textViewLogin)
-        val resendOTP = findViewById<TextView>(R.id.resendOTPButton)
+        val resendOTP = findViewById<Button>(R.id.resendOTPButton)
+        val sendOTP = findViewById<Button>(R.id.sendOTPButton)
+        val verifyOTP = findViewById<Button>(R.id.verifyOTPButton)
         val spanLogIn = SpannableString("Log In with Email and Password")
 
         val logInSpan: ClickableSpan = object : ClickableSpan() {
@@ -53,7 +56,7 @@ class OTPLogInActivity : AppCompatActivity() {
         logInTextView.movementMethod = LinkMovementMethod.getInstance()
 
 
-        resendOTP.setOnClickListener{
+        sendOTP.setOnClickListener{
             //validations
             val email = emailEditText.text.toString()
             if(email.isEmpty()) {
@@ -64,16 +67,32 @@ class OTPLogInActivity : AppCompatActivity() {
                 emailContainer.helperText = "Invalid Email Address"
             }
             else {
+                sendOTP.visibility = View.GONE
+                emailContainer.visibility = View.GONE
+
+                otpContainer.visibility = View.VISIBLE
+                resendOTP.visibility = View.VISIBLE
+                verifyOTP.visibility = View.VISIBLE
+
                 emailContainer.helperText = " "
 
                 Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
-                sendVerificationCode(email)
-                startActivity(Intent(this@OTPLogInActivity, LoginActivity::class.java))
             }
         }
-        sendOTPButton.setOnClickListener {
-            verifyOTP(string)
+
+        resendOTP.setOnClickListener {
+            val email = emailEditText.text.toString()
+
+            Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
         }
+
+        verifyOTP.setOnClickListener{
+            val email = emailEditText.text.toString()
+
+            sendVerificationCode(email)
+            startActivity(Intent(this@OTPLogInActivity, LoginActivity::class.java))
+        }
+
     }
 
     private fun sendVerificationCode(email: String) {
