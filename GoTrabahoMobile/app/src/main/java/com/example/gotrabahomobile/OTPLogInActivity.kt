@@ -59,6 +59,7 @@ class OTPLogInActivity : AppCompatActivity() {
         sendOTP.setOnClickListener{
             //validations
             val email = emailEditText.text.toString()
+
             if(email.isEmpty()) {
                 emailContainer.helperText = "Required"
             }
@@ -82,14 +83,14 @@ class OTPLogInActivity : AppCompatActivity() {
 
         resendOTP.setOnClickListener {
             val email = emailEditText.text.toString()
-
+            sendVerificationCode(email)
             Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
         }
 
         verifyOTP.setOnClickListener{
             val email = emailEditText.text.toString()
-
-            sendVerificationCode(email)
+            val OTPCode = otpEditText.text.toString()
+            verifyOTP(OTPCode)
             startActivity(Intent(this@OTPLogInActivity, LoginActivity::class.java))
         }
 
