@@ -7,12 +7,15 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.gotrabahomobile.Model.User
+import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
@@ -20,14 +23,15 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.concurrent.TimeUnit
 
 class OTPLogInActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private var storedVerificationId: String? = null
-    private var resendToken: PhoneAuthProvider.ForceResendingToken? = null
-
+    private var storedOtp: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otplog_in)
@@ -57,7 +61,7 @@ class OTPLogInActivity : AppCompatActivity() {
 
 
         sendOTP.setOnClickListener{
-            //validations
+
             val email = emailEditText.text.toString()
 
             if(email.isEmpty()) {
@@ -76,7 +80,7 @@ class OTPLogInActivity : AppCompatActivity() {
                 verifyOTP.visibility = View.VISIBLE
 
                 emailContainer.helperText = " "
-                sendVerificationCode(email)
+                sendOTP(email)
 
                 Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
             }
@@ -84,75 +88,124 @@ class OTPLogInActivity : AppCompatActivity() {
 
         resendOTP.setOnClickListener {
             val email = emailEditText.text.toString()
-            sendVerificationCode(email)
+            sendOTP(email)
             Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
         }
 
         verifyOTP.setOnClickListener{
             val email = emailEditText.text.toString()
             val OTPCode = otpEditText.text.toString()
-            verifyOTP(OTPCode)
+            verifyOTP(OTPCode, email)
             startActivity(Intent(this@OTPLogInActivity, LoginActivity::class.java))
         }
 
     }
 
-    private fun sendVerificationCode(email: String) {
-        val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-            override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                Toast.makeText(this@OTPLogInActivity, "Verification successful", Toast.LENGTH_SHORT).show()
-            }
+    private fun sendOTP(email: String) {
+        val otp = generateOTP()
+        storedOtp = otp
 
-            override fun onVerificationFailed(e: FirebaseException) {
-                Toast.makeText(this@OTPLogInActivity, "Verification failed: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onCodeSent(
-                verificationId: String,
-                token: PhoneAuthProvider.ForceResendingToken
-            ) {
-                super.onCodeSent(verificationId, token)
-                storedVerificationId = verificationId
-                resendToken = token
-                Toast.makeText(this@OTPLogInActivity, "OTP sent successfully", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        val optionsBuilder = PhoneAuthOptions.newBuilder(auth)
-
-        if (resendToken != null) {
-            optionsBuilder.setForceResendingToken(resendToken!!)
-        }
-
-        optionsBuilder
-            .setPhoneNumber(email)
-            .setTimeout(60L, TimeUnit.SECONDS)
-            .setActivity(this)
-            .setCallbacks(callbacks)
-            .build()
-
-        PhoneAuthProvider.verifyPhoneNumber(optionsBuilder.build())
+        // Send OTP via email using ACTION_SEND
+        sendEmailWithOTP(email, otp)
+        Toast.makeText(this, "OTP sent successfully", Toast.LENGTH_SHORT).show()
     }
-    private fun verifyOTP(otp: String) {
-        if (storedVerificationId != null && otp.isNotEmpty()) {
-            val credential = PhoneAuthProvider.getCredential(storedVerificationId!!, otp)
-            signInWithPhoneAuthCredential(credential)
+
+    private fun sendEmailWithOTP(email: String, otp: String) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "message/rfc822"
+        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Your OTP")
+        intent.putExtra(Intent.EXTRA_TEXT, "Your OTP is: $otp")
+
+        try {
+            startActivity(Intent.createChooser(intent, "Send email..."))
+        } catch (e: android.content.ActivityNotFoundException) {
+            Toast.makeText(this, "No email client installed.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun verifyOTP(enteredOtp: String, email: String) {
+        if (storedOtp != null && enteredOtp.isNotEmpty()) {
+            if (storedOtp == enteredOtp) {
+                signInWithEmailPassword(email)
+            } else {
+                Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show()
+            }
         } else {
             Toast.makeText(this, "Please enter valid OTP", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        auth.signInWithCredential(credential)
+    private fun signInWithEmailPassword(email: String) {
+
+        auth.signInWithEmailAndPassword(email, "default_password")
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    // Proceed to next activity or update UI accordingly
+                    val intent =
+                        Intent(this@OTPLogInActivity, CustomerMainActivity::class.java)
+                    startActivity(intent)
                 } else {
-                    if (task.exception is FirebaseAuthInvalidCredentialsException) {
-                        Toast.makeText(this, "Invalid OTP", Toast.LENGTH_SHORT).show()
-                    }
+                    Toast.makeText(this, "Authentication failed", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
+    private fun generateOTP(): String {
+        return (100000..999999).random().toString()
+    }
+
+/*private fun getUser(email:String)
+    {
+    val login = UserInstance.retrofitBuilder
+        login.loginUser(login).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                if (response.isSuccessful) {
+                    val user = response.body()
+                    if (user != null) {
+                        val userID = user.userId
+                        val firstName = user.firstName
+                        val lastName = user.lastName
+                        val userType = user.userType
+                        val longitude = user.longitude
+                        val latitude = user.latitude
+                        val fullName = "$firstName $lastName"
+                        if (userID != null) {
+                            LoginUser(
+                                email,
+                                pass,
+                                firstName,
+                                lastName,
+                                fullName,
+                                userID.toString(),
+                                userType,
+                                longitude,
+                                latitude,
+                                userID
+                            )
+                        } else {
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "Connection Error",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                } else {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "The email and/or password is incorrect",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    passwordContainer.helperText = "The email and/or password is incorrect"
+                }
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.d("MainActivity", "Registration failed: ")
+            }
+        })
+    }*/
 }
+}
+
