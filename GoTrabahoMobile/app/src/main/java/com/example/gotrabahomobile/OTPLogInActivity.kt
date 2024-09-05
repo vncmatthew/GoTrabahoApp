@@ -66,7 +66,7 @@ class OTPLogInActivity : AppCompatActivity() {
         resendOTP.setOnClickListener {
             var email = intent.getStringExtra("email")
 
-            var mail=SendMail("fxcsqz@gmail.com","spacecowboy13",email,"Login Signup app's OTP",
+            var mail=SendMail("yorushushok@gmail.com","paiirzatmdtjsukk",email,"Login Signup app's OTP",
                 "Your OTP is -> $random")
             mail.execute()
             Toast.makeText(this@OTPLogInActivity, "We sent an OTP to the email associated with your account, please check your email to verify with OTP", Toast.LENGTH_SHORT).show()
@@ -77,14 +77,12 @@ class OTPLogInActivity : AppCompatActivity() {
             val OTPCode = otpEditText.text.toString()
             var password = intent.getStringExtra("password")
             if(OTPCode.equals(random.toString()))
-            auth.createUserWithEmailAndPassword(email,password!!).addOnCompleteListener {
-                if(it.isSuccessful){
-                    var intent=Intent(this@OTPLogInActivity,CustomerMainActivity::class.java)
-                    startActivity(intent)
-                }
-                else {
-                    Toast.makeText(this@OTPLogInActivity, it.exception?.message.toString(), Toast.LENGTH_SHORT).show()
-                }
+            {
+                var intent=Intent(this@OTPLogInActivity,CustomerMainActivity::class.java)
+                startActivity(intent)
+            }
+            else {
+                Toast.makeText(this@OTPLogInActivity, "The OTP you have entered is wrong", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -93,7 +91,7 @@ class OTPLogInActivity : AppCompatActivity() {
     fun generateOTP(){
         random = (100000..999999).random()
         var email = intent.getStringExtra("email")
-        var mail=SendMail("fxcsqz@gmail.com","spacecowboy13",email,"Login Signup app's OTP",
+        var mail=SendMail("yorushushok@gmail.com","paiirzatmdtjsukk",email,"GoTrabaho Verification OTP",
             "Your OTP is -> $random")
         mail.execute()
     }
