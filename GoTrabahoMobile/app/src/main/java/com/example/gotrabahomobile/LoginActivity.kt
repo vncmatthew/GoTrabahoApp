@@ -32,6 +32,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 import kotlinx.serialization.json.Json
+import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity() {
 
@@ -53,6 +54,18 @@ class LoginActivity : AppCompatActivity() {
         val text = "Don't have an account? Sign Up"
         val spanString = SpannableString(text)
 
+        val logInWithOTPTextView = findViewById<TextView>(R.id.textViewLogInWithOTP)
+        val spanLogInWithOTP = SpannableString("Log In with OTP")
+        val logInSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                // Show the dialog when the text is clicked
+                val intent = Intent(this@LoginActivity, OTPLogInActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        spanLogInWithOTP.setSpan(logInSpan, 0, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        logInWithOTPTextView.text = spanLogInWithOTP
+        logInWithOTPTextView.movementMethod = LinkMovementMethod.getInstance()
 
         checkLocationPermissions()
 

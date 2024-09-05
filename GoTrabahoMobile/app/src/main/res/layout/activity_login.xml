@@ -108,7 +108,7 @@
         android:id="@+id/buttonLogin"
         android:layout_width="120dp"
         android:layout_height="50dp"
-        android:layout_marginTop="145dp"
+        android:layout_marginTop="130dp"
         android:backgroundTint="@color/white"
         android:text="Log In"
         android:textColor="@color/gt_green"
@@ -119,14 +119,26 @@
         app:layout_constraintTop_toBottomOf="@+id/passwordContainer" />
 
     <TextView
-        android:id="@+id/textViewNoAccount"
+        android:id="@+id/textViewLogInWithOTP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
-        android:text="Don't have an account? Sign Up"
+        android:textSize="16dp"
+        android:text="Log In with OTP"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
+
+    <TextView
+        android:id="@+id/textViewNoAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Don't have an account? Sign Up"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewLogInWithOTP" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
