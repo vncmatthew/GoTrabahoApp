@@ -244,8 +244,6 @@
     <string name="address_1">Address 1</string>
     <string name="address_2">Address 2</string>
     <string name="barangay">Barangay</string>
-    <string name="forgot_password">Forgot Password</string>
-    <string name="forgotemailinstructions">Enter the email associated with your account and we\'ll send an OTP to verify that it is your account</string>
 
 
 </resources>

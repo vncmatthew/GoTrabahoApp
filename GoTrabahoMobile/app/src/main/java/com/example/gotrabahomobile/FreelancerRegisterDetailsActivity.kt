@@ -21,11 +21,14 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.Log
 import android.util.Patterns
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -44,6 +47,7 @@ import com.example.gotrabahomobile.Remote.ArchiveRecordRemote.CityInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
@@ -57,6 +61,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
 import java.nio.charset.Charset
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
@@ -388,7 +393,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
             registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
                 address2, barangay, cityId!!, longitude, latitude)
-            val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerOTPActivity::class.java)
+            val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
             intent.putExtra("email", email)
             startActivity(intent)
     }
