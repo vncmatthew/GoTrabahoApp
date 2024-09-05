@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Log In with OTP"
+        android:text="Verify with OTP"
         android:textColor="@color/gt_blue"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -29,74 +29,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewLogoOTPLogIn" />
 
-    <TextView
-        android:id="@+id/cTextViewOTPInstructions"
-        android:layout_width="322dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="28dp"
-        android:text="Enter your email associated with an account and we'll send you an OTP to Log In with"
-        android:textAlignment="center"
-        android:textColor="@color/gt_blue"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewOTP" />
-
-    <com.google.android.material.textfield.TextInputLayout
-    android:id="@+id/emailContainer"
-    android:layout_width="350dp"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="20dp"
-    android:layout_marginTop="34dp"
-    app:helperTextTextColor="@android:color/holo_red_dark"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/cTextViewOTPInstructions">
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/emailEditText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:lines="1"
-        android:inputType="textEmailAddress"
-        android:background="@drawable/edit_text_background_white"
-        android:hint="@string/email"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-
-    </com.google.android.material.textfield.TextInputLayout>
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/otpContainer"
-        android:visibility="gone"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="69dp"
         app:counterEnabled="true"
         app:counterMaxLength="6"
         app:helperTextTextColor="@android:color/holo_red_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cTextViewOTPInstructions">
+        app:layout_constraintTop_toBottomOf="@+id/textViewOTP">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/otpEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:lines="1"
-            android:maxLength="6"
-            android:inputType="number"
             android:background="@drawable/edit_text_background_white"
             android:hint="OTP"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:inputType="number"
+            android:lines="1"
+            android:maxLength="6"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <Button
-        android:id="@+id/sendOTPButton"
+        android:id="@+id/resendOTPButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -107,27 +69,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailContainer" />
-
-
-    <Button
-        android:id="@+id/resendOTPButton"
-        android:visibility="gone"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:backgroundTint="@color/gt_green"
-        android:text="Resend OTP"
-        android:textSize="17sp"
-        app:cornerRadius="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/otpContainer" />
 
     <Button
         android:id="@+id/verifyOTPButton"
-        android:visibility="gone"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginTop="14dp"
@@ -140,16 +85,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/resendOTPButton" />
 
-    <TextView
-        android:id="@+id/textViewLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="44dp"
-        android:text="Log In with Email and Password"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+<!--    <TextView-->
+<!--        android:id="@+id/textViewLogin"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginBottom="44dp"-->
+<!--        android:text="Log In with Email and Password"-->
+<!--        android:textColor="@color/black"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

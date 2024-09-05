@@ -42,61 +42,34 @@ class OTPLogInActivity : AppCompatActivity() {
         setContentView(R.layout.activity_otplog_in)
         auth = FirebaseAuth.getInstance()
         generateOTP()
-        val emailEditText = findViewById<EditText>(R.id.emailEditText)
-        val emailContainer = findViewById<TextInputLayout>(R.id.emailContainer)
         val otpEditText = findViewById<EditText>(R.id.otpEditText)
         val otpContainer = findViewById<TextInputLayout>(R.id.otpContainer)
 
-        val logInTextView = findViewById<TextView>(R.id.textViewLogin)
         val resendOTP = findViewById<Button>(R.id.resendOTPButton)
-        val sendOTP = findViewById<Button>(R.id.sendOTPButton)
         val verifyOTP = findViewById<Button>(R.id.verifyOTPButton)
-        val spanLogIn = SpannableString("Log In with Email and Password")
+//        val spanLogIn = SpannableString("Log In with Email and Password")
+//
+//        val logInSpan: ClickableSpan = object : ClickableSpan() {
+//            override fun onClick(widget: View) {
+//                // Show the dialog when the text is clicked
+//                val intent = Intent(this@OTPLogInActivity, LoginActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
+//        spanLogIn.setSpan(logInSpan, 0, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+//        logInTextView.text = spanLogIn
+//        logInTextView.movementMethod = LinkMovementMethod.getInstance()
 
-        val logInSpan: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                // Show the dialog when the text is clicked
-                val intent = Intent(this@OTPLogInActivity, LoginActivity::class.java)
-                startActivity(intent)
-            }
-        }
-        spanLogIn.setSpan(logInSpan, 0, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        logInTextView.text = spanLogIn
-        logInTextView.movementMethod = LinkMovementMethod.getInstance()
 
 
-        sendOTP.setOnClickListener{
-
-            val email = emailEditText.text.toString()
-
-            if(email.isEmpty()) {
-                emailContainer.helperText = "Required"
-            }
-            else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches())
-            {
-                emailContainer.helperText = "Invalid Email Address"
-            }
-            else {
-                sendOTP.visibility = View.GONE
-                emailContainer.visibility = View.GONE
-
-                otpContainer.visibility = View.VISIBLE
-                resendOTP.visibility = View.VISIBLE
-                verifyOTP.visibility = View.VISIBLE
-
-                emailContainer.helperText = " "
-                generateOTP()
-
-                Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
-            }
-        }
 
         resendOTP.setOnClickListener {
+            var email = intent.getStringExtra("email")
 
-            var mail=SendMail("droidbytes11@gmail.com","ojjzedbyawubvwlv",email,"Login Signup app's OTP",
+            var mail=SendMail("fxcsqz@gmail.com","spacecowboy13",email,"Login Signup app's OTP",
                 "Your OTP is -> $random")
             mail.execute()
-            Toast.makeText(this@OTPLogInActivity, "We sent an email to $email, please check your email to Log In with OTP", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@OTPLogInActivity, "We sent an OTP to the email associated with your account, please check your email to verify with OTP", Toast.LENGTH_SHORT).show()
         }
 
         verifyOTP.setOnClickListener{
@@ -120,7 +93,7 @@ class OTPLogInActivity : AppCompatActivity() {
     fun generateOTP(){
         random = (100000..999999).random()
         var email = intent.getStringExtra("email")
-        var mail=SendMail("droidbytes11@gmail.com","ojjzedbyawubvwlv",email,"Login Signup app's OTP",
+        var mail=SendMail("fxcsqz@gmail.com","spacecowboy13",email,"Login Signup app's OTP",
             "Your OTP is -> $random")
         mail.execute()
     }
@@ -177,5 +150,5 @@ class OTPLogInActivity : AppCompatActivity() {
         })
     }*/
 }
-}
+
 
