@@ -636,60 +636,6 @@ class CustomerRegisterDetailsActivity : AppCompatActivity() {
         return null
     }
 
-//    fun validateInputs(
-//        firstName: String?,
-//        lastName: String?,
-//        email: String?,
-//        address1: String?,
-//        address2: String?,
-//        barangay: String?,
-//        city: String?,
-//        password: String?,
-//        confirmPass: String?,
-//        contactNumber: String?
-//    ): Boolean {
-//        if (firstName.isNullOrEmpty() || lastName.isNullOrEmpty() || email.isNullOrEmpty() ||
-//            address1.isNullOrEmpty()  || barangay.isNullOrEmpty() ||
-//            city.isNullOrEmpty()  || contactNumber.isNullOrEmpty()
-//        ) {
-//            Toast.makeText(this, "All fields must be filled out", Toast.LENGTH_SHORT).show()
-//            return false
-//        }
-//
-//        if (password?.length ?: 0 < 7) {
-//            Toast.makeText(this, "Password must be at least 7 characters long", Toast.LENGTH_SHORT).show()
-//            return false
-//        }
-//
-//        if (password?.equals(confirmPass) == false){
-//            Toast.makeText(this, "Confirm Password and Password are not the same", Toast.LENGTH_SHORT).show()
-//            return false
-//        }
-//
-//        if (!email.contains("@")) {
-//            Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show()
-//            return false
-//        }
-//
-//        if (!isValidPhoneNumber(contactNumber)) {
-//            Toast.makeText(this, "Invalid phone number format", Toast.LENGTH_SHORT).show()
-//            return false
-//        }
-//
-//        val latLong = getLatLongFromAddress(this, address1, address2!!, barangay, city)
-//        if (latLong == null) {
-//            Toast.makeText(this, "Address not found", Toast.LENGTH_SHORT).show()
-//            return false
-//        }
-//
-//        val (latitude, longitude) = latLong!!
-//        println("Latitude: $latitude, Longitude: $longitude")
-//        currentLongitude = longitude
-//        currentLatitude = latitude
-//
-//        return true
-//    }
-
     private fun fetchCities(cityName: String?) {
         val call = CityInstance.retrofitBuilder
         call.getCities().enqueue(object : Callback<List<Cities>> {
