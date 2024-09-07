@@ -193,7 +193,7 @@ class LoginActivity : AppCompatActivity() {
 
                                 if(userType == 1) {
                                     val intent =
-                                        Intent(this@LoginActivity, OTPLogInActivity::class.java)
+                                        Intent(this@LoginActivity, CustomerMainActivity::class.java)
                                     intent.putExtra("sqlId", sqlId)
                                     intent.putExtra("userId", identification)
                                     intent.putExtra("email", email)
@@ -220,7 +220,7 @@ class LoginActivity : AppCompatActivity() {
                                                 if (bro == 1 || bro == 3) {
                                                     Log.d("Identification@", "${identification}")
                                                     val intent =
-                                                        Intent(this@LoginActivity, OTPLogInActivity::class.java)
+                                                        Intent(this@LoginActivity, FreelancerMainActivity::class.java)
                                                     intent.putExtra("userId", identification)
                                                     intent.putExtra("freelancerId", freelancerId?.freelancerId)
                                                     intent.putExtra("firstName", firstName)

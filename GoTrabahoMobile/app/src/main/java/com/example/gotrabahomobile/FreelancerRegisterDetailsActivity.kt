@@ -393,8 +393,10 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
 
             registerCustomer(userType, firstName, lastName, email, password, contactNumber, birthdate, address1,
                 address2, barangay, cityId!!, longitude, latitude)
-            val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerIdentityVerificationActivity::class.java)
+            val intent = Intent(this@FreelancerRegisterDetailsActivity, FreelancerOTPActivity::class.java)
             intent.putExtra("email", email)
+            intent.putExtra("password", password)
+            intent.putExtra("userType", userType)
             startActivity(intent)
     }
 

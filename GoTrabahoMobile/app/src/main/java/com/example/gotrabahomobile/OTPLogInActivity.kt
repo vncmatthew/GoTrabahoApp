@@ -36,11 +36,17 @@ class OTPLogInActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     var random : Int=0
     var email : String=""
+    var password : String=""
+    var userType : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_otplog_in)
         auth = FirebaseAuth.getInstance()
+
+        email = intent.getStringExtra("email") ?: ""
+        password = intent.getStringExtra("password") ?: ""
+        userType = intent.getIntExtra("userType", 0)
         generateOTP()
         val otpEditText = findViewById<EditText>(R.id.otpEditText)
         val otpContainer = findViewById<TextInputLayout>(R.id.otpContainer)
@@ -77,8 +83,9 @@ class OTPLogInActivity : AppCompatActivity() {
             val OTPCode = otpEditText.text.toString()
             var password = intent.getStringExtra("password")
             if(OTPCode.equals(random.toString()))
+
             {
-                var intent=Intent(this@OTPLogInActivity,CustomerMainActivity::class.java)
+                var intent=Intent(this@OTPLogInActivity,LoginActivity::class.java)
                 startActivity(intent)
             }
             else {
