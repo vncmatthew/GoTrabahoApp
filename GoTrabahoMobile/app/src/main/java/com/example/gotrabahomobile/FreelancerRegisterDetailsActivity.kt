@@ -397,6 +397,7 @@ class FreelancerRegisterDetailsActivity : AppCompatActivity() {
             intent.putExtra("email", email)
             intent.putExtra("password", password)
             intent.putExtra("userType", userType)
+
             startActivity(intent)
     }
 
