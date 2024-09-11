@@ -108,6 +108,15 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                     ) {
                                                         if(response.isSuccessful){
                                                             negoIdholder = response.body()!!.negotiationId
+                                                            Log.d("BookingFreelacner", "$negoIdholder")
+                                                            val intent =
+                                                                Intent(context, PaymentActivity::class.java)
+
+                                                            intent.putExtra("negotiationId", negoIdholder)
+                                                            Log.d("NegoIdHolder2", "$negoIdholder")
+                                                            intent.putExtra("bookingId", currentItem.bookingId)
+                                                            intent.putExtra("email", email)
+                                                            context.startActivity(intent)
                                                         }
                                                     }
 
@@ -120,16 +129,6 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
                                                 })
                                             }
-                                            val intent =
-                                                Intent(context, PaymentActivity::class.java)
-                                            intent.putExtra(
-                                                "negotiationId",
-                                                negoIdholder
-                                            )
-                                            intent.putExtra("bookingId", currentItem.bookingId)
-                                            intent.putExtra("email", email)
-                                            context.startActivity(intent)
-
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
