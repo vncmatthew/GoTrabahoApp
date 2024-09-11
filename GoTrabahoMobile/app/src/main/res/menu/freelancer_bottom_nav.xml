@@ -11,6 +11,10 @@
         android:title="Negotiations"
         android:icon="@drawable/activity_icon_notext" />
     <item
+        android:id="@+id/freelancerDashboardFragment"
+        android:title="Dashboard"
+        android:icon="@drawable/dashboard_icon" />
+    <item
         android:id="@+id/freelancerMessagesFragment"
         android:title="Messages"
         android:icon="@drawable/message_icon_notext" />

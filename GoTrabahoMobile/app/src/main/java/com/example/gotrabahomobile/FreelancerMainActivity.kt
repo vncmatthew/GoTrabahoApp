@@ -60,6 +60,7 @@ class FreelancerMainActivity : AppCompatActivity() {
         val freelancerMessagesFragment = FreelancerMessagesFragment().apply { arguments = bundle }
         val freelancerAccountFragment = FreelancerAccountFragment().apply { arguments = bundle }
         val freelancerNegotiationFragment = FreelancerNegotiationFragment().apply { arguments = bundle }
+        val freelancerDashboardFragment = FreelancerDashboardFragment().apply { arguments = bundle }
 
 
         replaceFragment(bookingsFragment)
@@ -68,6 +69,7 @@ class FreelancerMainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.bookingsFragment -> replaceFragment(bookingsFragment)
                 R.id.freelancerNegotiationFragment -> replaceFragment(freelancerNegotiationFragment)
+                R.id.freelancerDashboardFragment -> replaceFragment(freelancerDashboardFragment)
                 R.id.freelancerMessagesFragment -> replaceFragment(freelancerMessagesFragment)
                 R.id.freelancerAccountFragment -> replaceFragment(freelancerAccountFragment)
                 else -> false

@@ -16,6 +16,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.gotrabahomobile.Helper.BookingFreelancerAdapter
 import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Booking
@@ -44,7 +45,9 @@ class BookingsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private var _binding: FragmentBookingsBinding? = null
+    private val binding get() = _binding!!
     private lateinit var rvAdapter: BookingFreelancerAdapter
     private lateinit var bookingList: List<Booking>
     var selectedService: String? = null
@@ -86,7 +89,6 @@ class BookingsFragment : Fragment() {
             }
         }
 
-
         return _binding!!.root
     }
 
@@ -100,7 +102,10 @@ class BookingsFragment : Fragment() {
         val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
 
-
+        swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshData()
+        }
 
         Log.d("BookingsFragment", email.toString())
 
@@ -112,17 +117,12 @@ class BookingsFragment : Fragment() {
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
-
-                when (tab.position) {
-                    0 -> {
-                        selectedService?.let { getBookingList(1, it) }
-                    }
-                    1 -> {
-                        selectedService?.let { getBookingList(2, it) }
-                    }
-                    2 -> {
-                        selectedService?.let { getBookingList(3, it) }
-                    }
+                val status = tab.position + 1 // Convert tab position to booking status
+                selectedService?.let {
+                    getBookingList(status, it)
+                } ?: run {
+                    Log.e("BookingsFragment", "selectedService is null")
+                    Toast.makeText(requireContext(), "Please select a service", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -133,11 +133,19 @@ class BookingsFragment : Fragment() {
             }
 
         })
-
-
-
+        tabLayout.getTabAt(0)?.select()
         Log.d("BookingsFragment", freelancerId.toString())
         Log.d("BookingsFragment", "${email}")
+    }
+
+    private fun refreshData() {
+        val status = binding.tabLayout.selectedTabPosition + 1
+        selectedService?.let {
+            getBookingList(status, it)
+        } ?: run {
+            Log.e("BookingsFragment", "selectedService is null")
+            Toast.makeText(requireContext(), "Please select a service", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun getBookingList(status: Int, selectedService: String){
@@ -152,25 +160,43 @@ class BookingsFragment : Fragment() {
                 call: Call<List<Booking>>,
                 response: Response<List<Booking>>
             ) {
+                swipeRefreshLayout.isRefreshing = false
                 if (response.isSuccessful && response.body() != null){
                     bookingList = response.body()!!
-                    _binding!!.rvFreelancerHome.apply {
-                        val email = arguments?.getString("email")
-                        rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, status)
-                        adapter = rvAdapter
-                        layoutManager = LinearLayoutManager(requireContext())
-                    }
+//                    _binding!!.rvFreelancerHome.apply {
+//                        val email = arguments?.getString("email")
+//                        rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, status)
+//                        adapter = rvAdapter
+//                        layoutManager = LinearLayoutManager(requireContext())
+//                    }
+                    updateRecyclerView(status)
                 } else{
-                    Log.d("TestActivity", "Error: ${response.code()}")
+                    Log.d("BookingsFragment", "Error: ${response.code()}")
+                    Toast.makeText(requireContext(), "Failed to load bookings", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<List<Booking>>, t: Throwable) {
+                swipeRefreshLayout.isRefreshing = false
                 Log.d("BookingsFragmentChecker", "${t}")
             }
 
         })
 
+    }
+
+    private fun updateRecyclerView(status: Int) {
+        _binding!!.rvFreelancerHome.apply {
+            val email = arguments?.getString("email")
+            rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, status)
+            adapter = rvAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+
+            // Force a refresh of the RecyclerView
+            post {
+                rvAdapter.notifyDataSetChanged()
+            }
+        }
     }
 
     companion object {
