@@ -135,18 +135,6 @@ class PaymentActivity : AppCompatActivity() {
                             val intent = Intent(Intent.ACTION_VIEW, url)
                             startActivity(intent)
 
-/*                            setupInvoiceLink(
-                                textInvoiceLink,
-                                invoiceResponse?.get("invoiceUrl")?.asString
-                            )*/
-
-
-//                            Toast.makeText(
-//                                this@PaymentActivity,
-//                                "Invoice URL has been generated, please click the 'Invoice Link' to copy it to your clipboard",
-//                                Toast.LENGTH_LONG
-//                            ).show()
-                            // Log.d("Invoice URL", invoiceResponse?.string() ?: "Example invoice link")
                             Log.d(
                                 "Invoice URL",
                                 invoiceResponse?.toString() ?: "Example invoice link"

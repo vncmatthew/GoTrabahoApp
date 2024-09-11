@@ -32,6 +32,7 @@ import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.Model.Negotiation
 import com.example.gotrabahomobile.Model.UserFirebase
+import com.example.gotrabahomobile.Notification.FcmNotificationSender
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
 import com.example.gotrabahomobile.Remote.NegotiationRemote.NegotiationInstance
 import com.google.firebase.auth.FirebaseAuth
@@ -85,7 +86,13 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
         createNotifChannel()
 
-
+        val fcmNotificationsSender = FcmNotificationSender(
+            "token here",
+            "Successfully Created a Booking!",
+            "body",
+            this
+        )
+        fcmNotificationsSender.SendNotifications();
         //back button
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{

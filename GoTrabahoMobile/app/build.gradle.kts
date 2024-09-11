@@ -42,6 +42,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
+
+    packagingOptions{
+        exclude("META-INF/DEPENDENCIES")
+    }
 }
 
 dependencies {
@@ -52,7 +58,12 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.gms:play-services-location:21.1.0")
     implementation("com.google.android.gms:play-services-maps:19.0.0")
+
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+    implementation("com.google.firebase:firebase-functions-ktx:21.0.0")
+    implementation("com.google.firebase:protolite-well-known-types:18.0.0")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -72,20 +83,21 @@ dependencies {
     implementation ("org.osmdroid:osmdroid-android:6.1.18")
 
     //firebase
+
     implementation(platform("com.google.firebase:firebase-bom:32.7.2"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
-    implementation("com.google.firebase:firebase-auth-ktx:22.3.1")
-    implementation("com.google.firebase:firebase-database-ktx:20.3.0")
-    implementation("com.google.firebase:firebase-firestore-ktx:24.10.2")
-    implementation("com.google.firebase:firebase-messaging-ktx:23.4.1")
+    implementation("com.google.firebase:firebase-database")
 
-    implementation ("org.danilopianini:khttp:1.3.2")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.11.0")
 
-    implementation ("io.ktor:ktor-client-android:2.3.12")
+    implementation("org.danilopianini:khttp:1.3.2")
+
+    implementation("io.ktor:ktor-client-android:2.3.12")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.1")
+    implementation("com.android.volley:volley:1.2.1")
 
-
-    implementation ("com.github.1902shubh:SendMail:1.0.0")
+    implementation("com.github.1902shubh:SendMail:1.0.0")
 
 }

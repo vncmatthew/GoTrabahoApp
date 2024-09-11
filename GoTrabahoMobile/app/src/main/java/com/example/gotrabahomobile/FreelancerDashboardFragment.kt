@@ -1,10 +1,28 @@
 package com.example.gotrabahomobile
 
 import android.os.Bundle
+import android.preference.PreferenceManager
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.DTO.BookingUserDTO
+import com.example.gotrabahomobile.DTO.FreelancerDashboard
+import com.example.gotrabahomobile.Helper.ActivityRecycleViewAdapter
+import com.example.gotrabahomobile.Model.Booking
+import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
+import com.example.gotrabahomobile.databinding.FragmentCustomerActivityBinding
+import com.example.gotrabahomobile.databinding.FragmentFreelancerDashboardBinding
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +38,8 @@ class FreelancerDashboardFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var _binding: FragmentFreelancerDashboardBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +53,29 @@ class FreelancerDashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_freelancer_dashboard, container, false)
+        _binding = FragmentFreelancerDashboardBinding.inflate(inflater, container, false)
+        arguments?.let {
+            var Id = it.getInt("serviceId", 0)
+            var userId = it.getInt("userId", 0)
+            var freelancerId = it.getInt("freelancerId", 0)
+            var firstName = it.getString("firstName").toString()
+            var lastName = it.getString("lastName").toString()
+            var email = it.getString("email").toString()
+
+        }
+        return _binding!!.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        // Initialize RecyclerView
+        var totalEarnings = view.findViewById<TextView>(R.id.TotalEarnings)
+        var pendingBookings = view.findViewById<TextView>(R.id.PendingBookings)
+        var totalBookings = view.findViewById<TextView>(R.id.TotalBookings)
+        getDashboard(totalEarnings, pendingBookings,totalBookings)
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -55,5 +94,28 @@ class FreelancerDashboardFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    fun getDashboard(totalEarnings: TextView, pendingBookings: TextView, totalBooking: TextView){
+        val freelancer = FreelancerInstance.retrofitBuilder
+        val freelancerId = arguments?.getInt("freelancerId")
+        freelancer.getDashboard(freelancerId!!).enqueue(object: Callback<FreelancerDashboard>{
+            override fun onResponse(
+                call: Call<FreelancerDashboard>,
+                response: Response<FreelancerDashboard>
+            ) {
+                if(response.isSuccessful){
+                    totalEarnings.text = response.body()!!.totalEarnings?.toString()
+                    pendingBookings.text = response.body()!!.pendingJobs?.toString()
+                    totalBooking.text = response.body()!!.totalBookings?.toString()
+                }
+            }
+
+            override fun onFailure(call: Call<FreelancerDashboard>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
     }
 }

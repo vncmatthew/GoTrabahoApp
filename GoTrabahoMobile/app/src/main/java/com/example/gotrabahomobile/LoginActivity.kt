@@ -27,12 +27,12 @@ import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.messaging.FirebaseMessaging
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 import kotlinx.serialization.json.Json
-import org.w3c.dom.Text
 
 class LoginActivity : AppCompatActivity() {
 
@@ -82,7 +82,9 @@ class LoginActivity : AppCompatActivity() {
         txt_signup.text = spanString
         txt_signup.movementMethod = LinkMovementMethod.getInstance()
         btn_login.setOnClickListener{loginUser()}
-
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener { task ->
+            Log.e("token: ", " ${task.result}")
+        }
 
         passwordFocusListener()
         emailFocusListener()
@@ -92,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
+
 
 
     private fun checkLocationPermissions() {
@@ -190,7 +193,9 @@ class LoginActivity : AppCompatActivity() {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener(this) {
                             if (it.isSuccessful) {
-
+                                FirebaseMessaging.getInstance().getToken().addOnCompleteListener { task ->
+                                    Log.e("token: ", " ${task.result}")
+                                }
                                 if(userType == 1) {
                                     val intent =
                                         Intent(this@LoginActivity, CustomerMainActivity::class.java)
@@ -325,6 +330,8 @@ class LoginActivity : AppCompatActivity() {
 
         return "Password or Email is wrong"
     }
+
+
 
 }
 
