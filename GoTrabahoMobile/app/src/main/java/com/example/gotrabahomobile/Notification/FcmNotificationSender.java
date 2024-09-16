@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.annotation.NonNull;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -45,26 +46,30 @@ public class FcmNotificationSender {
         this.context = context;
     }
 
-    public void SendNotifications(){
+    public void sendNotifications() {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JSONObject mainObj = new JSONObject();
-        try{
-            JSONObject messageObjext =new JSONObject();
-            JSONObject notificationObject = new JSONObject();
-            notificationObject.put("title", title);
-            notificationObject.put("body", body);
-            notificationObject.put("token", userFcmToken);
-            notificationObject.put("notification", notificationObject);
-            mainObj.put("message", messageObjext);
+        try {
+            JSONObject messageObj = new JSONObject();
+            JSONObject notificationObj = new JSONObject();
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, postUrl, mainObj, response ->{
+            notificationObj.put("title", title);
+            notificationObj.put("body", body);
 
-            }, volleyError -> {
+            messageObj.put("notification", notificationObj);
+            messageObj.put("to", userFcmToken); // Changed from "token" to "to"
 
-            }){
-                @NonNull
+            mainObj.put("message", messageObj);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, postUrl, mainObj,
+                    response -> {
+                        // Handle successful response
+                    },
+                    error -> {
+                        // Handle error
+                    }) {
                 @Override
-                public Map<String, String> getHeaders(){
+                public Map<String, String> getHeaders() throws AuthFailureError {
                     AccessToken accessToken = null;
                     try {
                         accessToken = new AccessToken(jsonString);
@@ -72,16 +77,17 @@ public class FcmNotificationSender {
                         throw new RuntimeException(e);
                     }
                     String accessKey = accessToken.getAccessToken();
-                    Map<String,String> header = new HashMap<>();
-                    header.put("content-type", "application/json");
-                    header.put("authorization", "Bearer " + accessKey);
-                    return header;
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "Bearer " + accessKey);
+                    return headers;
                 }
             };
 
             requestQueue.add(request);
-        } catch(JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
 }

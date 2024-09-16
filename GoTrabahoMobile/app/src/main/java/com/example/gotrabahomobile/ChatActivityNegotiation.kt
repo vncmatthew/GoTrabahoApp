@@ -87,12 +87,12 @@ class ChatActivityNegotiation : AppCompatActivity() {
         createNotifChannel()
 
         val fcmNotificationsSender = FcmNotificationSender(
-            "token here",
+            "fWlMGibNR12bTArtQtX4Vz:APA91bGB0kRRjolDgNLSfeCPesmZVa7SKtT8j60PgN1DycnatkI9IvQtIwbJf8Ko06eNJxerLqRVGx3ZLTJ5YLnbtE9T9QrdlTJgVZnENyq3tFspSS-zMFvvRUAj4-aYyc-ZQmNcUvdV",
             "Successfully Created a Booking!",
             "body",
             this
         )
-        fcmNotificationsSender.SendNotifications();
+        fcmNotificationsSender.sendNotifications()
         //back button
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{

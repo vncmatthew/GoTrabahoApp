@@ -22,6 +22,7 @@ import androidx.core.app.ActivityCompat
 import com.example.gotrabahomobile.Model.Freelancer
 import com.example.gotrabahomobile.Model.Login
 import com.example.gotrabahomobile.Model.User
+import com.example.gotrabahomobile.Notification.FcmNotificationSender
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.Remote.UserRemote.UserInstance
 import com.google.android.material.textfield.TextInputLayout
@@ -86,6 +87,13 @@ class LoginActivity : AppCompatActivity() {
             Log.e("token: ", " ${task.result}")
         }
 
+        val fcmNotificationsSender = FcmNotificationSender(
+            "fWlMGibNR12bTArtQtX4Vz:APA91bGB0kRRjolDgNLSfeCPesmZVa7SKtT8j60PgN1DycnatkI9IvQtIwbJf8Ko06eNJxerLqRVGx3ZLTJ5YLnbtE9T9QrdlTJgVZnENyq3tFspSS-zMFvvRUAj4-aYyc-ZQmNcUvdV",
+            "Successfully Created a Booking!",
+            "body",
+            this
+        )
+        fcmNotificationsSender.sendNotifications()
         passwordFocusListener()
         emailFocusListener()
         btn_login.setOnClickListener{

@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile.Remote.RatingRemote
 
+import com.example.gotrabahomobile.DTO.RatingListDTO
 import com.example.gotrabahomobile.Model.Notifications
 import com.example.gotrabahomobile.Model.Rating
 import okhttp3.ResponseBody
@@ -13,6 +14,9 @@ import retrofit2.http.Path
 interface RatingInterface {
     @GET("api/Rating")
     fun getRatings(): Call<List<Rating>>
+
+    @GET("api/Rating/RatingFreelancerList/{freelancerId}")
+    fun getFreelancerRatings(@Path("freelancerId") freelancerId:Int): Call<List<RatingListDTO>>
 
     @GET("api/Rating/RatingPerService/{serviceId}")
     fun getRatingPerService(@Path("serviceId") serviceId:Int): Call<List<Rating>>

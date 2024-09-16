@@ -2,6 +2,8 @@ package com.example.gotrabahomobile.Remote.ServicesRemote
 
 import com.example.gotrabahomobile.DTO.FreelancerLocations
 import com.example.gotrabahomobile.DTO.ServicesWUserId
+import com.example.gotrabahomobile.DTO.SubService
+import com.example.gotrabahomobile.DTO.SubServicesTypes
 import com.example.gotrabahomobile.Model.Freelancer
 
 import com.example.gotrabahomobile.Model.Services
@@ -51,6 +53,10 @@ interface ServicesInterface {
 
     @GET("api/Services/List/{serviceTypeName}")
     fun getServicesType(@Path("serviceTypeName") serviceTypeName: String?): Call<List<ServicesWUserId>>
+    @GET("api/SubServicesType/{subServiceType}")
+    fun getSubServicesPerService(@Path("subServiceType") subServiceType: String?): Call<List<SubServicesTypes>>
 
+    @POST("api/SubServices")
+    fun insertSubService(@Body request: SubService): Call<SubService>
 
 }
