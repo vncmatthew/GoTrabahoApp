@@ -25,6 +25,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".FreelancerViewRatingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddSubserviceActivity"
+            android:exported="false" />
+        <activity
             android:name=".FreelancerOTPActivity"
             android:exported="false" />
         <activity
@@ -203,19 +209,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".Notification.MessageService"
+
+        <service
+            android:name=".Notification.MessageService"
             android:exported="false"
             android:permission="TODO">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-                <action android:name="com.google.android.c2dm.intent.RECIEVE"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECIEVE" />
             </intent-filter>
         </service>
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="Notification"/>
+            android:value="Notification" />
     </application>
 
 </manifest>

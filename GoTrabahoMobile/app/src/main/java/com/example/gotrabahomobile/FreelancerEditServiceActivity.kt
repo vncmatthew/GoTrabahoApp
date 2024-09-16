@@ -48,6 +48,7 @@ class FreelancerEditServiceActivity : AppCompatActivity() {
             finish()
         }
 
+
         binding.buttonEditServiceCancel.setOnClickListener {
             Log.d("ButtonClick", "Cancel button clicked")
             finish()

@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
@@ -17,8 +18,10 @@ import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Remote.FreelancerRemote.FreelancerInstance
 import com.example.gotrabahomobile.databinding.FragmentCustomerActivityBinding
 import com.example.gotrabahomobile.databinding.FragmentFreelancerDashboardBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import org.w3c.dom.Text
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -74,7 +77,79 @@ class FreelancerDashboardFragment : Fragment() {
         var totalEarnings = view.findViewById<TextView>(R.id.TotalEarnings)
         var pendingBookings = view.findViewById<TextView>(R.id.PendingBookings)
         var totalBookings = view.findViewById<TextView>(R.id.TotalBookings)
+
+        val viewPending = view.findViewById<TextView>(R.id.ViewPendingBookings)
+        val viewTotalBookings = view.findViewById<TextView>(R.id.ViewTotalBookings)
+
         getDashboard(totalEarnings, pendingBookings,totalBookings)
+
+        viewTotalBookings.setOnClickListener {
+
+            val userId = arguments?.getInt("userId", 0) ?: 0
+            val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
+            val firstName = arguments?.getString("firstName")
+            val lastName = arguments?.getString("lastName")
+            val email = arguments?.getString("email")
+            val fullName = arguments?.getString("fullName")
+
+            val bundle = Bundle().apply {
+                putInt("userId", userId)
+                putInt("freelancerId", freelancerId)
+                putString("firstName", firstName)
+                putString("lastName", lastName)
+                putString("email", email)
+                putString("fullName", fullName)
+                putInt("initialTab", 3)
+            }
+
+            val bookingsFragment = BookingsFragment().apply {
+                arguments = bundle
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.freelancerMainContainer, bookingsFragment)
+                .addToBackStack(null)
+                .commit()
+
+            updateNavigationBarState(R.id.bookingsFragment)
+        }
+
+        viewPending.setOnClickListener {
+
+            val userId = arguments?.getInt("userId", 0) ?: 0
+            val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
+            val firstName = arguments?.getString("firstName")
+            val lastName = arguments?.getString("lastName")
+            val email = arguments?.getString("email")
+            val fullName = arguments?.getString("fullName")
+
+            val bundle = Bundle().apply {
+                putInt("userId", userId)
+                putInt("freelancerId", freelancerId)
+                putString("firstName", firstName)
+                putString("lastName", lastName)
+                putString("email", email)
+                putString("fullName", fullName)
+            }
+
+            val bookingsFragment = BookingsFragment().apply {
+                arguments = bundle
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.freelancerMainContainer, bookingsFragment)
+                .addToBackStack(null)
+                .commit()
+
+            updateNavigationBarState(R.id.bookingsFragment)
+
+//            val intent = Intent(activity, FreelancerMainActivity::class.java).apply {
+//                putExtras(bundle)
+//            }
+//
+//            activity?.startActivity(intent)
+
+        }
     }
     companion object {
         /**
@@ -105,7 +180,7 @@ class FreelancerDashboardFragment : Fragment() {
                 response: Response<FreelancerDashboard>
             ) {
                 if(response.isSuccessful){
-                    totalEarnings.text = response.body()!!.totalEarnings?.toString()
+                    totalEarnings.text = "₱ " + response.body()!!.totalEarnings?.toString()
                     pendingBookings.text = response.body()!!.pendingJobs?.toString()
                     totalBooking.text = response.body()!!.totalBookings?.toString()
                 }
@@ -118,4 +193,17 @@ class FreelancerDashboardFragment : Fragment() {
         })
 
     }
+
+    fun updateNavigationBarState(tabId: Int) {
+        activity?.let { activity ->
+            val bottomNavigationView =
+                activity.findViewById<BottomNavigationView>(R.id.freelancerBottomNavigationView)
+            when (tabId) {
+                R.id.bookingsFragment -> {
+                    bottomNavigationView.menu.findItem(R.id.bookingsFragment)?.isChecked = true
+                }
+            }
+        }
+    }
+
 }

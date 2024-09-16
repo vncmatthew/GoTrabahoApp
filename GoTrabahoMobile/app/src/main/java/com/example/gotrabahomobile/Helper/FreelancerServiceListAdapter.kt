@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gotrabahomobile.AddSubserviceActivity
 import com.example.gotrabahomobile.DTO.UserDetails
 import com.example.gotrabahomobile.FreelancerEditServiceActivity
 import com.example.gotrabahomobile.Model.Services
@@ -82,7 +83,23 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
         holder.binding.apply {
             editInfoServiceName.text = "${services.name}"
             editInfoDescription.text = "${services.description}"
-            editInfoPrice.text = "${services.priceEstimate}"
+            editInfoPrice.text = "₱ ${services.priceEstimate}"
+
+            holder.binding.buttonAddSubService.setOnClickListener {
+                val intent = Intent(context, AddSubserviceActivity::class.java)
+                intent.putExtra("serviceId", services.serviceId)
+                intent.putExtra("serviceTypeName", services.serviceTypeName)
+                intent.putExtra("status", services.status)
+                intent.putExtra("rating", services.rating)
+                intent.putExtra("freelancerId", services.freelancerId)
+                intent.putExtra("userId", UserDetails.userId)
+                intent.putExtra("firstName", UserDetails.firstName)
+                intent.putExtra("lastName", UserDetails.lastName)
+                intent.putExtra("fullName", UserDetails.fullName)
+                intent.putExtra("email", UserDetails.email)
+                intent.putExtra("showService", services.showService)
+                context.startActivity(intent)
+            }
 
             holder.binding.buttonEditService.setOnClickListener {
                 val intent = Intent(context, FreelancerEditServiceActivity::class.java)

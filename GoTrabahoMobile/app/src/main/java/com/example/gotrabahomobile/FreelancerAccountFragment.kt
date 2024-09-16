@@ -58,6 +58,7 @@ class FreelancerAccountFragment : Fragment() {
         val name = freelancerCardProfile.findViewById<TextView>(R.id.customerName)
         val freelancerCardLogout = view.findViewById<androidx.cardview.widget.CardView>(R.id.freelancerLogout)
         val customCardViewAddPayment = view.findViewById<androidx.cardview.widget.CardView>(R.id.cardAddPaymentMethod)
+        val viewRatings = view.findViewById<androidx.cardview.widget.CardView>(R.id.viewRatings)
 
         val userId = arguments?.getInt("userId", 0) ?: 0
         val freelancerId = arguments?.getInt("freelancerId", 0) ?: 0
@@ -81,6 +82,18 @@ class FreelancerAccountFragment : Fragment() {
             }
 
         }
+
+        viewRatings.setOnClickListener {
+            val intent = Intent(requireActivity(), FreelancerViewRatingsActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("freelancerId", freelancerId)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("email", email)
+            startActivity(intent)
+        }
+
         freelancerCardProfile.setOnClickListener{
             val intent = Intent(requireActivity(), FreelancerProfileMenuActivity::class.java)
             intent.putExtra("userId", userId)

@@ -1,6 +1,8 @@
 package com.example.gotrabahomobile.Helper
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -18,6 +20,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.gotrabahomobile.BookingsFragment
 import com.example.gotrabahomobile.Model.Booking
 import com.example.gotrabahomobile.Model.Chat
 import com.example.gotrabahomobile.Model.ChatRoom
@@ -42,7 +46,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.atomic.AtomicInteger
 
-class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context, private val email: String?, private val status: Int): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
+class BookingFreelancerAdapter(private val bookingList: List<Booking>, private val context: Context, private val email: String?, private val status: Int, private val swipeRefreshLayout: SwipeRefreshLayout, private val fragment: BookingsFragment): RecyclerView.Adapter<BookingFreelancerAdapter.BookingViewHolder>() {
 
     val CHANNEL_ID ="channelID"
     val CHANNEL_NAME ="channelName"
@@ -63,7 +67,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
         return bookingList.size
     }
 
-    override fun onBindViewHolder(holder: BookingViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BookingViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val currentItem = bookingList[position]
         val call = ServicesInstance.retrofitBuilder
         createNotifChannel()
@@ -117,6 +121,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                             intent.putExtra("bookingId", currentItem.bookingId)
                                                             intent.putExtra("email", email)
                                                             context.startActivity(intent)
+
                                                         }
                                                     }
 
@@ -132,69 +137,72 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
-                                            val book = BookingInstance.retrofitBuilder
+                                            showCancellationConfirmationDialog(position)
+                         /*                   val book = BookingInstance.retrofitBuilder*/
 
-                                            currentItem.bookingId?.let { it2 ->
-                                                book.getBooking(it2).enqueue(object : Callback<Booking> {
-                                                    override fun onResponse(
-                                                        call: Call<Booking>,
-                                                        response: Response<Booking>
-                                                    ) {
-                                                        if(response.isSuccessful){
-                                                            negoIdholder = response.body()!!.negotiationId
-                                                        }
-                                                    }
 
-                                                    override fun onFailure(
-                                                        call: Call<Booking>,
-                                                        t: Throwable
-                                                    ) {
-                                                        TODO("Not yet implemented")
-                                                    }
-
-                                                })
-                                            }
-
-                                            val updatedBook = Booking(
-                                                bookingId = currentItem.bookingId,
-                                                customerId = currentItem.customerId,
-                                                bookingDatetime = currentItem.bookingDatetime,
-                                                amount = currentItem.amount,
-                                                bookingStatus = 6,
-                                                serviceId = currentItem.serviceId,
-                                                serviceFee = currentItem.serviceFee,
-                                                negotiationId = null,
-                                                paymentStatus =  currentItem.paymentStatus,
-                                                refundFreelancer = 1
-                                            )
-                                            book.updateBooking(
-                                                currentItem.bookingId.toString(),
-                                                updatedBook
-                                            ).enqueue(
-                                                object : retrofit2.Callback<ResponseBody> {
-                                                    override fun onResponse(
-                                                        call: Call<ResponseBody>,
-                                                        response: Response<ResponseBody>
-                                                    ) {
-                                                        if (response.isSuccessful) {
-                                                            Log.d(
-                                                                "Booking",
-                                                                "Successfully Updated to 6"
-                                                            )
-                                                            notifMessage("The booking has been cancelled", "Thank you for your service")
-                                                        }
-                                                    }
-
-                                                    override fun onFailure(
-                                                        call: Call<ResponseBody>,
-                                                        t: Throwable
-                                                    ) {
-                                                        TODO("Not yet implemented")
-                                                    }
-
-                                                })
-
-                                            deleteNego(currentItem.bookingId!!)
+//
+//                                            currentItem.bookingId?.let { it2 ->
+//                                                book.getBooking(it2).enqueue(object : Callback<Booking> {
+//                                                    override fun onResponse(
+//                                                        call: Call<Booking>,
+//                                                        response: Response<Booking>
+//                                                    ) {
+//                                                        if(response.isSuccessful){
+//                                                            negoIdholder = response.body()!!.negotiationId
+//                                                        }
+//                                                    }
+//
+//                                                    override fun onFailure(
+//                                                        call: Call<Booking>,
+//                                                        t: Throwable
+//                                                    ) {
+//                                                        TODO("Not yet implemented")
+//                                                    }
+//
+//                                                })
+//                                            }
+//
+//                                            val updatedBook = Booking(
+//                                                bookingId = currentItem.bookingId,
+//                                                customerId = currentItem.customerId,
+//                                                bookingDatetime = currentItem.bookingDatetime,
+//                                                amount = currentItem.amount,
+//                                                bookingStatus = 6,
+//                                                serviceId = currentItem.serviceId,
+//                                                serviceFee = currentItem.serviceFee,
+//                                                negotiationId = null,
+//                                                paymentStatus =  currentItem.paymentStatus,
+//                                                refundFreelancer = 1
+//                                            )
+//                                            book.updateBooking(
+//                                                currentItem.bookingId.toString(),
+//                                                updatedBook
+//                                            ).enqueue(
+//                                                object : retrofit2.Callback<ResponseBody> {
+//                                                    override fun onResponse(
+//                                                        call: Call<ResponseBody>,
+//                                                        response: Response<ResponseBody>
+//                                                    ) {
+//                                                        if (response.isSuccessful) {
+//                                                            Log.d(
+//                                                                "Booking",
+//                                                                "Successfully Updated to 6"
+//                                                            )
+//                                                            notifMessage("The booking has been cancelled", "Thank you for your service")
+//                                                        }
+//                                                    }
+//
+//                                                    override fun onFailure(
+//                                                        call: Call<ResponseBody>,
+//                                                        t: Throwable
+//                                                    ) {
+//                                                        TODO("Not yet implemented")
+//                                                    }
+//
+//                                                })
+//
+//                                            deleteNego(currentItem.bookingId!!)
 
 
                                         }
@@ -461,6 +469,70 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 Log.w("Firebase", "Error deleting chatroom: ", exception)
                 completion(false)
             }
+    }
+
+    private fun showCancellationConfirmationDialog(position: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setMessage("Are you sure you want to cancel this booking?")
+            .setPositiveButton("Yes") { dialog, id ->
+                cancelBooking(position)
+            }
+            .setNegativeButton("No") { dialog, id ->
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
+
+    private fun cancelBooking(position: Int) {
+        val currentItem = bookingList[position]
+        val book = BookingInstance.retrofitBuilder
+
+        currentItem.bookingId?.let { it2 ->
+            book.getBooking(it2).enqueue(object : Callback<Booking> {
+                override fun onResponse(call: Call<Booking>, response: Response<Booking>) {
+                    if(response.isSuccessful){
+                        negoIdholder = response.body()!!.negotiationId
+                    }
+                }
+
+                override fun onFailure(call: Call<Booking>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+
+        val updatedBook = Booking(
+            bookingId = currentItem.bookingId,
+            customerId = currentItem.customerId,
+            bookingDatetime = currentItem.bookingDatetime,
+            amount = currentItem.amount,
+            bookingStatus = 6,
+            serviceId = currentItem.serviceId,
+            serviceFee = currentItem.serviceFee,
+            negotiationId = null,
+            paymentStatus =  currentItem.paymentStatus,
+            refundFreelancer = 1
+        )
+        book.updateBooking(
+            currentItem.bookingId.toString(),
+            updatedBook
+        ).enqueue(object : retrofit2.Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                if (response.isSuccessful) {
+                    Log.d("Booking", "Successfully Updated to 6")
+                    notifMessage("The booking has been cancelled", "Thank you for your service")
+                    swipeRefreshLayout.isRefreshing = true // Start refreshing animation
+                    fragment.refreshData()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        deleteNego(currentItem.bookingId!!)
     }
 
 }

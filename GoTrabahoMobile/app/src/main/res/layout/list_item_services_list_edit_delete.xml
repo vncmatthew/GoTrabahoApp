@@ -59,6 +59,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editInfoDescription" />
 
+            <Button
+                android:id="@+id/buttonAddSubService"
+                android:layout_width="160dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="18dp"
+                android:backgroundTint="@color/gt_green2"
+                android:text="Add Sub-service"
+                android:textColor="@color/white"
+                android:textSize="14dp"
+                app:cornerRadius="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editInfoPrice" />
+
             <TextView
                 android:id="@+id/switchLabel"
                 android:layout_width="wrap_content"
@@ -96,7 +110,7 @@
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editInfoPrice" />
+                app:layout_constraintTop_toBottomOf="@+id/buttonAddSubService" />
 
             <Button
                 android:id="@+id/buttonDeleteService"
@@ -109,12 +123,12 @@
                 android:text="Delete"
                 android:textColor="@color/white"
                 android:textSize="14dp"
-
-
                 app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/buttonEditService"
-                app:layout_constraintTop_toBottomOf="@+id/editInfoPrice" />
+                app:layout_constraintTop_toBottomOf="@+id/buttonAddSubService" />
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

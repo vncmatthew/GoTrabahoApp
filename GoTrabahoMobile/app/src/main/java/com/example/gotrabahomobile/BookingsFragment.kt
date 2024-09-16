@@ -82,6 +82,7 @@ class BookingsFragment : Fragment() {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
+                refreshData()
             }
 
             override fun onNothingSelected(parent: AdapterView<*>) {
@@ -124,6 +125,7 @@ class BookingsFragment : Fragment() {
                     Log.e("BookingsFragment", "selectedService is null")
                     Toast.makeText(requireContext(), "Please select a service", Toast.LENGTH_SHORT).show()
                 }
+                updateRecyclerView(status)
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -133,12 +135,13 @@ class BookingsFragment : Fragment() {
             }
 
         })
-        tabLayout.getTabAt(0)?.select()
+        val initialTabIndex = arguments?.getInt("initialTab") ?: 0
+        tabLayout.getTabAt(initialTabIndex)?.select()
         Log.d("BookingsFragment", freelancerId.toString())
         Log.d("BookingsFragment", "${email}")
     }
 
-    private fun refreshData() {
+    fun refreshData() {
         val status = binding.tabLayout.selectedTabPosition + 1
         selectedService?.let {
             getBookingList(status, it)
@@ -188,7 +191,7 @@ class BookingsFragment : Fragment() {
     private fun updateRecyclerView(status: Int) {
         _binding!!.rvFreelancerHome.apply {
             val email = arguments?.getString("email")
-            rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, status)
+            rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, 1, swipeRefreshLayout, this@BookingsFragment)
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(requireContext())
 

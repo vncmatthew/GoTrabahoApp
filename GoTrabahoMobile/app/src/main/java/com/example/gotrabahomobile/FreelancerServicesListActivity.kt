@@ -38,8 +38,6 @@ class FreelancerServicesListActivity : AppCompatActivity() {
         setContentView(binding.root)
         servicesList = listOf()
 
-
-
         val backButton: ImageButton = findViewById(R.id.back_buttonNavbar)
         backButton.setOnClickListener{
             finish()

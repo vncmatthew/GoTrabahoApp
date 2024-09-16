@@ -23,8 +23,8 @@
         android:id="@+id/profilePicture"
         android:src="@drawable/icon_profile"
         android:scaleType="centerCrop"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="30dp"
         app:shapeAppearanceOverlay="@drawable/circle_border"/>
 
@@ -33,7 +33,7 @@
             android:layout_width="193dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="35dp"
             android:layout_toEndOf="@+id/profilePicture"
             android:text="@string/customerName"
             android:textSize="20sp" />
@@ -42,7 +42,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="35dp"
             android:layout_toEndOf="@+id/customerName"
             android:src="@drawable/rightarrow_icon" />
 

@@ -44,6 +44,16 @@
         app:layout_constraintTop_toBottomOf="@+id/addNewService" />
 
     <include
+        android:id="@+id/viewRatings"
+        layout="@layout/list_item_view_ratings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editServices" />
+
+    <include
         android:id="@+id/freelancerReportBug"
         layout="@layout/list_item_report_bug"
         android:layout_width="match_parent"
@@ -61,7 +71,7 @@
         android:layout_marginTop="2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editServices" />
+        app:layout_constraintTop_toBottomOf="@+id/viewRatings" />
 
     <include
         android:id="@+id/freelancerLogout"
