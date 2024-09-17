@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +20,7 @@ import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
+import com.example.gotrabahomobile.SubservicesFragment
 import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -77,19 +79,17 @@ class CustomerHomeFragment : Fragment() {
         _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
 
 
-
-
-        val longitude = arguments?.getDouble("longitude", 0.0) ?: 0
-        val latitude = arguments?.getDouble("latitude", 0.0) ?: 0
-        val userId = arguments?.getInt("userId", 0) ?: 0
-        val buttonMapView: Button = _binding!!.buttonMapView
-        buttonMapView.setOnClickListener{
-            val intent = Intent(requireContext(), FreelancerListMapViewActivity::class.java)
-            intent.putExtra("longitude", longitude)
-            intent.putExtra("latitude", latitude)
-            intent.putExtra("sqlId", userId)
-            startActivity(intent)
-        }
+//        val longitude = arguments?.getDouble("longitude", 0.0) ?: 0
+//        val latitude = arguments?.getDouble("latitude", 0.0) ?: 0
+//        val userId = arguments?.getInt("userId", 0) ?: 0
+//        val buttonMapView: Button = _binding!!.buttonMapView
+//        buttonMapView.setOnClickListener{
+//            val intent = Intent(requireContext(), FreelancerListMapViewActivity::class.java)
+//            intent.putExtra("longitude", longitude)
+//            intent.putExtra("latitude", latitude)
+//            intent.putExtra("sqlId", userId)
+//            startActivity(intent)
+//        }
 
         //select service spinner
         val spinner: Spinner = _binding!!.spinnerServiceNameHome
@@ -123,6 +123,26 @@ class CustomerHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val backButton = view.findViewById<ImageButton>(R.id.back_buttonNavbar)
+
+        backButton.setOnClickListener {
+            val userId = arguments?.getInt("userId", 0) ?: 0
+
+            val bundle = Bundle().apply {
+                putInt("userId", userId)
+            }
+
+            val homeFragment = SubservicesFragment().apply {
+                arguments = bundle
+            }
+
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.mainContainer, homeFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
     }
 
     private fun getServiceList(select: String?){

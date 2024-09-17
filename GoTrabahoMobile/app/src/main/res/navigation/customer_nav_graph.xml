@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/customer_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/subservicesFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name ="com.example.gotrabahomobile.fragments.CustomerHomeFragment"
+        android:id="@+id/subservicesFragment"
+        android:name ="com.example.gotrabahomobile.SubservicesFragment"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_customer_home" />
+        tools:layout="@layout/fragment_subservices" />
     <fragment
         android:id="@+id/activityFragment"
         android:name="com.example.gotrabahomobile.fragments.CustomerActivityFragment"

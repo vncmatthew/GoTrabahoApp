@@ -20,6 +20,7 @@ import retrofit2.Response
 
 class FreelancerServiceListAdapter(private val servicesList: List<Services>, private val context: Context, private val UserDetails: UserDetails) : RecyclerView.Adapter<FreelancerServiceListAdapter.ServiceListViewHolder>() {
 
+    private var statusOn = false
     inner class ServiceListViewHolder(val binding: ListItemServicesListEditDeleteBinding) :
         RecyclerView.ViewHolder(binding.root) {
     }
@@ -86,64 +87,82 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
             editInfoPrice.text = "₱ ${services.priceEstimate}"
 
             holder.binding.buttonAddSubService.setOnClickListener {
-                val intent = Intent(context, AddSubserviceActivity::class.java)
-                intent.putExtra("serviceId", services.serviceId)
-                intent.putExtra("serviceTypeName", services.serviceTypeName)
-                intent.putExtra("status", services.status)
-                intent.putExtra("rating", services.rating)
-                intent.putExtra("freelancerId", services.freelancerId)
-                intent.putExtra("userId", UserDetails.userId)
-                intent.putExtra("firstName", UserDetails.firstName)
-                intent.putExtra("lastName", UserDetails.lastName)
-                intent.putExtra("fullName", UserDetails.fullName)
-                intent.putExtra("email", UserDetails.email)
-                intent.putExtra("showService", services.showService)
-                context.startActivity(intent)
+                if(statusOn){
+                    Toast.makeText(context, "Please turn Status to Inactive first before adding a sub-service", Toast.LENGTH_SHORT).show()
+                }else {
+                    val intent = Intent(context, AddSubserviceActivity::class.java)
+                    intent.putExtra("serviceId", services.serviceId)
+                    intent.putExtra("serviceTypeName", services.serviceTypeName)
+                    intent.putExtra("status", services.status)
+                    intent.putExtra("rating", services.rating)
+                    intent.putExtra("freelancerId", services.freelancerId)
+                    intent.putExtra("userId", UserDetails.userId)
+                    intent.putExtra("firstName", UserDetails.firstName)
+                    intent.putExtra("lastName", UserDetails.lastName)
+                    intent.putExtra("fullName", UserDetails.fullName)
+                    intent.putExtra("email", UserDetails.email)
+                    intent.putExtra("showService", services.showService)
+                    context.startActivity(intent)
+                }
             }
 
             holder.binding.buttonEditService.setOnClickListener {
-                val intent = Intent(context, FreelancerEditServiceActivity::class.java)
-                intent.putExtra("serviceId", services.serviceId)
-                intent.putExtra("serviceTypeName", services.serviceTypeName)
-                intent.putExtra("status", services.status)
-                intent.putExtra("rating", services.rating)
-                intent.putExtra("freelancerId", services.freelancerId)
-                intent.putExtra("userId", UserDetails.userId)
-                intent.putExtra("firstName", UserDetails.firstName)
-                intent.putExtra("lastName", UserDetails.lastName)
-                intent.putExtra("fullName", UserDetails.fullName)
-                intent.putExtra("email", UserDetails.email)
-                intent.putExtra("showService", services.showService)
-                context.startActivity(intent)
+                if(statusOn){
+                    Toast.makeText(context, "Please turn Status to Inactive first before editing", Toast.LENGTH_SHORT).show()
+                }else{
+                    val intent = Intent(context, FreelancerEditServiceActivity::class.java)
+                    intent.putExtra("serviceId", services.serviceId)
+                    intent.putExtra("serviceTypeName", services.serviceTypeName)
+                    intent.putExtra("status", services.status)
+                    intent.putExtra("rating", services.rating)
+                    intent.putExtra("freelancerId", services.freelancerId)
+                    intent.putExtra("userId", UserDetails.userId)
+                    intent.putExtra("firstName", UserDetails.firstName)
+                    intent.putExtra("lastName", UserDetails.lastName)
+                    intent.putExtra("fullName", UserDetails.fullName)
+                    intent.putExtra("email", UserDetails.email)
+                    intent.putExtra("showService", services.showService)
+                    context.startActivity(intent)
+                }
             }
 
             holder.binding.buttonDeleteService.setOnClickListener {
-                val service = ServicesInstance.retrofitBuilder
-                service.deleteService(services.serviceId!!).enqueue(object : Callback<Services> {
-                    override fun onResponse(call: Call<Services>, response: Response<Services>) {
-                        if (response.isSuccessful) {
-                            Toast.makeText(
-                                context,
-                                "Successfully Deleted The Service",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
+                if(statusOn){
+                    Toast.makeText(context, "Please turn Status to Inactive first before deleting", Toast.LENGTH_SHORT).show()
+                }else {
+                    val service = ServicesInstance.retrofitBuilder
+                    service.deleteService(services.serviceId!!)
+                        .enqueue(object : Callback<Services> {
+                            override fun onResponse(
+                                call: Call<Services>,
+                                response: Response<Services>
+                            ) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(
+                                        context,
+                                        "Successfully Deleted The Service",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
 
-                    override fun onFailure(call: Call<Services>, t: Throwable) {
-                        TODO("Not yet implemented")
-                    }
+                            override fun onFailure(call: Call<Services>, t: Throwable) {
+                                TODO("Not yet implemented")
+                            }
 
-                })
+                        })
+                }
             }
 
             holder.binding.ActiveStatusSwitch.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     changeStatusTrue(services.serviceId!!, services.freelancerId!!)
+                    statusOn = true
                     switchLabel.text = "Active"
 
                 } else {
                     changeStatusFalse(services.serviceId!!, services.freelancerId!!)
+                    statusOn = false
                     switchLabel.text = "Inactive"
                 }
 

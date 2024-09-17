@@ -9,6 +9,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import com.example.gotrabahomobile.Notification.FcmNotificationSender
 import com.example.gotrabahomobile.databinding.ActivityFreelancerMainBinding
 
 class FreelancerMainActivity : AppCompatActivity() {
@@ -20,7 +21,6 @@ class FreelancerMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFreelancerMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
@@ -60,7 +60,13 @@ class FreelancerMainActivity : AppCompatActivity() {
         val freelancerMessagesFragment = FreelancerMessagesFragment().apply { arguments = bundle }
         val freelancerAccountFragment = FreelancerAccountFragment().apply { arguments = bundle }
         val freelancerNegotiationFragment = FreelancerNegotiationFragment().apply { arguments = bundle }
-        val freelancerDashboardFragment = FreelancerDashboardFragment().apply { arguments = bundle }
+        val freelancerDashboardFragment = FreelancerDashboardFragment().apply {
+            arguments = bundle
+        }.also { fragment ->
+            fragment.arguments?.let { args ->
+                fragment.updateNavigationBarState(R.id.freelancerDashboardFragment)
+            }
+        }
 
 
         replaceFragment(bookingsFragment)
@@ -76,7 +82,10 @@ class FreelancerMainActivity : AppCompatActivity() {
             }
             true
         }
+
+
     }
+
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)

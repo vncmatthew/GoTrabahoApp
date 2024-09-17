@@ -55,13 +55,14 @@ class CustomerMainActivity : AppCompatActivity() {
         }
 
 
-        val customerHomeFragment = CustomerHomeFragment().apply { arguments = bundle }
+//        val customerHomeFragment = CustomerHomeFragment().apply { arguments = bundle }
+        val subservicesFragment = SubservicesFragment().apply { arguments = bundle }
         val customerActivityFragment = CustomerActivityFragment().apply { arguments = bundle }
         val customerMessagesFragment = CustomerMessagesFragment().apply { arguments = bundle }
         val customerAccountFragment = CustomerAccountFragment().apply { arguments = bundle }
 
 
-        replaceFragment(customerHomeFragment)
+        replaceFragment(subservicesFragment)
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
             != PackageManager.PERMISSION_GRANTED) {
@@ -76,7 +77,8 @@ class CustomerMainActivity : AppCompatActivity() {
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
-                R.id.homeFragment -> replaceFragment(customerHomeFragment)
+//                R.id.homeFragment -> replaceFragment(customerHomeFragment)
+                R.id.subservicesFragment -> replaceFragment(subservicesFragment)
                 R.id.activityFragment -> replaceFragment(customerActivityFragment)
                 R.id.customerMessagesFragment -> replaceFragment(customerMessagesFragment)
                 R.id.accountFragment -> replaceFragment(customerAccountFragment)

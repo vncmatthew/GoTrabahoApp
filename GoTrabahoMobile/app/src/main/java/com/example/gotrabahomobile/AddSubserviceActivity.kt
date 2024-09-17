@@ -1,6 +1,7 @@
 package com.example.gotrabahomobile
 
 import android.content.ContentValues
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,10 @@ class AddSubserviceActivity : AppCompatActivity() {
         subServiceSpinner = findViewById(R.id.spinnerSubservice)
         val backButton = findViewById<ImageButton>(R.id.back_buttonNavbar)
         val confirmSubservice = findViewById<Button>(R.id.buttonConfirmSubservice)
+
+        val serviceId = intent.getIntExtra("serviceId", 0)
+        val serviceType = intent.getStringExtra("serviceType")
+
         fetchSubService()
 
         backButton.setOnClickListener {
@@ -36,8 +41,10 @@ class AddSubserviceActivity : AppCompatActivity() {
             val selectedSubService = subServiceSpinner.selectedItem as SubServicesTypes
             val subServiceId = selectedSubService.subServiceTypeId
             addSubService(subServiceId!!)
-
-            finish()
+            val intent = Intent(this@AddSubserviceActivity, FreelancerServicesListActivity::class.java)
+            intent.putExtra("serviceId", serviceId)
+            intent.putExtra("serviceType", serviceType)
+            startActivity(intent)
         }
     }
 
@@ -47,7 +54,7 @@ class AddSubserviceActivity : AppCompatActivity() {
 
     private fun fetchSubService(){
         val call = ServicesInstance.retrofitBuilder
-        val serviceType = intent.getStringExtra("serviceType")
+        val serviceType = intent.getStringExtra("serviceTypeName")
         call.getSubServicesPerService(serviceType).enqueue(object: Callback<List<SubServicesTypes>>{
             override fun onResponse(
                 call: Call<List<SubServicesTypes>>,

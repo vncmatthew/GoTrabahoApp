@@ -1,5 +1,6 @@
 package com.example.gotrabahomobile
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
@@ -22,6 +23,8 @@ class FreelancerViewRatingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityFreelancerViewRatingsBinding.inflate(layoutInflater)
         setContentView(_binding.root)
+        val freelancerId = intent.getIntExtra("freelancerId",0)
+
         ratingList = listOf(
 
 
@@ -29,7 +32,9 @@ class FreelancerViewRatingsActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.back_buttonNavbar)
 
         backButton.setOnClickListener {
-            finish()
+            val intent = Intent(this, FreelancerAccountFragment::class.java)
+            intent.putExtra("freelancerId", freelancerId)
+            startActivity(intent)
         }
 
         getRatings()

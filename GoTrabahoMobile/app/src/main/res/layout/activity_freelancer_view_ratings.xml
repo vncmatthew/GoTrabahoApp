@@ -10,11 +10,14 @@
         android:id="@+id/include"
         layout="@layout/customer_toolbar_withbackbutton" />
 
-    <Spinner
-        android:id="@+id/spinnerServiceName"
-        android:layout_width="184dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="20dp"
+    <TextView
+        android:id="@+id/ratingsByCustomers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:text="Ratings by Customers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include" />
@@ -23,9 +26,9 @@
         android:id="@+id/rvRating"
         android:layout_width="409dp"
         android:layout_height="614dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerServiceName" />
+        app:layout_constraintTop_toBottomOf="@+id/ratingsByCustomers" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
