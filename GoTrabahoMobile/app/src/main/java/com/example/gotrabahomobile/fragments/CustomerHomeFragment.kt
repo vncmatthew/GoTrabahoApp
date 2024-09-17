@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gotrabahomobile.DTO.ServicesWUserId
 import com.example.gotrabahomobile.DTO.SubServicesTypes
@@ -53,6 +54,9 @@ class CustomerHomeFragment : Fragment() {
     private lateinit var rvAdapter: ServiceAdapter
     private lateinit var serviceList: List<ServicesWUserId>
     private var _binding: FragmentCustomerHomeBinding? = null
+
+
+
     private val binding get() = _binding!!
 
     private var email: String? = null
@@ -77,11 +81,6 @@ class CustomerHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
-
-
-
-
-
         return _binding!!.root
     }
 
@@ -89,8 +88,11 @@ class CustomerHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val backButton = view.findViewById<ImageButton>(R.id.back_buttonNavbar)
+        subServiceSpinner = binding.spinnerServiceNameHome
 
+        fetchSubService()
+
+        val backButton = view.findViewById<ImageButton>(R.id.back_buttonNavbar)
         backButton.setOnClickListener {
             val userId = arguments?.getInt("userId", 0) ?: 0
 
@@ -107,11 +109,39 @@ class CustomerHomeFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-
-        val selectedSubService = subServiceSpinner.selectedItem as SubServicesTypes
-        val subServiceId = selectedSubService.subServiceTypeId
-        getServiceList(subServiceId!!)
     }
+
+    private fun fetchSubService() {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            val call = ServicesInstance.retrofitBuilder
+            val serviceType = arguments?.getString("serviceTypeName")
+            call.getSubServicesPerService(serviceType).enqueue(object : Callback<List<SubServicesTypes>> {
+                override fun onResponse(call: Call<List<SubServicesTypes>>, response: Response<List<SubServicesTypes>>) {
+                    if (response.isSuccessful) {
+                        val subserviceResponse = response.body()
+                        if (subserviceResponse != null) {
+                            val adapter = SubServiceAdapter(requireContext(), subserviceResponse)
+                            subServiceSpinner.adapter = adapter
+
+                            // Now it's safe to get the selected item
+                            val selectedSubService = subServiceSpinner.selectedItem as? SubServicesTypes
+                            selectedSubService?.let {
+                                val subServiceId = it.subServiceName
+                                getServiceList(subServiceId!!)
+                            }
+                        }
+                    } else {
+                        Log.e(ContentValues.TAG, "Error fetching SubServices")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<SubServicesTypes>>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+    }
+
 
     private fun getServiceList(select: String){
         val service = ServicesInstance.retrofitBuilder
@@ -181,36 +211,6 @@ class CustomerHomeFragment : Fragment() {
 
         })
     }
-
-    private fun fetchSubService(){
-        val call = ServicesInstance.retrofitBuilder
-        val serviceType = arguments?.getString("serviceTypeName")
-        call.getSubServicesPerService(serviceType).enqueue(object: Callback<List<SubServicesTypes>>{
-            override fun onResponse(
-                call: Call<List<SubServicesTypes>>,
-                response: Response<List<SubServicesTypes>>
-            ) {
-                if(response.isSuccessful){
-                    val subserviceResponse = response.body()
-                    if(subserviceResponse != null){
-                        val adapter = SubServiceAdapter(requireContext(), subserviceResponse)
-                        subServiceSpinner.adapter = adapter
-                    }
-                } else{
-                    Log.e(ContentValues.TAG, "Error fetching SubServices")
-                }
-            }
-
-            override fun onFailure(call: Call<List<SubServicesTypes>>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        })
-    }
-
-
-
-
     companion object {
         /**
          * Use this factory method to create a new instance of
