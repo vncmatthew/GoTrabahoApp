@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
@@ -74,9 +75,11 @@ class AddSubserviceActivity : AppCompatActivity() {
             ) {
                 if(response.isSuccessful){
                     val subserviceResponse = response.body()
+
                     if(subserviceResponse != null){
                         val adapter = SubServiceAdapter(this@AddSubserviceActivity, subserviceResponse)
                         subServiceSpinner.adapter = adapter
+
                     }
                 } else{
                     Log.e(ContentValues.TAG, "Error fetching SubServices")

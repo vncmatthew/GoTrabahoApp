@@ -84,6 +84,7 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
         holder.binding.apply {
             editInfoServiceName.text = "${services.name}"
             editInfoDescription.text = "${services.description}"
+//            editInfoSubServices.text = "${services.sub}
             editInfoPrice.text = "₱ ${services.priceEstimate}"
 
             holder.binding.buttonAddSubService.setOnClickListener {

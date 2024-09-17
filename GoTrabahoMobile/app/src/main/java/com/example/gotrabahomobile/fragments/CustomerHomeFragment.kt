@@ -70,8 +70,7 @@ class CustomerHomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        subServiceSpinner = binding.spinnerServiceNameHome
-        fetchSubService()
+
         email = arguments?.getString("email")
         Log.d("YourFragment", "Arguments: $arguments")
     }
@@ -88,8 +87,7 @@ class CustomerHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        subServiceSpinner = binding.spinnerServiceNameHome
-
+        subServiceSpinner = _binding!!.spinnerServiceNameHome
         fetchSubService()
 
         val backButton = view.findViewById<ImageButton>(R.id.back_buttonNavbar)
@@ -123,7 +121,6 @@ class CustomerHomeFragment : Fragment() {
                             val adapter = SubServiceAdapter(requireContext(), subserviceResponse)
                             subServiceSpinner.adapter = adapter
 
-                            // Now it's safe to get the selected item
                             val selectedSubService = subServiceSpinner.selectedItem as? SubServicesTypes
                             selectedSubService?.let {
                                 val subServiceId = it.subServiceName
