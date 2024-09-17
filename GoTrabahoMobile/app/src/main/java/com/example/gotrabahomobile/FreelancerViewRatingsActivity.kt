@@ -32,9 +32,7 @@ class FreelancerViewRatingsActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.back_buttonNavbar)
 
         backButton.setOnClickListener {
-            val intent = Intent(this, FreelancerAccountFragment::class.java)
-            intent.putExtra("freelancerId", freelancerId)
-            startActivity(intent)
+            finish()
         }
 
         getRatings()

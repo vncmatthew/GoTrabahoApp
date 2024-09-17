@@ -138,11 +138,9 @@ class FreelancerServiceListAdapter(private val servicesList: List<Services>, pri
                                 response: Response<Services>
                             ) {
                                 if (response.isSuccessful) {
-                                    Toast.makeText(
-                                        context,
-                                        "Successfully Deleted The Service",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(context, "Successfully Deleted The Service", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(context, "Cannot delete service, you have existing bookings with this service", Toast.LENGTH_SHORT).show()
                                 }
                             }
 

@@ -29,6 +29,12 @@ class AddSubserviceActivity : AppCompatActivity() {
 
         val serviceId = intent.getIntExtra("serviceId", 0)
         val serviceType = intent.getStringExtra("serviceType")
+        val userId = intent.getIntExtra("userId", 0)
+        val freelancerId = intent.getIntExtra("freelancerId", 0)
+        val firstName = intent.getStringExtra("firstName")
+        val lastName = intent.getStringExtra("lastName")
+        val fullName = intent.getStringExtra("fullName")
+        val email = intent.getStringExtra("email")
 
         fetchSubService()
 
@@ -37,13 +43,19 @@ class AddSubserviceActivity : AppCompatActivity() {
         }
 
         confirmSubservice.setOnClickListener {
-
             val selectedSubService = subServiceSpinner.selectedItem as SubServicesTypes
             val subServiceId = selectedSubService.subServiceTypeId
             addSubService(subServiceId!!)
-            val intent = Intent(this@AddSubserviceActivity, FreelancerServicesListActivity::class.java)
+            val intent = Intent(this, FreelancerMainActivity::class.java)
+            intent.putExtra("userId", userId)
             intent.putExtra("serviceId", serviceId)
             intent.putExtra("serviceType", serviceType)
+            intent.putExtra("freelancerId", freelancerId)
+            intent.putExtra("firstName", firstName)
+            intent.putExtra("lastName", lastName)
+            intent.putExtra("fullName", fullName)
+            intent.putExtra("email", email)
+
             startActivity(intent)
         }
     }
