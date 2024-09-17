@@ -100,6 +100,7 @@ class SubservicesFragment : Fragment() {
 
             val bundle = Bundle().apply {
                 putInt("userId", userId)
+                putString("serviceTypeName", "Plumbing")
             }
 
             val homeFragment = CustomerHomeFragment().apply {
@@ -117,6 +118,7 @@ class SubservicesFragment : Fragment() {
 
             val bundle = Bundle().apply {
                 putInt("userId", userId)
+                putString("serviceTypeName", "Electrical")
             }
 
             val homeFragment = CustomerHomeFragment().apply {
@@ -134,6 +136,7 @@ class SubservicesFragment : Fragment() {
 
             val bundle = Bundle().apply {
                 putInt("userId", userId)
+                putString("serviceTypeName", "Ac")
             }
 
             val homeFragment = CustomerHomeFragment().apply {
@@ -151,6 +154,7 @@ class SubservicesFragment : Fragment() {
 
             val bundle = Bundle().apply {
                 putInt("userId", userId)
+                putString("serviceTypeName", "Ref")
             }
 
             val homeFragment = CustomerHomeFragment().apply {
@@ -168,6 +172,7 @@ class SubservicesFragment : Fragment() {
 
             val bundle = Bundle().apply {
                 putInt("userId", userId)
+                putString("serviceTypeName", "Carpentry")
             }
 
 
