@@ -56,6 +56,9 @@ interface ServicesInterface {
     @GET("api/SubServicesType/{subServiceType}")
     fun getSubServicesPerService(@Path("subServiceType") subServiceType: String?): Call<List<SubServicesTypes>>
 
+    @GET("api/Services/ServiceTypeDiscount/{serviceTypeName}")
+    fun getAverageAmountPerService(@Path("serviceTypeName") serviceTypeName: String?): Call<Double>
+
     @POST("api/SubServices")
     fun insertSubService(@Body request: SubService): Call<SubService>
 

@@ -8,11 +8,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import com.example.gotrabahomobile.Model.UserFirebase
+import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
 import com.example.gotrabahomobile.databinding.FragmentCustomerHomeBinding
 import com.example.gotrabahomobile.databinding.FragmentSubservicesBinding
 import com.example.gotrabahomobile.fragments.CustomerHomeFragment
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,6 +38,8 @@ class SubservicesFragment : Fragment() {
     var selectedService: String? = null
     var userList = ArrayList<UserFirebase>()
     private var _binding: FragmentSubservicesBinding? = null
+    private lateinit var viewMap: Map<String, Int>
+
     private val binding get() = _binding!!
     private var email: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +81,20 @@ class SubservicesFragment : Fragment() {
         val refRepair = view.findViewById<CardView>(R.id.refRepairSubservice)
         val carpentry = view.findViewById<CardView>(R.id.carpentrySubservice)
 
+        viewMap = mapOf(
+            "Plumbing" to R.id.averageRatePlumbing,
+            "Electrical" to R.id.averageRateElectrical,
+            "Ac Repair" to R.id.averageRateAcRepair,
+            "Refrigerator Repair" to R.id.averageRateRefRepair,
+            "Carpentry" to R.id.averageRateCarpentry
+        )
 
+        // Loop through the map and find views
+        for ((serviceType, viewId) in viewMap) {
+            val textView = view.findViewById<TextView>(viewId)
+            // Now you can work with each TextView
+            setupTextView(textView, serviceType)
+        }
         plumbing.setOnClickListener {
             val userId = arguments?.getInt("userId", 0) ?: 0
 
@@ -149,6 +170,7 @@ class SubservicesFragment : Fragment() {
                 putInt("userId", userId)
             }
 
+
             val homeFragment = CustomerHomeFragment().apply {
                 arguments = bundle
             }
@@ -158,6 +180,40 @@ class SubservicesFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+    }
+
+    private fun setupTextView(textView: TextView?, serviceType: String) {
+        textView?.let { tv ->
+
+            tv.setTextColor(ContextCompat.getColor(requireContext(), android.R.color.black))
+            tv.text = "Loading..."
+
+            computeAverageAmount(serviceType) { averageAmount ->
+                if (averageAmount != null) {
+                    tv.text = "$$averageAmount"
+                } else {
+                    tv.text = "N/A"
+                }
+            }
+        }
+    }
+
+    private fun computeAverageAmount(serviceTypeName: String?, callback: (Double?) -> Unit) {
+        val call = ServicesInstance.retrofitBuilder
+        call.getAverageAmountPerService(serviceTypeName).enqueue(object : Callback<Double> {
+            override fun onResponse(call: Call<Double>, response: Response<Double>) {
+                if (response.isSuccessful) {
+                    val averageAmount = response.body()
+                    callback(averageAmount)
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<Double>, t: Throwable) {
+                callback(null)
+            }
+        })
     }
     companion object {
         /**

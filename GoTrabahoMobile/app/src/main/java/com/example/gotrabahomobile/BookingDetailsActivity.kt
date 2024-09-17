@@ -369,7 +369,7 @@ class BookingDetailsActivity : AppCompatActivity() {
                     val newRating = Rating(
                         star = ratingNumber.toBigDecimal(),
                         bookingId = response.body()?.bookingId?.toInt(),
-                        comments = comment,
+                        comments = comment ?: "",
                         dateRecorded = LocalDate.now().toString(),
                         customerId = response.body()?.customerId
                     )
