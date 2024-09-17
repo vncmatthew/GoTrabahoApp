@@ -1,22 +1,21 @@
 package com.example.gotrabahomobile.fragments
 
-import android.content.Intent
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.gotrabahomobile.DTO.ServicesWUserId
+import com.example.gotrabahomobile.DTO.SubServicesTypes
 import com.example.gotrabahomobile.FreelancerListMapViewActivity
 import com.example.gotrabahomobile.Helper.ServiceAdapter
+import com.example.gotrabahomobile.Helper.SubServiceAdapter
 import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.R
 import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
@@ -49,7 +48,7 @@ class CustomerHomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    var selectedService: String? = null
+    private lateinit var subServiceSpinner: Spinner
     var userList = ArrayList<UserFirebase>()
     private lateinit var rvAdapter: ServiceAdapter
     private lateinit var serviceList: List<ServicesWUserId>
@@ -67,7 +66,8 @@ class CustomerHomeFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
+        subServiceSpinner = binding.spinnerServiceNameHome
+        fetchSubService()
         email = arguments?.getString("email")
         Log.d("YourFragment", "Arguments: $arguments")
     }
@@ -79,42 +79,7 @@ class CustomerHomeFragment : Fragment() {
         _binding = FragmentCustomerHomeBinding.inflate(inflater, container, false)
 
 
-//        val longitude = arguments?.getDouble("longitude", 0.0) ?: 0
-//        val latitude = arguments?.getDouble("latitude", 0.0) ?: 0
-//        val userId = arguments?.getInt("userId", 0) ?: 0
-//        val buttonMapView: Button = _binding!!.buttonMapView
-//        buttonMapView.setOnClickListener{
-//            val intent = Intent(requireContext(), FreelancerListMapViewActivity::class.java)
-//            intent.putExtra("longitude", longitude)
-//            intent.putExtra("latitude", latitude)
-//            intent.putExtra("sqlId", userId)
-//            startActivity(intent)
-//        }
 
-        //select service spinner
-        val spinner: Spinner = _binding!!.spinnerServiceNameHome
-        Log.d("CustomerHomeFragment", "Spinner found: $spinner")
-
-        val adapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.serviceTypes,
-            android.R.layout.simple_spinner_item
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-        Log.d("CustomerHomeFragment", "Adapter set: ${spinner.adapter}")
-
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                selectedService = parent.getItemAtPosition(position) as? String
-                getServiceList(selectedService)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                Toast.makeText(requireContext(), "Please Select a Service", Toast.LENGTH_SHORT).show()
-            }
-        }
 
 
         return _binding!!.root
@@ -143,13 +108,16 @@ class CustomerHomeFragment : Fragment() {
                 .commit()
         }
 
+        val selectedSubService = subServiceSpinner.selectedItem as SubServicesTypes
+        val subServiceId = selectedSubService.subServiceTypeId
+        getServiceList(subServiceId!!)
     }
 
-    private fun getServiceList(select: String?){
+    private fun getServiceList(select: String){
         val service = ServicesInstance.retrofitBuilder
         val identification = arguments?.getInt("userId", 0) ?: 0
 
-        service.getServicesType(select).enqueue(object : Callback<List<ServicesWUserId>> {
+        service.getServicesPerSubService(select).enqueue(object : Callback<List<ServicesWUserId>> {
             override fun onResponse(
                 call: Call<List<ServicesWUserId>>,
                 response: Response<List<ServicesWUserId>>
@@ -213,6 +181,35 @@ class CustomerHomeFragment : Fragment() {
 
         })
     }
+
+    private fun fetchSubService(){
+        val call = ServicesInstance.retrofitBuilder
+        val serviceType = arguments?.getString("serviceTypeName")
+        call.getSubServicesPerService(serviceType).enqueue(object: Callback<List<SubServicesTypes>>{
+            override fun onResponse(
+                call: Call<List<SubServicesTypes>>,
+                response: Response<List<SubServicesTypes>>
+            ) {
+                if(response.isSuccessful){
+                    val subserviceResponse = response.body()
+                    if(subserviceResponse != null){
+                        val adapter = SubServiceAdapter(requireContext(), subserviceResponse)
+                        subServiceSpinner.adapter = adapter
+                    }
+                } else{
+                    Log.e(ContentValues.TAG, "Error fetching SubServices")
+                }
+            }
+
+            override fun onFailure(call: Call<List<SubServicesTypes>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+
+
 
     companion object {
         /**
