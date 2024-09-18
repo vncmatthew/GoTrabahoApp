@@ -1,6 +1,5 @@
 package com.example.gotrabahomobile
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,22 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.gotrabahomobile.Helper.BookingFreelancerAdapter
-import com.example.gotrabahomobile.Helper.ServiceAdapter
 import com.example.gotrabahomobile.Model.Booking
-import com.example.gotrabahomobile.Model.Services
-import com.example.gotrabahomobile.Model.UserFirebase
 import com.example.gotrabahomobile.Remote.BookingRemote.BookingInstance
-import com.example.gotrabahomobile.Remote.ServicesRemote.ServicesInstance
-import com.example.gotrabahomobile.databinding.ActivityFreelancerBookingsPageBinding
 import com.example.gotrabahomobile.databinding.FragmentBookingsBinding
 import com.google.android.material.tabs.TabLayout
 import retrofit2.Call
@@ -78,7 +68,6 @@ class BookingsFragment : Fragment() {
         Log.d("BookingsFragment", "Adapter set: ${spinner.adapter}")
 
 
-
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 selectedService = parent.getItemAtPosition(position) as? String
@@ -102,6 +91,8 @@ class BookingsFragment : Fragment() {
         val lastName = arguments?.getString("lastName")
         val email = arguments?.getString("email")
         val fullName = arguments?.getString("fullName")
+
+
 
         swipeRefreshLayout = view.findViewById(R.id.swipeRefreshLayout)
         swipeRefreshLayout.setOnRefreshListener {

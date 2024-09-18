@@ -59,7 +59,9 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookingViewHolder {
         return BookingViewHolder(
+
             BookingLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         )
     }
 
@@ -85,7 +87,6 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                     response: Response<User>
                                 ) {
                                     if (response.isSuccessful) {
-
                                         var user = response.body()
                                         holder.binding.apply {
                                             if (user != null) {
@@ -121,7 +122,6 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                             intent.putExtra("bookingId", currentItem.bookingId)
                                                             intent.putExtra("email", email)
                                                             context.startActivity(intent)
-
                                                         }
                                                     }
 
@@ -134,6 +134,10 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
                                                 })
                                             }
+                                        }
+
+                                        holder.binding.btnRejectNego.setOnClickListener() {
+                                            showRejectConfirmationDialog(position)
                                         }
 
                                         holder.binding.btnCancelFreelancer.setOnClickListener() {
@@ -203,8 +207,6 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 //                                                })
 //
 //                                            deleteNego(currentItem.bookingId!!)
-
-
                                         }
 
                                         holder.binding.btnSetToCompleted.setOnClickListener {
@@ -219,6 +221,8 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                                                     ) {
                                                         if(response.isSuccessful){
                                                             negoIdholder = response.body()!!.negotiationId
+                                                            swipeRefreshLayout.isRefreshing = true
+                                                            fragment.refreshData()
                                                         }
                                                     }
 
@@ -275,15 +279,17 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
 
                                         if (status == 1) {
                                             holder.binding.btnSetToCompleted.visibility = View.GONE
+                                            holder.binding.btnCancelFreelancer.visibility = View.GONE
                                         }
                                         if (status == 2) {
                                             holder.binding.btnPayServiceFee.visibility = View.GONE
+                                            holder.binding.btnRejectNego.visibility = View.GONE
                                         }
                                         if (status == 3) {
                                             holder.binding.btnPayServiceFee.visibility = View.GONE
                                             holder.binding.btnSetToCompleted.visibility = View.GONE
                                             holder.binding.btnCancelFreelancer.visibility = View.GONE
-
+                                            holder.binding.btnRejectNego.visibility = View.GONE
                                         }
 
 
@@ -471,6 +477,19 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
             }
     }
 
+    private fun showRejectConfirmationDialog(position: Int) {
+        val builder = AlertDialog.Builder(context)
+        builder.setMessage("Are you sure you want to reject this negotiation?")
+            .setPositiveButton("Yes") { dialog, id ->
+                cancelBooking(position)
+            }
+            .setNegativeButton("No") { dialog, id ->
+                dialog.dismiss()
+            }
+        val alert = builder.create()
+        alert.show()
+    }
+
     private fun showCancellationConfirmationDialog(position: Int) {
         val builder = AlertDialog.Builder(context)
         builder.setMessage("Are you sure you want to cancel this booking?")
@@ -522,7 +541,7 @@ class BookingFreelancerAdapter(private val bookingList: List<Booking>, private v
                 if (response.isSuccessful) {
                     Log.d("Booking", "Successfully Updated to 6")
                     notifMessage("The booking has been cancelled", "Thank you for your service")
-                    swipeRefreshLayout.isRefreshing = true // Start refreshing animation
+                    swipeRefreshLayout.isRefreshing = true
                     fragment.refreshData()
                 }
             }

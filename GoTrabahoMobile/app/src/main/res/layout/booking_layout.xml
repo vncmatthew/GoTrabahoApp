@@ -75,15 +75,12 @@
             android:id="@+id/btnSetToCompleted"
             android:layout_width="90dp"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
-            android:layout_marginEnd="20dp"
             android:backgroundTint="@color/gt_green"
             android:text="Done"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnCancelFreelancer"
             app:layout_constraintTop_toBottomOf="@+id/tvSetPriceCustomer"
             app:layout_constraintVertical_bias="0.0" />
 
@@ -94,7 +91,18 @@
             android:backgroundTint="#CD1515"
             android:text="Cancel"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSetPriceCustomer"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/btnRejectNego"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:backgroundTint="@color/gt_red_cancel"
+            android:text="Reject Negotiation"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.097"
             app:layout_constraintStart_toEndOf="@+id/btnPayServiceFee"
             app:layout_constraintTop_toBottomOf="@+id/tvSetPriceCustomer"
