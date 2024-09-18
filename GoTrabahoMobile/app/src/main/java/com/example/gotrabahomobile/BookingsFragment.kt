@@ -191,7 +191,7 @@ class BookingsFragment : Fragment() {
     private fun updateRecyclerView(status: Int) {
         _binding!!.rvFreelancerHome.apply {
             val email = arguments?.getString("email")
-            rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, 1, swipeRefreshLayout, this@BookingsFragment)
+            rvAdapter = BookingFreelancerAdapter(bookingList, requireContext(), email, status, swipeRefreshLayout, this@BookingsFragment)
             adapter = rvAdapter
             layoutManager = LinearLayoutManager(requireContext())
 
