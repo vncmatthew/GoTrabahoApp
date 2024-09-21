@@ -235,7 +235,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
                                 patchNegotiation2(service.negotiationId!!, negotiation, service.customerId!!)
                                 notifMessage("Price has been Updated", "The price is ${freelancerPrice}")
-                                showBookingConfirmationToast()
+
                             }
                         }
                     }
@@ -253,7 +253,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                 )
                 patchNegotiation(negotiationId, negotiation)
                 notifMessage("Price has been Updated", "The price is ${freelancerPrice}")
-                showBookingConfirmationToast()
+
 
             }
 
@@ -630,25 +630,25 @@ class ChatActivityNegotiation : AppCompatActivity() {
 
     }
 
-    private fun bookingConfirmationToast() {
-        val layoutInflater = this.layoutInflater
-        val layout = layoutInflater.inflate(R.layout.toast_background, findViewById(R.id.toast_container))
-
-        with(Toast(this)) {
-            duration = Toast.LENGTH_SHORT
-            view = layout
-            setGravity(Gravity.BOTTOM, 0, 40)
-            show()
-        }
-    }
-
-    fun showBookingConfirmationToast() {
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            bookingConfirmationToast()
-
-            }, 10000)
-    }
+//    private fun bookingConfirmationToast() {
+//        val layoutInflater = this.layoutInflater
+//        val layout = layoutInflater.inflate(R.layout.toast_background, findViewById(R.id.toast_container))
+//
+//        with(Toast(this)) {
+//            duration = Toast.LENGTH_SHORT
+//            view = layout
+//            setGravity(Gravity.BOTTOM, 0, 40)
+//            show()
+//        }
+//    }
+//
+//    fun showBookingConfirmationToast() {
+//
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            bookingConfirmationToast()
+//
+//            }, 10000)
+//    }
 
 
 
