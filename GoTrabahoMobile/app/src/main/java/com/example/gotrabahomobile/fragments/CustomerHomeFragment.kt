@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageButton
 import android.widget.Spinner
 import android.widget.Toast
@@ -111,9 +112,8 @@ class CustomerHomeFragment : Fragment() {
 
     private fun fetchSubService() {
         viewLifecycleOwner.lifecycleScope.launchWhenStarted {
-            val call = ServicesInstance.retrofitBuilder
             val serviceType = arguments?.getString("serviceTypeName")
-            call.getSubServicesPerService(serviceType).enqueue(object : Callback<List<SubServicesTypes>> {
+            ServicesInstance.retrofitBuilder.getSubServicesPerService(serviceType).enqueue(object : Callback<List<SubServicesTypes>> {
                 override fun onResponse(call: Call<List<SubServicesTypes>>, response: Response<List<SubServicesTypes>>) {
                     if (response.isSuccessful) {
                         val subserviceResponse = response.body()
@@ -121,10 +121,21 @@ class CustomerHomeFragment : Fragment() {
                             val adapter = SubServiceAdapter(requireContext(), subserviceResponse)
                             subServiceSpinner.adapter = adapter
 
-                            val selectedSubService = subServiceSpinner.selectedItem as? SubServicesTypes
-                            selectedSubService?.let {
-                                val subServiceId = it.subServiceName
-                                getServiceList(subServiceId!!)
+
+                            val initialSubService = subserviceResponse.firstOrNull()?.subServiceName ?: ""
+                            getServiceList(initialSubService)
+
+
+                            subServiceSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                                    val selectedSubService = parent.getItemAtPosition(position) as? SubServicesTypes
+                                    selectedSubService?.let {
+                                        val subServiceId = it.subServiceName
+                                        getServiceList(subServiceId!!)
+                                    }
+                                }
+
+                                override fun onNothingSelected(parent: AdapterView<*>) {}
                             }
                         }
                     } else {
@@ -133,7 +144,7 @@ class CustomerHomeFragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<List<SubServicesTypes>>, t: Throwable) {
-                    TODO("Not yet implemented")
+                    Log.e(ContentValues.TAG, "Error fetching SubServices", t)
                 }
             })
         }
