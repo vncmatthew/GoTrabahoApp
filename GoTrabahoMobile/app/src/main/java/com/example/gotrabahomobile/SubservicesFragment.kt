@@ -84,8 +84,8 @@ class SubservicesFragment : Fragment() {
         viewMap = mapOf(
             "Plumbing" to R.id.averageRatePlumbing,
             "Electrical" to R.id.averageRateElectrical,
-            "Ac Repair" to R.id.averageRateAcRepair,
-            "Refrigerator Repair" to R.id.averageRateRefRepair,
+            "AC Repair" to R.id.averageRateAcRepair,
+            "Ref Repair" to R.id.averageRateRefRepair,
             "Carpentry" to R.id.averageRateCarpentry
         )
 
@@ -136,7 +136,7 @@ class SubservicesFragment : Fragment() {
 
             val bundle = Bundle().apply {
                 putInt("userId", userId)
-                putString("serviceTypeName", "Ac")
+                putString("serviceTypeName", "AC Repair")
             }
 
             val homeFragment = CustomerHomeFragment().apply {
@@ -154,7 +154,7 @@ class SubservicesFragment : Fragment() {
 
             val bundle = Bundle().apply {
                 putInt("userId", userId)
-                putString("serviceTypeName", "Ref")
+                putString("serviceTypeName", "Ref Repair")
             }
 
             val homeFragment = CustomerHomeFragment().apply {
@@ -195,7 +195,7 @@ class SubservicesFragment : Fragment() {
 
             computeAverageAmount(serviceType) { averageAmount ->
                 if (averageAmount != null) {
-                    tv.text = "$$averageAmount"
+                    tv.text = "₱$averageAmount"
                 } else {
                     tv.text = "N/A"
                 }
