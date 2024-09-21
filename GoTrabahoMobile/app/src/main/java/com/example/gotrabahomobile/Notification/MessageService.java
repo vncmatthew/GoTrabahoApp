@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.gotrabahomobile.LoginActivity;
+import com.example.gotrabahomobile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -48,6 +49,7 @@ public class MessageService extends FirebaseMessagingService {
         builder.setContentText(message.getNotification().getBody());
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(data.get("body")));
         builder.setAutoCancel(true);
+        builder.setSmallIcon(R.drawable.notification_icon);
         builder.setPriority(Notification.PRIORITY_MAX);
 
         notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
