@@ -35,7 +35,7 @@ class ChatAdapterNegotiation(private val context: Context, private val chatRoomL
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chatRoom = chatRoomList[position]
 
-        // Assuming you have a method to get the user by userId
+
         val userIdToDisplay = if (FirebaseAuth.getInstance().currentUser?.uid == chatRoom.customerId) chatRoom.freelancerId else chatRoom.customerId
         getUserById(userIdToDisplay) { user ->
             if (user != null) {
@@ -48,7 +48,7 @@ class ChatAdapterNegotiation(private val context: Context, private val chatRoomL
                     intent.putExtra("firstName", user.firstName)
                     intent.putExtra("lastName", user.lastName)
                     intent.putExtra("sqlId", user.sqlId)
-                    intent.putExtra("chatroomId", chatRoom.chatroomId) // Pass the chatroomId
+                    intent.putExtra("chatroomId", chatRoom.chatroomId)
                     context.startActivity(intent)
                 }
             }

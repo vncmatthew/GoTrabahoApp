@@ -331,7 +331,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                                  Log.d("Nego", "${body}")
                                                  Log.d("Nego", "true")
                                                  if (finalPrice != null) {
-
+                                                    Toast.makeText(this@ChatActivityNegotiation,"Discount applied", Toast.LENGTH_SHORT).show()
                                                      var newBooking = Booking(
                                                          customerId = userId,
                                                          bookingDatetime = LocalDate.now().toString(),
@@ -348,6 +348,7 @@ class ChatActivityNegotiation : AppCompatActivity() {
                                                              call: Call<Booking>,
                                                              response: Response<Booking>
                                                          ) {
+
                                                              val booking = response.body()
                                                              if(response.isSuccessful) {
                                                                  if (booking!!.equals("Successfully Created"))
