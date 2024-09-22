@@ -36,7 +36,7 @@ class BookingUserAdapter(private val context: Context, private val bookingList: 
 
         holder.binding.apply{
             customerNameActivity.text = "${booking.freelancerFirst}" + " " + "${booking.freelancerLast}"
-            priceActivity.text = "₱${booking.amount}"
+            priceActivity.text = "₱${booking.amount?.toInt()}"
             serviceActivity.text = " ${booking.serviceType}"
             dateActivity.text = " ${booking.bookingDatetime}"
 
